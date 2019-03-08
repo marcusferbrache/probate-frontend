@@ -14,17 +14,20 @@ class StartEligibility extends Step {
         ctx.isFeesApiToggleEnabled = featureToggle.isEnabled(featureToggles, 'fees_api');
 
         if (ctx.isFeesApiToggleEnabled) {
-            ctx.allApplicationFees = formdata.allApplicationFees.fees;
-            ctx.allCopiesFees = formdata.allCopiesFees.fees;
+            if (formdata.allApplicationFees.fees.length) {
+                ctx.allApplicationFees = formdata.allApplicationFees.fees;
+                ctx.allApplicationFees.forEach((fee) => {
+                    fee.min = FormatCurrency.format(fee.min);
+                    fee.max = FormatCurrency.format(fee.max);
+                    fee.amount = FormatCurrency.format(fee.amount);
+                });
+            }
 
-            ctx.allApplicationFees.forEach((fee) => {
-                fee.min = FormatCurrency.format(fee.min);
-                fee.max = FormatCurrency.format(fee.max);
-                fee.amount = FormatCurrency.format(fee.amount);
-            });
-
-            ctx.allCopiesFees.firstCopy.amount = FormatCurrency.format(ctx.allCopiesFees.firstCopy.amount);
-            ctx.allCopiesFees.extraCopies.amount = FormatCurrency.format(ctx.allCopiesFees.extraCopies.amount);
+            if (formdata.allCopiesFees.fees.length) {
+                ctx.allCopiesFees = formdata.allCopiesFees.fees;
+                ctx.allCopiesFees.firstCopy.amount = FormatCurrency.format(ctx.allCopiesFees.firstCopy.amount);
+                ctx.allCopiesFees.extraCopies.amount = FormatCurrency.format(ctx.allCopiesFees.extraCopies.amount);
+            }
         }
 
         return [ctx];

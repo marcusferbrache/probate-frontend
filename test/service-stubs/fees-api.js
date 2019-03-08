@@ -17,26 +17,23 @@ router.get(`/fees-register${config.services.feesRegister.paths.feesLookup}`, (re
             'version': 3,
             'fee_amount': 215
         });
-    }
-
-    if (req.query.event === 'copies' && req.query.keyword === 'DEF') {
+    } else if (req.query.event === 'copies' && req.query.keyword === 'DEF') {
         res.send({
             'code': 'FEE0003',
             'description': 'Copy of a document (10 pages or less).',
             'version': 3,
             'fee_amount': 10
         });
-    }
-
-    if (req.query.event === 'copies' && req.query.keyword !== 'DEF') {
+    } else if (req.query.event === 'copies' && req.query.keyword !== 'DEF') {
         res.send({
             'code': 'FEE0003',
             'description': 'Additional copies of the grant representation',
             'version': 3,
             'fee_amount': 0.50
         });
+    } else {
+        res.send('false');
     }
-    res.send('false');
 });
 
 router.get(`/fees-register${config.services.feesRegister.paths.feesByCode.replace('{feeCode}', config.services.feesRegister.applicationFeeCodes[0])}`, (req, res) => {
