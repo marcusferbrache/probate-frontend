@@ -12,7 +12,6 @@ let fetchJsonStub;
 
 describe('FeesCalculator', () => {
     describe('calc()', () => {
-
         beforeEach(() => {
             feesCalculator = new FeesCalculator('http://localhost', 'dummyId');
             fetchJsonStub = sinon.stub(Service.prototype, 'fetchJson');
@@ -121,7 +120,6 @@ describe('FeesCalculator', () => {
         });
 
         it('should handle errors when fees api service is unavailable', (done) => {
-
             formdata = {
                 iht: {
                     netValue: 6000
@@ -163,7 +161,6 @@ describe('FeesCalculator', () => {
         });
 
         it('should handle errors when one of the fees api call is unavailable', (done) => {
-
             formdata = {
                 iht: {
                     netValue: 6000
@@ -211,7 +208,6 @@ describe('FeesCalculator', () => {
         });
 
         it('should handle errors when one of the fees api call is not found', (done) => {
-
             formdata = {
                 iht: {
                     netValue: 6000
@@ -258,5 +254,4 @@ describe('FeesCalculator', () => {
                 });
         });
     });
-
 });

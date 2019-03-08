@@ -21,7 +21,8 @@ const copiesData = {
     event: 'copies',
     jurisdiction1: 'family',
     jurisdiction2: 'probate registry',
-    service: 'probate'
+    service: 'probate',
+    keyword: 'DEF'
 };
 
 class FeesCalculator {
@@ -43,6 +44,46 @@ class FeesCalculator {
         return createApplicationFeesCalls(feesCodes);
     }
 
+    getCopiesFees(feesCodes) {
+        return createCopiesFeesCalls(feesCodes);
+    }
+}
+
+async function createCopiesFeesCalls() {
+    const returnResult = {
+        status: 'success',
+        fees: {
+            firstCopy: {
+                amount: null
+            },
+            extraCopies: {
+                amount: null
+            }
+        }
+    };
+
+    copiesData.amount_or_volume = 1;
+
+    await feesLookup.get(copiesData, {})
+        .then((res) => {
+            if (identifyAnyErrors(res)) {
+                returnResult.status = 'failed';
+            } else {
+                returnResult.fees.firstCopy.amount += res.fee_amount;
+            }
+        });
+
+    delete copiesData.keyword;
+    await feesLookup.get(copiesData, {})
+        .then((res) => {
+            if (identifyAnyErrors(res)) {
+                returnResult.status = 'failed';
+            } else {
+                returnResult.fees.extraCopies.amount += res.fee_amount;
+            }
+        });
+
+    return returnResult;
 }
 
 async function createApplicationFeesCalls(feesCodes) {
@@ -221,7 +262,7 @@ async function createCallsRequired(formdata, headers) {
  * this caters for 404 type messages etc.
  */
 function identifyAnyErrors(res) {
-    if (res.fee_amount || res.current_version.flat_amount) {
+    if (res.fee_amount || (res.current_version && res.current_version.flat_amount)) {
         return false;
     }
     return true;

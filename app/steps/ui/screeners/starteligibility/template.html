@@ -64,7 +64,7 @@
                                 {% endfor %}
                             </tbody>
                         </table><br>
-                        <p>{{ content.paragraph8 | safe }}</p>
+                        <p>{{ content.paragraph8 | replace('{firstCopyFee}', fields.allCopiesFees.value.firstCopy.amount) | replace('{extraCopiesFee}', fields.allCopiesFees.value.extraCopies.amount) | safe }}</p>
                     {% else %}
                         <p>{{ content.paragraph12 | replace('{applicationFees}', links.applicationFees) | safe }}</p>
                     {% endif %}

@@ -15,7 +15,21 @@ describe('StartEligibility', () => {
     describe('handleGet()', () => {
         it('should return true when the fees api toggle is set', (done) => {
             const ctxToTest = {};
-            const formdata = {};
+            const formdata = {
+                allApplicationFees: {
+                    fees: []
+                },
+                allCopiesFees: {
+                    fees: {
+                        firstCopy: {
+                            amount: 10
+                        },
+                        extraCopies: {
+                            amount: 0.5
+                        }
+                    }
+                }
+            };
             const featureToggles = {
                 fees_api: true
             };

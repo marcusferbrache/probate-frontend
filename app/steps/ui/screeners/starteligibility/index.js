@@ -15,12 +15,16 @@ class StartEligibility extends Step {
 
         if (ctx.isFeesApiToggleEnabled) {
             ctx.allApplicationFees = formdata.allApplicationFees.fees;
+            ctx.allCopiesFees = formdata.allCopiesFees.fees;
 
             ctx.allApplicationFees.forEach((fee) => {
                 fee.min = FormatCurrency.format(fee.min);
                 fee.max = FormatCurrency.format(fee.max);
                 fee.amount = FormatCurrency.format(fee.amount);
             });
+
+            ctx.allCopiesFees.firstCopy.amount = FormatCurrency.format(ctx.allCopiesFees.firstCopy.amount);
+            ctx.allCopiesFees.extraCopies.amount = FormatCurrency.format(ctx.allCopiesFees.extraCopies.amount);
         }
 
         return [ctx];
