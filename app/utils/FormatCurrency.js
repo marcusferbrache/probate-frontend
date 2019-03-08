@@ -12,10 +12,10 @@ class FormatCurrency {
             if (typeof value === 'number') {
                 if (value < 1) {
                     value *= 100;
-                    value = `${value.toString()}  ${commonContent.pence}`;
+                    value = `${value.toString()} ${commonContent.pence}`;
                 } else if (value >= 1000000) {
                     value /= 1000000;
-                    value = `&pound;${value.toString()}  ${commonContent.million}`;
+                    value = `&pound;${value.toString()} ${commonContent.million}`;
                 } else {
                     value = `&pound;${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
                 }
