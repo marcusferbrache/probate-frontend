@@ -23,7 +23,7 @@ class StartEligibility extends Step {
                 });
             }
 
-            if (formdata.allCopiesFees.fees.length) {
+            if (Object.keys(formdata.allCopiesFees.fees).length) {
                 ctx.allCopiesFees = formdata.allCopiesFees.fees;
                 ctx.allCopiesFees.firstCopy.amount = FormatCurrency.format(ctx.allCopiesFees.firstCopy.amount);
                 ctx.allCopiesFees.extraCopies.amount = FormatCurrency.format(ctx.allCopiesFees.extraCopies.amount);
