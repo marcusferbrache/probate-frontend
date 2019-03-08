@@ -26,8 +26,84 @@ router.get(`/fees-register${config.services.feesRegister.paths.feesLookup}`, (re
             'fee_amount': 0.50
         });
     }
-    res.status(200);
     res.send('false');
+});
+
+router.get(`/fees-register${config.services.feesRegister.paths.feesByCode.replace('{feeCode}', config.services.feesRegister.applicationFeeCodes[0])}`, (req, res) => {
+    res.status(200);
+    res.send({
+        min_range: 50000.01,
+        max_range: 300000,
+        current_version: {
+            flat_amount: {
+                amount: 250
+            }
+        }
+    });
+});
+
+router.get(`/fees-register${config.services.feesRegister.paths.feesByCode.replace('{feeCode}', config.services.feesRegister.applicationFeeCodes[1])}`, (req, res) => {
+    res.status(200);
+    res.send({
+        min_range: 300000.01,
+        max_range: 500000,
+        current_version: {
+            flat_amount: {
+                amount: 750
+            }
+        }
+    });
+});
+
+router.get(`/fees-register${config.services.feesRegister.paths.feesByCode.replace('{feeCode}', config.services.feesRegister.applicationFeeCodes[2])}`, (req, res) => {
+    res.status(200);
+    res.send({
+        min_range: 500000.01,
+        max_range: 1000000,
+        current_version: {
+            flat_amount: {
+                amount: 2500
+            }
+        }
+    });
+});
+
+router.get(`/fees-register${config.services.feesRegister.paths.feesByCode.replace('{feeCode}', config.services.feesRegister.applicationFeeCodes[3])}`, (req, res) => {
+    res.status(200);
+    res.send({
+        min_range: 1000000.01,
+        max_range: 1600000,
+        current_version: {
+            flat_amount: {
+                amount: 4000
+            }
+        }
+    });
+});
+
+router.get(`/fees-register${config.services.feesRegister.paths.feesByCode.replace('{feeCode}', config.services.feesRegister.applicationFeeCodes[4])}`, (req, res) => {
+    res.status(200);
+    res.send({
+        min_range: 1600000.01,
+        max_range: 2000000,
+        current_version: {
+            flat_amount: {
+                amount: 5000
+            }
+        }
+    });
+});
+
+router.get(`/fees-register${config.services.feesRegister.paths.feesByCode.replace('{feeCode}', config.services.feesRegister.applicationFeeCodes[5])}`, (req, res) => {
+    res.status(200);
+    res.send({
+        min_range: 2000000.01,
+        current_version: {
+            flat_amount: {
+                amount: 6000
+            }
+        }
+    });
 });
 
 router.get('/health', (req, res) => {

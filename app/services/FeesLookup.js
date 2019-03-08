@@ -11,6 +11,11 @@ class FeesLookup extends FeesRegister {
         return super.get(url, headers);
     }
 
+    getByCode(feeCode) {
+        this.log('Get payment fee by code');
+        const url = `${this.endpoint}${config.services.feesRegister.paths.feesByCode.replace('{feeCode}', feeCode)}`;
+        return super.get(url, {});
+    }
 }
 
 module.exports = FeesLookup;

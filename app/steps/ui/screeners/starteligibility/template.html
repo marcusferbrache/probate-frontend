@@ -47,7 +47,7 @@
                             </tr>
                             <tr>
                                 <th scope="row">{{ content.tableBodyFeeRange2 | safe }}</th>
-                                <td class="numeric">{{ content.tableBodyFeeRange2Value | safe }}</td>
+                                <td class="numeric">{{ content.tableBodyFeeRange2Value | replace('{fee2value}', fields.fees[0].amount.value) | safe }}</td>
                             </tr>
                             <tr>
                                 <th scope="row">{{ content.tableBodyFeeRange3 | safe }}</th>

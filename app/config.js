@@ -83,11 +83,19 @@ const config = {
             port: 4411,
             paths: {
                 fees: '/fees',
-                feesLookup: '/fees/lookup'
+                feesLookup: '/fees/lookup',
+                feesByCode: '/fees/{feeCode}'
             },
-            ihtMinAmt: 5000
+            ihtMinAmt: 5000,
+            applicationFeeCodes: [
+                'FEE0659',
+                'FEE0660',
+                'FEE0661',
+                'FEE0662',
+                'FEE0663',
+                'FEE0664'
+            ]
         }
-
     },
     redis: {
         host: process.env.REDIS_HOST || 'localhost',

@@ -6,7 +6,7 @@ const config = require('app/config');
 let feesLookup;
 const issuesData = {
     amount_or_volume: 0,
-    applicant_type: 'personal',
+    applicant_type: 'all',
     channel: 'default',
     event: 'issue',
     jurisdiction1: 'family',
@@ -39,6 +39,109 @@ class FeesCalculator {
         return createCallsRequired(formdata, headers);
     }
 
+    getApplicationFees(feesCodes) {
+        return createApplicationFeesCalls(feesCodes);
+    }
+
+}
+
+async function createApplicationFeesCalls(feesCodes) {
+    const returnResult = {
+        status: 'success',
+        fees: []
+    };
+
+    await feesLookup.getByCode(feesCodes[0])
+        .then((res) => {
+            if (identifyAnyErrors(res)) {
+                returnResult.status = 'failed';
+            } else {
+                returnResult.fees.push(
+                    {
+                        min: res.min_range,
+                        max: res.max_range,
+                        amount: res.current_version.flat_amount.amount
+                    }
+                );
+            }
+        });
+
+    await feesLookup.getByCode(feesCodes[1])
+        .then((res) => {
+            if (identifyAnyErrors(res)) {
+                returnResult.status = 'failed';
+            } else {
+                returnResult.fees.push(
+                    {
+                        min: res.min_range,
+                        max: res.max_range,
+                        amount: res.current_version.flat_amount.amount
+                    }
+                );
+            }
+        });
+
+    await feesLookup.getByCode(feesCodes[2])
+        .then((res) => {
+            if (identifyAnyErrors(res)) {
+                returnResult.status = 'failed';
+            } else {
+                returnResult.fees.push(
+                    {
+                        min: res.min_range,
+                        max: res.max_range,
+                        amount: res.current_version.flat_amount.amount
+                    }
+                );
+            }
+        });
+
+    await feesLookup.getByCode(feesCodes[3])
+        .then((res) => {
+            if (identifyAnyErrors(res)) {
+                returnResult.status = 'failed';
+            } else {
+                returnResult.fees.push(
+                    {
+                        min: res.min_range,
+                        max: res.max_range,
+                        amount: res.current_version.flat_amount.amount
+                    }
+                );
+            }
+        });
+
+    await feesLookup.getByCode(feesCodes[4])
+        .then((res) => {
+            if (identifyAnyErrors(res)) {
+                returnResult.status = 'failed';
+            } else {
+                returnResult.fees.push(
+                    {
+                        min: res.min_range,
+                        max: res.max_range,
+                        amount: res.current_version.flat_amount.amount
+                    }
+                );
+            }
+        });
+
+    await feesLookup.getByCode(feesCodes[5])
+        .then((res) => {
+            if (identifyAnyErrors(res)) {
+                returnResult.status = 'failed';
+            } else {
+                returnResult.fees.push(
+                    {
+                        min: res.min_range,
+                        max: res.max_range,
+                        amount: res.current_version.flat_amount.amount
+                    }
+                );
+            }
+        });
+
+    return returnResult;
 }
 
 async function createCallsRequired(formdata, headers) {
@@ -103,7 +206,7 @@ async function createCallsRequired(formdata, headers) {
  * this caters for 404 type messages etc.
  */
 function identifyAnyErrors(res) {
-    if (res.fee_amount) {
+    if (res.fee_amount || res.current_version.flat_amount) {
         return false;
     }
     return true;
