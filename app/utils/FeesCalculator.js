@@ -141,6 +141,21 @@ async function createApplicationFeesCalls(feesCodes) {
             }
         });
 
+    await feesLookup.getByCode(feesCodes[6])
+        .then((res) => {
+            if (identifyAnyErrors(res)) {
+                returnResult.status = 'failed';
+            } else {
+                returnResult.fees.push(
+                    {
+                        min: res.min_range,
+                        max: res.max_range,
+                        amount: res.current_version.flat_amount.amount
+                    }
+                );
+            }
+        });
+
     return returnResult;
 }
 

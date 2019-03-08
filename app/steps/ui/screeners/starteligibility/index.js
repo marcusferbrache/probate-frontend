@@ -1,9 +1,8 @@
 'use strict';
 
-const config = require('app/config');
 const Step = require('app/core/steps/Step');
 const featureToggle = require('app/utils/FeatureToggle');
-const FeesCalculator = require('app/utils/FeesCalculator');
+const FormatCurrency = require('app/utils/FormatCurrency');
 
 class StartEligibility extends Step {
 
@@ -11,15 +10,17 @@ class StartEligibility extends Step {
         return '/start-eligibility';
     }
 
-    * handleGet(ctx, formdata, featureToggles) {
+    handleGet(ctx, formdata, featureToggles) {
         ctx.isFeesApiToggleEnabled = featureToggle.isEnabled(featureToggles, 'fees_api');
 
         if (ctx.isFeesApiToggleEnabled) {
-            const feesCalculator = new FeesCalculator(config.services.feesRegister.url, ctx.sessionID);
-            const applicationFees = yield feesCalculator.getApplicationFees(config.services.feesRegister.applicationFeeCodes);
-            ctx.fees = applicationFees.fees;
+            ctx.allApplicationFees = formdata.allApplicationFees.fees;
 
-            console.log('CTX.FEES: ', ctx.fees);
+            ctx.allApplicationFees.forEach((fee) => {
+                fee.min = FormatCurrency.format(fee.min);
+                fee.max = FormatCurrency.format(fee.max);
+                fee.amount = FormatCurrency.format(fee.amount);
+            });
         }
 
         return [ctx];

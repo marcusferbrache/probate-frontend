@@ -32,46 +32,42 @@
                 </h2>
 
                 {% if fields.isFeesApiToggleEnabled.value === 'true' %}
-                    <p>{{ content.paragraph7 | safe }}</p>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th scope="col">{{ content.tableHeadLeft | safe }}</th>
-                                <th class="numeric" scope="col">{{ content.tableHeadRight | safe }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">{{ content.tableBodyFeeRange1 | safe }}</th>
-                                <td class="numeric">{{ content.tableBodyFeeRange1Value | safe }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">{{ content.tableBodyFeeRange2 | safe }}</th>
-                                <td class="numeric">{{ content.tableBodyFeeRange2Value | replace('{fee2value}', fields.fees[0].amount.value) | safe }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">{{ content.tableBodyFeeRange3 | safe }}</th>
-                                <td class="numeric">{{ content.tableBodyFeeRange3Value | safe }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">{{ content.tableBodyFeeRange4 | safe }}</th>
-                                <td class="numeric">{{ content.tableBodyFeeRange4Value | safe }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">{{ content.tableBodyFeeRange5 | safe }}</th>
-                                <td class="numeric">{{ content.tableBodyFeeRange5Value | safe }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">{{ content.tableBodyFeeRange6 | safe }}</th>
-                                <td class="numeric">{{ content.tableBodyFeeRange6Value | safe }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">{{ content.tableBodyFeeRange7 | safe }}</th>
-                                <td class="numeric">{{ content.tableBodyFeeRange7Value | safe }}</td>
-                            </tr>
-                        </tbody>
-                    </table><br>
-                    <p>{{ content.paragraph8 | safe }}</p>
+                    {% if fields.allApplicationFees.value %}
+                        <p>{{ content.paragraph7 | replace('{noFeeMax}', fields.allApplicationFees.value[0].max) | safe }}</p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">{{ content.tableHeadLeft | safe }}</th>
+                                    <th class="numeric" scope="col">{{ content.tableHeadRight | safe }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for fee in fields.allApplicationFees.value %}
+                                    <tr>
+                                        <th scope="row">
+                                            {% if fee.max and not fee.min %}
+                                                {{ fee.max | safe }} {{ content.orUnder | safe }}
+                                            {% else %}
+                                                {% if fee.min %}
+                                                    {{ content.over | safe }} {{ fields.allApplicationFees.value[loop.index - 2].max | safe }}
+                                                {% endif %}
+                                                {% if fee.max %}
+                                                    {{ content.to | safe }} {{ fee.max | safe }}
+                                                {% endif %}
+                                            {% endif %}
+                                        </th>
+                                        <td class="numeric">
+                                            {{ fee.amount | safe if fee.amount !== '' }}
+                                            {{ content.free | safe if fee.amount === '' }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table><br>
+                        <p>{{ content.paragraph8 | safe }}</p>
+                    {% else %}
+                        <p>{{ content.paragraph12 | replace('{applicationFees}', links.applicationFees) | safe }}</p>
+                    {% endif %}
                 {% else %}
                     <p>{{ content.paragraph7old | safe }}</p>
                     <p>{{ content.paragraph8old | safe }}</p>
