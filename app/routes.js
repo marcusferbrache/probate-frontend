@@ -7,6 +7,7 @@ const logger = require('app/components/logger');
 const {get, includes, isEqual} = require('lodash');
 const commonContent = require('app/resources/en/translation/common');
 const ExecutorsWrapper = require('app/wrappers/Executors');
+const shutter = require('app/shutter');
 const documentUpload = require('app/documentUpload');
 const documentDownload = require('app/documentDownload');
 const paymentFees = require('app/paymentFees');
@@ -56,6 +57,7 @@ router.get('/', (req, res) => {
         });
 });
 
+router.use(shutter);
 router.use(documentDownload);
 router.use(paymentFees);
 
