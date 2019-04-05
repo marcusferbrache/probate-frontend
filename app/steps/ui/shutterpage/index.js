@@ -3,7 +3,6 @@
 const Step = require('app/core/steps/Step');
 
 class ShutterPage extends Step {
-
     static getUrl() {
         return '/offline';
     }
