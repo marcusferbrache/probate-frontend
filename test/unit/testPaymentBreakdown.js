@@ -26,7 +26,7 @@ describe('PaymentBreakdown', () => {
     let feesCalculator;
 
     describe('getContextData', () => {
-        it('FT ON - should return the context with the deceased name', (done) => {
+        it('should return the context with the deceased name', (done) => {
             const PaymentBreakdown = steps.PaymentBreakdown;
             const req = {
                 sessionID: 'dummy_sessionId',
@@ -57,44 +57,7 @@ describe('PaymentBreakdown', () => {
                 deceasedLastName: 'Ceased',
                 paymentError: 'dummy_status',
                 journeyType: 'probate',
-                sessionID: 'dummy_sessionId',
-                isFeesApiToggleEnabled: true
-            });
-            done();
-        });
-        it('FT OFF - should return the context with the deceased name', (done) => {
-            const PaymentBreakdown = steps.PaymentBreakdown;
-            const req = {
-                sessionID: 'dummy_sessionId',
-                authToken: 'dummy_token',
-                userId: 'dummy_userId',
-                session: {
-                    form: {
-                        journeyType: 'probate',
-                        deceased: {
-                            firstName: 'Dee',
-                            lastName: 'Ceased'
-                        }
-                    },
-                    featureToggles: {
-                        fees_api: false
-                    },
-                    journeyType: 'probate'
-                },
-                query: {
-                    status: 'dummy_status'
-                }
-            };
-
-            const ctx = PaymentBreakdown.getContextData(req);
-            expect(ctx).to.deep.equal({
-                authToken: 'dummy_token',
-                userId: 'dummy_userId',
-                deceasedLastName: 'Ceased',
-                paymentError: 'dummy_status',
-                journeyType: 'probate',
-                sessionID: 'dummy_sessionId',
-                isFeesApiToggleEnabled: false
+                sessionID: 'dummy_sessionId'
             });
             done();
         });
@@ -121,6 +84,7 @@ describe('PaymentBreakdown', () => {
             site_id: 'siteId0001',
             external_reference: 12345
         };
+        const featureToggles = {};
         let revertAuthorise;
         let expectedFormdata;
         let hostname;
@@ -129,6 +93,8 @@ describe('PaymentBreakdown', () => {
         let session;
 
         beforeEach(() => {
+            featureToggles.fees_api = true;
+
             expectedFormdata = {
                 ccdCase: {
                     id: 1535395401245028,
@@ -178,9 +144,7 @@ describe('PaymentBreakdown', () => {
 
         it('FT ON - sets paymentPending to false if ctx.total = 0', (done) => {
             const paymentBreakdown = new PaymentBreakdown(steps, section, templatePath, i18next, schema);
-            let ctx = {
-                isFeesApiToggleEnabled: true
-            };
+            let ctx = {};
             let errors = [];
             const formdata = {
                 fees: {
@@ -207,7 +171,7 @@ describe('PaymentBreakdown', () => {
             }));
 
             co(function* () {
-                [ctx, errors] = yield paymentBreakdown.handlePost(ctx, errors, formdata);
+                [ctx, errors] = yield paymentBreakdown.handlePost(ctx, errors, formdata, session, hostname, featureToggles);
                 expect(formdata.paymentPending).to.equal('false');
                 done();
             }).catch((err) => {
@@ -215,10 +179,10 @@ describe('PaymentBreakdown', () => {
             });
         });
         it('FT OFF - sets paymentPending to false if ctx.total = 0', (done) => {
+            featureToggles.fees_api = false;
+
             const paymentBreakdown = new PaymentBreakdown(steps, section, templatePath, i18next, schema);
-            let ctx = {
-                isFeesApiToggleEnabled: false
-            };
+            let ctx = {};
             let errors = [];
             const formdata = {
                 fees: {
@@ -245,7 +209,7 @@ describe('PaymentBreakdown', () => {
             }));
 
             co(function* () {
-                [ctx, errors] = yield paymentBreakdown.handlePost(ctx, errors, formdata);
+                [ctx, errors] = yield paymentBreakdown.handlePost(ctx, errors, formdata, session, hostname, featureToggles);
                 expect(formdata.paymentPending).to.equal('false');
                 done();
             }).catch((err) => {
@@ -260,8 +224,7 @@ describe('PaymentBreakdown', () => {
                 }
             };
             let ctx = {
-                total: 1,
-                isFeesApiToggleEnabled: true
+                total: 1
             };
             let errors = [];
             const formdata = {
@@ -290,7 +253,7 @@ describe('PaymentBreakdown', () => {
             }));
 
             co(function* () {
-                [ctx, errors] = yield paymentBreakdown.handlePost(ctx, errors, formdata);
+                [ctx, errors] = yield paymentBreakdown.handlePost(ctx, errors, formdata, session, hostname, featureToggles);
                 expect(paymentBreakdown.nextStepUrl(req)).to.equal('/payment-status');
                 done();
             }).catch((err) => {
@@ -298,14 +261,15 @@ describe('PaymentBreakdown', () => {
             });
         });
         it('FT OFF - sets nextStepUrl to payment-status if paymentPending is unknown', (done) => {
+            featureToggles.fees_api = false;
+
             const req = {
                 session: {
                     journey: journey
                 }
             };
             let ctx = {
-                total: 1,
-                isFeesApiToggleEnabled: false
+                total: 1
             };
             let errors = [];
             const formdata = {
@@ -334,7 +298,7 @@ describe('PaymentBreakdown', () => {
             }));
 
             co(function* () {
-                [ctx, errors] = yield paymentBreakdown.handlePost(ctx, errors, formdata);
+                [ctx, errors] = yield paymentBreakdown.handlePost(ctx, errors, formdata, session, hostname, featureToggles);
                 expect(paymentBreakdown.nextStepUrl(req)).to.equal('/payment-status');
                 done();
             }).catch((err) => {
@@ -369,7 +333,6 @@ describe('PaymentBreakdown', () => {
                 overseascopiesfee: 10.5,
                 total: 2520.5
             };
-            ctxTestData.isFeesApiToggleEnabled = true;
 
             feesCalculator.returns(Promise.resolve({
                 status: 'success',
@@ -385,7 +348,7 @@ describe('PaymentBreakdown', () => {
             const paymentBreakdown = new PaymentBreakdown(steps, section, templatePath, i18next, schema);
 
             co(function* () {
-                const [ctx, errors] = yield paymentBreakdown.handlePost(ctxTestData, errorsTestData, formdata, session, hostname);
+                const [ctx, errors] = yield paymentBreakdown.handlePost(ctxTestData, errorsTestData, formdata, session, hostname, featureToggles);
                 expect(formdata).to.deep.equal(expectedFormdata);
                 expect(ctx).to.deep.equal(ctxTestData);
                 expect(errors).to.deep.equal(errorsTestData);
@@ -395,6 +358,8 @@ describe('PaymentBreakdown', () => {
             });
         });
         it('FT OFF - sets paymentPending to true if ctx.total > 0', (done) => {
+            featureToggles.fees_api = false;
+
             const formdata = {
                 creatingPayment: 'true',
                 fees: {
@@ -421,7 +386,6 @@ describe('PaymentBreakdown', () => {
                 overseascopiesfee: 1,
                 total: 216.50
             };
-            ctxTestData.isFeesApiToggleEnabled = false;
 
             feesCalculator.returns(Promise.resolve({
                 status: 'success',
@@ -437,7 +401,7 @@ describe('PaymentBreakdown', () => {
             const paymentBreakdown = new PaymentBreakdown(steps, section, templatePath, i18next, schema);
 
             co(function* () {
-                const [ctx, errors] = yield paymentBreakdown.handlePost(ctxTestData, errorsTestData, formdata, session, hostname);
+                const [ctx, errors] = yield paymentBreakdown.handlePost(ctxTestData, errorsTestData, formdata, session, hostname, featureToggles);
                 expect(formdata).to.deep.equal(expectedFormdata);
                 expect(ctx).to.deep.equal(ctxTestData);
                 expect(errors).to.deep.equal(errorsTestData);
@@ -492,7 +456,6 @@ describe('PaymentBreakdown', () => {
                 overseascopiesfee: 10.5,
                 total: 2520.5
             };
-            ctxTestData.isFeesApiToggleEnabled = true;
 
             feesCalculator.returns(Promise.resolve({
                 status: 'success',
@@ -509,7 +472,7 @@ describe('PaymentBreakdown', () => {
             expectedFormdata.creatingPayment = 'false';
 
             co(function* () {
-                const [ctx, errors] = yield paymentBreakdown.handlePost(ctxTestData, errorsTestData, formdata, session, hostname);
+                const [ctx, errors] = yield paymentBreakdown.handlePost(ctxTestData, errorsTestData, formdata, session, hostname, featureToggles);
                 expect(formdata).to.deep.equal(expectedFormdata);
                 expect(errors).to.deep.equal(errorsTestData);
                 expect(ctx).to.deep.equal({
@@ -537,6 +500,8 @@ describe('PaymentBreakdown', () => {
             });
         });
         it('FT OFF - sets paymentPending to true if ctx.total > 0 and createPayment is false', (done) => {
+            featureToggles.fees_api = false;
+
             const revert = PaymentBreakdown.__set__({
                 Payment: class {
                     post() {
@@ -581,7 +546,6 @@ describe('PaymentBreakdown', () => {
                 overseascopiesfee: 1,
                 total: 216.50
             };
-            ctxTestData.isFeesApiToggleEnabled = false;
 
             feesCalculator.returns(Promise.resolve({
                 status: 'success',
@@ -598,7 +562,7 @@ describe('PaymentBreakdown', () => {
             expectedFormdata.creatingPayment = 'false';
 
             co(function* () {
-                const [ctx, errors] = yield paymentBreakdown.handlePost(ctxTestData, errorsTestData, formdata, session, hostname);
+                const [ctx, errors] = yield paymentBreakdown.handlePost(ctxTestData, errorsTestData, formdata, session, hostname, featureToggles);
                 expect(formdata).to.deep.equal(expectedFormdata);
                 expect(errors).to.deep.equal(errorsTestData);
                 expect(ctx).to.deep.equal({
@@ -671,7 +635,6 @@ describe('PaymentBreakdown', () => {
                 overseascopiesfee: 10.5,
                 total: 2520.5
             };
-            ctxTestData.isFeesApiToggleEnabled = true;
 
             feesCalculator.returns(Promise.resolve({
                 status: 'success',
@@ -688,7 +651,7 @@ describe('PaymentBreakdown', () => {
             expectedFormdata.creatingPayment = 'false';
 
             co(function* () {
-                const [ctx, errors] = yield paymentBreakdown.handlePost(ctxTestData, errorsTestData, formdata, session, hostname);
+                const [ctx, errors] = yield paymentBreakdown.handlePost(ctxTestData, errorsTestData, formdata, session, hostname, featureToggles);
                 expect(formdata).to.deep.equal(expectedFormdata);
                 expect(errors).to.deep.equal(errorsTestData);
                 expect(ctx).to.deep.equal({
@@ -716,6 +679,8 @@ describe('PaymentBreakdown', () => {
             });
         });
         it('FT OFF - Returns errror message if ctx.total > 0 and authorise service returns error', (done) => {
+            featureToggles.fees_api = false;
+
             const revert = PaymentBreakdown.__set__({
                 Payment: class {
                     post() {
@@ -760,7 +725,6 @@ describe('PaymentBreakdown', () => {
                 overseascopiesfee: 1,
                 total: 216.50
             };
-            ctxTestData.isFeesApiToggleEnabled = false;
 
             feesCalculator.returns(Promise.resolve({
                 status: 'success',
@@ -777,7 +741,7 @@ describe('PaymentBreakdown', () => {
             expectedFormdata.creatingPayment = 'false';
 
             co(function* () {
-                const [ctx, errors] = yield paymentBreakdown.handlePost(ctxTestData, errorsTestData, formdata, session, hostname);
+                const [ctx, errors] = yield paymentBreakdown.handlePost(ctxTestData, errorsTestData, formdata, session, hostname, featureToggles);
                 expect(formdata).to.deep.equal(expectedFormdata);
                 expect(errors).to.deep.equal(errorsTestData);
                 expect(ctx).to.deep.equal({
@@ -832,7 +796,6 @@ describe('PaymentBreakdown', () => {
                     total: 216.50
                 }
             };
-            ctxTestData.isFeesApiToggleEnabled = true;
 
             feesCalculator.returns(Promise.resolve({
                 status: 'success',
@@ -847,7 +810,7 @@ describe('PaymentBreakdown', () => {
             const paymentBreakdown = new PaymentBreakdown(steps, section, templatePath, i18next, schema);
 
             co(function* () {
-                const [ctx, errors] = yield paymentBreakdown.handlePost(ctxTestData, errorsTestData, formdata, session, hostname);
+                const [ctx, errors] = yield paymentBreakdown.handlePost(ctxTestData, errorsTestData, formdata, session, hostname, featureToggles);
                 expect(ctx).to.deep.equal({
                     total: 216.50,
                     applicationFee: 215,
@@ -877,6 +840,8 @@ describe('PaymentBreakdown', () => {
             });
         });
         it('FT OFF - if sendToSubmitService returns DUPLICATE_SUBMISSION', (done) => {
+            featureToggles.fees_api = false;
+
             const stub = sinon
                 .stub(PaymentBreakdown.prototype, 'sendToSubmitService')
                 .returns([
@@ -903,7 +868,6 @@ describe('PaymentBreakdown', () => {
                     total: 216.50
                 }
             };
-            ctxTestData.isFeesApiToggleEnabled = false;
 
             feesCalculator.returns(Promise.resolve({
                 status: 'success',
@@ -918,7 +882,7 @@ describe('PaymentBreakdown', () => {
             const paymentBreakdown = new PaymentBreakdown(steps, section, templatePath, i18next, schema);
 
             co(function* () {
-                const [ctx, errors] = yield paymentBreakdown.handlePost(ctxTestData, errorsTestData, formdata, session, hostname);
+                const [ctx, errors] = yield paymentBreakdown.handlePost(ctxTestData, errorsTestData, formdata, session, hostname, featureToggles);
                 expect(ctx).to.deep.equal({
                     total: 216.50,
                     applicationFee: 215,
@@ -985,7 +949,6 @@ describe('PaymentBreakdown', () => {
                 overseascopiesfee: 10.5,
                 total: 2520.5
             };
-            ctxTestData.isFeesApiToggleEnabled = true;
 
             feesCalculator.returns(Promise.resolve({
                 status: 'success',
@@ -1001,7 +964,7 @@ describe('PaymentBreakdown', () => {
             expectedFormdata.payment.paymentId = 'RC-12345';
 
             co(function* () {
-                const [ctx, errors] = yield paymentBreakdown.handlePost(ctxTestData, errorsTestData, formdata, session, hostname);
+                const [ctx, errors] = yield paymentBreakdown.handlePost(ctxTestData, errorsTestData, formdata, session, hostname, featureToggles);
                 expect(formdata).to.deep.equal(expectedFormdata);
                 expect(ctx).to.deep.equal(ctxTestData);
                 expect(errors).to.deep.equal(errorsTestData);
@@ -1012,6 +975,8 @@ describe('PaymentBreakdown', () => {
             });
         });
         it('FT OFF - sets paymentPending to true if ctx.total > 0 and payment exists with status of Success', (done) => {
+            featureToggles.fees_api = false;
+
             const revert = PaymentBreakdown.__set__({
                 Payment: class {
                     get() {
@@ -1048,7 +1013,6 @@ describe('PaymentBreakdown', () => {
                 overseascopiesfee: 1,
                 total: 216.50
             };
-            ctxTestData.isFeesApiToggleEnabled = false;
 
             feesCalculator.returns(Promise.resolve({
                 status: 'success',
@@ -1064,7 +1028,7 @@ describe('PaymentBreakdown', () => {
             expectedFormdata.payment.paymentId = 'RC-12345';
 
             co(function* () {
-                const [ctx, errors] = yield paymentBreakdown.handlePost(ctxTestData, errorsTestData, formdata, session, hostname);
+                const [ctx, errors] = yield paymentBreakdown.handlePost(ctxTestData, errorsTestData, formdata, session, hostname, featureToggles);
                 expect(formdata).to.deep.equal(expectedFormdata);
                 expect(ctx).to.deep.equal(ctxTestData);
                 expect(errors).to.deep.equal(errorsTestData);
@@ -1112,7 +1076,6 @@ describe('PaymentBreakdown', () => {
                 overseascopiesfee: 10.5,
                 total: 2520.5
             };
-            ctxTestData.isFeesApiToggleEnabled = true;
 
             const paymentBreakdown = new PaymentBreakdown(steps, section, templatePath, i18next, schema);
             expectedFormdata.payment.paymentId = 'RC-12345';
@@ -1128,7 +1091,7 @@ describe('PaymentBreakdown', () => {
             }));
 
             co(function* () {
-                const [ctx, errors] = yield paymentBreakdown.handlePost(ctxTestData, errorsTestData, formdata, session, hostname);
+                const [ctx, errors] = yield paymentBreakdown.handlePost(ctxTestData, errorsTestData, formdata, session, hostname, featureToggles);
                 expect(formdata).to.deep.equal(expectedFormdata);
                 expect(ctx).to.deep.equal(ctxTestData);
                 expect(errors).to.deep.equal(errorsTestData);
@@ -1139,6 +1102,8 @@ describe('PaymentBreakdown', () => {
             });
         });
         it('FT OFF - sets paymentPending to true if ctx.total > 0 and payment exists with status of Initiated', (done) => {
+            featureToggles.fees_api = false;
+
             const revert = PaymentBreakdown.__set__({
                 Payment: class {
                     get() {
@@ -1175,7 +1140,6 @@ describe('PaymentBreakdown', () => {
                 overseascopiesfee: 1,
                 total: 216.50
             };
-            ctxTestData.isFeesApiToggleEnabled = false;
 
             const paymentBreakdown = new PaymentBreakdown(steps, section, templatePath, i18next, schema);
             expectedFormdata.payment.paymentId = 'RC-12345';
@@ -1191,7 +1155,7 @@ describe('PaymentBreakdown', () => {
             }));
 
             co(function* () {
-                const [ctx, errors] = yield paymentBreakdown.handlePost(ctxTestData, errorsTestData, formdata, session, hostname);
+                const [ctx, errors] = yield paymentBreakdown.handlePost(ctxTestData, errorsTestData, formdata, session, hostname, featureToggles);
                 expect(formdata).to.deep.equal(expectedFormdata);
                 expect(ctx).to.deep.equal(ctxTestData);
                 expect(errors).to.deep.equal(errorsTestData);
@@ -1218,8 +1182,7 @@ describe('PaymentBreakdown', () => {
                 sessionID: 'dummySessionID',
                 authToken: 'dummyAuthToken',
                 paymentError: 'dummyError',
-                deceasedLastName: 'aName',
-                isFeesApiToggleEnabled: true
+                deceasedLastName: 'aName'
             };
             const formdata = {
                 fees: 'fees object'

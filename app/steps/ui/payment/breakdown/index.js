@@ -46,15 +46,18 @@ class PaymentBreakdown extends Step {
         const ctx = super.getContextData(req);
         const formdata = req.session.form;
 
-        ctx.isFeesApiToggleEnabled = FeatureToggle.isEnabled(req.session.featureToggles, 'fees_api');
         ctx.authToken = req.authToken;
         ctx.userId = req.userId;
         ctx.deceasedLastName = get(formdata.deceased, 'lastName', '');
         ctx.paymentError = get(req, 'query.status');
+
         return ctx;
     }
 
-    * handlePost(ctx, errors, formdata, session, hostname) {
+    * handlePost(ctx, errors, formdata, session, hostname, featureToggles) {
+        super.handlePost(ctx, errors, formdata, session, hostname, featureToggles);
+        ctx.isFeesApiToggleEnabled = FeatureToggle.isEnabled(featureToggles, 'fees_api');
+
         const feesCalculator = new FeesCalculator(config.services.feesRegister.url, ctx.sessionID);
         const confirmFees = yield feesCalculator.calc(formdata, ctx.authToken, ctx.isFeesApiToggleEnabled);
         this.checkFeesStatus(confirmFees);
@@ -175,7 +178,6 @@ class PaymentBreakdown extends Step {
         delete ctx.authToken;
         delete ctx.paymentError;
         delete ctx.deceasedLastName;
-        delete ctx.isFeesApiToggleEnabled;
         delete formdata.fees;
         return [ctx, formdata];
     }
