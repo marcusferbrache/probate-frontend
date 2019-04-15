@@ -10,10 +10,12 @@ const Service = require('app/services/Service');
 let formdata;
 let feesLookupStub;
 let fetchJsonStub;
+let feesApiFeatureToggle;
 
 describe('FeesCalculator', () => {
     describe('calc()', () => {
         beforeEach(() => {
+            feesApiFeatureToggle = true;
             fetchJsonStub = sinon.stub(Service.prototype, 'fetchJson');
             feesLookupStub = sinon.stub(FeesLookup.prototype, 'get');
         });
@@ -24,7 +26,6 @@ describe('FeesCalculator', () => {
         });
 
         it('FT ON - should calculate probate fees for iht and both sets of copies', (done) => {
-            const feesApiFeatureToggle = true;
             const feesCalculator = new FeesCalculator('http://localhost');
             formdata = {
                 iht: {
@@ -99,7 +100,6 @@ describe('FeesCalculator', () => {
         });
 
         it('FT ON - should calculate probate fees for iht < £50000 and both sets of copies', (done) => {
-            const feesApiFeatureToggle = true;
             const feesCalculator = new FeesCalculator('http://localhost');
             formdata = {
                 iht: {
@@ -172,7 +172,6 @@ describe('FeesCalculator', () => {
         });
 
         it('FT ON - should handle errors when fees api service is unavailable', (done) => {
-            const feesApiFeatureToggle = true;
             const feesCalculator = new FeesCalculator('http://localhost');
             formdata = {
                 iht: {
@@ -246,7 +245,6 @@ describe('FeesCalculator', () => {
         });
 
         it('FT ON - should handle errors when one of the fees api call is unavailable', (done) => {
-            const feesApiFeatureToggle = true;
             const feesCalculator = new FeesCalculator('http://localhost');
             formdata = {
                 iht: {
@@ -319,7 +317,6 @@ describe('FeesCalculator', () => {
         });
 
         it('FT ON - should handle errors when one of the fees api call is not found', (done) => {
-            const feesApiFeatureToggle = true;
             const feesCalculator = new FeesCalculator('http://localhost');
             formdata = {
                 iht: {
@@ -393,7 +390,6 @@ describe('FeesCalculator', () => {
         });
 
         it('FT ON - should handle errors when the keyword for the first copies is wrong', (done) => {
-            const feesApiFeatureToggle = true;
             const feesCalculator = new FeesCalculator('http://localhost');
             formdata = {
                 iht: {
