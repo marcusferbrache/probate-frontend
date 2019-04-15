@@ -3,7 +3,6 @@
 const TestWrapper = require('test/util/TestWrapper');
 const ExecutorAddress = require('app/steps/ui/executors/address/index');
 const commonContent = require('app/resources/en/translation/common');
-const config = require('app/config');
 
 describe('executors-contact-details', () => {
     let testWrapper, sessionData;
@@ -36,13 +35,12 @@ describe('executors-contact-details', () => {
             testWrapper.agent.post('/prepare-session/form')
                 .send(sessionData)
                 .end(() => {
-                    const playbackData = {};
-                    playbackData.helpTitle = commonContent.helpTitle;
-                    playbackData.helpText = commonContent.helpText;
-                    playbackData.contactTelLabel = commonContent.contactTelLabel.replace('{helpLineNumber}', config.helpline.number);
-                    playbackData.contactOpeningTimes = commonContent.contactOpeningTimes.replace('{openingTimes}', config.helpline.hours);
-                    playbackData.helpEmailLabel = commonContent.helpEmailLabel;
-                    playbackData.contactEmailAddress = commonContent.contactEmailAddress;
+                    const playbackData = {
+                        helpTitle: commonContent.helpTitle,
+                        helpText: commonContent.helpText,
+                        contactTelLabel: commonContent.contactTelLabel,
+                        helpEmailLabel: commonContent.helpEmailLabel
+                    };
 
                     testWrapper.testDataPlayback(done, playbackData);
                 });

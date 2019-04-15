@@ -26,10 +26,8 @@ describe('pin-page', () => {
                     const playbackData = {
                         helpTitle: commonContent.helpTitle,
                         helpText: commonContent.helpText,
-                        contactTelLabel: commonContent.contactTelLabel.replace('{helpLineNumber}', config.helpline.number),
-                        contactOpeningTimes: commonContent.contactOpeningTimes.replace('{openingTimes}', config.helpline.hours),
-                        helpEmailLabel: commonContent.helpEmailLabel,
-                        contactEmailAddress: commonContent.contactEmailAddress
+                        contactTelLabel: commonContent.contactTelLabel,
+                        helpEmailLabel: commonContent.helpEmailLabel
                     };
                     testWrapper.testDataPlayback(done, playbackData);
                 });

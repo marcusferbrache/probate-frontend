@@ -1,8 +1,7 @@
 'use strict';
 
 const TestWrapper = require('test/util/TestWrapper');
-const common = require('app/resources/en/translation/common');
-const config = require('app/config');
+const commonContent = require('app/resources/en/translation/common');
 
 class TestHelpBlockContent {
     static runTest(page, callback, cookies = []) {
@@ -18,13 +17,12 @@ class TestHelpBlockContent {
                     .get(testWrapper.pageUrl)
                     .then(() => {
                         const playbackData = {
-                            helpTitle: common.helpTitle,
-                            helpText: common.helpText,
-                            contactTelLabel: common.contactTelLabel.replace('{helpLineNumber}', config.helpline.number),
-                            contactOpeningTimes: common.contactOpeningTimes.replace('{openingTimes}', config.helpline.hours),
-                            helpEmailLabel: common.helpEmailLabel,
-                            contactEmailAddress: common.contactEmailAddress
+                            helpTitle: commonContent.helpTitle,
+                            helpText: commonContent.helpText,
+                            contactTelLabel: commonContent.contactTelLabel,
+                            helpEmailLabel: commonContent.helpEmailLabel
                         };
+
                         testWrapper.testDataPlayback(done, playbackData, cookies);
                     })
                     .catch(err => {
