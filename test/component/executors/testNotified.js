@@ -4,6 +4,7 @@ const TestWrapper = require('test/util/TestWrapper');
 const TaskList = require('app/steps/ui/tasklist/index');
 const ExecutorRoles = require('app/steps/ui/executors/roles/index');
 const commonContent = require('app/resources/en/translation/common');
+const config = require('app/config');
 
 describe('executor-notified', () => {
     let testWrapper, sessionData;
@@ -34,12 +35,12 @@ describe('executor-notified', () => {
             testWrapper.agent.post('/prepare-session/form')
                 .send(sessionData)
                 .end(() => {
-                    const playbackData = {
-                        helpTitle: commonContent.helpTitle,
-                        helpText: commonContent.helpText,
-                        contactTelLabel: commonContent.contactTelLabel,
-                        helpEmailLabel: commonContent.helpEmailLabel
-                    };
+                    const playbackData = {};
+                    playbackData.helpTitle = commonContent.helpTitle;
+                    playbackData.helpHeading1 = commonContent.helpHeading1;
+                    playbackData.helpHeading2 = commonContent.helpHeading2;
+                    playbackData.contactOpeningTimes = commonContent.contactOpeningTimes.replace('{openingTimes}', config.helpline.hours);
+                    playbackData.helpEmailLabel = commonContent.helpEmailLabel.replace(/{contactEmailAddress}/g, config.links.contactEmailAddress);
 
                     testWrapper.testDataPlayback(done, playbackData);
                 });
