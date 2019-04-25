@@ -590,7 +590,7 @@ describe('PaymentBreakdown', () => {
             });
         });
 
-        it('FT ON - Returns errror message if ctx.total > 0 and authorise service returns error', (done) => {
+        it('FT ON - Returns error message if ctx.total > 0 and authorise service returns error', (done) => {
             const revert = PaymentBreakdown.__set__({
                 Payment: class {
                     post() {
@@ -678,7 +678,7 @@ describe('PaymentBreakdown', () => {
                 done(err);
             });
         });
-        it('FT OFF - Returns errror message if ctx.total > 0 and authorise service returns error', (done) => {
+        it('FT OFF - Returns error message if ctx.total > 0 and authorise service returns error', (done) => {
             featureToggles.fees_api = false;
 
             const revert = PaymentBreakdown.__set__({
