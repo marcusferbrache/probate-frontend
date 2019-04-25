@@ -2,6 +2,7 @@
 
 const TestWrapper = require('test/util/TestWrapper');
 const commonContent = require('app/resources/en/translation/common');
+const config = require('app/config');
 
 class TestHelpBlockContent {
     static runTest(page, callback, cookies = []) {
@@ -18,9 +19,10 @@ class TestHelpBlockContent {
                     .then(() => {
                         const playbackData = {
                             helpTitle: commonContent.helpTitle,
-                            helpText: commonContent.helpText,
-                            contactTelLabel: commonContent.contactTelLabel,
-                            helpEmailLabel: commonContent.helpEmailLabel
+                            helpHeading1: commonContent.helpHeading1,
+                            helpHeading2: commonContent.helpHeading2,
+                            contactOpeningTimes: commonContent.contactOpeningTimes.replace('{openingTimes}', config.helpline.hours),
+                            helpEmailLabel: commonContent.helpEmailLabel.replace(/{contactEmailAddress}/g, config.links.contactEmailAddress)
                         };
 
                         testWrapper.testDataPlayback(done, playbackData, cookies);

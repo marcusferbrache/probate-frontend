@@ -32,9 +32,10 @@ describe('document-upload', () => {
 
             const playbackData = {
                 helpTitle: commonContent.helpTitle,
-                helpText: commonContent.helpText,
-                contactTelLabel: commonContent.contactTelLabel,
-                helpEmailLabel: commonContent.helpEmailLabel
+                helpHeading1: commonContent.helpHeading1,
+                helpHeading2: commonContent.helpHeading2,
+                contactOpeningTimes: commonContent.contactOpeningTimes.replace('{openingTimes}', config.helpline.hours),
+                helpEmailLabel: commonContent.helpEmailLabel.replace(/{contactEmailAddress}/g, config.links.contactEmailAddress)
             };
 
             testWrapper.testDataPlayback(done, playbackData);

@@ -9,6 +9,7 @@ const TaskList = require('app/steps/ui/tasklist/index');
 const ExecutorsApplying = require('app/steps/ui/executors/applying/index');
 const contentData = {executorFullName: 'many clouds'};
 const commonContent = require('app/resources/en/translation/common');
+const config = require('app/config');
 
 describe('executors-when-died', () => {
     let testWrapper, sessionData;
@@ -67,12 +68,12 @@ describe('executors-when-died', () => {
             testWrapper.agent.post('/prepare-session/form')
                 .send(sessionData)
                 .end(() => {
-                    const playbackData = {
-                        helpTitle: commonContent.helpTitle,
-                        helpText: commonContent.helpText,
-                        contactTelLabel: commonContent.contactTelLabel,
-                        helpEmailLabel: commonContent.helpEmailLabel
-                    };
+                    const playbackData = {};
+                    playbackData.helpTitle = commonContent.helpTitle;
+                    playbackData.helpHeading1 = commonContent.helpHeading1;
+                    playbackData.helpHeading2 = commonContent.helpHeading2;
+                    playbackData.contactOpeningTimes = commonContent.contactOpeningTimes.replace('{openingTimes}', config.helpline.hours);
+                    playbackData.helpEmailLabel = commonContent.helpEmailLabel.replace(/{contactEmailAddress}/g, config.links.contactEmailAddress);
 
                     testWrapper.testDataPlayback(done, playbackData);
                 });
