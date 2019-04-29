@@ -14,7 +14,7 @@ probate_frontend_use_auth = "false"
 
 reform_envirionment_for_test = "sandbox"
 
-payment_create_url = "http://payment-api-saat.service.core-compute-saat.internal/card-payments"
+payment_create_url = "http://payment-api-saat.service.core-compute-saat.internal"
 
 idam_service_api = "http://betadevbccidams2slb.reform.hmcts.net"
 
@@ -39,7 +39,7 @@ probate_submit_service_url = "http://probate-submit-service-sandbox.service.core
 
 probate_persistence_service_url = " http://probate-persistence-service-sandbox.service.core-compute-sandbox.internal/formdata"
 
-probate_fees_registry_service_url = "http://fees-register-api-sandbox.service.core-compute-aat.internal/fees-register"
+probate_fees_registry_service_url = "http://fees-register-api-sandbox.service.core-compute-sandbox.internal/fees-register"
 
 feature_toggles_api_url = "http://rpe-feature-toggle-api-aat.service.core-compute-aat.internal"
 asp_name = "probate-sandbox"
