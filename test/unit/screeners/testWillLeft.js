@@ -41,28 +41,6 @@ describe('WillLeft', () => {
         });
     });
 
-    describe('handlePost()', () => {
-        it('should remove session.form and set session.willLeft', (done) => {
-            const ctxToTest = {
-                left: content.optionYes
-            };
-            const errorsToTest = {};
-            const formdata = {};
-            const session = {
-                form: {}
-            };
-            const [ctx, errors] = WillLeft.handlePost(ctxToTest, errorsToTest, formdata, session);
-            expect(session).to.deep.equal({
-                willLeft: content.optionYes
-            });
-            expect(ctx).to.deep.equal({
-                left: content.optionYes
-            });
-            expect(errors).to.deep.equal({});
-            done();
-        });
-    });
-
     describe('nextStepUrl()', () => {
         it('should return the correct url when Yes is given', (done) => {
             const req = {
@@ -132,7 +110,7 @@ describe('WillLeft', () => {
         });
     });
 
-    describe('action', () => {
+    describe('action()', () => {
         it('test isIntestacyQuestionsToggleEnabled is removed from the context', () => {
             const ctx = {
                 isIntestacyQuestionsToggleEnabled: false

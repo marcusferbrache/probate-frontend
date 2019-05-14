@@ -74,6 +74,7 @@ describe('summary-deceased-section', () => {
                         willCodicils: willContent.codicils.question
                     };
                     Object.assign(playbackData, deceasedData.deceased, deceasedData.will);
+                    playbackData.address = deceasedData.deceased.address.formattedAddress;
                     testWrapper.testDataPlayback(done, playbackData);
                 });
         });

@@ -18,11 +18,11 @@
         visible: fields.iht.method.value == content.IhtMethod.paperOption
     },{
         question: content.IhtValue.grossValue,
-        answer: fields.iht.grossValue.value,
+        answer: fields.iht['grossValueField' + selectedOption].value,
         visible: fields.iht.method.value == content.IhtMethod.paperOption
     },{
         question: content.IhtValue.netValue,
-        answer: fields.iht.netValue.value,
+        answer: fields.iht['netValueField' + selectedOption].value,
         visible: fields.iht.method.value == content.IhtMethod.paperOption
     }],
     url = content.IhtPaper.url,
@@ -42,11 +42,11 @@
 {{checkanswer(
     items = [{
         question: content.IhtValue.grossValue,
-        answer: fields.iht.grossValue.value,
+        answer: fields.iht.grossValueField.value,
         visible: fields.iht.method.value == content.IhtMethod.onlineOption
     },{
         question: content.IhtValue.netValue,
-        answer: fields.iht.netValue.value,
+        answer: fields.iht.netValueField.value,
         visible: fields.iht.method.value == content.IhtMethod.onlineOption
     }],
     url = content.IhtValue.url,

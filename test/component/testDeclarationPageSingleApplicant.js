@@ -22,13 +22,13 @@ describe('declaration, single applicant', () => {
             applicantWillName: applicantData.alias,
             applicantCurrentName: `${applicantData.firstName} ${applicantData.lastName}`,
             aliasReason: ' i changed my name by deed poll',
-            applicantAddress: applicantData.address,
+            applicantAddress: applicantData.address.formattedAddress,
             deceasedName: `${deceasedData.firstName} ${deceasedData.lastName}`,
-            deceasedAddress: deceasedData.address,
+            deceasedAddress: deceasedData.address.formattedAddress,
             deceasedDob: deceasedData.dob_formattedDate,
             deceasedDod: deceasedData.dod_formattedDate,
-            ihtGrossValue: sessionData.iht.grossValue,
-            ihtNetValue: sessionData.iht.netValue
+            ihtGrossValue: sessionData.iht.grossValueField,
+            ihtNetValue: sessionData.iht.netValueField
         };
     });
 
