@@ -116,8 +116,6 @@ describe('AddressLookup', () => {
             const referrerDataToTest = {
                 addresses: 'addresses',
                 addressFound: 'addressFound',
-                postcodeAddress: 'postcodeAddress',
-                freeTextAddress: 'freeTextAddress',
                 errors: 'errors'
             };
             const referrerData = addressLookup.pruneReferrerData(referrerDataToTest);

@@ -42,11 +42,9 @@ class ExecutorRoles extends CollectionStep {
         delete data.currentName;
         delete data.currentNameReason;
         delete data.email;
-        delete data.freeTextAddress;
         delete data.hasOtherName;
         delete data.mobile;
         delete data.postcode;
-        delete data.postcodeAddress;
         return data;
     }
 

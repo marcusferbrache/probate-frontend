@@ -123,7 +123,7 @@ describe('IhtValue', () => {
         });
     });
 
-    describe('action', () => {
+    describe('action()', () => {
         it('test it cleans up context', () => {
             const ctx = {
                 lessThanOrEqualTo250k: 200000

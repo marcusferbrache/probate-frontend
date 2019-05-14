@@ -19,11 +19,6 @@ class WillLeft extends EligibilityValidationStep {
         return super.getContextData(req, res, pageUrl, fieldKey, featureToggles);
     }
 
-    handlePost(ctx, errors, formdata, session) {
-        session.willLeft = ctx.left;
-        return super.handlePost(ctx, errors, formdata, session);
-    }
-
     nextStepUrl(req, ctx) {
         return this.next(req, ctx).constructor.getUrl('noWill');
     }

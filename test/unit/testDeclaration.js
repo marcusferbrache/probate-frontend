@@ -24,7 +24,9 @@ describe('Declaration tests', () => {
         beforeEach(() => {
             formdata = {
                 applicant: {
-                    address: 'Applicant address',
+                    address: {
+                        formattedAddress: 'Applicant address',
+                    },
                     isApplicant: true,
                     firstName: 'Applicant',
                     lastName: 'Current Name'
@@ -33,21 +35,27 @@ describe('Declaration tests', () => {
                     list: [{
                         firstName: 'Applicant',
                         lastName: 'Current Name',
-                        address: 'Applicant address',
+                        address: {
+                            formattedAddress: 'Applicant address',
+                        },
                         isApplicant: true,
                         isApplying: true,
                         alias: 'Applicant Will Name',
                         aliasReason: 'Change by deed poll'
                     }, {
                         fullName: 'Exec 1 Will Name',
-                        address: 'Exec 1 address',
+                        address: {
+                            formattedAddress: 'Exec 1 address',
+                        },
                         isApplying: true,
                         currentName: 'Exec 1 Current Name',
                         currentNameReason: 'Marriage',
                         hasOtherName: true
                     }, {
                         fullName: 'Exec 2 Will Name',
-                        address: 'Exec 2 address',
+                        address: {
+                            formattedAddress: 'Exec 2 address',
+                        },
                         isApplying: true,
                         currentName: 'Exec 2 Current Name',
                         currentNameReason: 'Divorce',
