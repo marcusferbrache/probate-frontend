@@ -42,7 +42,6 @@ const dataMap = {
     caseId: 'ccdCase.id',
     caseState: 'ccdCase.state',
     registry: 'registry',
-    submissionReference: 'submissionReference',
 };
 
 const submitData = (ctx, data) => {

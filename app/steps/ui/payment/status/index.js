@@ -37,7 +37,6 @@ class PaymentStatus extends Step {
         super.action(ctx, formdata);
         delete ctx.authToken;
         delete ctx.userId;
-        delete ctx.submissionReference;
         delete ctx.regId;
         delete ctx.sessionId;
         delete ctx.errors;
