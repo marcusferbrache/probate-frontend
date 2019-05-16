@@ -37,7 +37,7 @@ describe('Tasklist', () => {
         });
 
         afterEach(() => {
-            delete req.session.willLeft;
+            delete req.session.caseType;
         });
 
         it('Updates the context: neither task is started', () => {
@@ -84,7 +84,7 @@ describe('Tasklist', () => {
                 will: completedForm.will,
                 iht: completedForm.iht
             };
-            req.session.willLeft = 'No';
+            req.session.caseType = 'intestacy';
             req.session.form = formdata;
             ctx = taskList.getContextData(req);
 

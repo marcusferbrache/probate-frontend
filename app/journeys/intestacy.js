@@ -103,7 +103,8 @@ const stepList = {
         otherwise: 'StopPage'
     },
     AdoptionPlace: {
-        inEnglandOrWales: 'SpouseNotApplyingReason',
+        inEnglandOrWalesDeceasedMarried: 'SpouseNotApplyingReason',
+        inEnglandOrWalesDeceasedNotMarried: 'AnyOtherChildren',
         otherwise: 'StopPage'
     },
     AnyChildren: {

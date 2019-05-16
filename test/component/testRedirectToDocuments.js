@@ -1,7 +1,7 @@
 'use strict';
 
 const TestWrapper = require('test/util/TestWrapper');
-const DocumentsPage = require('app/steps/ui/documents/index');
+const DocumentsPage = require('app/steps/ui/documents');
 
 describe('redirect to documents', () => {
     let testWrapper, sessionData;

@@ -41,6 +41,29 @@ describe('WillLeft', () => {
         });
     });
 
+    describe('handlePost()', () => {
+        it('should remove session.form and set session.caseType', (done) => {
+            const ctxToTest = {
+                left: content.optionYes
+            };
+            const errorsToTest = {};
+            const formdata = {};
+            const session = {
+                form: {}
+            };
+            const [ctx, errors] = WillLeft.handlePost(ctxToTest, errorsToTest, formdata, session);
+            expect(session).to.deep.equal({
+                caseType: 'gop'
+            });
+            expect(ctx).to.deep.equal({
+                caseType: 'gop',
+                left: content.optionYes
+            });
+            expect(errors).to.deep.equal({});
+            done();
+        });
+    });
+
     describe('nextStepUrl()', () => {
         it('should return the correct url when Yes is given', (done) => {
             const req = {

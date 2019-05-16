@@ -8,7 +8,7 @@ const sinon = require('sinon');
 const ExecutorsWrapper = require('app/wrappers/Executors');
 const content = require('app/resources/en/translation/declaration');
 const rewire = require('rewire');
-const Declaration = rewire('app/steps/ui/declaration/index');
+const Declaration = rewire('app/steps/ui/declaration');
 
 describe('Declaration tests', () => {
     const steps = initSteps([`${__dirname}/../../app/steps/action/`, `${__dirname}/../../app/steps/ui`]).Declaration;
