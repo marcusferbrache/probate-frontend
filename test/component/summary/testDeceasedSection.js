@@ -78,6 +78,5 @@ describe('summary-deceased-section', () => {
                     testWrapper.testDataPlayback(done, playbackData);
                 });
         });
-
     });
 });

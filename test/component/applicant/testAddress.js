@@ -1,7 +1,7 @@
 'use strict';
 
 const TestWrapper = require('test/util/TestWrapper');
-const ExecutorsNumber = require('app/steps/ui/executors/number/index');
+const ExecutorsNumber = require('app/steps/ui/executors/number');
 const testAddressData = require('test/data/find-address');
 const formatAddress = address => address.replace(/\n/g, ', ');
 const testHelpBlockContent = require('test/component/common/testHelpBlockContent.js');

@@ -1,7 +1,8 @@
 'use strict';
 
 const initSteps = require('app/core/initSteps');
-const {expect, assert} = require('chai');
+const expect = require('chai').expect;
+const contentAssetsOutside = require('app/resources/en/translation/iht/assetsoutside');
 const steps = initSteps([`${__dirname}/../../app/steps/action/`, `${__dirname}/../../app/steps/ui`]);
 const IhtValue = steps.IhtValue;
 
@@ -126,10 +127,16 @@ describe('IhtValue', () => {
     describe('action()', () => {
         it('test it cleans up context', () => {
             const ctx = {
-                lessThanOrEqualTo250k: 200000
+                netValue: 400000,
+                lessThanOrEqualTo250k: false,
+                assetsOutside: contentAssetsOutside.optionYes,
+                netValueAssetsOutsideField: '600000',
+                netValueAssetsOutside: 600000
             };
             IhtValue.action(ctx);
-            assert.isUndefined(ctx.lessThanOrEqualTo250k);
+            expect(ctx).to.deep.equal({
+                netValue: 400000
+            });
         });
     });
 });

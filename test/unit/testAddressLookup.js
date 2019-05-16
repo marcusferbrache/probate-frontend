@@ -3,7 +3,7 @@
 const {expect} = require('chai');
 const co = require('co');
 const rewire = require('rewire');
-const AddressLookup = rewire('app/steps/action/addressLookup/index');
+const AddressLookup = rewire('app/steps/action/addressLookup');
 
 describe('AddressLookup', () => {
     let steps;

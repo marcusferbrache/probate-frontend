@@ -1,9 +1,9 @@
 'use strict';
 
 const TestWrapper = require('test/util/TestWrapper');
-const Summary = require('app/steps/ui/summary/index');
-const IhtMethod = require('app/steps/ui/iht/method/index');
-const DocumentUpload = require('app/steps/ui/documentupload/index');
+const Summary = require('app/steps/ui/summary');
+const IhtMethod = require('app/steps/ui/iht/method');
+const DocumentUpload = require('app/steps/ui/documentupload');
 const testHelpBlockContent = require('test/component/common/testHelpBlockContent.js');
 const config = require('app/config');
 const nock = require('nock');

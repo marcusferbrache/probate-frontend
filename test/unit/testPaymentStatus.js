@@ -4,7 +4,7 @@ const initSteps = require('app/core/initSteps');
 const {expect} = require('chai');
 const co = require('co');
 const rewire = require('rewire');
-const PaymentStatus = rewire('app/steps/ui/payment/status/index');
+const PaymentStatus = rewire('app/steps/ui/payment/status');
 const nock = require('nock');
 const config = require('app/config');
 

@@ -3,11 +3,11 @@
 'use strict';
 
 const TestWrapper = require('test/util/TestWrapper');
-const ExecutorsInvite = require('app/steps/ui/executors/invite/index');
-const ExecutorsUpdateInvite = require('app/steps/ui/executors/updateinvite/index');
-const ExecutorsAdditionalInvite = require('app/steps/ui/executors/additionalinvite/index');
-const ExecutorsChangeMade = require('app/steps/ui/executors/changemade/index');
-const Tasklist = require('app/steps/ui/tasklist/index');
+const ExecutorsInvite = require('app/steps/ui/executors/invite');
+const ExecutorsUpdateInvite = require('app/steps/ui/executors/updateinvite');
+const ExecutorsAdditionalInvite = require('app/steps/ui/executors/additionalinvite');
+const ExecutorsChangeMade = require('app/steps/ui/executors/changemade');
+const Tasklist = require('app/steps/ui/tasklist');
 const testHelpBlockContent = require('test/component/common/testHelpBlockContent.js');
 const {assert} = require('chai');
 
