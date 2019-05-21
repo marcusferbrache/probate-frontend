@@ -68,9 +68,9 @@ const config = {
         },
         payment: {
             url: process.env.PAYMENT_API_URL || 'http://localhost:8383',
-            authorization: process.env.PAYMENT_AUTHORIZATION || 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI3bTRsNWlrZmFsZGZwbzQyaGR0ZjZiMTBmNCIsInN1YiI6IjM3IiwiaWF0IjoxNTQ5OTA1MzE2LCJleHAiOjE1NDk5MzQxMTYsImRhdGEiOiJjYXNld29ya2VyLXByb2JhdGUsY2l0aXplbixjYXNld29ya2VyLGNhc2V3b3JrZXItcHJvYmF0ZS1sb2ExLGNpdGl6ZW4tbG9hMSxjYXNld29ya2VyLWxvYTEiLCJ0eXBlIjoiQUNDRVNTIiwiaWQiOiIzNyIsImZvcmVuYW1lIjoiVXNlciIsInN1cm5hbWUiOiJUZXN0IiwiZGVmYXVsdC1zZXJ2aWNlIjoiQ0NEIiwibG9hIjoxLCJkZWZhdWx0LXVybCI6Imh0dHBzOi8vbG9jYWxob3N0OjkwMDAvcG9jL2NjZCIsImdyb3VwIjoiY2FzZXdvcmtlciJ9.PEIyDFArolm9Am9YUVRO74zAbUSbwhlxvq-O_2gKqt8',
-            serviceAuthorization: process.env.PAYMENT_SERVICE_AUTHORIZATION || 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9iYXRlX2Zyb250ZW5kIiwiZXhwIjoxNTQ5OTE5NzE2fQ.GJ9wLe_4it4TysL2M4ABGyvDGIc97cnryJJPd4wz7Ic5qM-k6ENlVmcLXbUqwL2LV7XuyW5MJofWJIgUPCA9lQ',
-            userId: process.env.PAYMENT_USER_ID || 37,
+            authorization: process.env.PAYMENT_AUTHORIZATION || 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4aDNlbWc4dmhqazVhMjFzYWE4Y2MzM3YzZyIsInN1YiI6IjQyIiwiaWF0IjoxNTU3OTk5MTIxLCJleHAiOjE1NTgwMjc5MjEsImRhdGEiOiJjYXNld29ya2VyLXByb2JhdGUsY2l0aXplbixjYXNld29ya2VyLGNhc2V3b3JrZXItcHJvYmF0ZS1sb2ExLGNpdGl6ZW4tbG9hMSxjYXNld29ya2VyLWxvYTEiLCJ0eXBlIjoiQUNDRVNTIiwiaWQiOiI0MiIsImZvcmVuYW1lIjoiVXNlciIsInN1cm5hbWUiOiJUZXN0IiwiZGVmYXVsdC1zZXJ2aWNlIjoiQ0NEIiwibG9hIjoxLCJkZWZhdWx0LXVybCI6Imh0dHBzOi8vbG9jYWxob3N0OjkwMDAvcG9jL2NjZCIsImdyb3VwIjoiY2FzZXdvcmtlciJ9.5sT0KGtWsPC-Ol6RKV6gHFJl5b-OsL7HGKqdScFdOdQ',
+            serviceAuthorization: process.env.PAYMENT_SERVICE_AUTHORIZATION || 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9iYXRlX2Zyb250ZW5kIiwiZXhwIjoxNTU4MDEzNTIyfQ.YEiOlFZleoA8u9fZ4iEqcrVKvOTaCRPfzM6W_DptlV63V-euNNGpJlMlz-9JWRoTQ0ZYIF9RWskTe_PlAZHJvg',
+            userId: process.env.PAYMENT_USER_ID || 42,
             paths: {
                 payments: '/payments',
                 createPayment: '/card-payments',
@@ -183,7 +183,7 @@ const config = {
         gop: [],
         intestacy: []
     },
-    nonIdamPages: ['stop-page/*', 'error', 'sign-in', 'pin-resend', 'pin-sent', 'co-applicant-*', 'pin', 'inviteIdList', 'start-eligibility', 'death-certificate', 'deceased-domicile', 'iht-completed', 'will-left', 'will-original', 'applicant-executor', 'mental-capacity', 'died-after-october-2014', 'related-to-deceased', 'other-applicants', 'start-apply', 'contact-us', 'terms-conditions', 'privacy-policy', 'cookies'],
+    nonIdamPages: ['health/*', 'stop-page/*', 'error', 'sign-in', 'pin-resend', 'pin-sent', 'co-applicant-*', 'pin', 'inviteIdList', 'start-eligibility', 'death-certificate', 'deceased-domicile', 'iht-completed', 'will-left', 'will-original', 'applicant-executor', 'mental-capacity', 'died-after-october-2014', 'related-to-deceased', 'other-applicants', 'start-apply', 'contact-us', 'terms-conditions', 'privacy-policy', 'cookies'],
     endpoints: {
         health: '/health',
         info: '/info'

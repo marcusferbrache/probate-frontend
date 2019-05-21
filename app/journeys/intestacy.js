@@ -99,7 +99,7 @@ const stepList = {
         otherwise: 'StopPage'
     },
     SpouseNotApplyingReason: {
-        renouncing: 'AnyChildren',
+        renouncing: 'AnyOtherChildren',
         otherwise: 'StopPage'
     },
     AdoptionPlace: {
