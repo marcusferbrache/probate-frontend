@@ -140,6 +140,10 @@ Object.entries(steps).forEach(([, step]) => {
     router.post(step.constructor.getUrl(), step.runner().POST(step));
 });
 
+router.get('/health/liveness', (req, res) => {
+    res.json({status: 'UP'});
+});
+
 router.get('/payment', (req, res) => {
     res.redirect(301, '/documents');
 });
