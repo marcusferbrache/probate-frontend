@@ -8,7 +8,7 @@ const content = require('app/resources/en/translation/deceased/maritalstatus');
 const contentDivorcePlace = require('app/resources/en/translation/deceased/divorceplace');
 const contentAnyChildren = require('app/resources/en/translation/deceased/anychildren');
 const contentAnyOtherChildren = require('app/resources/en/translation/deceased/anyotherchildren');
-// const contentAllChildrenOver18 = require('app/resources/en/translation/deceased/allchildrenover18');
+const contentAllChildrenOver18 = require('app/resources/en/translation/deceased/allchildrenover18');
 // const contentAnyDeceasedChildren = require('app/resources/en/translation/deceased/anydeceasedchildren');
 // const contentAnyGrandchildrenUnder18 = require('app/resources/en/translation/deceased/anygrandchildrenunder18');
 const contentRelationshipToDeceased = require('app/resources/en/translation/applicant/relationshiptodeceased');
@@ -82,8 +82,7 @@ describe('DeceasedMaritalStatus', () => {
                 divorcePlace: contentDivorcePlace.optionYes,
                 anyChildren: contentAnyChildren.optionYes,
                 anyOtherChildren: contentAnyOtherChildren.optionYes,
-                // allChildrenOver18: contentAllChildrenOver18.optionYes,
-                allChildrenOver18: 'Yes',
+                allChildrenOver18: contentAllChildrenOver18.optionYes,
                 // anyDeceasedChildren: contentAnyDeceasedChildren.optionYes,
                 anyDeceasedChildren: 'Yes',
                 // anyGrandchildrenUnder18: contentAnyGrandchildrenUnder18.optionYes
