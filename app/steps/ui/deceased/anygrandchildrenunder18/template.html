@@ -4,16 +4,17 @@
 
 {% block question %}
     <h1 class="form-title heading-large">
-        {{content.question | replace('{deceasedName}', fields.deceasedName.value) | replace('{deceasedDoD}', fields.dod_formattedDate.value) | safe}}
+        {{content.question | safe}}
     </h1>
+    <p class="form-hint">{{content.hint | replace('{deceasedName}', fields.deceasedName.value) | safe}}</p>
 {% endblock %}
 
 {% block form_content %}
     {{optionsRadio(content,
-        name = 'anyDeceasedChildren',
-        field = fields.anyDeceasedChildren,
+        name = 'anyGrandchildrenUnder18',
+        field = fields.anyGrandchildrenUnder18,
         options = ['optionYes', 'optionNo'],
-        legend = content.legend | replace('{deceasedName}', fields.deceasedName.value | replace('{deceasedDoD}', fields.deceasedDoD.value)),
+        legend = content.legend,
         inline = true
     )}}
     <div class="form-group">

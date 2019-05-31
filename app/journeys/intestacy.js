@@ -120,8 +120,12 @@ const stepList = {
         otherwise: 'StopPage'
     },
     AnyDeceasedChildren: {
-        hadDeceasedChildren: 'AnyGrandchildren',
+        hadDeceasedChildren: 'AnyGrandchildrenUnder18',
         otherwise: 'ApplicantName'
+    },
+    AnyGrandchildrenUnder18: {
+        allGrandchildrenOver18: 'ApplicantName',
+        otherwise: 'StopPage'
     },
 
     Summary: 'TaskList',
