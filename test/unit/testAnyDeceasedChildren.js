@@ -3,14 +3,14 @@
 const initSteps = require('app/core/initSteps');
 const {expect, assert} = require('chai');
 const steps = initSteps([`${__dirname}/../../app/steps/action/`, `${__dirname}/../../app/steps/ui`]);
-const AnyChildren = steps.AnyChildren;
-const content = require('app/resources/en/translation/deceased/anychildren');
+const AnyDeceasedChildren = steps.AnyDeceasedChildren;
+const content = require('app/resources/en/translation/deceased/anydeceasedchildren');
 
-describe('AnyChildren', () => {
+describe('AnyDeceasedChildren', () => {
     describe('getUrl()', () => {
         it('should return the correct url', (done) => {
-            const url = AnyChildren.constructor.getUrl();
-            expect(url).to.equal('/any-children');
+            const url = AnyDeceasedChildren.constructor.getUrl();
+            expect(url).to.equal('/any-deceased-children');
             done();
         });
     });
@@ -28,7 +28,7 @@ describe('AnyChildren', () => {
                 }
             };
 
-            const ctx = AnyChildren.getContextData(req);
+            const ctx = AnyDeceasedChildren.getContextData(req);
             expect(ctx.deceasedName).to.equal('John Doe');
             done();
         });
@@ -36,10 +36,11 @@ describe('AnyChildren', () => {
 
     describe('nextStepOptions()', () => {
         it('should return the correct options', (done) => {
-            const nextStepOptions = AnyChildren.nextStepOptions();
+            const ctx = {};
+            const nextStepOptions = AnyDeceasedChildren.nextStepOptions(ctx);
             expect(nextStepOptions).to.deep.equal({
                 options: [
-                    {key: 'anyChildren', value: content.optionYes, choice: 'hadChildren'},
+                    {key: 'anyDeceasedChildren', value: content.optionYes, choice: 'hadDeceasedChildren'},
                 ]
             });
             done();
@@ -51,7 +52,7 @@ describe('AnyChildren', () => {
             const ctx = {
                 deceasedName: 'Dee Ceased'
             };
-            AnyChildren.action(ctx);
+            AnyDeceasedChildren.action(ctx);
             assert.isUndefined(ctx.deceasedName);
         });
     });
