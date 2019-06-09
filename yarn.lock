@@ -18,6 +18,11 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
+"@hmcts/frontend@0.0.34-alpha":
+  version "0.0.34-alpha"
+  resolved "https://registry.yarnpkg.com/@hmcts/frontend/-/frontend-0.0.34-alpha.tgz#0d39b6d06c632ccb7c578fc91e3311306da9db0d"
+  integrity sha512-+q3IB4L3UHsD5cs/11PDWEftDAmDV6eYkxm9eoNtXAfea93VhXNFA9ZEIV+TM7v/9xaAIkmDj9C4kCSUb1Hl3g==
+
 "@hmcts/nodejs-logging@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@hmcts/nodejs-logging/-/nodejs-logging-3.0.0.tgz#81d84cea5528fa57b4162641b427233fca771715"
