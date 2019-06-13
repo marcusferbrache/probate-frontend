@@ -17,6 +17,9 @@
                 classes: "govuk-fieldset__legend--l"
             }
         },
+        hint: {
+            text: content.hintText | safe
+        },
         errorMessage: { text: fields.completed.errorMessage.message | safe } if fields.completed.errorMessage,
         items: [
             {

@@ -7,13 +7,6 @@ const content = require('app/resources/en/translation/documentupload');
 const config = require('app/config');
 const nock = require('nock');
 const expect = require('chai').expect;
-const featureToggleUrl = config.featureToggles.url;
-const documentUploadFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.document_upload}`;
-const featureTogglesNock = (status = 'true') => {
-    nock(featureToggleUrl)
-        .get(documentUploadFeatureTogglePath)
-        .reply(200, status);
-};
 
 describe('document-upload', () => {
     let testWrapper;
@@ -29,8 +22,6 @@ describe('document-upload', () => {
 
     describe('Verify Content, Errors and Redirection', () => {
         it('test help block content loaded on the page', (done) => {
-            featureTogglesNock('true');
-
             const playbackData = {
                 helpTitle: commonContent.helpTitle,
                 helpHeading1: commonContent.helpHeading1,
@@ -43,8 +34,6 @@ describe('document-upload', () => {
         });
 
         it('test content loaded on the page', (done) => {
-            featureTogglesNock('true');
-
             testWrapper.testContent(done);
         });
 
