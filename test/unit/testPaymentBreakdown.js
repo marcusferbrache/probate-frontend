@@ -57,6 +57,9 @@ describe('PaymentBreakdown', () => {
                 userId: 'dummy_userId',
                 deceasedLastName: 'Ceased',
                 paymentError: 'dummy_status',
+                featureToggles: {
+                    webchat: 'false'
+                },
                 journeyType: 'probate',
                 sessionID: 'dummy_sessionId'
             });
