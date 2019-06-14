@@ -33,7 +33,7 @@
 {% block form_content %}
     {% call govukFieldset({
         legend: {
-            text: (content.header if fields.isDocumentUploadToggleEnabled.value == "true" else content.old_header) | safe,
+            text: content.header | safe,
             classes: "govuk-fieldset__legend--l",
             isPageHeading: true
         }

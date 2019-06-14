@@ -90,6 +90,10 @@ exports.init = function() {
         maxFiles: config.documentUpload.maxFiles,
         maxSizeBytes: config.documentUpload.maxSizeBytes
     });
+    njkEnv.addGlobal('webChat', {
+        chatId: config.webChat.chatId,
+        tenant: config.webChat.tenant
+    });
 
     filters(njkEnv);
     njkEnv.express(app);
@@ -110,12 +114,26 @@ exports.init = function() {
                 '\'sha256-AaA9Rn5LTFZ5vKyp3xOfFcP4YbyOjvWn2up8IKHVAKk=\'',
                 '\'sha256-G29/qSW/JHHANtFhlrZVDZW1HOkCDRc78ggbqwwIJ2g=\'',
                 'www.google-analytics.com',
+                'vcc-eu4.8x8.com',
+                'vcc-eu4b.8x8.com',
                 `'nonce-${uuid}'`
             ],
             connectSrc: ['\'self\''],
             mediaSrc: ['\'self\''],
-            frameSrc: ['\'none\''],
-            imgSrc: ['\'self\'', 'www.google-analytics.com'],
+            frameSrc: [
+                'vcc-eu4.8x8.com',
+                'vcc-eu4b.8x8.com'
+            ],
+            imgSrc: [
+                '\'self\'',
+                'www.google-analytics.com',
+                'vcc-eu4.8x8.com',
+                'vcc-eu4b.8x8.com'
+            ],
+            styleSrc: [
+                '\'self\'',
+                '\'unsafe-inline\''
+            ],
             frameAncestors: ['\'self\'']
         },
         browserSniff: true,
@@ -135,6 +153,8 @@ exports.init = function() {
     app.use(helmet.noCache());
 
     app.use(helmet.xssFilter({setOnOldIE: true}));
+
+    app.use('/webchat', express.static(`${__dirname}/node_modules/@hmcts/ctsc-web-chat/assets`));
 
     // Middleware to serve static assets
     app.use('/public/stylesheets', express.static(`${__dirname}/public/stylesheets`));

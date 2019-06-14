@@ -22,9 +22,13 @@
 #contact-us-for-help {
   margin-top: 50px;
 
-  //summary {
-  //  font-size: 16px;
-  //}
+  p {
+    margin: 0;
+
+    & + h4 {
+      margin-top: 25px;
+    }
+  }
 }
 
 .inset-page {

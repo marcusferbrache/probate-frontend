@@ -4,10 +4,10 @@
   "version": "4.1.2",
   "private": true,
   "engines": {
-    "node": ">=8.9"
+    "node": ">=8.9.4"
   },
   "scripts": {
-    "setup": "NODE_PATH=. npm run sass && npm run git-info && npm run sass-ie8",
+    "setup": "NODE_PATH=. npm run sass && npm run git-info && npm run sass-ie8 && npm run sass-webchat",
     "start": "NODE_PATH=. node server.js",
     "debug": "NODE_PATH=. node inspect server.js",
     "prestart:dev": "npm run sass:watch",
@@ -15,13 +15,14 @@
     "sass:watch": "NODE_PATH=. watch 'npm run -s sass' app/assets/sass/ &",
     "sass": "NODE_PATH=. node-sass app/assets/sass/application.scss --output public/stylesheets --quiet --output-style expanded --source-map true --include-path node_modules/govuk_frontend",
     "sass-ie8": "NODE_PATH=. node-sass app/assets/sass/application-ie8.scss --output public/stylesheets --quiet --output-style expanded --source-map true --include-path node_modules/govuk_frontend",
+    "sass-webchat": "NODE_PATH=. node-sass node_modules/@hmcts/ctsc-web-chat/assets/sass/hmcts-webchat.scss --output public/stylesheets --quiet --output-style expanded --source-map true --include-path node_modules/govuk_template_jinja/assets/stylesheets --include-path node_modules/govuk_frontend_toolkit/stylesheets --include-path node_modules/govuk-elements-sass/public/sass/",
     "test": "npm run test-unit -- $@ && npm run test-accessibility -- $@ && npm run test-component -- $@",
     "test-unit": "NODE_PATH=. LOG_LEVEL=error mocha test/unit --reporter spec --recursive --timeout 15000",
     "test-component": "NODE_PATH=. LOG_LEVEL=error mocha test/component --reporter spec --recursive --timeout 15000",
     "test:a11y": "NODE_PATH=. LOG_LEVEL=error ENABLE_TRACKING=false mocha test/accessibility --timeout 15000",
     "test-accessibility": "NODE_PATH=. LOG_LEVEL=error ENABLE_TRACKING=false mocha test/accessibility --timeout 15000",
     "test-e2e": "NODE_PATH=. node ./node_modules/codeceptjs/bin/codecept.js run -c ./test/end-to-end/ --steps --reporter mochawesome",
-    "test-crossbrowser-e2e": "NODE_PATH=. codeceptjs run -c test/end-to-end/saucelabs.conf.js --steps",
+    "test:crossbrowser": "NODE_PATH=. codeceptjs run-multiple firefox -c test/end-to-end/saucelabs.conf.js --plugins retryFailedStep --steps --reporter mocha-multi",
     "test:smoke": "mocha test/smoke/healthcheck.js --timeout 25000 --reporter spec",
     "test-contract": "NODE_PATH=. LOG_LEVEL=error mocha 'test/contract/addresslookup/*.js' 'test/contract/generatepin/*.js' --timeout 15000 --reporter spec",
     "test-pact": "NODE_PATH=. LOG_LEVEL=error mocha 'test/contract/pact/*.js' --timeout 15000 --reporter spec",
@@ -49,6 +50,7 @@
     "test:fullfunctional": "NODE_PATH=. node ./node_modules/codeceptjs/bin/codecept.js run-multiple parallel -c ./test/end-to-end/ --steps --reporter mochawesome"
   },
   "dependencies": {
+    "@hmcts/ctsc-web-chat": "^0.1.19",
     "@hmcts/frontend": "0.0.34-alpha",
     "@hmcts/nodejs-logging": "^3.0.0",
     "@hmcts/os-places-client": "^1.0.4",
@@ -104,13 +106,14 @@
     "chai-as-promised": "^7.1.1",
     "chai-http": "^4.0.0",
     "chai-string": "^1.5.0",
-    "codeceptjs": "^2.0.6",
+    "codeceptjs": "^2.1.4",
     "eslint": "4.1.1 ",
     "eslint-plugin-mocha": "^4.8.0",
     "istanbul": "^0.4.5",
     "mocha": "^2.5.3",
     "mocha-jenkins-reporter": "^0.3.8",
     "mochawesome": "^2.0.0",
+    "mocha-multi": "^1.1.0",
     "nock": "^9.3.0",
     "nodemon": "^1.11.0",
     "nsp": "^2.6.2",
@@ -129,6 +132,7 @@
     "unirest": "^0.5.1",
     "uuid": "^3.1.0",
     "watch": "^1.0.1",
+    "webdriverio": "^4.14.4",
     "when": "^3.7.7"
   }
 }

@@ -7,6 +7,11 @@
     {% set helpContent = helpContent + "<p class=\"govuk-heading-s\">" + (common.helpHeading2 | safe) + "</p>" %}
     {% set helpContent = helpContent + "<p>" + (common.helpEmailLabel | replace('{contactEmailAddress}', links.contactEmailAddress) | safe) + "</p>" %}
 
+    {% if fields.featureToggles.value.webchat == "true" %}
+        {% set helpContent = helpContent + "<h4 id=\"ctsc-web-chat-header\" class=\"heading-small\">" + (common.helpHeading3 | safe) + "</h4>" %}
+        {% set helpContent = helpContent + "<div id=\"ctsc-web-chat\"></div>" %}
+    {% endif %}
+
     {{ govukDetails({
         summaryText: common.helpTitle,
         text: helpContent | safe,
