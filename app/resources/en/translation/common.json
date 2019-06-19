@@ -40,7 +40,6 @@
   "helpHeading1": "Telephone",
   "helpHeading2": "Email",
   "helpHeading3": "Webchat",
-  "contactOpeningTimes" : "{openingTimes}.",
   "helpEmailLabel" : "Email us at <a href=\"mailto:{contactEmailAddress}\" tabindex=\"-1\">{contactEmailAddress}</a>",
   "or": "or",
   "documentUploadChooseFile": "Choose a file or take a photo",

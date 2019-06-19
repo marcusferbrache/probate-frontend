@@ -39,7 +39,6 @@ describe('executor-notified', () => {
                     playbackData.helpTitle = commonContent.helpTitle;
                     playbackData.helpHeading1 = commonContent.helpHeading1;
                     playbackData.helpHeading2 = commonContent.helpHeading2;
-                    playbackData.contactOpeningTimes = commonContent.contactOpeningTimes.replace('{openingTimes}', config.helpline.hours);
                     playbackData.helpEmailLabel = commonContent.helpEmailLabel.replace(/{contactEmailAddress}/g, config.links.contactEmailAddress);
 
                     testWrapper.testDataPlayback(done, playbackData);

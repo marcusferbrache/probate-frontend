@@ -2,9 +2,9 @@
     <details class="help-panel help-details">
         <summary><span class="summary help-details-summary">{{ common.helpTitle }}</span></summary>
         <div class="panel panel-border-narrow">
-            <h4 class="heading-small">{{common.helpHeading1 | safe}}</h4>
+            <h4 class="heading-small">{{ common.helpHeading1 | safe }}</h4>
             <p>{{ helpline.number | safe }}</p>
-            <p>{{ common.contactOpeningTimes | replace('{openingTimes}', helpline.hours) | safe }}</p>
+            <p>{{ helpline.hours | safe }}</p>
             <h4 class="heading-small">{{common.helpHeading2 | safe}}</h4>
             <p>{{ common.helpEmailLabel | replace('{contactEmailAddress}', links.contactEmailAddress) | safe }}</p>
             {% if fields.featureToggles.value.webchat == "true" %}
