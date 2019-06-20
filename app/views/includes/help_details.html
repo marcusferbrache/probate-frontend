@@ -2,10 +2,10 @@
 
 {% block help_info %}
     {% set helpContent = "<p class=\"govuk-heading-s\">" + (common.helpHeading1 | safe) + "</p>" %}
-    {% set helpContent = helpContent + "<p>" + helpline.number | safe + "</p>" %}
-    {% set helpContent = helpContent + "<p>" + (common.contactOpeningTimes | replace('{openingTimes}', helpline.hours) | safe) + "</p>" %}
+    {% set helpContent = helpContent + "<p class=\"govuk-body\">" + helpline.number | safe + "</p>" %}
+    {% set helpContent = helpContent + "<p class=\"govuk-body\">" + (common.contactOpeningTimes | replace('{openingTimes}', helpline.hours) | safe) + "</p>" %}
     {% set helpContent = helpContent + "<p class=\"govuk-heading-s\">" + (common.helpHeading2 | safe) + "</p>" %}
-    {% set helpContent = helpContent + "<p>" + (common.helpEmailLabel | replace('{contactEmailAddress}', links.contactEmailAddress) | safe) + "</p>" %}
+    {% set helpContent = helpContent + "<p class=\"govuk-body\">" + (common.helpEmailLabel | replace('{contactEmailAddress}', links.contactEmailAddress) | safe) + "</p>" %}
 
     {% if fields.featureToggles.value.webchat == "true" %}
         {% set helpContent = helpContent + "<h4 id=\"ctsc-web-chat-header\" class=\"heading-small\">" + (common.helpHeading3 | safe) + "</h4>" %}
