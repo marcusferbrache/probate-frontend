@@ -1,7 +1,9 @@
 'use strict';
 
 const Step = require('app/core/steps/Step');
+const RegistryWrapper = require('app/wrappers/Registry');
 const FormatCcdCaseId = require('app/utils/FormatCcdCaseId');
+const content = require('app/resources/en/translation/recap');
 
 class Recap extends Step {
 
@@ -10,6 +12,14 @@ class Recap extends Step {
     }
 
     handleGet(ctx, formdata) {
+        const registryAddress = (new RegistryWrapper(formdata.registry)).address();
+
+        ctx.ccdReferenceNumber = FormatCcdCaseId.format(formdata.ccdCase);
+        ctx.ccdReferenceNumber = '1234-5678-9012-3456'; // For demo purposes only
+        ctx.ccdReferenceNumberAccessible = ctx.ccdReferenceNumber.split('').join(' ');
+        ctx.ccdReferenceNumberAccessible = ctx.ccdReferenceNumberAccessible.replace(/ - /g, ', -, ');
+        ctx.registryAddress = registryAddress ? registryAddress : content.block1Address;
+
         ctx.checkAnswersSummary = false;
         ctx.legalDeclaration = false;
         if (formdata.checkAnswersSummary) {
@@ -18,15 +28,12 @@ class Recap extends Step {
         if (formdata.legalDeclaration) {
             ctx.legalDeclaration = true;
         }
-        return [ctx];
-    }
 
-    getContextData(req) {
-        const ctx = super.getContextData(req);
-        ctx.ccdReferenceNumber = FormatCcdCaseId.format(req.session.form.ccdCase);
-        ctx.ccdReferenceNumberAccessible = ctx.ccdReferenceNumber.split('').join(' ');
-        ctx.ccdReferenceNumberAccessible = ctx.ccdReferenceNumberAccessible.replace(/ - /g, ', -, ');
-        return ctx;
+        ctx.documentsSent = false; // For demo purposes only
+        ctx.checkAnswersSummary = true; // For demo purposes only
+        ctx.legalDeclaration = true; // For demo purposes only
+
+        return [ctx];
     }
 
     action(ctx, formdata) {

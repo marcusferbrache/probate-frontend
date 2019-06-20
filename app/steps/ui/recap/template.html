@@ -1,78 +1,124 @@
 {% extends "includes/layout.html" %}
 
-{% from "panel/macro.njk" import govukPanel %}
+{% from "inset-text/macro.njk" import govukInsetText %}
+{% from "button/macro.njk" import govukButton %}
 {% from "hmcts-progress-bar/macro.njk" import hmctsProgressBar %}
+{% from "widgets/lists.html" import unorderedList %}
+
+{% set checklistOneItems = [] %}
+{% set codicilsSuffix = "" %}
+
+{% if fields.hasCodicils.value == "true" and fields.codicilsNumber.value > "0" %}
+    {% set checklistOneItems = (checklistOneItems.push(content["block1Checklist1-item1-codicils"]), checklistOneItems) %}
+    {% set codicilsSuffix = "-codicils" %}
+{% else %}
+    {% set checklistOneItems = (checklistOneItems.push(content["block1Checklist1-item1-no-codicils"]), checklistOneItems) %}
+{% endif %}
+{% if fields.uploads.value | length == 0 %}
+    {% set checklistOneItems = (checklistOneItems.push(content["block1Checklist2-item3-will-uploaded"]), checklistOneItems) %}
+{% endif %}
+{% if (fields.is205.value == "true") %}
+    {% set checklistOneItems = (checklistOneItems.push(content["block1Checklist2-item4-iht205"]), checklistOneItems) %}
+{% endif %}
+{% if fields.hasRenunciated.value == "true" %}
+    {% set checklistOneItems = (checklistOneItems.push(content["block1Checklist2-item5-renunciated"] | replace("{renunciationFormLink}", links.renunciationForm)), checklistOneItems) %}
+{% endif %}
+{% if fields.executorsNameChangedByDeedPollList.value | length > 0 %}
+    {% for executor in fields.executorsNameChangedByDeedPollList.value %}
+        {% set checklistOneItems = (checklistOneItems.push(content["block1Checklist2-item6-deed-poll"] | replace("{executorCurrentName}", executor)), checklistOneItems) %}
+    {% endfor %}
+{% endif %}
 
 {% block content %}
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            {% set referenceNumberHtml %}
-                {% if fields.ccdReferenceNumber.value !== '' %}
-                    <p class="govuk-!-font-size-36 govuk-!-font-weight-bold">
-                        <span class="govuk-!-font-size-24 govuk-!-font-weight-bold">{{ content.referenceNumber | safe }}</span><br>
-                        <strong class="govuk-!-font-weight-bold" aria-label="{{ fields.ccdReferenceNumberAccessible.value }}">{{ fields.ccdReferenceNumber.value }}</strong>
-                    </p>
-                {% endif %}
-            {% endset -%}
-
-            {{ govukPanel({
-                titleText: content.header | safe,
-                html: referenceNumberHtml
-            }) }}
+            <h1 class="govuk-heading-l">{{ content.title | safe }}</h1>
+            <p class="govuk-body margin-bottom50">CCD case reference <strong class="govuk-!-font-weight-bold" aria-label="{{ fields.ccdReferenceNumberAccessible.value }}">{{ fields.ccdReferenceNumber.value }}</strong></p>
 
             {{ hmctsProgressBar({
                 items: [{
                     label: {
-                        text: 'You apply'
+                        text: 'Online application submitted'
                     },
                     complete: true
                 }, {
                     label: {
-                        text: 'Your husband/wife responds'
+                        text: 'Post paper documents'
                     },
-                    active: true
-                }, {
-                    label: {
-                        text: 'The court decides'
-                    }
-                }, {
-                    label: {
-                        text: 'Divorce finalised'
-                    }
+                    complete: fields.documentsSent.value == "true"
                 }]
             }) }}
 
-            <h2 class="govuk-heading-m">{{ content.successHeading1 | safe }}</h2>
-            <p class="govuk-body">{{ content.successParagraph1 | safe }}</p>
-            <p class="govuk-body">{{ content.successParagraph2 | safe }}</p>
-            <p class="govuk-body">{{ content.successParagraph3 | replace('{helpLineNumber}', helpline.number) | safe }}</p>
+            {% if fields.documentsSent.value != "true" %}
+                <div class="margin-bottom50">
+                    <h2 class="govuk-heading-m">{{ content.block1Heading1 | safe }}</h2>
+                    <p class="govuk-body">{{ content.block1CoverSheetDownloadMessage }} <a class="govuk-link" id="coverSheetPdfHref" href="/cover-sheet-pdf">{{ content.block1CoverSheetPdf }}</a>.</p>
+                    {% if fields.ccdReferenceNumber.value !== "" %}
+                        <p class="govuk-body">{{ content.block1Text1 | replace("{ccdReferenceNumberAccessible}", fields.ccdReferenceNumberAccessible.value) | replace("{ccdReferenceNumber}", fields.ccdReferenceNumber.value) | safe }}</p>
+                    {% endif %}
+                    <p class="govuk-body">{{ content.block1Text2 | safe }}</p>
+                    {{ unorderedList(checklistOneItems) }}
 
-            <div class="margin-bottom50">
-                <h2 class="govuk-heading-m">{{ content.saveYourApplication }}</h2>
-                <p class="govuk-body">{{ content.saveParagraph1 }}</p>
-                {% if fields.checkAnswersSummary.value == 'true' %}
-                    <p class="govuk-body save-this-page-link">
-                        <em class="icon icon-file-download"></em>
-                        <a class="govuk-link anchor-margin-left" id="checkAnswerHref" href="/check-answers-pdf">{{ content.checkAnswersPdf }}</a>
-                    </p>
-                {% endif %}
-                {% if fields.legalDeclaration.value == 'true' %}
+                    <p class="govuk-body">{{ content.block1Text3 | safe }}</p>
+                    <p class="govuk-body">{{ content.block1Text4 | safe }}</p>
+
+                    <div class="panel panel-border-wide">
+                        <p class="govuk-body">{{ content.block1Warning | safe }}</p>
+                    </div>
+
+                    <h3 class="govuk-heading-s">{{ content.block1Heading2 | safe }}</h3>
+                    <p class="govuk-body">{{ content.block1Text5 | safe }}</p>
+
+                    <div class="panel panel-border-narrow">
+                        <p class="govuk-body">{{ fields.registryAddress.value | safe | nl2br }}</p>
+                    </div>
+
+                    <input id="sentDocuments" type="hidden" name="sentDocuments" value="true"/>
+                </div>
+            {% endif %}
+
+            <h2 class="govuk-heading-m">{{ content.block2Heading | safe }}</h2>
+            <p class="govuk-body">{{ content.block2Text1 | safe }}</p>
+            <p class="govuk-body">{{ content.block2Text2 | safe }}</p>
+            <p class="govuk-body">{{ content.block2Text3 | replace('{helpLineNumber}', helpline.number) | safe }}</p>
+
+            {{ govukInsetText({
+                text: content.block2Text4 | replace('{findOutNext}', links.findOutNext) | safe
+            }) }}
+
+            {% include "includes/help_details.html" %}
+        </div>
+        <div class="govuk-grid-column-one-third">
+            <aside class="app-related-items" role="complementary">
+                <div class="margin-bottom50">
+                    <h3 class="govuk-heading-s">{{ content.block3Heading | safe }}</h3>
+                    <div class="govuk-form-group">
+                        {{ govukButton({
+                            text: common.checkApply,
+                            href: "/start-eligibility",
+                            classes: "govuk-button--start"
+                        }) }}
+                    </div>
+
+                    <h3 class="govuk-heading-s">{{ content.block4Heading | safe }}</h3>
+                    {% if fields.checkAnswersSummary.value == 'true' %}
+                        <p class="govuk-body save-this-page-link">
+                            <em class="icon icon-file-download"></em>
+                            <a class="govuk-body-s govuk-link anchor-margin-left" id="checkAnswerHref" href="/check-answers-pdf">{{ content.checkAnswersPdf }}</a>
+                        </p>
+                    {% endif %}
+                    {% if fields.legalDeclaration.value == 'true' %}
+                        <p class="govuk-body">
+                            <em class="icon icon-file-download"></em>
+                            <a class="govuk-body-s govuk-link anchor-margin-left" id="declarationPdfHref" href="/declaration-pdf">{{ content.declarationPdf }}</a>
+                        </p>
+                    {% endif %}
                     <p class="govuk-body">
                         <em class="icon icon-file-download"></em>
-                        <a class="govuk-link anchor-margin-left" id="declarationPdfHref" href="/declaration-pdf">{{ content.declarationPdf }}</a>
+                        <a class="govuk-body-s govuk-link anchor-margin-left" id="coverSheetPdfHref" href="/cover-sheet-pdf">{{ content.coverSheetPdf }}</a>
                     </p>
-                {% endif %}
-                <p class="govuk-body">
-                    <em class="icon icon-file-download"></em>
-                    <a class="govuk-link anchor-margin-left" id="coverSheetPdfHref" href="/cover-sheet-pdf">{{ content.coverSheetPdf }}</a>
-                </p>
-            </div>
-
-            <div class="panel panel-border-wide">
-                <p class="govuk-body">{{ content.successParagraph4 | replace('{findOutNext}', links.findOutNext) | safe }}</p>
-            </div>
-
-            <a href="{{ links.surveyEndOfApplication | safe }}" class="govuk-link">{{ content.survey | safe }}</a>
+                </div>
+            </aside>
         </div>
     </div>
 {% endblock %}

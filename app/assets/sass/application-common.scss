@@ -73,6 +73,10 @@
   word-break: break-word;
 }
 
+.no-wrap {
+  white-space: nowrap;
+}
+
 .find-address-button,
 .executor-header {
   margin-bottom: 0;
@@ -88,4 +92,9 @@
     height: 39px;
     background-image: url('/public/images/icon-file-download.png');
   }
+}
+
+.app-related-items {
+  padding-top: 10px;
+  border-top: 10px solid govuk-colour("blue");
 }
