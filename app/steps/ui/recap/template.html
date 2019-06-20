@@ -33,7 +33,9 @@
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-l">{{ content.title | safe }}</h1>
-            <p class="govuk-body margin-bottom50">CCD case reference <strong class="govuk-!-font-weight-bold" aria-label="{{ fields.ccdReferenceNumberAccessible.value }}">{{ fields.ccdReferenceNumber.value }}</strong></p>
+            {% if fields.ccdReferenceNumber.value != "" %}
+                <p class="govuk-body margin-bottom50">CCD case reference <strong class="govuk-!-font-weight-bold" aria-label="{{ fields.ccdReferenceNumberAccessible.value }}">{{ fields.ccdReferenceNumber.value }}</strong></p>
+            {% endif %}
 
             {{ hmctsProgressBar({
                 items: [{
@@ -52,8 +54,8 @@
             {% if fields.documentsSent.value != "true" %}
                 <div class="margin-bottom50">
                     <h2 class="govuk-heading-m">{{ content.block1Heading1 | safe }}</h2>
-                    <p class="govuk-body">{{ content.block1CoverSheetDownloadMessage }} <a class="govuk-link" id="coverSheetPdfHref" href="/cover-sheet-pdf">{{ content.block1CoverSheetPdf }}</a>.</p>
-                    {% if fields.ccdReferenceNumber.value !== "" %}
+                    <p class="govuk-body">{{ content.block1CoverSheetDownloadMessage }} <a class="govuk-link" href="/cover-sheet-pdf">{{ content.block1CoverSheetPdf }}</a>.</p>
+                    {% if fields.ccdReferenceNumber.value != "" %}
                         <p class="govuk-body">{{ content.block1Text1 | replace("{ccdReferenceNumberAccessible}", fields.ccdReferenceNumberAccessible.value) | replace("{ccdReferenceNumber}", fields.ccdReferenceNumber.value) | safe }}</p>
                     {% endif %}
                     <p class="govuk-body">{{ content.block1Text2 | safe }}</p>
