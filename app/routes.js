@@ -16,6 +16,8 @@ const AllExecutorsAgreed = require('app/services/AllExecutorsAgreed');
 const ServiceMapper = require('app/utils/ServiceMapper');
 const lockPaymentAttempt = require('app/middleware/lockPaymentAttempt');
 
+router.use(shutter);
+
 router.all('*', (req, res, next) => {
     req.log = logger(req.sessionID);
     req.log.info(`Processing ${req.method} for ${req.originalUrl}`);
@@ -58,7 +60,6 @@ router.get('/', (req, res) => {
         });
 });
 
-router.use(shutter);
 router.use(documentDownload);
 router.use(paymentFees);
 router.post('/payment-breakdown', lockPaymentAttempt);
