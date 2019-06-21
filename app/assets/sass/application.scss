@@ -5,7 +5,11 @@ $path: "/public/images/";
 // Import GOV.UK elements from /govuk-modules/, this will import the frontend toolkit and some base styles.
 // Take a look in /govuk-modules/_govuk-elements.scss to see which files are imported.
 @import 'node_modules/govuk-frontend/all';
-@import 'node_modules/@hmcts/frontend/all';
+
+@import "node_modules/@hmcts/frontend/settings/all";
+@import "node_modules/@hmcts/frontend/helpers/all";
+@import "node_modules/@hmcts/frontend/objects/all";
+@import 'node_modules/@hmcts/frontend/components/hmcts-progress-bar/progress-bar';
 
 // Take a look at in app/assets/sass/patterns/ to see which files are imported.
 @import 'patterns/header';
