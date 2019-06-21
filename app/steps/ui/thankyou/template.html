@@ -1,6 +1,7 @@
 {% extends "includes/layout.html" %}
 
 {% from "panel/macro.njk" import govukPanel %}
+{% from "inset-text/macro.njk" import govukInsetText %}
 
 {% block content %}
     <div class="govuk-grid-row">
@@ -45,9 +46,9 @@
                 </p>
             </div>
 
-            <div class="panel panel-border-wide">
-                <p class="govuk-body">{{ content.successParagraph4 | replace('{findOutNext}', links.findOutNext) | safe }}</p>
-            </div>
+            {{ govukInsetText({
+                text: content.successParagraph4 | replace('{findOutNext}', links.findOutNext) | safe
+            }) }}
 
             <a href="{{ links.surveyEndOfApplication | safe }}" class="govuk-link">{{ content.survey | safe }}</a>
         </div>
