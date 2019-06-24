@@ -27,8 +27,8 @@ describe('ProbateDeclarationFactory', () => {
         formdata.deceasedName = FormatName.format(formdataDeceased);
         formdata.deceasedAddress = get(formdataDeceased, 'address', {});
         formdata.deceasedOtherNames = FormatName.formatMultipleNamesAndAddress(get(formdataDeceased, 'otherNames'), content);
-        formdata.dob_formattedDate = formdataDeceased.dob_formattedDate;
-        formdata.dod_formattedDate = formdataDeceased.dod_formattedDate;
+        formdata.dobFormattedDate = formdataDeceased['dob-formattedDate'];
+        formdata.dodFormattedDate = formdataDeceased['dod-formattedDate'];
         formdata.maritalStatus = formdataDeceased.maritalStatus;
         formdata.relationshipToDeceased = formdataDeceased.relationshipToDeceased;
         formdata.hadChildren = formdataDeceased.hadChildren;
@@ -57,8 +57,8 @@ describe('ProbateDeclarationFactory', () => {
                     deceased: content.legalStatementDeceased
                         .replace('{deceasedName}', formdata.deceasedName)
                         .replace('{deceasedAddress}', formdata.deceasedAddress.formattedAddress)
-                        .replace('{deceasedDob}', formdata.dob_formattedDate)
-                        .replace('{deceasedDod}', formdata.dod_formattedDate),
+                        .replace('{deceasedDob}', formdata.dobFormattedDate)
+                        .replace('{deceasedDod}', formdata.dodFormattedDate),
                     deceasedEstateLand: content[`deceasedEstateLand${multipleApplicantSuffix}`]
                         .replace(/{deceasedName}/g, formdata.deceasedName),
                     deceasedEstateValue: content.deceasedEstateValue

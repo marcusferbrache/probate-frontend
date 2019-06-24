@@ -38,8 +38,8 @@ class Declaration extends ValidationStep {
         formdata.deceasedName = FormatName.format(formdataDeceased);
         formdata.deceasedAddress = get(formdataDeceased, 'address', {});
         formdata.deceasedOtherNames = FormatName.formatMultipleNamesAndAddress(get(formdataDeceased, 'otherNames'), content);
-        formdata.dob_formattedDate = formdataDeceased.dob_formattedDate;
-        formdata.dod_formattedDate = formdataDeceased.dod_formattedDate;
+        formdata.dobFormattedDate = formdataDeceased['dob-formattedDate'];
+        formdata.dodFormattedDate = formdataDeceased['dod-formattedDate'];
         formdata.maritalStatus = formdataDeceased.maritalStatus;
         formdata.relationshipToDeceased = formdataApplicant.relationshipToDeceased;
         formdata.anyChildren = formdataDeceased.anyChildren;
@@ -94,63 +94,6 @@ class Declaration extends ValidationStep {
         Object.assign(ctx, templateData);
         ctx.softStop = this.anySoftStops(formdata, ctx);
         return ctx;
-    }
-
-    prepareDataForTemplate(ctx, content, formdata) {
-        const applicant = formdata.applicant || {};
-        const applicantAddress = get(applicant, 'address', {});
-        const deceased = formdata.deceased || {};
-        const deceasedAddress = get(deceased, 'address', {});
-        const iht = formdata.iht || {};
-        const ihtGrossValue = iht.grossValue ? iht.grossValue.toFixed(2) : 0;
-        const ihtNetValue = iht.netValue ? iht.netValue.toFixed(2) : 0;
-        const hasCodicils = (new WillWrapper(formdata.will)).hasCodicils();
-        const codicilsNumber = (new WillWrapper(formdata.will)).codicilsNumber();
-        const applicantName = FormatName.format(applicant);
-        const deceasedName = FormatName.format(deceased);
-        const executorsApplying = ctx.executorsWrapper.executorsApplying();
-        const executorsNotApplying = ctx.executorsWrapper.executorsNotApplying();
-        const deceasedOtherNames = FormatName.formatMultipleNamesAndAddress(get(deceased, 'otherNames'), content);
-        const hasMultipleApplicants = ctx.executorsWrapper.hasMultipleApplicants();
-        const multipleApplicantSuffix = this.multipleApplicantSuffix(hasMultipleApplicants);
-        const legalStatement = {
-            intro: content[`intro${multipleApplicantSuffix}`]
-                .replace('{applicantName}', applicantName),
-            applicant: content[`legalStatementApplicant${multipleApplicantSuffix}`]
-                .replace('{detailsOfApplicants}', FormatName.formatMultipleNamesAndAddress(executorsApplying, content, applicantAddress))
-                .replace('{applicantName}', applicantName)
-                .replace('{applicantAddress}', applicantAddress.formattedAddress),
-            deceased: content.legalStatementDeceased
-                .replace('{deceasedName}', deceasedName)
-                .replace('{deceasedAddress}', deceasedAddress.formattedAddress)
-                .replace('{deceasedDob}', deceased['dob-formattedDate'])
-                .replace('{deceasedDod}', deceased['dod-formattedDate']),
-            deceasedOtherNames: deceasedOtherNames ? content.deceasedOtherNames.replace('{deceasedOtherNames}', deceasedOtherNames) : '',
-            executorsApplying: this.executorsApplying(hasMultipleApplicants, executorsApplying, content, hasCodicils, codicilsNumber, deceasedName, applicantName),
-            deceasedEstateValue: content.deceasedEstateValue
-                .replace('{ihtGrossValue}', ihtGrossValue)
-                .replace('{ihtNetValue}', ihtNetValue),
-            deceasedEstateLand: content[`deceasedEstateLand${multipleApplicantSuffix}`]
-                .replace(/{deceasedName}/g, deceasedName),
-            executorsNotApplying: this.executorsNotApplying(executorsNotApplying, content, deceasedName, hasCodicils)
-        };
-        const declaration = {
-            confirm: content[`declarationConfirm${multipleApplicantSuffix}`]
-                .replace('{deceasedName}', deceasedName),
-            confirmItem1: content.declarationConfirmItem1,
-            confirmItem2: content.declarationConfirmItem2,
-            confirmItem3: content.declarationConfirmItem3,
-            requests: content[`declarationRequests${multipleApplicantSuffix}`],
-            requestsItem1: content.declarationRequestsItem1,
-            requestsItem2: content.declarationRequestsItem2,
-            understand: content[`declarationUnderstand${multipleApplicantSuffix}`],
-            understandItem1: content[`declarationUnderstandItem1${multipleApplicantSuffix}`],
-            understandItem2: content[`declarationUnderstandItem2${multipleApplicantSuffix}`],
-            accept: content.declarationCheckbox,
-            submitWarning: content[`submitWarning${multipleApplicantSuffix}`],
-        };
-
-        return {legalStatement, declaration};
     }
 
     codicilsSuffix(hasCodicils) {
