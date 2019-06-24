@@ -9,7 +9,7 @@ class CheckAnswersSummaryJSONObjectBuilder {
         const $ = (require('jquery'))(dom.window);
         const summary = {};
         summary.sections = [];
-        const sections = $('.govuk-heading-l, .govuk-heading-m, .govuk-heading-s, .check-your-answers__row');
+        const sections = $('#check-your-answers .govuk-heading-l, #check-your-answers .govuk-heading-m, #check-your-answers .govuk-heading-s, #check-your-answers .check-your-answers__row');
         const mainParagraph = $('#main-heading-content');
         summary.mainParagraph = mainParagraph.text();
         let section;
