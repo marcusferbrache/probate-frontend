@@ -1,8 +1,12 @@
 'use strict';
 
+const setJourney = require('app/middleware/setJourney');
+const probateDeclarationFactory = require('app/utils/ProbateDeclarationFactory');
+const intestacyDeclarationFactory = require('app/utils/IntestacyDeclarationFactory');
 const ValidationStep = require('app/core/steps/ValidationStep');
 const executorNotifiedContent = require('app/resources/en/translation/executors/notified');
 const executorContent = require('app/resources/en/translation/executors/executorcontent');
+const assetsOutsideContent = require('app/resources/en/translation/iht/assetsoutside');
 const {get} = require('lodash');
 const ExecutorsWrapper = require('app/wrappers/Executors');
 const WillWrapper = require('app/wrappers/Will');
@@ -25,18 +29,70 @@ class Declaration extends ValidationStep {
         return ctx;
     }
 
+    getFormDataForTemplate(content, formdata) {
+        const formdataApplicant = formdata.applicant || {};
+        formdata.applicantName = FormatName.format(formdataApplicant);
+        formdata.applicantAddress = get(formdataApplicant, 'address', {});
+
+        const formdataDeceased = formdata.deceased || {};
+        formdata.deceasedName = FormatName.format(formdataDeceased);
+        formdata.deceasedAddress = get(formdataDeceased, 'address', {});
+        formdata.deceasedOtherNames = FormatName.formatMultipleNamesAndAddress(get(formdataDeceased, 'otherNames'), content);
+        formdata.dob_formattedDate = formdataDeceased.dob_formattedDate;
+        formdata.dod_formattedDate = formdataDeceased.dod_formattedDate;
+        formdata.maritalStatus = formdataDeceased.maritalStatus;
+        formdata.relationshipToDeceased = formdataApplicant.relationshipToDeceased;
+        formdata.anyChildren = formdataDeceased.anyChildren;
+        formdata.anyOtherChildren = formdataDeceased.anyOtherChildren;
+
+        const formdataIht = formdata.iht || {};
+        formdata.ihtGrossValue = formdataIht.grossValue ? formdataIht.grossValue.toFixed(2) : 0;
+        formdata.ihtNetValue = formdataIht.netValue ? formdataIht.netValue.toFixed(2) : 0;
+        formdata.ihtNetValueAssetsOutside = formdataIht.netValueAssetsOutside ? formdataIht.netValueAssetsOutside.toFixed(2) : 0;
+        formdata.ihtTotalNetValue = formdataIht.netValue;
+        formdata.ihtTotalNetValue += formdataIht.netValueAssetsOutside ? formdataIht.netValueAssetsOutside : 0;
+
+        return formdata;
+    }
+
     getContextData(req) {
+        let templateData;
         let ctx = super.getContextData(req);
         ctx = this.pruneFormData(req.body, ctx);
+        ctx.isIntestacyJourney = setJourney.isIntestacyJourney(req.session);
         const formdata = req.session.form;
-        ctx.executorsWrapper = new ExecutorsWrapper(formdata.executors);
-        const templateData = this.prepareDataForTemplate(ctx, this.generateContent(ctx, formdata), formdata);
+        const content = this.generateContent(ctx, formdata);
+        const formDataForTemplate = this.getFormDataForTemplate(content, formdata);
+
+        if (ctx.isIntestacyJourney && formdata.iht) {
+            ctx.showNetValueAssetsOutside = (formdata.iht.assetsOutside === assetsOutsideContent.optionYes && (formdata.iht.netValue + formdata.iht.netValueAssetsOutside) > config.assetsValueThreshold);
+            if (ctx.showNetValueAssetsOutside) {
+                ctx.ihtNetValueAssetsOutside = formDataForTemplate.ihtNetValueAssetsOutside;
+            }
+            templateData = intestacyDeclarationFactory.build(ctx, content, formDataForTemplate);
+        } else {
+            ctx.executorsWrapper = new ExecutorsWrapper(formdata.executors);
+            ctx.invitesSent = get(formdata, 'executors.invitesSent');
+            ctx.hasMultipleApplicants = ctx.executorsWrapper.hasMultipleApplicants(get(formdata, 'executors.list'));
+            ctx.executorsEmailChanged = ctx.executorsWrapper.hasExecutorsEmailChanged();
+            ctx.hasExecutorsToNotify = ctx.executorsWrapper.hasExecutorsToNotify() && ctx.invitesSent === 'true';
+
+            const hasCodicils = (new WillWrapper(formdata.will)).hasCodicils();
+            const codicilsNumber = (new WillWrapper(formdata.will)).codicilsNumber();
+            const hasMultipleApplicants = ctx.executorsWrapper.hasMultipleApplicants();
+            const multipleApplicantSuffix = this.multipleApplicantSuffix(hasMultipleApplicants);
+
+            const executorsApplying = ctx.executorsWrapper.executorsApplying();
+            const executorsApplyingText = this.executorsApplying(hasMultipleApplicants, executorsApplying, content, hasCodicils, codicilsNumber, formdata.deceasedName, formdata.applicantName);
+
+            const executorsNotApplying = ctx.executorsWrapper.executorsNotApplying();
+            const executorsNotApplyingText = this.executorsNotApplying(executorsNotApplying, content, formdata.deceasedName, hasCodicils);
+
+            templateData = probateDeclarationFactory.build(ctx, content, formDataForTemplate, multipleApplicantSuffix, executorsApplying, executorsApplyingText, executorsNotApplyingText);
+        }
+
         Object.assign(ctx, templateData);
         ctx.softStop = this.anySoftStops(formdata, ctx);
-        ctx.invitesSent = get(formdata, 'executors.invitesSent');
-        ctx.hasMultipleApplicants = ctx.executorsWrapper.hasMultipleApplicants(get(formdata, 'executors.list'));
-        ctx.executorsEmailChanged = ctx.executorsWrapper.hasExecutorsEmailChanged();
-        ctx.hasExecutorsToNotify = ctx.executorsWrapper.hasExecutorsToNotify() && ctx.invitesSent === 'true';
         return ctx;
     }
 
@@ -203,6 +259,9 @@ class Declaration extends ValidationStep {
 
     action(ctx, formdata) {
         super.action(ctx, formdata);
+        delete ctx.isIntestacyJourney;
+        delete ctx.showNetValueAssetsOutside;
+        delete ctx.ihtNetValueAssetsOutside;
         delete ctx.hasMultipleApplicants;
 
         if (ctx.hasDataChanged === true) {

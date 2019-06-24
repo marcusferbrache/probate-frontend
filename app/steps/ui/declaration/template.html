@@ -8,70 +8,71 @@
 {% block form_content %}
     <h1 class="govuk-heading-l">{{ content.title }}</h1>
     <p class="govuk-body word-break">{{ fields.legalStatement.value.intro | safe }}</p>
-    <div class="declaration-wrapper word-break">
-        <div class="inset-page declaration-grid-item">
-            <div class="declaration-header">
-                <div class="govuk-heading-m declaration-header-item">{{ content.highCourtHeader }}</div>
-                <div class="govuk-heading-s declaration-header-item">{{ content.familyDivisionHeader }}</div>
-                <div class="govuk-heading-s declaration-header-item">{{ content.probateHeader }}</div>
-            </div>
 
-            <h2 class="govuk-heading-m declaration-subheader">{{ content.legalStatementHeader }}</h2>
-            <p class="govuk-body declaration-item">{{ fields.legalStatement.value.applicant | safe }}</p>
+    {% ifAsync fields.isIntestacyJourney.value === "false" %}
+        <div class="declaration-wrapper word-break">
+            <div class="inset-page declaration-grid-item">
+                <div class="declaration-header">
+                    <div class="govuk-heading-m declaration-header-item">{{ content.highCourtHeader }}</div>
+                    <div class="govuk-heading-s declaration-header-item">{{ content.familyDivisionHeader }}</div>
+                    <div class="govuk-heading-s declaration-header-item">{{ content.probateHeader }}</div>
+                </div>
 
-            <h3 class="govuk-heading-s declaration-subheader">{{ content.deceasedHeader }}</h3>
-            <p class="govuk-body declaration-item">{{ fields.legalStatement.value.deceased | safe }} {{ fields.legalStatement.value.deceasedOtherNames }}</p>
+                <h2 class="govuk-heading-m declaration-subheader">{{ content.legalStatementHeader }}</h2>
+                <p class="govuk-body declaration-item">{{ fields.legalStatement.value.applicant | safe }}</p>
 
-            <h3 class="govuk-heading-s declaration-subheader">{{ content.deceasedEstateHeader }}</h3>
-            <p class="govuk-body declaration-item">{{ fields.legalStatement.value.deceasedEstateValue | safe }}</p>
-            <p class="govuk-body declaration-item">{{ fields.legalStatement.value.deceasedEstateLand | safe }}</p>
+                <h3 class="govuk-heading-s declaration-subheader">{{ content.deceasedHeader }}</h3>
+                <p class="govuk-body declaration-item">{{ fields.legalStatement.value.deceased | safe }} {{ fields.legalStatement.value.deceasedOtherNames }}</p>
 
-            <h3 class="govuk-heading-s declaration-subheader">{{ content.executorApplyingHeader }}</h3>
-            {% for executor in fields.legalStatement.value.executorsApplying %}
-                <p class="govuk-body declaration-item">{{ executor.name | safe }}</p>
-                {% if executor.sign !== "" %}
-                    <p class="govuk-body declaration-item">{{ executor.sign | safe }}</p>
-                {% endif %}
-            {% endfor %}
+                {% include "ui/declaration/includes/estate.njk" %}
 
-            {% if fields.legalStatement.value.executorsNotApplying.length > 0 %}
-                <h3 class="govuk-heading-s declaration-subheader">{{ content.executorNotApplyingHeader }}</h3>
-                {% for executor in fields.legalStatement.value.executorsNotApplying %}
-                    <p class="govuk-body declaration-item">{{ executor | safe }}</p>
+                <h3 class="govuk-heading-s declaration-subheader">{{ content.executorApplyingHeader }}</h3>
+                {% for executor in fields.legalStatement.value.executorsApplying %}
+                    <p class="govuk-body declaration-item">{{ executor.name | safe }}</p>
+                    {% if executor.sign !== "" %}
+                        <p class="govuk-body declaration-item">{{ executor.sign | safe }}</p>
+                    {% endif %}
                 {% endfor %}
-            {% endif %}
 
-            <h2 class="govuk-heading-l declaration-subheader">{{ content.declarationHeader }}</h2>
-            <p class="govuk-body declaration-item">{{ fields.declaration.value.confirm | safe }}</p>
+                {% if fields.legalStatement.value.executorsNotApplying.length > 0 %}
+                    <h3 class="govuk-heading-s declaration-subheader">{{ content.executorNotApplyingHeader }}</h3>
+                    {% for executor in fields.legalStatement.value.executorsNotApplying %}
+                        <p class="govuk-body declaration-item">{{ executor | safe }}</p>
+                    {% endfor %}
+                {% endif %}
 
-            {{ unorderedList([
-                fields.declaration.value.confirmItem1,
-                fields.declaration.value.confirmItem2,
-                fields.declaration.value.confirmItem3
-            ]) }}
-
-            <p class="govuk-body declaration-item">{{ fields.declaration.value.requests | safe }}</p>
-
-            {{ unorderedList([
-                fields.declaration.value.requestsItem1,
-                fields.declaration.value.requestsItem2
-            ]) }}
-
-            <p class="govuk-body declaration-item">{{ fields.declaration.value.understand | safe }}</p>
-
-            {{ unorderedList([
-                fields.declaration.value.understandItem1,
-                fields.declaration.value.understandItem2
-            ]) }}
+                {% include "ui/declaration/includes/lists.njk" %}
+            </div>
+            {% include "ui/declaration/includes/download.njk" %}
         </div>
-        <div class="declaration-grid-item">
-            <h2 class="govuk-heading-m">{{ content.saveThisPage }}</h2>
-            <p class="govuk-body">
-                <em class="icon icon-file-download"></em>
-                <a class="anchor-margin-left" id="declarationPdfHref" href="/declaration-pdf">{{ content.declarationPdf }}</a>
-            </p>
+    {% endif %}
+    {% ifAsync fields.isIntestacyJourney.value === "true" %}
+        <div class="declaration-wrapper word-break">
+            <div class="inset-page declaration-grid-item">
+                <div class="declaration-header">
+                    <div class="govuk-heading-m declaration-header-item">{{ content.highCourtHeader }}</div>
+                    <div class="govuk-heading-s declaration-header-item">{{ content.familyDivisionHeader }}</div>
+                    <div class="govuk-heading-s declaration-header-item">{{ content.intestacyHeader }}</div>
+                </div>
+
+                <h2 class="govuk-heading-m declaration-subheader">{{ content.legalStatementHeader }}</h2>
+                <p class="govuk-body declaration-item">{{ fields.legalStatement.value.applicant | safe }}</p>
+
+                <h3 class="govuk-heading-s declaration-subheader">{{ content.deceasedHeader }}</h3>
+                <p class="govuk-body declaration-item">{{ fields.legalStatement.value.deceased | safe }} {{ fields.legalStatement.value.deceasedOtherNames }}</p>
+                <p class="govuk-body declaration-item">{{ fields.legalStatement.value.deceasedMaritalStatus }}</p>
+                <p class="govuk-body declaration-item">{{ fields.legalStatement.value.deceasedChildren }}</p>
+
+                {% include "ui/declaration/includes/estate.njk" %}
+
+                <p class="govuk-body declaration-item">{{ fields.legalStatement.value.applicant2 | safe }}</p>
+                <p class="govuk-body declaration-item">{{ fields.legalStatement.value.applying | safe }}</p>
+
+                {% include "ui/declaration/includes/lists.njk" %}
+            </div>
+            {% include "ui/declaration/includes/download.njk" %}
         </div>
-    </div>
+    {% endif %}
 
     {{ govukCheckboxes({
         idPrefix: "declarationCheckbox",
