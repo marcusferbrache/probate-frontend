@@ -25,8 +25,8 @@ $path: "/public/images/";
 @import "node_modules/govuk-frontend/components/textarea/textarea";
 
 // Import HMCTS Frontend
-//@import "node_modules/@hmcts/frontend/settings/assets";
-//@import 'node_modules/@hmcts/frontend/components/hmcts-progress-bar/progress-bar';
+@import "node_modules/@hmcts/frontend/settings/assets";
+@import 'node_modules/@hmcts/frontend/components/hmcts-progress-bar/progress-bar';
 
 @import 'patterns/header';
 @import 'patterns/hint';
