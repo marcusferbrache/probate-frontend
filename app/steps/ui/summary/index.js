@@ -123,7 +123,7 @@ class Summary extends Step {
                 .replace('{deceasedName}', deceasedName ? deceasedName : content.AnyOtherChildren.theDeceased);
             ctx.deceasedAnyDeceasedChildrenQuestion = content.AnyDeceasedChildren.question
                 .replace('{deceasedName}', deceasedName ? deceasedName : content.AnyDeceasedChildren.theDeceased)
-                .replace('{deceasedDoD}', (formdata.deceased && formdata.deceased.dod_formattedDate) ? formdata.deceased.dod_formattedDate : '');
+                .replace('{deceasedDoD}', (formdata.deceased && formdata.deceased['dod-formattedDate']) ? formdata.deceased['dod-formattedDate'] : '');
             ctx.deceasedAllChildrenOver18Question = content.AllChildrenOver18.question
                 .replace('{deceasedName}', deceasedName ? deceasedName : content.AllChildrenOver18.theDeceased);
             ctx.deceasedSpouseNotApplyingReasonQuestion = content.SpouseNotApplyingReason.question

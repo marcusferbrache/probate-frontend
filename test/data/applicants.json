@@ -8,7 +8,7 @@
   "deceased": {
     "firstName": "Joe",
     "lastName": "Bloggs",
-    "dod_formattedDate": "12 December 2016",
+    "dod-formattedDate": "12 December 2016",
     "anyOtherChildren": "Yes",
     "allChildrenOver18": "Yes",
     "anyDeceasedChildren": "Yes",
