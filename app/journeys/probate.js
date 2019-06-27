@@ -193,7 +193,8 @@ const stepList = {
         otherwise: 'CoApplicantDisagreePage'
     },
     CoApplicantAgreePage: 'CoApplicantAgreePage',
-    CoApplicantDisagreePage: 'CoApplicantDisagreePage'
+    CoApplicantDisagreePage: 'CoApplicantDisagreePage',
+    Recap: 'Recap'
 };
 
 module.exports.stepList = stepList;

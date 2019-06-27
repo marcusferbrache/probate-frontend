@@ -152,7 +152,8 @@ const stepList = {
     PaymentBreakdown: 'PaymentStatus',
     PaymentStatus: 'TaskList',
     TaskList: 'TaskList',
-    StopPage: 'StopPage'
+    StopPage: 'StopPage',
+    Recap: 'Recap'
 };
 
 module.exports.stepList = stepList;
