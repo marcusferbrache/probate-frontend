@@ -17,9 +17,12 @@ class Recap extends ValidationStep {
         return '/recap';
     }
 
-    handleGet(ctx, formdata) {
+    getContextData(req) {
+        const ctx = super.getContextData(req);
+        const formdata = req.session.formdata || {};
         const registryAddress = (new RegistryWrapper(formdata.registry)).address();
 
+        ctx.journeyType = setJourney.getJourneyName(req.session);
         ctx.ccdReferenceNumber = FormatCcdCaseId.format(formdata.ccdCase);
         ctx.ccdReferenceNumber = '1234-5678-9012-3456'; // For demo purposes only
         ctx.ccdReferenceNumberAccessible = ctx.ccdReferenceNumber.split('').join(' ');
@@ -35,7 +38,6 @@ class Recap extends ValidationStep {
             ctx.legalDeclaration = true;
         }
 
-        // ctx.documentsSent = false; // For demo purposes only
         ctx.checkAnswersSummary = true; // For demo purposes only
         ctx.legalDeclaration = true; // For demo purposes only
 
@@ -54,19 +56,24 @@ class Recap extends ValidationStep {
 
         ctx.is205 = formdata.iht && formdata.iht.method === contentIhtMethod.optionPaper && formdata.iht.form === 'IHT205';
 
-        return [ctx];
-    }
-
-    getContextData(req) {
-        const ctx = super.getContextData(req);
-        ctx.journeyType = setJourney.getJourneyName(req.session);
         return ctx;
     }
 
     action(ctx, formdata) {
         super.action(ctx, formdata);
+        delete ctx.journeyType;
         delete ctx.ccdReferenceNumber;
         delete ctx.ccdReferenceNumberAccessible;
+        delete ctx.registryAddress;
+        delete ctx.checkAnswersSummary;
+        delete ctx.legalDeclaration;
+        delete ctx.hasCodicils;
+        delete ctx.codicilsNumber;
+        delete ctx.hasMultipleApplicants;
+        delete ctx.hasRenunciated;
+        delete ctx.executorsNameChangedByDeedPollList;
+        delete ctx.spouseRenouncing;
+        delete ctx.is205;
         return [ctx, formdata];
     }
 }
