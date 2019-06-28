@@ -4,29 +4,29 @@
 {% from "button/macro.njk" import govukButton %}
 {% from "widgets/lists.html" import unorderedList %}
 
-{% set checklistOneItems = [] %}
+{% set checklistItems = [] %}
 {% set codicilsSuffix = "" %}
 
 {% if fields.journeyType.value === "gop" %}
     {% if fields.hasCodicils.value == "true" and fields.codicilsNumber.value > "0" %}
-        {% set checklistOneItems = (checklistOneItems.push(content["checklist1-item1-codicils"]), checklistOneItems) %}
+        {% set checklistItems = (checklistItems.push(content["checklist-item1-codicils"]), checklistItems) %}
         {% set codicilsSuffix = "-codicils" %}
     {% else %}
-        {% set checklistOneItems = (checklistOneItems.push(content["checklist1-item1-no-codicils"]), checklistOneItems) %}
+        {% set checklistItems = (checklistItems.push(content["checklist-item1-no-codicils"]), checklistItems) %}
     {% endif %}
 
     {% if fields.uploads.value | length == 0 %}
-        {% set checklistOneItems = (checklistOneItems.push(content["checklist2-item3-will-uploaded"]), checklistOneItems) %}
+        {% set checklistItems = (checklistItems.push(content["checklist-item3-will-uploaded"]), checklistItems) %}
     {% endif %}
     {% if (fields.is205.value == "true") %}
-        {% set checklistOneItems = (checklistOneItems.push(content["checklist2-item4-iht205"]), checklistOneItems) %}
+        {% set checklistItems = (checklistItems.push(content["checklist-item4-iht205"]), checklistItems) %}
     {% endif %}
     {% if fields.hasRenunciated.value == "true" %}
-        {% set checklistOneItems = (checklistOneItems.push(content["checklist2-item5-renunciated"] | replace("{renunciationFormLink}", links.renunciationForm)), checklistOneItems) %}
+        {% set checklistItems = (checklistItems.push(content["checklist-item5-renunciated"] | replace("{renunciationFormLink}", links.renunciationForm)), checklistItems) %}
     {% endif %}
     {% if fields.executorsNameChangedByDeedPollList.value | length > 0 %}
         {% for executor in fields.executorsNameChangedByDeedPollList.value %}
-            {% set checklistOneItems = (checklistOneItems.push(content["checklist2-item6-deed-poll"] | replace("{executorCurrentName}", executor)), checklistOneItems) %}
+            {% set checklistItems = (checklistItems.push(content["checklist-item6-deed-poll"] | replace("{executorCurrentName}", executor)), checklistItems) %}
         {% endfor %}
     {% endif %}
 {% else %}
@@ -56,7 +56,7 @@
         {% endif %}
         <p class="govuk-body">{{ content.text2 | safe }}</p>
 
-        {{ unorderedList(checklistOneItems) }}
+        {{ unorderedList(checklistItems) }}
 
         {% if fields.journeyType.value === "gop" %}
             <p class="govuk-body">{{ content.text3 | safe }}</p>
