@@ -56,12 +56,12 @@
         classes: 'margin-bottom50',
         items: [{
             label: {
-                text: 'Online application submitted'
+                text: content.progressStep1
             },
             complete: true
         }, {
             label: {
-                text: 'Post paper documents'
+                text: content["progressStep2-2"] if fields.documentsSent.value == "true" else content["progressStep2-1"]
             },
             complete: fields.documentsSent.value == "true"
         }]

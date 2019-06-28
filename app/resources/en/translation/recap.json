@@ -2,6 +2,10 @@
   "title": "Your probate application",
   "referenceNumber": "Your reference number is",
 
+  "progressStep1": "Online application submitted",
+  "progressStep2-1": "Post paper documents",
+  "progressStep2-2": "Paper documents posted",
+
   "block1Heading1": "Post documents",
   "block1Heading2": "Post your documents to the probate registry",
   "block1Text1": "Reference number <strong class=\"no-wrap\", aria-label=\"{ccdReferenceNumberAccessible}\">{ccdReferenceNumber}</strong>",
@@ -38,7 +42,7 @@
   "errors": {
     "documentsSent": {
       "required": {
-        "summary": "You haven&rsquo;t ticked the check box to let us know that you&rsquo;ve sent your document",
+        "summary": "You haven&rsquo;t ticked the check box to let us know that you&rsquo;ve sent your documents",
         "message": "Tick the check box to let us know that you&rsquo;ve sent your documents"
       }
     }
