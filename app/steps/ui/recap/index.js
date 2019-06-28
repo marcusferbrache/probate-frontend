@@ -1,11 +1,17 @@
 'use strict';
 
-const Step = require('app/core/steps/Step');
+const setJourney = require('app/middleware/setJourney');
+const ValidationStep = require('app/core/steps/ValidationStep');
+const ExecutorsWrapper = require('app/wrappers/Executors');
+const WillWrapper = require('app/wrappers/Will');
 const RegistryWrapper = require('app/wrappers/Registry');
 const FormatCcdCaseId = require('app/utils/FormatCcdCaseId');
 const content = require('app/resources/en/translation/recap');
+const contentDeceasedMaritalStatus = require('app/resources/en/translation/deceased/maritalstatus');
+const contentRelationshipToDeceased = require('app/resources/en/translation/applicant/relationshiptodeceased');
+const contentIhtMethod = require('app/resources/en/translation/iht/method');
 
-class Recap extends Step {
+class Recap extends ValidationStep {
 
     static getUrl () {
         return '/recap';
@@ -18,7 +24,7 @@ class Recap extends Step {
         ctx.ccdReferenceNumber = '1234-5678-9012-3456'; // For demo purposes only
         ctx.ccdReferenceNumberAccessible = ctx.ccdReferenceNumber.split('').join(' ');
         ctx.ccdReferenceNumberAccessible = ctx.ccdReferenceNumberAccessible.replace(/ - /g, ', -, ');
-        ctx.registryAddress = registryAddress ? registryAddress : content.block1Address;
+        ctx.registryAddress = registryAddress ? registryAddress : content.block1Text8;
 
         ctx.checkAnswersSummary = false;
         ctx.legalDeclaration = false;
@@ -29,11 +35,32 @@ class Recap extends Step {
             ctx.legalDeclaration = true;
         }
 
-        ctx.documentsSent = false; // For demo purposes only
+        // ctx.documentsSent = false; // For demo purposes only
         ctx.checkAnswersSummary = true; // For demo purposes only
         ctx.legalDeclaration = true; // For demo purposes only
 
+        if (ctx.journeyType === 'gop') {
+            const executorsWrapper = new ExecutorsWrapper(formdata.executors);
+            const willWrapper = new WillWrapper(formdata.will);
+
+            ctx.hasCodicils = willWrapper.hasCodicils();
+            ctx.codicilsNumber = willWrapper.codicilsNumber();
+            ctx.hasMultipleApplicants = executorsWrapper.hasMultipleApplicants();
+            ctx.hasRenunciated = executorsWrapper.hasRenunciated();
+            ctx.executorsNameChangedByDeedPollList = executorsWrapper.executorsNameChangedByDeedPoll();
+        } else {
+            ctx.spouseRenouncing = formdata.deceased && formdata.deceased.maritalStatus === contentDeceasedMaritalStatus.optionMarried && (formdata.applicant.relationshipToDeceased === contentRelationshipToDeceased.optionChild || formdata.applicant.relationshipToDeceased === contentRelationshipToDeceased.optionAdoptedChild);
+        }
+
+        ctx.is205 = formdata.iht && formdata.iht.method === contentIhtMethod.optionPaper && formdata.iht.form === 'IHT205';
+
         return [ctx];
+    }
+
+    getContextData(req) {
+        const ctx = super.getContextData(req);
+        ctx.journeyType = setJourney.getJourneyName(req.session);
+        return ctx;
     }
 
     action(ctx, formdata) {

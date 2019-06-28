@@ -2,34 +2,45 @@
   "title": "Your probate application",
   "referenceNumber": "Your reference number is",
 
-  "block1Heading1": "You must send these documents:",
+  "block1Heading1": "Post documents",
   "block1Heading2": "Post your documents to the probate registry",
-  "block1Text1": "Print off this <a href=\"/cover-sheet-pdf\" class=\"govuk-link\" target=\"_blank\" rel=\"noopener\">cover letter to include with your documents</a>.",
-  "block1Text2": "If you do not have access to a printer, include your reference number <strong class=\"no-wrap\", aria-label=\"{ccdReferenceNumberAccessible}\">{ccdReferenceNumber}</strong> on a sheet of paper and  include it with your documents.",
-  "block1Text3": "You&rsquo;ll need to include a cover letter if the will or codicils have changed in any way since you&rsquo;ve had them.",
-  "block1Text4": "The letter should explain whats been changed and why. ",
-  "block1Text5": "You should send your documents using a signed-for postal service to:",
+  "block1Text1": "Reference number <strong class=\"no-wrap\", aria-label=\"{ccdReferenceNumberAccessible}\">{ccdReferenceNumber}</strong>",
+  "block1Text2": "You must send these documents:",
+  "block1Text3": "Print off <a href=\"/cover-sheet-pdf\" class=\"govuk-link\" target=\"_blank\" rel=\"noopener\">this coversheet</a> and send it with your documents.",
+  "block1Text4": "If you do not have a printer, write your reference number <strong class=\"no-wrap\", aria-label=\"{ccdReferenceNumberAccessible}\">{ccdReferenceNumber}</strong> on a sheet of paper and send it with your documents.",
+  "block1Text5": "If the will or codicils have changed in any way since you&rsquo;ve had them, you&rsquo;ll need to include a letter explaining what&rsquo;s changed and why.",
   "block1Text6": "The grant of probate won&rsquo;t be issued if you don&rsquo;t have all the necessary documents.",
-  "block1Checklist1-item1-no-codicils": "the original will (this won&rsquo;t be returned to you)",
-  "block1Checklist1-item1-codicils": "the original will and any updates (codicils) (these won&rsquo;t be returned to you)",
-  "block1Checklist2-item3-will-uploaded": "the original death certificate (this will be returned to you)",
-  "block1Checklist2-item4-iht205": "the completed inheritance tax form IHT 205",
-  "block1Checklist2-item5-renunciated": "a <a href=\"{renunciationFormLink}\" class=\"govuk-link\" target=\"_blank\" rel=\"noopener\">renunciation form</a> filled in by any executors who are permanently giving up their right to make this application for probate",
-  "block1Checklist2-item6-deed-poll": "copy of the deed poll document for {executorCurrentName}",
+  "block1Text7": "Send your documents using a signed-for postal service to:",
+  "block1Text8": "Digital Application\nOxford District Probate Registry\nCombined Court Building\nSt Aldates\nOxford\nOX1 1LY",
+  "block1Checklist-item1-will-no-codicils": "the original will (this won&rsquo;t be returned to you)",
+  "block1Checklist-item1-will-codicils": "the original will and any updates (codicils) (these won&rsquo;t be returned to you)",
+  "block1Checklist-item2-spouse-renouncing": "a <a href=\"{renunciationFormLink}\" class=\"govuk-link\" target=\"_blank\" rel=\"noopener\">renunciation form</a> filled in by the spouse or civil partner of the deceased who is permanently giving up the right to make this application for probate",
+  "block1Checklist-item3-will-not-uploaded": "the original death certificate (this will be returned to you)",
+  "block1Checklist-item4-iht205": "the completed inheritance tax form IHT 205",
+  "block1Checklist-item5-spouse-renunciated": "a <a href=\"{renunciationFormLink}\" class=\"govuk-link\" target=\"_blank\" rel=\"noopener\">renunciation form</a> filled in by any executors who are permanently giving up their right to make this application for probate",
+  "block1Checklist-item6-deed-poll": "copy of the deed poll document for {executorCurrentName}",
 
   "block2Heading": "What happens next",
-  "block2Text1": "Your application will be processed as soon as the Probate Registry receives your documents.",
-  "block2Text2": "You will receive the grant of probate and any copies you&rsquo;ve ordered within 20 working days of your documents being received.",
-  "block2Text3": "We&rsquo;ll email you if we need any more information. You can also call the Probate Registry on {helpLineNumber} if you have any questions.",
-  "block2Text4": "Find out what to do <a href=\"{findOutNext}\" class=\"govuk-link\" target=\"_blank\" rel=\"noopener\">when you receive your grant of probate</a>.",
+  "block2Text1": "It currently takes us up to 8 weeks from when we receive your documents to fully process your probate application and issue you a grant of probate.",
+  "block2Text2": "We will be in contact once we have reviewed your application. You do not need to do anything until then.",
+  "block2Text3": "Find out what to do <a href=\"{findOutNext}\" class=\"govuk-link\" target=\"_blank\" rel=\"noopener\">when you receive your grant of probate</a>.",
 
   "block3Heading": "Start a new application",
   "block4Heading": "View your application so far",
 
-  "documentsSent": "Documents sent",
-  "save": "Save",
+  "documentsSent": "I have sent my documents to the Probate Registry",
+  "continue": "Continue",
   "declarationPdf": "Legal declaration (30kb PDF)",
   "checkAnswersPdf": "Check your answers (10kb PDF)",
   "coverSheetPdf": "Application coversheet (20kb PDF)",
-  "documentsListPdf": "Documents list (15kb PDF)"
+  "documentsListPdf": "Documents checklist (15kb PDF)",
+
+  "errors": {
+    "documentsSent": {
+      "required": {
+        "summary": "You haven&rsquo;t ticked the check box to let us know that you&rsquo;ve sent your document",
+        "message": "Tick the check box to let us know that you&rsquo;ve sent your documents"
+      }
+    }
+  }
 }
