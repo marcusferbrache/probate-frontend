@@ -22,7 +22,7 @@
         {% set checklistItems = (checklistItems.push(content["checklist-item4-iht205"]), checklistItems) %}
     {% endif %}
     {% if fields.hasRenunciated.value == "true" %}
-        {% set checklistItems = (checklistItems.push(content["checklist-item5-renunciated"] | replace("{renunciationFormLink}", links.renunciationForm)), checklistItems) %}
+        {% set checklistItems = (checklistItems.push(content["checklist-item5-renunciated"] | replace("{renunciationFormLink}", globals.links.renunciationForm)), checklistItems) %}
     {% endif %}
     {% if fields.executorsNameChangedByDeedPollList.value | length > 0 %}
         {% for executor in fields.executorsNameChangedByDeedPollList.value %}
@@ -31,7 +31,7 @@
     {% endif %}
 {% else %}
     {% if fields.spouseRenouncing.value === "true" %}
-        {% set checklistItems = (checklistItems.push(content["checklist-item2-spouse-renouncing"] | replace("{renunciationFormLink}", links.renunciationForm)), checklistItems) %}
+        {% set checklistItems = (checklistItems.push(content["checklist-item2-spouse-renouncing"] | replace("{renunciationFormLink}", globals.links.renunciationForm)), checklistItems) %}
     {% endif %}
     {% if fields.uploads.value | length === 0 %}
         {% set checklistItems = (checklistItems.push(content["checklist-item3-will-uploaded"]), checklistItems) %}

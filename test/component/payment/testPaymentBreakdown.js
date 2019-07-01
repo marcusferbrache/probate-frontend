@@ -1,8 +1,8 @@
 'use strict';
 
-const TestWrapper = require('test/util/TestWrapper');
 const nock = require('nock');
 const config = require('app/config');
+const TestWrapper = require('test/util/TestWrapper');
 const testHelpBlockContent = require('test/component/common/testHelpBlockContent.js');
 const IDAM_S2S_URL = config.services.idam.s2s_url;
 const sinon = require('sinon');

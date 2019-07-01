@@ -78,21 +78,24 @@ exports.init = function() {
         noCache: true
     });
 
-    njkEnv.addGlobal('currentYear', new Date().getFullYear());
-    njkEnv.addGlobal('gaTrackingId', config.gaTrackingId);
-    njkEnv.addGlobal('enableTracking', config.enableTracking);
-    njkEnv.addGlobal('links', config.links);
-    njkEnv.addGlobal('helpline', config.helpline);
-    njkEnv.addGlobal('nonce', uuid);
-    njkEnv.addGlobal('documentUpload', {
-        validMimeTypes: config.documentUpload.validMimeTypes,
-        maxFiles: config.documentUpload.maxFiles,
-        maxSizeBytes: config.documentUpload.maxSizeBytes
-    });
-    njkEnv.addGlobal('webChat', {
-        chatId: config.webChat.chatId,
-        tenant: config.webChat.tenant
-    });
+    const globals = {
+        currentYear: new Date().getFullYear(),
+        gaTrackingId: config.gaTrackingId,
+        enableTracking: config.enableTracking,
+        links: config.links,
+        helpline: config.helpline,
+        nonce: uuid,
+        documentUpload: {
+            validMimeTypes: config.documentUpload.validMimeTypes,
+            maxFiles: config.documentUpload.maxFiles,
+            maxSizeBytes: config.documentUpload.maxSizeBytes
+        },
+        webChat: {
+            chatId: config.webChat.chatId,
+            tenant: config.webChat.tenant
+        }
+    };
+    njkEnv.addGlobal('globals', globals);
 
     filters(njkEnv);
     njkEnv.express(app);
@@ -138,6 +141,7 @@ exports.init = function() {
         browserSniff: true,
         setAllHeaders: true
     }));
+
     // Http public key pinning
     app.use(helmet.hpkp({
         maxAge: 900,
@@ -150,12 +154,10 @@ exports.init = function() {
     }));
 
     app.use(helmet.noCache());
-
     app.use(helmet.xssFilter({setOnOldIE: true}));
 
-    app.use('/webchat', express.static(`${__dirname}/node_modules/@hmcts/ctsc-web-chat/assets`));
-
     // Middleware to serve static assets
+    app.use('/webchat', express.static(`${__dirname}/node_modules/@hmcts/ctsc-web-chat/assets`));
     app.use('/public/stylesheets', express.static(`${__dirname}/public/stylesheets`));
     app.use('/public/images', express.static(`${__dirname}/app/assets/images`));
     app.use('/public/javascripts/govuk-frontend', express.static(`${__dirname}/node_modules/govuk-frontend`));

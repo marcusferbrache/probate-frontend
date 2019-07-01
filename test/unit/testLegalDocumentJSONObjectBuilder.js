@@ -6,8 +6,8 @@ const fs = require('fs');
 const html = fs.readFileSync('test/data/legalDeclationHTML.html').toString();
 const requireDir = require('require-directory');
 const translations = requireDir(module, '../../app/resources/en/translation');
-const FormatName = require('app/utils/FormatName');
 const he = require('he');
+const FormatName = require('app/utils/FormatName');
 
 let legalDocumentJSONObjectBuilder;
 let sessionData;

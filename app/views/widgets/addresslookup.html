@@ -26,7 +26,7 @@
         </div>
     {% endif %}
 
-    <script nonce="{{ nonce }}">
+    <script nonce="{{ globals.nonce }}">
         if (document.getElementById('postcodeAddress')) {
             const addresses = [
                 {% for address in fields.addresses.value %}

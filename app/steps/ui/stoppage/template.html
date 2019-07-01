@@ -9,7 +9,7 @@
             <h1 class="govuk-heading-l">{{ content.header | safe }}</h1>
 
             {% for placeholder in fields.linkPlaceholders.value %}
-                {% set tempContent = tempContent | replace("{" + placeholder + "}", links[placeholder]) %}
+                {% set tempContent = tempContent | replace("{" + placeholder + "}", globals.links[placeholder]) %}
             {% endfor %}
 
             <p class="govuk-body">{{ tempContent | safe }}</p>

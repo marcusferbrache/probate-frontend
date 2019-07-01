@@ -1,11 +1,11 @@
 <script src="/public/javascripts/jquery-1.11.3.js"></script>
 
 <script src="/public/javascripts/govuk-frontend/all.js"></script>
-<script nonce="{{ nonce }}">window.GOVUKFrontend.initAll()</script>
+<script nonce="{{ globals.nonce }}">window.GOVUKFrontend.initAll()</script>
 
-{% if enableTracking == "true" %}
-    <script nonce="{{ nonce }}">
-        const gatrackingid = "{{ gaTrackingId }}";
+{% if globals.enableTracking == "true" %}
+    <script nonce="{{ globals.nonce }}">
+        const gatrackingid = "{{ globals.gaTrackingId }}";
     </script>
     <script src="/public/javascripts/ga-tracking.js"></script>
     <noscript>
@@ -14,13 +14,13 @@
 {% endif %}
 
 <script src="/public/javascripts/dropzone.js"></script>
-<script nonce="{{ nonce }}">
+<script nonce="{{ globals.nonce }}">
     const documentUploadConfig = {
         csrfToken: '{{ csrfToken }}',
-        validMimeTypes: '{{ documentUpload.validMimeTypes }}',
-        maxFiles: '{{ documentUpload.maxFiles }}',
-        maxSizeBytes: '{{ documentUpload.maxSizeBytes }}',
-        timeout: '{{ documentUpload.timeout }}',
+        validMimeTypes: '{{ globals.documentUpload.validMimeTypes }}',
+        maxFiles: '{{ globals.documentUpload.maxFiles }}',
+        maxSizeBytes: '{{ globals.documentUpload.maxSizeBytes }}',
+        timeout: '{{ globals.documentUpload.timeout }}',
         content: {
             removeFileText: '{{ common.documentUploadRemoveFile }}',
             errorSummaryHeading: '{{ common.errorSummaryHeading }}',
@@ -45,10 +45,10 @@
 
 {% if fields.featureToggles.value.webchat == "true" %}
     <script src="/webchat/javascript/hmcts-webchat.js"></script>
-    <script nonce="{{ nonce }}">
+    <script nonce="{{ globals.nonce }}">
         webchat_init({
-            uuid: '{{ webChat.chatId }}',
-            tenant: '{{ webChat.tenant }}',
+            uuid: '{{ globals.webChat.chatId }}',
+            tenant: '{{ globals.webChat.tenant }}',
             channel: 'Probate',
             stylesheetURL: 'https://' + window.location.hostname + '/public/stylesheets/hmcts-webchat.css',
             busHandlerURL: 'https://' + window.location.hostname + '/webchat/javascript/hmcts-webchat-busHandler.js',
