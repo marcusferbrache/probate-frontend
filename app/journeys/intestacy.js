@@ -27,7 +27,7 @@ const taskList = {
         summary: 'Summary'
     },
     DocumentsTask: {
-        firstStep: 'Documents',
+        firstStep: 'Recap',
         lastStep: 'TaskList',
         summary: 'Summary'
     }
@@ -156,8 +156,6 @@ const stepList = {
     CopiesSummary: 'TaskList',
     PaymentBreakdown: 'PaymentStatus',
     PaymentStatus: 'TaskList',
-    Documents: 'ThankYou',
-    ThankYou: 'TaskList',
     TaskList: 'TaskList',
     StopPage: 'StopPage',
     Recap: 'Recap'

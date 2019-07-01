@@ -27,7 +27,7 @@ const taskList = {
         summary: 'Summary'
     },
     DocumentsTask: {
-        firstStep: 'Documents',
+        firstStep: 'Recap',
         lastStep: 'TaskList',
         summary: 'Summary'
     }
@@ -168,8 +168,6 @@ const stepList = {
     ExecutorsInvitesSent: 'TaskList',
     ExecutorsChangeMade: 'TaskList',
     Submit: 'TaskList',
-    Documents: 'ThankYou',
-    ThankYou: 'TaskList',
     CopiesStart: 'CopiesUk',
     CopiesUk: 'AssetsOverseas',
     AssetsOverseas: {
