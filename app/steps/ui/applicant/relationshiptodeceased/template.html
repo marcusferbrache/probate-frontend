@@ -7,23 +7,23 @@
 {% if fields.deceasedMaritalStatus.value == "Married or in a civil partnership" %}
     {% set answers = (answers.push({
         value: content["optionSpousePartner"],
-        text: content["optionSpousePartner"] | safe,
+        text: content["optionSpousePartner"],
         checked: true if fields.relationshipToDeceased.value == content["optionSpousePartner"] | escape
     }), answers) %}
 {% endif %}
 {% set answers = (answers.push({
     value: content["optionChild"],
-    text: content["optionChild"] | safe,
+    text: content["optionChild"],
     checked: true if fields.relationshipToDeceased.value == content["optionChild"] | escape
 }), answers) %}
 {% set answers = (answers.push({
     value: content["optionAdoptedChild"],
-    text: content["optionAdoptedChild"] | safe,
+    text: content["optionAdoptedChild"],
     checked: true if fields.relationshipToDeceased.value == content["optionAdoptedChild"] | escape
 }), answers) %}
 {% set answers = (answers.push({
     value: content["optionOther"],
-    text: content["optionOther"] | safe,
+    text: content["optionOther"],
     checked: true if fields.relationshipToDeceased.value == content["optionOther"] | escape
 }), answers) %}
 

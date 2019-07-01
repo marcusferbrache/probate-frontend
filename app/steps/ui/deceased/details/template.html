@@ -29,11 +29,11 @@
         } %}
     {% endif %}
 
-    <h1 class="form-title govuk-heading-l">{{ content.question | safe }}</h1>
+    <h1 class="form-title govuk-heading-l">{{ content.question }}</h1>
 
     {% call govukFieldset({
         legend: {
-            text: content.questionName | safe,
+            text: content.questionName,
             classes: "govuk-fieldset__legend--m"
         }
     }) %}
@@ -47,7 +47,7 @@
             id: "firstName",
             name: "firstName",
             value: fields.firstName.value | safe,
-            errorMessage: { text: fields.firstName.errorMessage.message | safe } if fields.firstName.errorMessage,
+            errorMessage: { text: fields.firstName.errorMessage.message } if fields.firstName.errorMessage,
             attributes: {
                 maxlength: 100
             },
@@ -60,7 +60,7 @@
             id: "lastName",
             name: "lastName",
             value: fields.lastName.value | safe,
-            errorMessage: { text: fields.lastName.errorMessage.message | safe } if fields.lastName.errorMessage,
+            errorMessage: { text: fields.lastName.errorMessage.message } if fields.lastName.errorMessage,
             attributes: {
                 maxlength: 100
             },
@@ -73,7 +73,7 @@
         namePrefix: "dob",
         fieldset: {
             legend: {
-                text: content.questionDob | safe,
+                text: content.questionDob,
                 classes: "govuk-fieldset__legend--m"
             }
         },
@@ -105,7 +105,7 @@
         namePrefix: "dod",
         fieldset: {
             legend: {
-                text: content.questionDod | safe,
+                text: content.questionDod,
                 classes: "govuk-fieldset__legend--m"
             }
         },

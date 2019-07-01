@@ -12,7 +12,7 @@
         name: "domicile",
         fieldset: {
             legend: {
-                text: content.question | safe,
+                text: content.question,
                 isPageHeading: true,
                 classes: "govuk-fieldset__legend--l"
             }
@@ -24,12 +24,12 @@
         items: [
             {
                 value: content["optionYes"],
-                text: content["optionYes"] | safe,
+                text: content["optionYes"],
                 checked: true if fields.domicile.value == content["optionYes"] | escape
             },
             {
                 value: content["optionNo"],
-                text: content["optionNo"] | safe,
+                text: content["optionNo"],
                 checked: true if fields.domicile.value == content["optionNo"] | escape
             }
         ]

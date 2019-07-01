@@ -1,14 +1,14 @@
 {% from "details/macro.njk" import govukDetails %}
 
 {% block help_info %}
-    {% set helpContent = "<p class=\"govuk-heading-s\">" + (common.helpHeading1 | safe) + "</p>" %}
-    {% set helpContent = helpContent + "<p class=\"govuk-body\">" + globals.helpline.number | safe + "</p>" %}
-    {% set helpContent = helpContent + "<p class=\"govuk-body\">" + (common.contactOpeningTimes | replace('{openingTimes}', globals.helpline.hours) | safe) + "</p>" %}
-    {% set helpContent = helpContent + "<p class=\"govuk-heading-s\">" + (common.helpHeading2 | safe) + "</p>" %}
-    {% set helpContent = helpContent + "<p class=\"govuk-body\">" + (common.helpEmailLabel | replace('{contactEmailAddress}', globals.links.contactEmailAddress) | safe) + "</p>" %}
+    {% set helpContent = "<p class=\"govuk-heading-s\">" + (common.helpHeading1) + "</p>" %}
+    {% set helpContent = helpContent + "<p class=\"govuk-body\">" + globals.helpline.number + "</p>" %}
+    {% set helpContent = helpContent + "<p class=\"govuk-body\">" + (common.contactOpeningTimes | replace('{openingTimes}', globals.helpline.hours)) + "</p>" %}
+    {% set helpContent = helpContent + "<p class=\"govuk-heading-s\">" + (common.helpHeading2) + "</p>" %}
+    {% set helpContent = helpContent + "<p class=\"govuk-body\">" + (common.helpEmailLabel | replace('{contactEmailAddress}', globals.links.contactEmailAddress)) + "</p>" %}
 
     {% if fields.featureToggles.value.webchat == "true" %}
-        {% set helpContent = helpContent + "<p class=\"govuk-heading-s\" id=\"ctsc-web-chat-header\">" + (common.helpHeading3 | safe) + "</p>" %}
+        {% set helpContent = helpContent + "<p class=\"govuk-heading-s\" id=\"ctsc-web-chat-header\">" + (common.helpHeading3) + "</p>" %}
         {% set helpContent = helpContent + "<div id=\"ctsc-web-chat\"></div>" %}
     {% endif %}
 

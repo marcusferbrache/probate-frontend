@@ -8,7 +8,7 @@
     {% set otherHtml %}
         {{ govukInput({
             label: {
-                text: content.optionOtherHint | safe
+                text: content.optionOtherHint
             },
             id: "otherReason",
             name: "otherReason",
@@ -36,22 +36,22 @@
         items: [
             {
                 value: content["optionMarriage"],
-                text: content["optionMarriage"] | safe,
+                text: content["optionMarriage"],
                 checked: true if fields.currentNameReason.value == content["optionMarriage"] | escape
             },
             {
                 value: content["optionDivorce"],
-                text: content["optionDivorce"] | safe,
+                text: content["optionDivorce"],
                 checked: true if fields.currentNameReason.value == content["optionDivorce"] | escape
             },
             {
                 value: content["optionDeedPoll"],
-                text: content["optionDeedPoll"] | safe,
+                text: content["optionDeedPoll"],
                 checked: true if fields.currentNameReason.value == content["optionDeedPoll"] | escape
             },
             {
                 value: content["optionOther"],
-                text: content["optionOther"] | safe,
+                text: content["optionOther"],
                 checked: true if fields.currentNameReason.value == content["optionOther"] | escape,
                 conditional: {
                     html: otherHtml

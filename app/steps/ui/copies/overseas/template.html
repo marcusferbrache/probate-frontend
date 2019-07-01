@@ -8,15 +8,15 @@
 {% block form_content %}
     {% call govukFieldset({
         legend: {
-            text: content.question | safe,
+            text: content.question,
             classes: "govuk-fieldset__legend--l",
             isPageHeading: true
         }
     }) %}
         <p class="govuk-body">{{ content.paragraph1 | safe }}</p>
         {{ unorderedList([
-            content.bullet1 | safe,
-            content.bullet2 | safe
+            content.bullet1,
+            content.bullet2
         ]) }}
 
         {{ govukInput({

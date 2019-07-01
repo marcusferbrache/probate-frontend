@@ -6,7 +6,7 @@
 {% block form_content %}
     {% call govukFieldset({
         legend: {
-            text: content.question | safe,
+            text: content.question,
             classes: "govuk-fieldset__legend--l",
             isPageHeading: true
         }
@@ -14,11 +14,11 @@
         <p class="govuk-body">{{ content.paragraph1 | safe }}</p>
         <p class="govuk-body panel panel-border-wide">{{ content.paragraph2 | safe }}</p>
 
-        <h2 class="govuk-heading-m">{{ content.heading1  | safe }}</h2>
+        <h2 class="govuk-heading-m">{{ content.heading1 | safe }}</h2>
         <p class="govuk-body">{{ content.paragraph3 | safe }}</p>
         <p class="govuk-body">{{ content.paragraph4 | safe }}</p>
 
-        <h2 class="govuk-heading-m">{{ content.heading2  | safe }}</h2>
+        <h2 class="govuk-heading-m">{{ content.heading2 | safe }}</h2>
         <p class="govuk-body">{{ content.paragraph5 | safe }}</p>
         <p class="govuk-body">{{ content.paragraph6 | safe }}</p>
 

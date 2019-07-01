@@ -19,12 +19,12 @@
         items: [
             {
                 value: content["optionYes"],
-                text: content["optionYes"] | safe,
+                text: content["optionYes"],
                 checked: true if fields.anyDeceasedChildren.value == content["optionYes"] | escape
             },
             {
                 value: content["optionNo"],
-                text: content["optionNo"] | safe,
+                text: content["optionNo"],
                 checked: true if fields.anyDeceasedChildren.value == content["optionNo"] | escape
             }
         ]

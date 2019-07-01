@@ -9,14 +9,14 @@
 {% block form_content %}
     {% call govukFieldset({
         legend: {
-            text: content.header | safe,
+            text: content.header,
             classes: "govuk-fieldset__legend--l",
             isPageHeading: true
         }
     }) %}
-        <h2 class="form-title govuk-heading-m pin-sub-header">{{ content.subHeader | safe }}</h2>
-        <p class="govuk-body">{{ content.securityCode | safe }}</p>
-        <p class="govuk-body">{{ content.phoneCode | safe }}</p>
+        <h2 class="form-title govuk-heading-m pin-sub-header">{{ content.subHeader }}</h2>
+        <p class="govuk-body">{{ content.securityCode }}</p>
+        <p class="govuk-body">{{ content.phoneCode }}</p>
 
         {{ govukInput({
             label: {
@@ -26,7 +26,7 @@
             id: "pin",
             name: "pin",
             value: fields.pin.value | safe,
-            errorMessage: { text: fields.pin.errorMessage.message | safe } if fields.pin.errorMessage,
+            errorMessage: { text: fields.pin.errorMessage.message } if fields.pin.errorMessage,
             attributes: {
                 maxlength: 6
             },
@@ -41,7 +41,7 @@
         }) }}
     </div>
 
-    <p class="govuk-body"><a href="/pin-resend" class="govuk-link">{{ content.forgottenCode | safe }}</a></p>
+    <p class="govuk-body"><a href="/pin-resend" class="govuk-link">{{ content.forgottenCode }}</a></p>
 {% endblock %}
 
 {% block save_and_close %}{% endblock %}
