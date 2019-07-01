@@ -18,7 +18,7 @@
         hint: {
             text: content.hint
         },
-        errorMessage: { text: fields.assetsoverseas.errorMessage.message } if fields.assetsoverseas.errorMessage,
+        errorMessage: { text: fields.assetsoverseas.errorMessage.message | safe } if fields.assetsoverseas.errorMessage,
         items: [
             {
                 value: content["optionYes"],

@@ -15,7 +15,7 @@
         }
     }) %}
         <h2 class="form-title govuk-heading-m pin-sub-header">{{ content.subHeader }}</h2>
-        <p class="govuk-body">{{ content.securityCode }}</p>
+        <p class="govuk-body">{{ content.securityCode | safe }}</p>
         <p class="govuk-body">{{ content.phoneCode }}</p>
 
         {{ govukInput({
@@ -41,7 +41,7 @@
         }) }}
     </div>
 
-    <p class="govuk-body"><a href="/pin-resend" class="govuk-link">{{ content.forgottenCode }}</a></p>
+    <p class="govuk-body"><a href="/pin-resend" class="govuk-link">{{ content.forgottenCode | safe }}</a></p>
 {% endblock %}
 
 {% block save_and_close %}{% endblock %}
