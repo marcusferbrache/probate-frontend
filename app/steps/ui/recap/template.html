@@ -61,13 +61,13 @@
             complete: true
         }, {
             label: {
-                text: content["progressStep2-2"] if fields.documentsSent.value == "true" else content["progressStep2-1"]
+                text: content["progressStep2-2"] if fields.sentDocuments.value == "true" else content["progressStep2-1"]
             },
-            complete: fields.documentsSent.value == "true"
+            complete: fields.sentDocuments.value == "true"
         }]
     }) }}
 
-    {% if fields.documentsSent.value != "true" %}
+    {% if fields.sentDocuments.value != "true" %}
         <div class="margin-bottom50">
             <h2 class="govuk-heading-m">{{ content.block1Heading1 }}</h2>
             <p class="govuk-body">{{ content.block1Text2 | safe }}</p>
@@ -93,19 +93,19 @@
             </div>
 
             {{ govukCheckboxes({
-                idPrefix: "documentsSent",
-                name: "documentsSent",
+                idPrefix: "sentDocuments",
+                name: "sentDocuments",
                 fieldset: {
                     legend: {
-                        text: content.documentsSent,
+                        text: content.sentDocuments,
                         classes: "govuk-visually-hidden"
                     }
                 },
-                errorMessage: { text: fields.documentsSent.errorMessage.message | safe } if fields.documentsSent.errorMessage,
+                errorMessage: { text: fields.sentDocuments.errorMessage.message | safe } if fields.sentDocuments.errorMessage,
                 items: [
                     {
                         value: true,
-                        text: content.documentsSent
+                        text: content.sentDocuments
                     }
                 ]
             }) }}

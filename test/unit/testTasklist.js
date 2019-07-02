@@ -281,9 +281,9 @@ describe('Tasklist', () => {
                 assert.equal(ctx.PaymentTask.status, 'complete');
             });
 
-            it('Updates the context: DeceasedTask, Executors, Review and confirm, Copies and Document tasks complete', () => {
+            it.only('Updates the context: DeceasedTask, Executors, Review and confirm, Copies and Document tasks complete', () => {
                 req.session.form = completedForm;
-                req.session.form.documents = {
+                req.session.form.recap = {
                     sentDocuments: 'true'
                 };
                 req.body = {};

@@ -32,7 +32,7 @@
   "block3Heading": "Start a new application",
   "block4Heading": "View your application so far",
 
-  "documentsSent": "I have sent my documents to the Probate Registry",
+  "sentDocuments": "I have sent my documents to the Probate Registry",
   "continue": "Continue",
   "declarationPdf": "Legal declaration (30kb PDF)",
   "checkAnswersPdf": "Check your answers (10kb PDF)",
@@ -40,7 +40,7 @@
   "documentsListPdf": "Documents checklist (15kb PDF)",
 
   "errors": {
-    "documentsSent": {
+    "sentDocuments": {
       "required": {
         "summary": "You haven&rsquo;t ticked the check box to let us know that you&rsquo;ve sent your documents",
         "message": "Tick the check box to let us know that you&rsquo;ve sent your documents"
