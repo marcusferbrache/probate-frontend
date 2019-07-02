@@ -1,11 +1,11 @@
 'use strict';
 
 const TestWrapper = require('test/util/TestWrapper');
-const DocumentsPage = require('app/steps/ui/documents');
+const RecapPage = require('app/steps/ui/recap');
 
-describe('redirect to documents', () => {
+describe('redirect to recap', () => {
     let testWrapper, sessionData;
-    const expectedUrlForDocumentsPage = DocumentsPage.getUrl();
+    const expectedUrlForRecapPage = RecapPage.getUrl();
 
     beforeEach(() => {
         testWrapper = new TestWrapper('CopiesUk');
@@ -24,12 +24,12 @@ describe('redirect to documents', () => {
         testWrapper.destroy();
     });
 
-    it(`test it redirects to Documents page when the application was submitted: ${expectedUrlForDocumentsPage}`, (done) => {
+    it(`test it redirects to Documents page when the application was submitted: ${expectedUrlForRecapPage}`, (done) => {
         testWrapper.agent.post('/prepare-session/form')
             .send(sessionData)
             .end(() => {
                 testWrapper.agent.get(testWrapper.pageUrl)
-                    .expect('location', 'documents')
+                    .expect('location', 'recap')
                     .expect(302)
                     .end((err) => {
                         testWrapper.server.http.close();
