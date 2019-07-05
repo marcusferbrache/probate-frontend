@@ -18,7 +18,7 @@
         hint: {
             text: (content.paragraph1 + "<br><br>" + unorderedList([content["applicant-rights1"], content["applicant-rights2"], content["applicant-rights3"]]) + content["applicants-not-dealing"]) | safe
         },
-        errorMessage: { text: fields.executorsApplying.errorMessage.message | safe } if fields.executorsApplying.errorMessage,
+        errorMessage: { text: fields.executorsApplying.errorMessage.message } if fields.executorsApplying.errorMessage,
         items: fields.options.value
     }) }}
 

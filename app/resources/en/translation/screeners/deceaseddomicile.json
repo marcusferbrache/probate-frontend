@@ -5,7 +5,7 @@
   "hintText2": "You can read more about <a href=\"https://www.gov.uk/inheritance-tax/when-someone-living-outside-the-uk-dies\" class=\"govuk-link\">domicile</a>.",
   "optionYes": "Yes",
   "optionNo": "No",
-  "legend": "Did the person who died live permanently in England or Wales, or intend to return here?",
+
   "errors": {
     "domicile": {
       "required": {

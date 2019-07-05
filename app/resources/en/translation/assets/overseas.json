@@ -4,7 +4,6 @@
   "hint": "This could be shares or property outside the UK. If so, you may need a copy of the grant of probate for use outside the UK.",
   "optionYes": "Yes",
   "optionNo": "No",
-  "legend": "Did {deceasedName} have assets outside the UK?",
 
   "errors": {
     "assetsoverseas": {

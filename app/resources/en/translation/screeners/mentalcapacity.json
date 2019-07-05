@@ -5,7 +5,7 @@
   "hintText2": "You can read about <a rel=\"external noopener\" href=\"https://www.gov.uk/make-decisions-for-someone/assessing-mental-capacity\" class=\"govuk-link\">mental capacity</a> on GOV.UK.",
   "optionYes": "Yes",
   "optionNo": "No",
-  "legend": "Are all the executors able to make their own decisions?",
+
   "errors": {
     "mentalCapacity": {
       "required": {

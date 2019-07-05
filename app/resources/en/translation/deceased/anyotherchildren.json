@@ -1,7 +1,6 @@
 {
   "title": "Did the deceased have any other children",
   "question": "Did {deceasedName} have any other children?",
-  "legend": "Did {deceasedName} have any other children?",
   "optionYes": "Yes",
   "optionNo": "No",
   "theDeceased": "the deceased",
