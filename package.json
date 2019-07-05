@@ -56,7 +56,7 @@
   },
   "dependencies": {
     "@hmcts/ctsc-web-chat": "^0.1.21",
-    "@hmcts/frontend": "0.0.34-alpha",
+    "@hmcts/frontend": "^0.0.34-alpha",
     "@hmcts/nodejs-logging": "^3.0.0",
     "@hmcts/os-places-client": "^1.0.4",
     "ajv": "^4.11.8",
