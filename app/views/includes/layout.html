@@ -7,7 +7,7 @@
         {% set title = content.title %}
     {% endif %}
 
-    {{ title | safe }}{% if serviceName %}{{ ' - ' + serviceName }}{% endif %}
+    {{ title | safe }}{% if serviceName %}{{ " - " + serviceName }}{% endif %}
 {% endblock %}
 
 {% block head %}
@@ -49,7 +49,7 @@
         tag: {
             text: common.phase
         },
-        html: common.feedback | replace('{smartSurveyFeedbackUrl}', globals.links.survey) | replace('{currentPageUrl}', pageUrl) | safe
+        html: common.feedback | replace("{smartSurveyFeedbackUrl}", globals.links.survey) | replace("{currentPageUrl}", pageUrl) | safe
     }) }}
 {% endblock %}
 
