@@ -29,7 +29,7 @@ class CheckAnswersSummaryJSONObjectBuilder {
     }
 }
 
-function buildQuestionAndAnswers($element, section) {
+const buildQuestionAndAnswers = ($element, section) => {
     const question = $element.children('.check-your-answers__question');
     const answer = $element.children('.check-your-answers__answer');
     const questionAndAnswer = {};
@@ -45,15 +45,15 @@ function buildQuestionAndAnswers($element, section) {
         questionAndAnswer.answers.push(answer.text());
     }
     section.questionAndAnswers.push(questionAndAnswer);
-}
+};
 
-function buildSection(section, $element, summary) {
+const buildSection = (section, $element, summary) => {
     section = {};
     section.title = $element.text();
     section.type = $element.attr('class');
     section.questionAndAnswers = [];
     summary.sections.push(section);
     return section;
-}
+};
 
 module.exports = CheckAnswersSummaryJSONObjectBuilder;

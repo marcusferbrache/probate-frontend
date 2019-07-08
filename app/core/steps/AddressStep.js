@@ -1,7 +1,7 @@
 'use strict';
 
 const ValidationStep = require('app/core/steps/ValidationStep');
-const {get} = require('lodash');
+const {get, forEach} = require('lodash');
 
 class AddressStep extends ValidationStep {
 
@@ -59,7 +59,7 @@ class AddressStep extends ValidationStep {
 
     getFormattedAddress(address) {
         let formattedAddress = '';
-        Object.values(address).forEach(value => {
+        forEach(Object.values(address), (value) => {
             if (value) {
                 formattedAddress = `${formattedAddress}${value} `;
             }

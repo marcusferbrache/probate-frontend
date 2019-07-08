@@ -1,6 +1,6 @@
 'use strict';
 
-const {filter, isEqual, map, uniqWith} = require('lodash');
+const {filter, isEqual, map, uniqWith, forEach} = require('lodash');
 const i18next = require('i18next');
 
 const FieldError = (param, keyword, resourcePath, contentCtx) => {
@@ -32,7 +32,7 @@ const generateErrors = (errs, ctx, formdata, errorPath, lang = 'en') => {
                 return FieldError(param, 'required', errorPath);
             }
             [, param] = e.dataPath.split('.');
-            if (!param) {
+            if (!param && e.dataPath.includes('[\'') && e.dataPath.includes('\']')) {
                 param = e.dataPath
                     .replace(/\['|']/g, '');
             }
@@ -49,8 +49,8 @@ const mapErrorsToFields = (fields, errors = []) => {
     let err = [];
 
     if (Array.isArray(errors[0])) {
-        errors.forEach((error) => {
-            error[1].forEach((e) => {
+        forEach(errors, (error) => {
+            forEach(error[1], (e) => {
                 err.push(e);
             });
         });
@@ -58,7 +58,7 @@ const mapErrorsToFields = (fields, errors = []) => {
         err = errors;
     }
 
-    err.forEach((e) => {
+    forEach(err, (e) => {
         if (!fields[e.field]) {
             fields[e.field] = {};
         }

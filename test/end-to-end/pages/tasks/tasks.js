@@ -2,7 +2,7 @@
 
 const taskListContent = require('app/resources/en/translation/tasklist');
 
-exports.completeEligibilityTask = function () {
+exports.completeEligibilityTask = () => {
     const I = this;
     I.startApplication();
     I.selectATask(taskListContent.taskNotStarted);
@@ -13,7 +13,7 @@ exports.completeEligibilityTask = function () {
     I.selectApplicantIsExecutor();
 };
 
-exports.completeExecutorsTask = function () {
+exports.completeExecutorsTask = () => {
     const I = this;
     I.selectATask(taskListContent.taskNotStarted);
     I.enterApplicantName('Applicant First Name', 'Applicant Last Name');

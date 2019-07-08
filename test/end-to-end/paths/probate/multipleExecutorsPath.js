@@ -22,7 +22,7 @@ AfterSuite(() => {
     TestConfigurator.getAfter();
 });
 
-Scenario(TestConfigurator.idamInUseText('Multiple Executors Journey - Main applicant; Stage 1: Enter deceased and executor details'), async function (I) {
+Scenario(TestConfigurator.idamInUseText('Multiple Executors Journey - Main applicant; Stage 1: Enter deceased and executor details'), async (I) => {
     stage1retries += 1;
 
     if (stage1retries >= 1) {
@@ -71,7 +71,7 @@ Scenario(TestConfigurator.idamInUseText('Multiple Executors Journey - Main appli
     let diedBefore = true;
     I.selectExecutorsWhoDied(executorsWhoDiedList);
 
-    forEach(executorsWhoDiedList, executorNumber => {
+    forEach(executorsWhoDiedList, (executorNumber) => {
         I.selectExecutorsWhenDied(executorNumber, diedBefore, head(executorsWhoDiedList) === executorNumber);
 
         diedBefore = !diedBefore;
@@ -88,19 +88,19 @@ Scenario(TestConfigurator.idamInUseText('Multiple Executors Journey - Main appli
     I.selectWhichExecutorsWithDifferentNameOnWill(executorsWithDifferentNameIdList);
 
     const executorsWithDifferentNameList = ['5'];
-    forEach(executorsWithDifferentNameList, executorNumber => {
+    forEach(executorsWithDifferentNameList, (executorNumber) => {
         I.enterExecutorCurrentName(executorNumber, head(executorsWithDifferentNameList) === executorNumber);
         I.enterExecutorCurrentNameReason(executorNumber, 'aliasOther', 'executor_alias_reason');
     });
 
-    forEach(executorsApplyingList, executorNumber => {
+    forEach(executorsApplyingList, (executorNumber) => {
         I.enterExecutorContactDetails(executorNumber, head(executorsApplyingList) === executorNumber);
         I.enterExecutorManualAddress(executorNumber);
     });
 
     const executorsAliveList = ['4', '6'];
     let powerReserved = true;
-    forEach(executorsAliveList, executorNumber => {
+    forEach(executorsAliveList, (executorNumber) => {
         I.selectExecutorRoles(executorNumber, powerReserved, head(executorsAliveList) === executorNumber);
 
         if (powerReserved) {
@@ -126,7 +126,7 @@ Scenario(TestConfigurator.idamInUseText('Multiple Executors Journey - Main appli
 
 }).retry(TestConfigurator.getRetryScenarios());
 
-Scenario(TestConfigurator.idamInUseText('Stage 2: Additional Executor(s) Agree to Statement of Truth'), async function (I) {
+Scenario(TestConfigurator.idamInUseText('Stage 2: Additional Executor(s) Agree to Statement of Truth'), async (I) => {
     const idList = JSON.parse(grabIds);
 
     for (let i=0; i < idList.ids.length; i++) {
@@ -148,7 +148,7 @@ Scenario(TestConfigurator.idamInUseText('Stage 2: Additional Executor(s) Agree t
     }
 }).retry(TestConfigurator.getRetryScenarios());
 
-Scenario(TestConfigurator.idamInUseText('Stage 3: Continuation of Main applicant journey: final stage of application'), function (I) {
+Scenario(TestConfigurator.idamInUseText('Stage 3: Continuation of Main applicant journey: final stage of application'), (I) => {
 
     // IDAM
     I.authenticateWithIdamIfAvailable(true);

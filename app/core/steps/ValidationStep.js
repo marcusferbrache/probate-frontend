@@ -1,6 +1,6 @@
 'use strict';
 
-const {mapValues, reduce} = require('lodash');
+const {mapValues, reduce, forEach} = require('lodash');
 const Ajv = require('ajv');
 const Step = require('app/core/steps/Step');
 const generateErrors = require('app/components/error').generateErrors;
@@ -45,9 +45,9 @@ class ValidationStep extends Step {
         let [isValid, errors] = [true, {}];
 
         //remove empty fields as ajv expects them to be absent
-        Object.keys(ctx).filter(field =>
-            (typeof ctx[field] === 'string' && ctx[field].trim() === '') || ctx[field] === '')
-            .forEach(field => delete ctx[field]);
+        forEach(Object.keys(ctx).filter((field) =>
+            (typeof ctx[field] === 'string' && ctx[field].trim() === '') || ctx[field] === ''), (field) =>
+            delete ctx[field]);
 
         if (ctx) {
             isValid = this.validateSchema(ctx);

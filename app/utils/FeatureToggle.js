@@ -4,6 +4,7 @@ const featureToggles = require('app/config').featureToggles;
 const logger = require('app/components/logger');
 const FeatureToggleService = require('app/services/FeatureToggle');
 const config = require('app/config');
+const {forEach} = require('lodash');
 
 class FeatureToggle {
     callCheckToggle(req, res, next, featureToggleKey, callback, redirectPage) {
@@ -65,7 +66,7 @@ class FeatureToggle {
     static appwideToggles(req, ctx, appwideToggles) {
         if (appwideToggles.length) {
             ctx.featureToggles = {};
-            appwideToggles.forEach((toggleKey) => {
+            forEach(appwideToggles, (toggleKey) => {
                 ctx.featureToggles[toggleKey] = FeatureToggle.isEnabled(req.session.featureToggles, toggleKey).toString();
             });
         }

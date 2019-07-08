@@ -72,7 +72,7 @@ const html = `
 </body>
 </html>`;
 
-describe('CheckAnswersSummaryJSONObjectBuilder', function () {
+describe('CheckAnswersSummaryJSONObjectBuilder', () => {
     beforeEach(() => {
         checkAnswersSummaryJSONObjBuilder = new CheckAnswersSummaryJSONObjectBuilder();
     });
@@ -136,15 +136,15 @@ describe('CheckAnswersSummaryJSONObjectBuilder', function () {
         });
     });
 
-    function assertPropertyExistsAndIsEqualTo(value, equalto) {
+    const assertPropertyExistsAndIsEqualTo = (value, equalto) => {
         assert.exists(value);
         assert.equal(value, equalto);
-    }
+    };
 
-    function assertQuestionAndAnswer(questionAndAnswers, question, answer) {
+    const assertQuestionAndAnswer = (questionAndAnswers, question, answer) => {
         assertPropertyExistsAndIsEqualTo(questionAndAnswers.question, question);
         assert.isArray(questionAndAnswers.answers);
         assert.lengthOf(questionAndAnswers.answers, 1);
         assertPropertyExistsAndIsEqualTo(questionAndAnswers.answers[0], answer);
-    }
+    };
 });

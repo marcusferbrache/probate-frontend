@@ -3,13 +3,15 @@
 const ValidationStep = require('app/core/steps/ValidationStep');
 const EligibilityCookie = require('app/utils/EligibilityCookie');
 const eligibilityCookie = new EligibilityCookie();
+const {forEach} = require('lodash');
 
 class EligibilityValidationStep extends ValidationStep {
 
     setFeatureTogglesOnCtx(ctx, featureToggles = {}) {
-        Object.keys(featureToggles).forEach((toggle) => {
-            ctx[toggle] = featureToggles[toggle];
-        });
+        forEach(Object.keys(featureToggles),
+            (toggle) => {
+                ctx[toggle] = featureToggles[toggle];
+            });
         return ctx;
     }
 

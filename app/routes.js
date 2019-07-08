@@ -6,7 +6,7 @@ const config = require('app/config');
 const router = require('express').Router();
 const initSteps = require('app/core/initSteps');
 const logger = require('app/components/logger');
-const {get, includes, isEqual} = require('lodash');
+const {get, includes, isEqual, forEach} = require('lodash');
 const commonContent = require('app/resources/en/translation/common');
 const ExecutorsWrapper = require('app/wrappers/Executors');
 const documentUpload = require('app/documentUpload');
@@ -137,7 +137,7 @@ router.use((req, res, next) => {
 
 const steps = initSteps([`${__dirname}/steps/action/`, `${__dirname}/steps/ui/`]);
 
-Object.entries(steps).forEach(([, step]) => {
+forEach(Object.entries(steps), ([, step]) => {
     router.get(step.constructor.getUrl(), step.runner().GET(step));
     router.post(step.constructor.getUrl(), step.runner().POST(step));
 });

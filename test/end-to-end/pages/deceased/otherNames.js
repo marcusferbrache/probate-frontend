@@ -3,7 +3,7 @@
 const commonContent = require('app/resources/en/translation/common');
 const pageUnderTest = require('app/steps/ui/deceased/otherNames');
 
-module.exports = function (noOfAliases) {
+module.exports = (noOfAliases) => {
     const I = this;
     I.amOnLoadedPage(pageUnderTest.getUrl());
     let i = 1;

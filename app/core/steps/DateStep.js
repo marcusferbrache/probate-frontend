@@ -1,6 +1,7 @@
 'use strict';
 
 const ValidationStep = require('app/core/steps/ValidationStep');
+const {forEach} = require('lodash');
 const moment = require('moment');
 const config = require('app/config');
 const utils = require('app/components/step-utils');
@@ -18,7 +19,7 @@ class DateStep extends ValidationStep {
     }
 
     parseDate(ctx, dateNames) {
-        dateNames.forEach(dateName => {
+        forEach(dateNames, (dateName) => {
             const [day, month, year] = [`${dateName}-day`, `${dateName}-month`, `${dateName}-year`];
 
             ctx[day] = ctx[day] ? parseInt(ctx[day]) : ctx[day];

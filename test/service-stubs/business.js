@@ -48,7 +48,7 @@ router.delete('/document/delete/:index', (req, res) => {
 });
 
 router.post('/businessDocument/generateCheckAnswersSummaryPDF', (req, res) => {
-    fs.readFile('test/data/generic.pdf', function (err, data) {
+    fs.readFile('test/data/generic.pdf', (err, data) => {
         if (err) {
             console.log(err);
         } else {
@@ -60,7 +60,7 @@ router.post('/businessDocument/generateCheckAnswersSummaryPDF', (req, res) => {
 });
 
 router.post('/businessDocument/generateLegalDeclarationPDF', (req, res) => {
-    fs.readFile('test/data/generic.pdf', function (err, data) {
+    fs.readFile('test/data/generic.pdf', (err, data) => {
         if (err) {
             console.log(err);
         } else {

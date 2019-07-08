@@ -82,7 +82,7 @@ class ExecutorsNames extends ValidationStep {
         const self = this;
         const errorMessages = [];
         errorMessages.length = [ctx.executorsNumber - 1];
-        validationErrors.forEach((validationError) => {
+        forEach(validationErrors, (validationError) => {
             const index = self.getIndexFromErrorParameter(validationError);
             errorMessages[index] = self.composeMessage(ctx.executorName[index], parseInt(index) + 2);
             validationError.msg = errorMessages[index].msg;

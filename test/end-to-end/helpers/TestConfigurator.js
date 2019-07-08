@@ -52,7 +52,7 @@ class TestConfigurator {
                     method: 'POST',
                     json: true, // <--Very important!!!
                     body: this.userDetails
-                }, function (error, response, body) {
+                }, (error, response, body) => {
                     if (response && response.statusCode !== 201) {
                         throw new Error('TestConfigurator.getBefore: Using proxy - Unable to create user.  Response from IDAM was: ' + response.statusCode);
                     }
@@ -63,7 +63,7 @@ class TestConfigurator {
                     method: 'POST',
                     json: true, // <--Very important!!!
                     body: this.userDetails
-                }, function (error, response, body) {
+                }, (error, response, body) => {
                     if (response.statusCode !== 201) {
                         throw new Error('TestConfigurator.getBefore: Without proxy - Unable to create user.  Response from IDAM was: ' + response.statusCode);
                     }
@@ -181,7 +181,7 @@ class TestConfigurator {
             json: true,
             body: formData
         },
-        function (error, response, body) {
+        (error, response, body) => {
             console.log('This is email id ' + emailId);
         });
     }

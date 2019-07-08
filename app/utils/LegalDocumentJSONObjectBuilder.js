@@ -33,7 +33,7 @@ class LegalDocumentJSONObjectBuilder {
     }
 }
 
-function buildDeclarationItemValues($element, legalDeclaration) {
+const buildDeclarationItemValues = ($element, legalDeclaration) => {
     const section = legalDeclaration.sections[legalDeclaration.sections.length - 1];
     const declarationItem = section.declarationItems.pop();
     declarationItem.values = [];
@@ -44,16 +44,16 @@ function buildDeclarationItemValues($element, legalDeclaration) {
         }
     }
     section.declarationItems.push(declarationItem);
-}
+};
 
-function buildDeclarationItem($element, legalDeclaration) {
+const buildDeclarationItem = ($element, legalDeclaration) => {
     const declarationItem = {};
     declarationItem.title = $element.text();
     const section = legalDeclaration.sections[legalDeclaration.sections.length - 1];
     section.declarationItems.push(declarationItem);
-}
+};
 
-function buildSection($element) {
+const buildSection = ($element) => {
     const section = {};
     if ($element.hasClass('govuk-heading-m') || $element.hasClass('govuk-heading-l')) {
         section.headingType = 'large';
@@ -63,6 +63,6 @@ function buildSection($element) {
     section.title = $element.text();
     section.declarationItems = [];
     return section;
-}
+};
 
 module.exports = LegalDocumentJSONObjectBuilder;

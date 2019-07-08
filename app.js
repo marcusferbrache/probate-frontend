@@ -34,7 +34,7 @@ const EligibilityCookie = require('app/utils/EligibilityCookie');
 const eligibilityCookie = new EligibilityCookie();
 const featureToggles = require('app/featureToggles');
 
-exports.init = function() {
+exports.init = () => {
     const app = express();
     const port = config.app.port;
     const releaseVersion = packageJson.version;
@@ -219,7 +219,7 @@ exports.init = function() {
     }
 
     // Add variables that are available in all views
-    app.use(function (req, res, next) {
+    app.use((req, res, next) => {
         res.locals.serviceName = commonContent.serviceName;
         res.locals.cookieText = commonContent.cookieText;
         res.locals.releaseVersion = `v${releaseVersion}`;

@@ -2,6 +2,7 @@
 
 const ValidationStep = require('app/core/steps/ValidationStep');
 const featureToggle = require('app/utils/FeatureToggle');
+const {forEach} = require('lodash');
 
 class CopiesUk extends ValidationStep {
 
@@ -35,7 +36,7 @@ class CopiesUk extends ValidationStep {
         delete formdata.applicant.addresses;
         delete formdata.deceased.addresses;
         if (formdata.executors) {
-            formdata.executors.list.forEach((executor) => {
+            forEach(formdata.executors.list, (executor) => {
                 delete executor.addresses;
             });
         }

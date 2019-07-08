@@ -64,18 +64,18 @@ describe('legalDeclarationPDF', () => {
         });
     });
 
-    function assertPropertyExistsAndIsEqualTo(value, equalto) {
+    const assertPropertyExistsAndIsEqualTo = (value, equalto) => {
         value = value.replace(/\n| /g, '');
         equalto = equalto.replace(/\n| /g, '');
         assert.exists(value);
         assert.equal(value, equalto);
-    }
+    };
 
-    function replaceTokens(searchstring, tokenlist) {
+    const replaceTokens = (searchstring, tokenlist) => {
         let result = searchstring;
         for (let i = 0, len = tokenlist.length; i < len; i++) {
             result = result.replace(RegExp('{[a-z0-9]*}', 'i'), tokenlist[i]);
         }
         return result;
-    }
+    };
 });

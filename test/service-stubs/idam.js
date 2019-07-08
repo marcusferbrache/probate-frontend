@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-router.post('/lease', function (req, res) {
+router.post('/lease', (req, res) => {
     console.log(req.headers);
     console.log(req.body);
 
@@ -51,7 +51,7 @@ const server = app.listen(S2S_STUB_PORT);
 
 module.exports = server;
 
-function getShowErrorFromSeq() {
+const getShowErrorFromSeq = () => {
     let showError = false;
     if (errorSequence.charAt(iterator) === '1') {
         showError = true;
@@ -59,4 +59,4 @@ function getShowErrorFromSeq() {
 
     console.log(`showError for s2s-stub: ${showError}`);
     return showError;
-}
+};

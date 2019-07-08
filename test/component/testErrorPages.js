@@ -25,7 +25,7 @@ describe('error-pages', () => {
     it('test 500', (done) => {
         const request = require('supertest');
         const routes = require('app/routes');
-        routes.get('/throwError', function () {
+        routes.get('/throwError', () => {
             throw new Error('Test error');
         });
         const server = new (require ('app').init)();

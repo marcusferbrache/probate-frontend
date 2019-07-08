@@ -4,7 +4,7 @@
 const pageUnderTest = require('app/steps/ui/screeners/starteligibility');
 const testConfig = require('test/config');
 
-module.exports = function (checkCookieBannerExists) {
+module.exports = (checkCookieBannerExists) => {
     const I = this;
 
     I.amOnLoadedPage(pageUnderTest.getUrl());

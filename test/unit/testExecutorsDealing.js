@@ -3,7 +3,7 @@
 const initSteps = require('app/core/initSteps');
 const {expect, assert} = require('chai');
 
-describe('Executors-Applying', function () {
+describe('Executors-Applying', () => {
     let ctx;
     let ctxTest;
     let data;
