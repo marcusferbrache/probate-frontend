@@ -34,7 +34,7 @@ const EligibilityCookie = require('app/utils/EligibilityCookie');
 const eligibilityCookie = new EligibilityCookie();
 const featureToggles = require('app/featureToggles');
 
-exports.init = () => {
+exports.init = function() {
     const app = express();
     const port = config.app.port;
     const releaseVersion = packageJson.version;
