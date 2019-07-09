@@ -26,7 +26,7 @@
     {% endif %}
 
     {% if fields.hasRenunciated.value == "true" %}
-        {% set checklistItems = (checklistItems.push(content["block1Checklist-item5-spouse-renunciated"] | replace("{renunciationFormLink}", links.renunciationForm)), checklistItems) %}
+        {% set checklistItems = (checklistItems.push(content["block1Checklist-item5-spouse-renunciated"] | replace("{renunciationFormLink}", globals.links.renunciationForm)), checklistItems) %}
     {% endif %}
 
     {% if fields.executorsNameChangedByDeedPollList.value | length > 0 %}
@@ -36,7 +36,7 @@
     {% endif %}
 {% else %}
     {% if fields.spouseRenouncing.value === "true" %}
-        {% set checklistItems = (checklistItems.push(content["block1Checklist-item2-spouse-renouncing"] | replace("{renunciationFormLink}", links.renunciationForm)), checklistItems) %}
+        {% set checklistItems = (checklistItems.push(content["block1Checklist-item2-spouse-renouncing"] | replace("{renunciationFormLink}", globals.links.renunciationForm)), checklistItems) %}
     {% endif %}
     {% if fields.uploads.value | length === 0 %}
         {% set checklistItems = (checklistItems.push(content["block1Checklist-item3-will-not-uploaded"]), checklistItems) %}
@@ -123,7 +123,7 @@
         <p class="govuk-body">{{ content.block2Text2 | safe }}</p>
 
         {{ govukInsetText({
-            text: content.block2Text3 | replace('{findOutNext}', links.findOutNext) | safe
+            text: content.block2Text3 | replace('{findOutNext}', globals.links.findOutNext) | safe
         }) }}
     {% endif %}
 

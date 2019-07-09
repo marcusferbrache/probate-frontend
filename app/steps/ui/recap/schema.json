@@ -3,5 +3,5 @@
   "id": "recap",
   "type": "object",
   "properties": {},
-  "required": ["documentsSent"]
+  "required": ["sentDocuments"]
 }
