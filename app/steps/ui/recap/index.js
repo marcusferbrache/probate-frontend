@@ -19,7 +19,7 @@ class Recap extends ValidationStep {
 
     getContextData(req) {
         const ctx = super.getContextData(req);
-        const formdata = req.session.formdata || {};
+        const formdata = req.session.form || {};
         const registryAddress = (new RegistryWrapper(formdata.registry)).address();
 
         ctx.journeyType = setJourney.getJourneyName(req.session);
