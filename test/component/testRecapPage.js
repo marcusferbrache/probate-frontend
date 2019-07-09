@@ -2,7 +2,6 @@
 
 const TestWrapper = require('test/util/TestWrapper');
 const config = require('app/config');
-const content = require('app/resources/en/translation/recap');
 
 describe('recap', () => {
     let testWrapper;
