@@ -9,7 +9,7 @@
     <h1 class="govuk-heading-l">{{ content.title }}</h1>
     <p class="govuk-body word-break">{{ fields.legalStatement.value.intro | safe }}</p>
 
-    {% ifAsync fields.caseType.value === "gop" %}
+    {% ifAsync fields.caseType.value === globals.caseTypes.gop %}
         <div class="declaration-wrapper word-break">
             <div class="inset-page declaration-grid-item">
                 <div class="declaration-header">
@@ -46,7 +46,7 @@
             {% include "ui/declaration/includes/download.njk" %}
         </div>
     {% endif %}
-    {% ifAsync fields.caseType.value === "intestacy" %}
+    {% ifAsync fields.caseType.value === globals.caseTypes.intestacy %}
         <div class="declaration-wrapper word-break">
             <div class="inset-page declaration-grid-item">
                 <div class="declaration-header">

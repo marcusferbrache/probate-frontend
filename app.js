@@ -32,6 +32,7 @@ const uuidv4 = require('uuid/v4');
 const uuid = uuidv4();
 const EligibilityCookie = require('app/utils/EligibilityCookie');
 const eligibilityCookie = new EligibilityCookie();
+const caseTypes = require('app/utils/CaseTypes');
 const featureToggles = require('app/featureToggles');
 
 exports.init = function() {
@@ -94,6 +95,10 @@ exports.init = function() {
         webChat: {
             chatId: config.webChat.chatId,
             tenant: config.webChat.tenant
+        },
+        caseTypes: {
+            gop: caseTypes.GOP,
+            intestacy: caseTypes.INTESTACY
         }
     };
     njkEnv.addGlobal('globals', globals);
