@@ -122,6 +122,7 @@ const config = {
         cookies: '/cookies',
         privacy: '/privacy-policy',
         terms: '/terms-conditions',
+        accessibility: '/accessibility',
         contact: '/contact-us',
         contactEmailAddress: 'contactprobate@justice.gov.uk',
         callCharges: 'https://www.gov.uk/call-charges',

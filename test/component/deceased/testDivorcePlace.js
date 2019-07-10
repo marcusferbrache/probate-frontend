@@ -7,6 +7,7 @@ const commonContent = require('app/resources/en/translation/common');
 const contentMaritalStatus = require('app/resources/en/translation/deceased/maritalstatus');
 const content = require('app/resources/en/translation/deceased/divorceplace');
 const config = require('app/config');
+const caseTypes = require('app/utils/CaseTypes');
 const nock = require('nock');
 const featureToggleUrl = config.featureToggles.url;
 const intestacyQuestionsFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.intestacy_questions}`;
@@ -21,6 +22,7 @@ describe('divorce-place', () => {
     const expectedNextUrlForStopPage = StopPage.getUrl('divorcePlace');
     const expectedNextUrlForTaskList = TaskList.getUrl();
     const sessionData = {
+        caseType: caseTypes.INTESTACY,
         deceased: {
             maritalStatus: contentMaritalStatus.optionDivorced
         }
@@ -45,7 +47,6 @@ describe('divorce-place', () => {
                     playbackData.helpTitle = commonContent.helpTitle;
                     playbackData.helpHeading1 = commonContent.helpHeading1;
                     playbackData.helpHeading2 = commonContent.helpHeading2;
-                    playbackData.contactOpeningTimes = commonContent.contactOpeningTimes.replace('{openingTimes}', config.helpline.hours);
                     playbackData.helpEmailLabel = commonContent.helpEmailLabel.replace(/{contactEmailAddress}/g, config.links.contactEmailAddress);
 
                     testWrapper.testDataPlayback(done, playbackData);
@@ -74,32 +75,26 @@ describe('divorce-place', () => {
         });
 
         it(`test it redirects to stop page: ${expectedNextUrlForStopPage}`, (done) => {
-            testWrapper.agent.post('/prepare-session-field/caseType/intestacy')
-                .end(() => {
-                    const data = {
-                        divorcePlace: content.optionNo
-                    };
+            const data = {
+                divorcePlace: content.optionNo
+            };
 
-                    testWrapper.agent.post('/prepare-session/form')
-                        .send(sessionData)
-                        .end(() => {
-                            testWrapper.testRedirect(done, data, expectedNextUrlForStopPage);
-                        });
+            testWrapper.agent.post('/prepare-session/form')
+                .send(sessionData)
+                .end(() => {
+                    testWrapper.testRedirect(done, data, expectedNextUrlForStopPage);
                 });
         });
 
         it(`test it redirects to tasklist: ${expectedNextUrlForTaskList}`, (done) => {
-            testWrapper.agent.post('/prepare-session-field/caseType/intestacy')
-                .end(() => {
-                    const data = {
-                        divorcePlace: content.optionYes
-                    };
+            const data = {
+                divorcePlace: content.optionYes
+            };
 
-                    testWrapper.agent.post('/prepare-session/form')
-                        .send(sessionData)
-                        .end(() => {
-                            testWrapper.testRedirect(done, data, expectedNextUrlForTaskList);
-                        });
+            testWrapper.agent.post('/prepare-session/form')
+                .send(sessionData)
+                .end(() => {
+                    testWrapper.testRedirect(done, data, expectedNextUrlForTaskList);
                 });
         });
     });
