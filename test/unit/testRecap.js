@@ -40,7 +40,7 @@ describe('Recap', () => {
             const ctx = Recap.getContextData(req);
             expect(ctx).to.deep.equal({
                 sessionID: 'dummy_sessionId',
-                journeyType: 'gop',
+                caseType: 'gop',
                 ccdReferenceNumber: '1234-5678-9012-3456',
                 ccdReferenceNumberAccessible: '1 2 3 4, -, 5 6 7 8, -, 9 0 1 2, -, 3 4 5 6',
                 registryAddress: 'Digital Application\nOxford District Probate Registry\nCombined Court Building\nSt Aldates\nOxford\nOX1 1LY',
@@ -82,7 +82,7 @@ describe('Recap', () => {
             const ctx = Recap.getContextData(req);
             expect(ctx).to.deep.equal({
                 sessionID: 'dummy_sessionId',
-                journeyType: 'intestacy',
+                caseType: 'intestacy',
                 ccdReferenceNumber: '1234-5678-9012-3456',
                 ccdReferenceNumberAccessible: '1 2 3 4, -, 5 6 7 8, -, 9 0 1 2, -, 3 4 5 6',
                 registryAddress: 'Digital Application\nOxford District Probate Registry\nCombined Court Building\nSt Aldates\nOxford\nOX1 1LY',
@@ -101,7 +101,7 @@ describe('Recap', () => {
     describe('action()', () => {
         it('test it cleans up context', () => {
             const ctx = {
-                journeyType: 'gop',
+                caseType: 'gop',
                 ccdReferenceNumber: '1234-5678-9012-3456',
                 ccdReferenceNumberAccessible: '1 2 3 4, -, 5 6 7 8, -, 9 0 1 2, -, 3 4 5 6',
                 registryAddress: 'Some address',

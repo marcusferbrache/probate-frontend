@@ -9,7 +9,7 @@
 {% set checklistItems = [] %}
 {% set codicilsSuffix = "" %}
 
-{% if fields.journeyType.value === "gop" %}
+{% if fields.caseType.value === globals.caseTypes.gop %}
     {% if fields.hasCodicils.value == "true" and fields.codicilsNumber.value > "0" %}
         {% set checklistItems = (checklistItems.push(content["block1Checklist-item1-will-codicils"]), checklistItems) %}
         {% set codicilsSuffix = "-codicils" %}

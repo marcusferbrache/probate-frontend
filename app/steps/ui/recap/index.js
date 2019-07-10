@@ -1,6 +1,6 @@
 'use strict';
 
-const setJourney = require('app/middleware/setJourney');
+const caseTypes = require('app/utils/CaseTypes');
 const ValidationStep = require('app/core/steps/ValidationStep');
 const ExecutorsWrapper = require('app/wrappers/Executors');
 const WillWrapper = require('app/wrappers/Will');
@@ -22,7 +22,6 @@ class Recap extends ValidationStep {
         const formdata = req.session.form || {};
         const registryAddress = (new RegistryWrapper(formdata.registry)).address();
 
-        ctx.journeyType = setJourney.getJourneyName(req.session);
         ctx.ccdReferenceNumber = FormatCcdCaseId.format(formdata.ccdCase);
         ctx.ccdReferenceNumber = '1234-5678-9012-3456'; // For demo purposes only
         ctx.ccdReferenceNumberAccessible = ctx.ccdReferenceNumber.split('').join(' ');
@@ -41,7 +40,7 @@ class Recap extends ValidationStep {
         ctx.checkAnswersSummary = true; // For demo purposes only
         ctx.legalDeclaration = true; // For demo purposes only
 
-        if (ctx.journeyType === 'gop') {
+        if (ctx.caseType === caseTypes.GOP) {
             const executorsWrapper = new ExecutorsWrapper(formdata.executors);
             const willWrapper = new WillWrapper(formdata.will);
 
@@ -61,7 +60,6 @@ class Recap extends ValidationStep {
 
     action(ctx, formdata) {
         super.action(ctx, formdata);
-        delete ctx.journeyType;
         delete ctx.ccdReferenceNumber;
         delete ctx.ccdReferenceNumberAccessible;
         delete ctx.registryAddress;
