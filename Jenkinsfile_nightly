@@ -62,13 +62,14 @@ withNightlyPipeline("nodejs", product, component) {
     setVaultName('probate')
     loadVaultSecrets(secrets)
     //enableFullFunctionalTest()
-    enableCrossBrowserTest()
-    enableSecurityScan()
+    //enableCrossBrowserTest()
+    //enableSecurityScan()
+    enableMutationTest()
     after('build') {
         sh 'mkdir -p functional-output'
         sh 'yarn setup'
         //sh 'yarn test-accessibility'
-    }  
+    }
     after('fullFunctionalTest') {
         steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'output/**/*'
     }
