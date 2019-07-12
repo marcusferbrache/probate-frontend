@@ -94,7 +94,10 @@ exports.init = function() {
         },
         webChat: {
             chatId: config.webChat.chatId,
-            tenant: config.webChat.tenant
+            tenant: config.webChat.tenant,
+            buttonNoAgents: config.webChat.buttonNoAgents,
+            buttonAgentsBusy: config.webChat.buttonAgentsBusy,
+            buttonServiceClosed: config.webChat.buttonServiceClosed
         },
         caseTypes: {
             gop: caseTypes.GOP,
