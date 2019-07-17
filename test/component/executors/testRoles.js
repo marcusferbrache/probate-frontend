@@ -49,12 +49,15 @@ describe('executor-roles', () => {
             testWrapper.agent.post('/prepare-session/form')
                 .send(sessionData)
                 .end(() => {
-                    const playbackData = {};
-                    playbackData.helpTitle = commonContent.helpTitle;
-                    playbackData.helpHeading1 = commonContent.helpHeading1;
-                    playbackData.helpHeading2 = commonContent.helpHeading2;
-                    playbackData.contactOpeningTimes = commonContent.contactOpeningTimes.replace('{openingTimes}', config.helpline.hours);
-                    playbackData.helpEmailLabel = commonContent.helpEmailLabel.replace(/{contactEmailAddress}/g, config.links.contactEmailAddress);
+                    const playbackData = {
+                        helpTitle: commonContent.helpTitle,
+                        helpHeading1: commonContent.helpHeading1,
+                        helpHeading2: commonContent.helpHeading2,
+                        contactOpeningTimes: commonContent.contactOpeningTimes.replace('{openingTimes}', config.helpline.hours),
+                        sendUsAMessage: commonContent.sendUsAMessage.replace('{webForms}', config.links.webForms),
+                        opensInNewWindow: commonContent.opensInNewWindow,
+                        responseTime: commonContent.responseTime
+                    };
 
                     testWrapper.testDataPlayback(done, playbackData);
                 });

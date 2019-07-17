@@ -126,6 +126,7 @@ const config = {
         privacy: '/privacy-policy',
         terms: '/terms-conditions',
         contact: '/contact-us',
+        webForms: 'https://ctsc-query.platform.hmcts.net/query.html?serviceId=Probate',
         contactEmailAddress: 'contactprobate@justice.gov.uk',
         callCharges: 'https://www.gov.uk/call-charges',
         howToManageCookies: 'https://www.aboutcookies.org',
