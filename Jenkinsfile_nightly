@@ -62,9 +62,9 @@ withNightlyPipeline("nodejs", product, component) {
     setVaultName('probate')
     loadVaultSecrets(secrets)
     //enableFullFunctionalTest()
-    //enableCrossBrowserTest()
-    //enableSecurityScan()
-    enableMutationTest()
+    enableCrossBrowserTest()
+    enableSecurityScan()
+    //enableMutationTest()
     after('build') {
         sh 'mkdir -p functional-output'
         sh 'yarn setup'
