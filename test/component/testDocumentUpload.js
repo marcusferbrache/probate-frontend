@@ -3,9 +3,22 @@
 const TestWrapper = require('test/util/TestWrapper');
 const IhtMethod = require('app/steps/ui/iht/method');
 const commonContent = require('app/resources/en/translation/common');
+const expect = require('chai').expect;
 const config = require('app/config');
 const nock = require('nock');
-const expect = require('chai').expect;
+const featureToggleUrl = config.featureToggles.url;
+const webchatFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.webchat}`;
+const webformsFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.webforms}`;
+const featureTogglesNockWebchat = (status = 'true') => {
+    nock(featureToggleUrl)
+        .get(webchatFeatureTogglePath)
+        .reply(200, status);
+};
+const featureTogglesNockWebforms = (status = 'true') => {
+    nock(featureToggleUrl)
+        .get(webformsFeatureTogglePath)
+        .reply(200, status);
+};
 
 describe('document-upload', () => {
     let testWrapper;
@@ -17,15 +30,37 @@ describe('document-upload', () => {
 
     afterEach(() => {
         testWrapper.destroy();
+        nock.cleanAll();
     });
 
     describe('Verify Content, Errors and Redirection', () => {
         it('test help block content loaded on the page', (done) => {
             const playbackData = {
                 helpTitle: commonContent.helpTitle,
-                helpHeading1: commonContent.helpHeading1,
-                helpHeading2: commonContent.helpHeading2,
+                helpHeadingTelephone: commonContent.helpHeadingTelephone,
+                helpHeadingEmail: commonContent.helpHeadingEmail,
                 contactOpeningTimes: commonContent.contactOpeningTimes.replace('{openingTimes}', config.helpline.hours),
+                helpEmailLabel: commonContent.helpEmailLabel.replace(/{contactEmailAddress}/g, config.links.contactEmailAddress)
+            };
+
+            testWrapper.testDataPlayback(done, playbackData);
+        });
+
+        it('test webchat help block content is loaded on page', (done) => {
+            featureTogglesNockWebchat();
+
+            const playbackData = {
+                helpHeadingWebchat: commonContent.helpHeadingWebchat,
+            };
+
+            testWrapper.testDataPlayback(done, playbackData);
+        });
+
+        it('test webforms help block content is loaded on page', (done) => {
+            featureTogglesNockWebforms();
+
+            const playbackData = {
+                helpHeadingOnlineForm: commonContent.helpHeadingOnlineForm,
                 sendUsAMessage: commonContent.sendUsAMessage.replace('{webForms}', config.links.webForms),
                 opensInNewWindow: commonContent.opensInNewWindow,
                 responseTime: commonContent.responseTime
