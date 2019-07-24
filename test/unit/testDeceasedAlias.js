@@ -53,7 +53,8 @@ describe('DeceasedAlias', () => {
                 sessionID: 'dummy_sessionId',
                 caseType: 'gop',
                 featureToggles: {
-                    webchat: 'false'
+                    webchat: 'false',
+                    webforms: 'false'
                 }
             });
             done();

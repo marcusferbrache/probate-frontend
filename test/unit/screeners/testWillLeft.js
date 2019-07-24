@@ -37,7 +37,8 @@ describe('WillLeft', () => {
                 left: content.optionYes,
                 caseType: 'gop',
                 featureToggles: {
-                    webchat: 'false'
+                    webchat: 'false',
+                    webforms: 'false'
                 }
             });
             done();

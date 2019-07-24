@@ -122,7 +122,8 @@ describe('Summary', () => {
                 deceasedAliasQuestion: 'Did Dee Ceased have assets in another name?',
                 deceasedMarriedQuestion: 'Did Dee Ceased get married or enter into a civil partnership after the will was signed?',
                 featureToggles: {
-                    webchat: 'false'
+                    webchat: 'false',
+                    webforms: 'false'
                 },
                 ihtTotalNetValue: 300000,
                 caseType: 'gop',
@@ -180,7 +181,8 @@ describe('Summary', () => {
                 deceasedMaritalStatusQuestion: 'What was Dee Ceased&rsquo;s marital status?',
                 deceasedSpouseNotApplyingReasonQuestion: 'Why isn&rsquo;t Dee Ceased&rsquo;s spouse applying?',
                 featureToggles: {
-                    webchat: 'false'
+                    webchat: 'false',
+                    webforms: 'false'
                 },
                 ihtTotalNetValue: 550000,
                 ihtTotalNetValueGreaterThan250k: true,
