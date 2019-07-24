@@ -5,7 +5,21 @@ const {assert} = require('chai');
 const CoApplicantStartPage = require('app/steps/ui/coapplicant/startpage');
 const commonContent = require('app/resources/en/translation/common');
 const config = require('app/config');
+const webchatFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.webchat}`;
+const webformsFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.webforms}`;
 const nock = require('nock');
+const featureToggleUrl = config.featureToggles.url;
+
+const featureTogglesNockWebchat = (status = 'true') => {
+    nock(featureToggleUrl)
+        .get(webchatFeatureTogglePath)
+        .reply(200, status);
+};
+const featureTogglesNockWebforms = (status = 'true') => {
+    nock(featureToggleUrl)
+        .get(webformsFeatureTogglePath)
+        .reply(200, status);
+};
 
 describe('pin-page', () => {
     let testWrapper;
@@ -17,6 +31,8 @@ describe('pin-page', () => {
 
     afterEach(() => {
         testWrapper.destroy();
+        nock.cleanAll();
+
     });
 
     describe('Verify Content, Errors and Redirection', () => {
@@ -25,9 +41,36 @@ describe('pin-page', () => {
                 .end(() => {
                     const playbackData = {
                         helpTitle: commonContent.helpTitle,
-                        helpHeading1: commonContent.helpHeading1,
-                        helpHeading2: commonContent.helpHeading2,
+                        helpHeadingTelephone: commonContent.helpHeadingTelephone,
+                        helpHeadingEmail: commonContent.helpHeadingEmail,
                         contactOpeningTimes: commonContent.contactOpeningTimes.replace('{openingTimes}', config.helpline.hours),
+                        helpEmailLabel: commonContent.helpEmailLabel.replace(/{contactEmailAddress}/g, config.links.contactEmailAddress)
+                    };
+
+                    testWrapper.testDataPlayback(done, playbackData);
+                });
+        });
+
+        it('test webchat help block content is loaded on page', (done) => {
+            featureTogglesNockWebchat();
+
+            testWrapper.agent.post('/prepare-session-field/validLink/true')
+                .end(() => {
+                    const playbackData = {
+                        helpHeadingWebchat: commonContent.helpHeadingWebchat,
+                    };
+
+                    testWrapper.testDataPlayback(done, playbackData);
+                });
+        });
+
+        it('test webforms help block content is loaded on page', (done) => {
+            featureTogglesNockWebforms();
+
+            testWrapper.agent.post('/prepare-session-field/validLink/true')
+                .end(() => {
+                    const playbackData = {
+                        helpHeadingOnlineForm: commonContent.helpHeadingOnlineForm,
                         sendUsAMessage: commonContent.sendUsAMessage.replace('{webForms}', config.links.webForms),
                         opensInNewWindow: commonContent.opensInNewWindow,
                         responseTime: commonContent.responseTime

@@ -11,9 +11,21 @@ const caseTypes = require('app/utils/CaseTypes');
 const nock = require('nock');
 const featureToggleUrl = config.featureToggles.url;
 const intestacyQuestionsFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.intestacy_questions}`;
-const featureTogglesNock = (status = 'true') => {
+const webchatFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.webchat}`;
+const webformsFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.webforms}`;
+const featureTogglesNockIntestacyQuestions = (status = 'true') => {
     nock(featureToggleUrl)
         .get(intestacyQuestionsFeatureTogglePath)
+        .reply(200, status);
+};
+const featureTogglesNockWebchat = (status = 'true') => {
+    nock(featureToggleUrl)
+        .get(webchatFeatureTogglePath)
+        .reply(200, status);
+};
+const featureTogglesNockWebforms = (status = 'true') => {
+    nock(featureToggleUrl)
+        .get(webformsFeatureTogglePath)
         .reply(200, status);
 };
 
@@ -30,7 +42,7 @@ describe('divorce-place', () => {
 
     beforeEach(() => {
         testWrapper = new TestWrapper('DivorcePlace');
-        featureTogglesNock();
+        featureTogglesNockIntestacyQuestions();
     });
 
     afterEach(() => {
@@ -45,9 +57,38 @@ describe('divorce-place', () => {
                 .end(() => {
                     const playbackData = {
                         helpTitle: commonContent.helpTitle,
-                        helpHeading1: commonContent.helpHeading1,
-                        helpHeading2: commonContent.helpHeading2,
+                        helpHeadingTelephone: commonContent.helpHeadingTelephone,
+                        helpHeadingEmail: commonContent.helpHeadingEmail,
                         contactOpeningTimes: commonContent.contactOpeningTimes.replace('{openingTimes}', config.helpline.hours),
+                        helpEmailLabel: commonContent.helpEmailLabel.replace(/{contactEmailAddress}/g, config.links.contactEmailAddress)
+                    };
+
+                    testWrapper.testDataPlayback(done, playbackData);
+                });
+        });
+
+        it('test webchat help block content is loaded on page', (done) => {
+            featureTogglesNockWebchat();
+
+            testWrapper.agent.post('/prepare-session/form')
+                .send(sessionData)
+                .end(() => {
+                    const playbackData = {
+                        helpHeadingWebchat: commonContent.helpHeadingWebchat,
+                    };
+
+                    testWrapper.testDataPlayback(done, playbackData);
+                });
+        });
+
+        it('test webforms help block content is loaded on page', (done) => {
+            featureTogglesNockWebforms();
+
+            testWrapper.agent.post('/prepare-session/form')
+                .send(sessionData)
+                .end(() => {
+                    const playbackData = {
+                        helpHeadingOnlineForm: commonContent.helpHeadingOnlineForm,
                         sendUsAMessage: commonContent.sendUsAMessage.replace('{webForms}', config.links.webForms),
                         opensInNewWindow: commonContent.opensInNewWindow,
                         responseTime: commonContent.responseTime

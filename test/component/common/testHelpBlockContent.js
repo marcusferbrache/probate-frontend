@@ -19,12 +19,10 @@ class TestHelpBlockContent {
                     .then(() => {
                         const playbackData = {
                             helpTitle: commonContent.helpTitle,
-                            helpHeading1: commonContent.helpHeading1,
-                            helpHeading2: commonContent.helpHeading2,
+                            helpHeadingTelephone: commonContent.helpHeadingTelephone,
+                            helpHeadingEmail: commonContent.helpHeadingEmail,
                             contactOpeningTimes: commonContent.contactOpeningTimes.replace('{openingTimes}', config.helpline.hours),
-                            sendUsAMessage: commonContent.sendUsAMessage.replace('{webForms}', config.links.webForms),
-                            opensInNewWindow: commonContent.opensInNewWindow,
-                            responseTime: commonContent.responseTime
+                            helpEmailLabel: commonContent.helpEmailLabel.replace(/{contactEmailAddress}/g, config.links.contactEmailAddress)
                         };
 
                         testWrapper.testDataPlayback(done, playbackData, cookies);
