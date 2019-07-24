@@ -14,7 +14,8 @@ const config = {
         fees_api: 'probate-fees-api',
         copies_fees: 'probate-copies-fees',
         webchat: 'probate-webchat',
-        appwideToggles: ['webchat']
+        webforms: 'probate-webforms',
+        appwideToggles: ['webchat', 'webforms']
     },
     app: {
         username: process.env.USERNAME,

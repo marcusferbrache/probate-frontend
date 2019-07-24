@@ -2,16 +2,21 @@
     <details class="help-panel help-details">
         <summary><span class="summary help-details-summary">{{ common.helpTitle }}</span></summary>
         <div class="panel panel-border-narrow">
-            <h4 class="heading-small">{{common.helpHeading1 | safe}}</h4>
+            <h4 class="heading-small">{{common.helpHeadingTelephone | safe}}</h4>
             <p>{{ helpline.number | safe }}</p>
             <p>{{ common.contactOpeningTimes | replace('{openingTimes}', helpline.hours) | safe }}</p>
 
-            <h4 class="heading-small">{{common.helpHeading2 | safe}}</h4>
-            <p>{{ common.sendUsAMessage | replace('{webForms}', links.webForms) | safe }} {{ common.opensInNewWindow }}</p>
-            <p>{{ common.responseTime | safe }}</p>
+            {% if fields.featureToggles.value.webforms == "true" %}
+                <h4 class="heading-small">{{common.helpHeadingOnlineForm | safe}}</h4>
+                <p>{{ common.sendUsAMessage | replace('{webForms}', links.webForms) | safe }} {{ common.opensInNewWindow }}</p>
+                <p>{{ common.responseTime | safe }}</p>
+            {% else %}
+                <h4 class="heading-small">{{common.helpHeadingEmail | safe}}</h4>
+                <p>{{ common.helpEmailLabel | replace('{contactEmailAddress}', links.contactEmailAddress) | safe }}</p>
+            {% endif %}
 
             {% if fields.featureToggles.value.webchat == "true" %}
-                <h4 id="ctsc-web-chat-header" class="heading-small">{{ common.helpHeading3 | safe }}</h4>
+                <h4 id="ctsc-web-chat-header" class="heading-small">{{ common.helpHeadingWebchat | safe }}</h4>
                 <div id="ctsc-web-chat"></div>
             {% endif %}
         </div>
