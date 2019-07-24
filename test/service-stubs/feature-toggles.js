@@ -16,9 +16,9 @@ const featureToggles = {
     'probate-webforms': true
 };
 
-Object.keys(featureToggles).forEach((key) => {
+Object.entries(featureToggles).forEach(([key, value]) => {
     router.get(`${config.featureToggles.path}/${key}`, (req, res) => {
-        res.send(featureToggles[key].toString());
+        res.send(value.toString());
     });
 });
 
