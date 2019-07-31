@@ -11,7 +11,6 @@ const featureToggles = {
     'probate-fe-shutter': true,
     'probate-intestacy-questions': true,
     'probate-fees-api': true,
-    'probate-copies-fees': true,
     'probate-webchat': true,
     'probate-webforms': true
 };
