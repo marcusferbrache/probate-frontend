@@ -18,26 +18,28 @@ describe('copies-overseas', () => {
 
     afterEach(() => {
         testWrapper.destroy();
+        nock.cleanAll();
     });
 
     describe('Verify Content, Errors and Redirection', () => {
         testHelpBlockContent.runTest('CopiesOverseas');
 
         it('test right content loaded on the page with the fees_api toggle ON', (done) => {
-            const featureTogglesNock = (status = 'true') => {
+            const feesApiFeatureTogglesNock = (status = 'true') => {
                 nock(featureToggleUrl)
                     .get(feesApiFeatureTogglePath)
                     .reply(200, status);
             };
             const excludeKeys = [
-                'copiesOld'
+                'questionOld',
+                'paragraph1Old'
             ];
-            featureTogglesNock();
+            feesApiFeatureTogglesNock();
             testWrapper.testContent(done, excludeKeys);
         });
 
         it('test right content loaded on the page with the fees_api toggle OFF', (done) => {
-            const featureTogglesNock = (status = 'false') => {
+            const feesApiFeatureTogglesNock = (status = 'false') => {
                 nock(featureToggleUrl)
                     .get(feesApiFeatureTogglePath)
                     .reply(200, status);
@@ -48,7 +50,7 @@ describe('copies-overseas', () => {
                 'bullet2',
                 'copies'
             ];
-            featureTogglesNock();
+            feesApiFeatureTogglesNock();
             testWrapper.testContent(done, excludeKeys);
         });
 

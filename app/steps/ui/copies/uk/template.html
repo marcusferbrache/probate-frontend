@@ -21,6 +21,10 @@
                 content.bullet1,
                 content.bullet2
             ]) }}
+        {% else %}
+            <p class="govuk-body">{{ content.paragraph1Old | safe }}</p>
+            <p class="govuk-body">{{ content.paragraph2Old }}</p>
+            <p class="govuk-body">{{ content.paragraph3Old | safe }}</p>
         {% endif %}
 
         {{ govukInput({

@@ -18,11 +18,12 @@ describe('start-eligibility', () => {
 
     afterEach(() => {
         testWrapper.destroy();
+        nock.cleanAll();
     });
 
     describe('Verify Content, Errors and Redirection', () => {
         it('test right content loaded on the page with the fees_api toggle ON', (done) => {
-            const featureTogglesNock = (status = 'true') => {
+            const feesApiFeatureTogglesNock = (status = 'true') => {
                 nock(featureToggleUrl)
                     .get(feesApiFeatureTogglePath)
                     .reply(200, status);
@@ -32,12 +33,12 @@ describe('start-eligibility', () => {
                 'paragraph7old',
                 'paragraph8old'
             ];
-            featureTogglesNock();
+            feesApiFeatureTogglesNock();
             testWrapper.testContent(done, excludeKeys);
         });
 
         it('test right content loaded on the page with the fees_api toggle OFF', (done) => {
-            const featureTogglesNock = (status = 'false') => {
+            const feesApiFeatureTogglesNock = (status = 'false') => {
                 nock(featureToggleUrl)
                     .get(feesApiFeatureTogglePath)
                     .reply(200, status);
@@ -63,7 +64,7 @@ describe('start-eligibility', () => {
                 'tableBodyFeeRange7',
                 'tableBodyFeeRange7Value'
             ];
-            featureTogglesNock();
+            feesApiFeatureTogglesNock();
             testWrapper.testContent(done, excludeKeys);
         });
 

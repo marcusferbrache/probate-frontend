@@ -42,7 +42,7 @@ describe('CopiesOverseas', () => {
     });
 
     describe('handleGet()', () => {
-        it('should return true when the fees api toggle is set', (done) => {
+        it('should return true when the fees_api toggle is set', (done) => {
             const ctxToTest = {};
             const formdata = {};
             const featureToggles = {
@@ -53,7 +53,7 @@ describe('CopiesOverseas', () => {
             done();
         });
 
-        it('should return false when the fees api toggle is not set', (done) => {
+        it('should return false when the fees_api toggle is not set', (done) => {
             const ctxToTest = {};
             const formdata = {};
             const featureToggles = {};

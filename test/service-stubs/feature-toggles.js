@@ -7,8 +7,18 @@ const logger = require('app/components/logger')('Init');
 const app = express();
 const featureTogglesPort = config.featureToggles.port;
 
-router.get(`${config.featureToggles.path}/:featureToggleKey`, (req, res) => {
-    res.send('true');
+const featureToggles = {
+    'probate-fe-shutter': true,
+    'probate-intestacy-questions': true,
+    'probate-fees-api': true,
+    'probate-webchat': true,
+    'probate-webforms': true
+};
+
+Object.entries(featureToggles).forEach(([key, value]) => {
+    router.get(`${config.featureToggles.path}/${key}`, (req, res) => {
+        res.send(value.toString());
+    });
 });
 
 app.use(router);

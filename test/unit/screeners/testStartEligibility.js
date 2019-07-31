@@ -1,3 +1,5 @@
+'use strict';
+
 const initSteps = require('app/core/initSteps');
 const expect = require('chai').expect;
 const steps = initSteps([`${__dirname}/../../../app/steps/action/`, `${__dirname}/../../../app/steps/ui`]);
@@ -13,7 +15,7 @@ describe('StartEligibility', () => {
     });
 
     describe('handleGet()', () => {
-        it('should return true when the fees api toggle is set', (done) => {
+        it('should return true when the fees_api toggle is set', (done) => {
             const ctxToTest = {};
             const formdata = {};
             const featureToggles = {
@@ -24,7 +26,7 @@ describe('StartEligibility', () => {
             done();
         });
 
-        it('should return false when the fees api toggle is not set', (done) => {
+        it('should return false when the fees_api toggle is not set', (done) => {
             const ctxToTest = {};
             const formdata = {};
             const featureToggles = {};

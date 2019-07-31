@@ -13,11 +13,15 @@
             isPageHeading: true
         }
     }) %}
-        <p class="govuk-body">{{ content.paragraph1 | safe }}</p>
-        {{ unorderedList([
-            content.bullet1,
-            content.bullet2
-        ]) }}
+        {% if fields.isFeesApiToggleEnabled.value === "true" %}
+            <p class="govuk-body">{{ content.paragraph1 | safe }}</p>
+            {{ unorderedList([
+                content.bullet1,
+                content.bullet2
+            ]) }}
+        {% else %}
+            <p class="govuk-body">{{ content.paragraph1Old | safe }}</p>
+        {% endif %}
 
         {{ govukInput({
             label: {
