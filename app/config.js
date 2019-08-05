@@ -127,7 +127,7 @@ const config = {
         privacy: '/privacy-policy',
         terms: '/terms-conditions',
         contact: '/contact-us',
-        webForms: process.env.WEBFORMS || 'http://ctsc-web-forms-ui-aat.service.core-compute-aat.internal',
+        webForms: process.env.WEBFORMS || 'http://ctsc-web-forms-ui-aat.service.core-compute-aat.internal?serviceId=probate',
         contactEmailAddress: 'contactprobate@justice.gov.uk',
         callCharges: 'https://www.gov.uk/call-charges',
         howToManageCookies: 'https://www.aboutcookies.org',
