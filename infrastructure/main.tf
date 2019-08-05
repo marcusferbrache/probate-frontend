@@ -9,7 +9,7 @@ locals {
   nonPreviewVaultName = "${var.raw_product}-${var.env}"
   vaultName = "${(var.env == "preview" || var.env == "spreview") ? local.previewVaultName : local.nonPreviewVaultName}"
   localenv = "${(var.env == "preview" || var.env == "spreview") ? "aat": "${var.env}"}"  
-  ctsc_web_form_url = "http://ctsc-web-forms-ui-${local.localenv}.service.core-compute-${local.localenv}.internal"  
+  ctsc_web_form_url = "http://ctsc-web-forms-ui-${local.localenv}.service.core-compute-${local.localenv}.internal?serviceId=probate"  
 }
 
 data "azurerm_subnet" "core_infra_redis_subnet" {
