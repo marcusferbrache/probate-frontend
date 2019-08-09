@@ -31,14 +31,14 @@ $path: "/public/images/";
 @import "node_modules/@hmcts/frontend/settings/assets";
 @import 'node_modules/@hmcts/frontend/components/hmcts-progress-bar/progress-bar';
 
-@import 'patterns/cookie-bar';
-@import 'patterns/header';
-@import 'patterns/hint';
-@import 'patterns/radios';
+@import "patterns/cookie-bar";
+@import "patterns/header";
+@import "patterns/hint";
+@import "patterns/radios";
 
-@import 'patterns/task-list';
-@import 'patterns/check-your-answers';
-@import 'patterns/document-upload';
-@import 'patterns/declaration';
+@import "patterns/task-list";
+@import "patterns/check-your-answers";
+@import "patterns/document-upload";
+@import "patterns/declaration";
 
-@import 'application-common.scss';
+@import "application-common.scss";
