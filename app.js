@@ -73,7 +73,6 @@ exports.init = function() {
         'app/steps',
         'app/views',
         'node_modules/govuk-frontend/',
-        'node_modules/govuk-frontend/components/',
         'node_modules/@hmcts/frontend/components/'
     ], {
         autoescape: true,
