@@ -4,6 +4,8 @@
   "progressStep1": "Online application submitted",
   "progressStep2-1": "Post paper documents",
   "progressStep2-2": "Paper documents posted",
+  "progressStep3-1": "Documents not yet received",
+  "progressStep3-2": "Documents received",
 
   "block1Heading1": "Post documents",
   "block1Heading2": "Post your documents to the probate registry",
@@ -34,7 +36,7 @@
   "sentDocuments": "I have sent my documents to the Probate Registry",
   "continue": "Continue",
   "declarationPdf": "Legal declaration (30kb PDF)",
-  "checkAnswersPdf": "Check your answers (10kb PDF)",
+  "caseOverviewPdf": "Case overview (10kb PDF)",
   "coverSheetPdf": "Application coversheet (20kb PDF)",
   "documentsListPdf": "Documents checklist (15kb PDF)",
 
