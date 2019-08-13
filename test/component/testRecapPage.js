@@ -24,6 +24,7 @@ describe('recap', () => {
             };
             const excludeKeys = [
                 'progressStep2-2',
+                'progressStep3-2',
                 'block1Checklist-item1-will-codicils',
                 'block1Checklist-item2-spouse-renouncing',
                 'block1Checklist-item4-iht205',
@@ -61,6 +62,7 @@ describe('recap', () => {
             };
             const excludeKeys = [
                 'progressStep2-2',
+                'progressStep3-2',
                 'block1Checklist-item1-will-no-codicils',
                 'block1Checklist-item1-will-codicils',
                 'block1Checklist-item2-spouse-renouncing',
