@@ -11,8 +11,8 @@
             <p class="govuk-body">{{ content.paragraph3 | replace('{applyForProbate}', links.applyForProbate) | safe }}</p>
             <p class="govuk-body">{{ content.paragraph4 }}</p>
             <p class="govuk-body">
-                {{ common.helpHeading1 | safe }}: {{ helpline.number | safe }} ({{ helpline.hours | safe }})<br>
-                {{ common.helpEmailLabel | replace('{contactEmailAddress}', links.contactEmailAddress) | safe }}
+                {{ common.helpHeading1 | safe }}: {{ globals.helpline.number | safe }} ({{ globals.helpline.hours | safe }})<br>
+                {{ common.helpEmailLabel | replace('{contactEmailAddress}', globals.links.contactEmailAddress) | safe }}
             </p>
         </div>
     </div>
