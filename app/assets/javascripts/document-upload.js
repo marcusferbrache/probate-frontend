@@ -21,7 +21,7 @@ var DocumentUpload = {
                 maxFilesize: documentUploadConfig.maxSizeBytes,
                 addRemoveLinks: true,
                 parallelUploads: 1,
-                previewTemplate: '<div class="dz-preview dz-file-preview"><div class="dz-error-message"><span data-dz-errormessage></span></div><div class="dz-details"><div class="dz-filename"><span data-dz-name></span></div></div><div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div></div>',
+                previewTemplate: '<div class="dz-preview dz-file-preview"><div class="dz-error-message"><span data-dz-errormessage></span></div><div class="dz-details"><div class="dz-filename"><span data-dz-name class="govuk-body"></span></div></div><div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div></div>',
                 dictRemoveFile: documentUploadConfig.content.removeFileText,
                 dictInvalidFileType: documentUploadConfig.content.invalidFileType,
                 dictMaxFilesExceeded: documentUploadConfig.content.maxFiles,
@@ -75,7 +75,7 @@ var DocumentUpload = {
     },
     showErrorSummary: function() {
         if ($('.error-summary').length === 0) {
-            $('h1').before('<div class="error-summary" role="group" aria-labelledby="error-summary-heading" tabindex="-1"><h2 class="heading-medium error-summary-heading" id="error-summary-heading">' + documentUploadConfig.content.errorSummaryHeading + '</h2><ul class="error-summary-list"></ul></div>');
+            $('h1').before('<div class="error-summary" role="group" aria-labelledby="error-summary-heading" tabindex="-1"><h2 class="govuk-heading-m error-summary-heading" id="error-summary-heading">' + documentUploadConfig.content.errorSummaryHeading + '</h2><ul class="error-summary-list"></ul></div>');
         }
     },
     removeErrorSummary: function() {
@@ -102,6 +102,7 @@ var DocumentUpload = {
     },
     updateLinkAttributes: function() {
         $('.dz-preview').each(function(key) {
+            $(this).find('.dz-remove').addClass('govuk-link');
             $(this).find('.dz-remove').attr('data-index', key);
             $(this).find('.dz-remove').attr('href', '/document-upload/remove/' + key);
         });

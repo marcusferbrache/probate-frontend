@@ -37,9 +37,9 @@ describe('any-deceased-children', () => {
         it('test content loaded on the page', (done) => {
             const sessionData = {
                 deceased: {
-                    firstName: 'John',
-                    lastName: 'Doe',
-                    dod_formattedDate: '13 October 2018'
+                    'firstName': 'John',
+                    'lastName': 'Doe',
+                    'dod-formattedDate': '13 October 2018'
                 }
             };
 

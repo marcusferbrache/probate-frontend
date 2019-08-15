@@ -21,11 +21,10 @@ const config = require('app/config');
 
 Object.keys(steps)
     .filter(stepName => stepsToExclude.includes(stepName))
-    .forEach(stepName => delete steps[stepName]);
+    .forEach((stepName) => delete steps[stepName]);
 
 for (const step in steps) {
     ((step) => {
-
         let results;
 
         describe(`Verify accessibility for the page ${step.name}`, () => {
@@ -47,7 +46,11 @@ for (const step in steps) {
                     .reply(200, 'true');
 
                 nock(config.featureToggles.url)
-                    .get(`${config.featureToggles.path}/probate-document-upload`)
+                    .get(`${config.featureToggles.path}/probate-webchat`)
+                    .reply(200, 'true');
+
+                nock(config.featureToggles.url)
+                    .get(`${config.featureToggles.path}/probate-fees-api`)
                     .reply(200, 'true');
 
                 server = app.init();
@@ -65,7 +68,7 @@ for (const step in steps) {
                     });
             });
 
-            after(function (done) {
+            after((done) => {
                 nock.cleanAll();
                 server.http.close();
                 done();

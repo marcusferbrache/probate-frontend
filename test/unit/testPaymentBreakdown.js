@@ -381,10 +381,11 @@ describe('PaymentBreakdown', () => {
             co(function* () {
                 const [ctx, errors] = yield paymentBreakdown.handlePost(ctxTestData, errorsTestData, formdata, session, hostname);
                 expect(errors).to.deep.equal([{
-                    param: 'authorisation',
+                    field: 'authorisation',
+                    href: '#authorisation',
                     msg: {
                         summary: 'We could not take your payment, please try again later.',
-                        message: 'payment.breakdown.errors.authorisation.failure.message'
+                        message: ''
                     }
                 }]);
                 expect(ctx).to.deep.equal(ctxTestData);
@@ -580,10 +581,11 @@ describe('PaymentBreakdown', () => {
                 expect(ctx).to.deep.equal(ctxTestData);
                 expect(ctx.reference).to.equal('RC-67890');
                 expect(errors).to.deep.equal([{
-                    param: 'payment',
+                    field: 'payment',
+                    href: '#payment',
                     msg: {
                         summary: 'Your payment may have failed. Do not try to pay again for 2 hours.',
-                        message: 'payment.breakdown.errors.payment.initiated.message'
+                        message: ''
                     }
                 }]);
                 getCasePaymentsStub.restore();

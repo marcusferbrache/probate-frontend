@@ -152,7 +152,7 @@ describe('executor-roles', () => {
                 notApplyingReason: reasons.optionRenunciated
             };
 
-            Object.keys(reasons).forEach(key => {
+            Object.keys(reasons).forEach((key) => {
                 ctx.notApplyingReason = reasons[key];
                 [ctx] = ExecutorRoles.handlePost(ctx);
                 assert.exists(ctx.list[1].notApplyingKey, 'key not found - this key is needed for CCD data');

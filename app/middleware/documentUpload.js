@@ -95,7 +95,7 @@ const persistFormData = (id, formdata, sessionID) => {
     const formData = ServiceMapper.map(
         'FormData',
         [config.services.persistence.url, sessionID],
-        formdata.journeyType
+        formdata.caseType
     );
     return formData.post(id, formdata, sessionID);
 };

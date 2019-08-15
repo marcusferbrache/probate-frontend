@@ -5,7 +5,7 @@
   "hintText2": "This is not the same as a beneficiary who will get money or other property from the person who died. You could be named as both an executor and a beneficiary.",
   "optionYes": "Yes",
   "optionNo": "No",
-  "legend": "Are you named as an executor on the will?",
+
   "errors": {
     "executor": {
       "required": {

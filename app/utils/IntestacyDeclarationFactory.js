@@ -14,8 +14,8 @@ class IntestacyDeclarationFactory {
             deceased: content.intestacyLegalStatementDeceased
                 .replace('{deceasedName}', formdata.deceasedName)
                 .replace('{deceasedAddress}', formdata.deceasedAddress.formattedAddress)
-                .replace('{deceasedDob}', formdata.dob_formattedDate)
-                .replace('{deceasedDod}', formdata.dod_formattedDate),
+                .replace('{deceasedDob}', formdata.dobFormattedDate)
+                .replace('{deceasedDod}', formdata.dodFormattedDate),
             deceasedOtherNames: formdata.deceasedOtherNames ? content.deceasedOtherNames.replace('{deceasedOtherNames}', formdata.deceasedOtherNames) : '',
             deceasedMaritalStatus: content.intestacyDeceasedMaritalStatus
                 .replace('{deceasedMaritalStatus}', get(formdata.deceased, 'maritalStatus', '').toLowerCase()),

@@ -23,8 +23,7 @@ class AddAlias extends DeceasedOtherNames {
         if (isEmpty(errors)) {
             let counter = 0;
             const otherNames = {};
-            Object.entries(ctx.otherNames)
-                .filter(([index]) => index.startsWith('name_'))
+            Object.entries(ctx.otherNames).filter(([index]) => index.startsWith('name_'))
                 .forEach(([, otherName]) => {
                     set(otherNames, `name_${counter}`, otherName);
                     counter += 1;

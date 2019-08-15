@@ -183,7 +183,6 @@ const stepList = {
     AddressLookup: 'AddressLookup',
     TaskList: 'TaskList',
     StopPage: 'StopPage',
-    TermsConditions: 'TermsConditions',
     PinPage: 'CoApplicantStartPage',
     PinResend: 'PinSent',
     PinSent: 'PinPage',

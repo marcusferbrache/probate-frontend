@@ -2,7 +2,7 @@ const initSteps = require('app/core/initSteps'),
     assert = require('chai').assert,
     {isNil} = require('lodash');
 
-describe('Co-Applicant', function () {
+describe('Co-Applicant', () => {
 
     const steps = initSteps([__dirname + '/../../app/steps/action/', __dirname + '/../../app/steps/ui']);
 

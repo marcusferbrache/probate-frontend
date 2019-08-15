@@ -4,6 +4,7 @@ const initSteps = require('app/core/initSteps');
 const {expect, assert} = require('chai');
 const steps = initSteps([`${__dirname}/../../app/steps/action/`, `${__dirname}/../../app/steps/ui`]);
 const IhtValue = steps.IhtValue;
+const content = require('app/resources/en/translation/iht/value');
 const contentAssetsOutside = require('app/resources/en/translation/iht/assetsoutside');
 const contentAnyChildren = require('app/resources/en/translation/deceased/anychildren');
 const contentAllChildrenOver18 = require('app/resources/en/translation/deceased/allchildrenover18');
@@ -86,25 +87,28 @@ describe('IhtValue', () => {
             });
             expect(errors).to.deep.equal([
                 {
+                    field: 'grossValueField',
+                    href: '#grossValueField',
                     msg: {
-                        summary: 'Gross value can only contain numbers',
-                        message: 'Gross value must be a whole number or a number with 2 decimal places'
-                    },
-                    param: 'grossValueField'
+                        summary: content.errors.grossValueField.invalidCurrencyFormat.summary,
+                        message: content.errors.grossValueField.invalidCurrencyFormat.message
+                    }
                 },
                 {
+                    field: 'netValueField',
+                    href: '#netValueField',
                     msg: {
-                        summary: 'Net value can only contain numbers',
-                        message: 'Net value must be a whole number or a number with 2 decimal places'
-                    },
-                    param: 'netValueField'
+                        summary: content.errors.netValueField.invalidCurrencyFormat.summary,
+                        message: content.errors.netValueField.invalidCurrencyFormat.message
+                    }
                 },
                 {
+                    field: 'netValueField',
+                    href: '#netValueField',
                     msg: {
-                        summary: 'The net amount can&rsquo;t be greater than the gross amount',
-                        message: 'The net amount can&rsquo;t be greater than the gross amount'
-                    },
-                    param: 'netValueField'
+                        summary: content.errors.netValueField.netValueGreaterThanGross.summary,
+                        message: content.errors.netValueField.netValueGreaterThanGross.message
+                    }
                 }
             ]);
             done();

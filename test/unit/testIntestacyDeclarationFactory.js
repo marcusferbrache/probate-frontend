@@ -22,8 +22,8 @@ describe('IntestacyDeclarationFactory', () => {
         formdata.deceasedName = FormatName.format(formdataDeceased);
         formdata.deceasedAddress = get(formdataDeceased, 'address', {});
         formdata.deceasedOtherNames = FormatName.formatMultipleNamesAndAddress(get(formdataDeceased, 'otherNames'), content);
-        formdata.dob_formattedDate = formdataDeceased.dob_formattedDate;
-        formdata.dod_formattedDate = formdataDeceased.dod_formattedDate;
+        formdata.dobFormattedDate = formdataDeceased['dob-formattedDate'];
+        formdata.dodFormattedDate = formdataDeceased['dod-formattedDate'];
         formdata.maritalStatus = formdataDeceased.maritalStatus;
         formdata.relationshipToDeceased = formdataDeceased.relationshipToDeceased;
         formdata.hadChildren = formdataDeceased.hadChildren;
@@ -49,8 +49,8 @@ describe('IntestacyDeclarationFactory', () => {
                     deceased: content.intestacyLegalStatementDeceased
                         .replace('{deceasedName}', formdata.deceasedName)
                         .replace('{deceasedAddress}', formdata.deceasedAddress.formattedAddress)
-                        .replace('{deceasedDob}', formdata.dob_formattedDate)
-                        .replace('{deceasedDod}', formdata.dod_formattedDate),
+                        .replace('{deceasedDob}', formdata.dobFormattedDate)
+                        .replace('{deceasedDod}', formdata.dodFormattedDate),
                     deceasedChildren: content.intestacyDeceasedChildren,
                     deceasedEstateLand: content.intestacyDeceasedEstateLand
                         .replace(/{deceasedName}/g, formdata.deceasedName),

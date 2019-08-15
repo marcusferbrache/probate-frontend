@@ -47,8 +47,8 @@ class Declaration extends ValidationStep {
         formdata.deceasedName = FormatName.format(formdataDeceased);
         formdata.deceasedAddress = get(formdataDeceased, 'address', {});
         formdata.deceasedOtherNames = FormatName.formatMultipleNamesAndAddress(get(formdataDeceased, 'otherNames'), content);
-        formdata.dob_formattedDate = formdataDeceased.dob_formattedDate;
-        formdata.dod_formattedDate = formdataDeceased.dod_formattedDate;
+        formdata.dobFormattedDate = formdataDeceased['dob-formattedDate'];
+        formdata.dodFormattedDate = formdataDeceased['dod-formattedDate'];
         formdata.maritalStatus = formdataDeceased.maritalStatus;
         formdata.relationshipToDeceased = formdataApplicant.relationshipToDeceased;
         formdata.anyChildren = formdataDeceased.anyChildren;

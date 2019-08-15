@@ -19,7 +19,6 @@ describe('EligibilityValidationStep', () => {
         it('should set feature toggles in the context', (done) => {
             let ctx = {};
             const featureToggles = {
-                isDocumentUploadToggleEnabled: true,
                 isIntestacyQuestionsToggleEnabled: true
             };
 
@@ -27,7 +26,6 @@ describe('EligibilityValidationStep', () => {
             ctx = eligibilityValidationStep.setFeatureTogglesOnCtx(ctx, featureToggles);
 
             expect(ctx).to.deep.equal({
-                isDocumentUploadToggleEnabled: true,
                 isIntestacyQuestionsToggleEnabled: true
             });
             done();

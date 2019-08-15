@@ -42,7 +42,7 @@ describe('DetectDataChange.js', () => {
 
         it('should return the paramsKey when paramsKey is not address', (done) => {
             const detectDataChange = new DetectDataChange();
-            expect(detectDataChange.accessDataKey('dob_day')).to.equal('dob_day');
+            expect(detectDataChange.accessDataKey('dob-day')).to.equal('dob-day');
             done();
         });
     });
@@ -51,10 +51,10 @@ describe('DetectDataChange.js', () => {
         describe('should return true', () => {
             it('when the values are not equal', (done) => {
                 const params = {
-                    dob_day: '30'
+                    'dob-day': '30'
                 };
                 const sectionData = {
-                    dob_day: '31'
+                    'dob-day': '31'
                 };
                 const detectDataChange = new DetectDataChange();
                 expect(detectDataChange.hasChanged(params, sectionData)).to.equal(true);
@@ -85,10 +85,10 @@ describe('DetectDataChange.js', () => {
 
         it('should return false when the values are equal', (done) => {
             const params = {
-                dob_day: '30'
+                'dob-day': '30'
             };
             const sectionData = {
-                dob_day: '30'
+                'dob-day': '30'
             };
             const detectDataChange = new DetectDataChange();
             expect(detectDataChange.hasChanged(params, sectionData)).to.equal(false);

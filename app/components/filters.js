@@ -1,6 +1,6 @@
 const initialsFilter = require('app/components/initialsFilter');
 
-module.exports = function(env) {
+module.exports = (env) => {
 
     // if you need accss to the internal nunjucks filter you can just env
     // see the example below for 'safe' which is used in 'filters.log'

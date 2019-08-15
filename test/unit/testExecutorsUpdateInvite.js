@@ -2,7 +2,7 @@
 const initSteps = require('app/core/initSteps');
 const {expect, assert} = require('chai');
 
-describe('Update-Invite', function () {
+describe('Update-Invite', () => {
     let ctx;
     const steps = initSteps([`${__dirname}/../../app/steps/action/`, `${__dirname}/../../app/steps/ui`]);
     const updateInvite = steps.ExecutorsUpdateInvite;

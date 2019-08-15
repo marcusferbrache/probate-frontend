@@ -295,7 +295,7 @@ describe('executors-when-died', () => {
         it('Gets the reason key from the json and adds it to the context', () => {
             const ExecutorsWhenDied = steps.ExecutorsWhenDied;
 
-            Object.keys(reasons).forEach(key => {
+            Object.keys(reasons).forEach((key) => {
                 ctx.notApplyingReason = reasons[key];
                 ctx.diedbefore = 'No';
                 if (key === 'optionDiedBefore') {

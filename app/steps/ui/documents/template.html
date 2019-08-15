@@ -1,12 +1,15 @@
 {% extends "includes/two_thirds_form.html" %}
 
+{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "widgets/lists.html" import unorderedList %}
-{% from "widgets/checkboxes.html" import checkbox %}
 
 {% set checklistItems = [] %}
 {% set codicilsSuffix = "" %}
 
-{% if fields.caseType.value === "gop" %}
+
+{% if fields.caseType.value === globals.caseTypes.gop %}
     {% if fields.hasCodicils.value === "true" and fields.codicilsNumber.value > "0" %}
         {% set checklistItems = (checklistItems.push(content["checklist-item1-codicils"]), checklistItems) %}
         {% set codicilsSuffix = "-codicils" %}
@@ -21,7 +24,7 @@
         {% set checklistItems = (checklistItems.push(content["checklist-item4-iht205"]), checklistItems) %}
     {% endif %}
     {% if fields.hasRenunciated.value === "true" %}
-        {% set checklistItems = (checklistItems.push(content["checklist-item5-renunciated"] | replace("{renunciationFormLink}", links.renunciationForm)), checklistItems) %}
+        {% set checklistItems = (checklistItems.push(content["checklist-item5-renunciated"] | replace("{renunciationFormLink}", globals.links.renunciationForm)), checklistItems) %}
     {% endif %}
     {% if fields.executorsNameChangedByDeedPollList.value | length > 0 %}
         {% for executor in fields.executorsNameChangedByDeedPollList.value %}
@@ -30,7 +33,7 @@
     {% endif %}
 {% else %}
     {% if fields.spouseRenouncing.value === "true" %}
-        {% set checklistItems = (checklistItems.push(content["checklist-item2-spouse-renouncing"] | replace("{renunciationFormLink}", links.renunciationForm)), checklistItems) %}
+        {% set checklistItems = (checklistItems.push(content["checklist-item2-spouse-renouncing"] | replace("{renunciationFormLink}", globals.links.renunciationForm)), checklistItems) %}
     {% endif %}
     {% if fields.uploads.value | length === 0 %}
         {% set checklistItems = (checklistItems.push(content["checklist-item3-will-uploaded"]), checklistItems) %}
@@ -40,39 +43,46 @@
     {% endif %}
 {% endif %}
 
-{% block question %}
-    <h1 class="form-title heading-large">{{ content.header }}</h1>
-{% endblock %}
-
 {% block form_content %}
-    <h2 class="heading-medium">{{ content.heading1 | safe }}</h2>
-    <p>{{ content.coverSheetDownloadMessage }} <a id="coverSheetPdfHref" href="/cover-sheet-pdf">{{ content.coverSheetPdf }}</a>.</p>
-    {% if fields.ccdReferenceNumber.value !== '' %}
-        <p>{{ content.text1 | safe | replace('{ccdReferenceNumber}', fields.ccdReferenceNumber.value) }}</p>
-    {% endif %}
-    <p>{{ content.text2 | safe }}</p>
+    {% call govukFieldset({
+        legend: {
+            text: content.header,
+            classes: "govuk-fieldset__legend--l",
+            isPageHeading: true
+        }
+    }) %}
+        <h2 class="govuk-heading-m">{{ content.heading1 | safe }}</h2>
+        <p class="govuk-body">{{ content.coverSheetDownloadMessage }} <a class="govuk-link" id="coverSheetPdfHref" href="/cover-sheet-pdf">{{ content.coverSheetPdf }}</a>.</p>
+        {% if fields.ccdReferenceNumber.value !== "" %}
+            <p class="govuk-body">{{ content.text1 | safe | replace("{ccdReferenceNumber}", fields.ccdReferenceNumber.value) }}</p>
+        {% endif %}
+        <p class="govuk-body">{{ content.text2 | safe }}</p>
 
-    {{ unorderedList(checklistItems) }}
+        {{ unorderedList(checklistItems) }}
 
-    {% if fields.caseType.value === "gop" %}
-        <p>{{ content.text3 | safe }}</p>
-        <p>{{ content.text4 | safe }}</p>
-    {% endif %}
+        {% if fields.caseType.value === globals.caseTypes.gop %}
+            <p class="govuk-body">{{ content.text3 | safe }}</p>
+            <p class="govuk-body">{{ content.text4 | safe }}</p>
+        {% endif %}
 
-    <div class="panel panel-border-wide">
-        <p>{{ content.warning | safe }}</p>
-    </div>
+        {{ govukInsetText({
+            text: content.warning | safe
+        }) }}
 
-    <h2 class="heading-medium">{{ content.heading2 | safe }}</h2>
-    <p>{{ content.text5 | safe }}</p>
+        <h2 class="govuk-heading-m">{{ content.heading2 | safe }}</h2>
+        <p class="govuk-body">{{ content.text5 | safe }}</p>
 
-    <div class="panel panel-border-narrow">
-        <p>{{ fields.registryAddress.value | safe | nl2br }}</p>
-    </div>
+        {{ govukInsetText({
+            text: fields.registryAddress.value | safe | nl2br
+        }) }}
 
-    <input id="sentDocuments" type="hidden" name="sentDocuments" value="true"/>
+        <input id="sentDocuments" type="hidden" name="sentDocuments" value="true"/>
+    {% endcall %}
 
-    <div class="form-group">
-        <input id="button" class="button" type="submit" role="button" value="{{ common.continue }}">
+    <div class="govuk-form-group">
+        {{ govukButton({
+            text: common.continue,
+            preventDoubleClick: true
+        }) }}
     </div>
 {% endblock %}

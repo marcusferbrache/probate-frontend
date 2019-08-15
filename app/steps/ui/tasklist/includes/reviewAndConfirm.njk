@@ -9,17 +9,16 @@
         previousTaskStatus = fields.previousTaskStatus.value.ReviewAndConfirmTask
     ) }}
     <div class="task-list-items">
-        {% if fields.ReviewAndConfirmTask.value.status === 'complete' %}
-            {% if fields.hasMultipleApplicants.value === 'true' and fields.alreadyDeclared.value === 'false' %}
-                <span class="progress-status-tag">{{ content.taskCompleteTag | upper }}</span>
-                <p>{{ content.reviewAndConfirmTaskMultiplesParagraph1 | safe }}</p>
-                <p>{{ content.reviewAndConfirmTaskMultiplesParagraph2 | safe }}</p>
+        {% if fields.ReviewAndConfirmTask.value.status == "complete" %}
+            {% if fields.hasMultipleApplicants.value == "true" and fields.alreadyDeclared.value == "false" %}
+                <p class="govuk-body">{{ content.reviewAndConfirmTaskMultiplesParagraph1 | safe }}</p>
+                <p class="govuk-body">{{ content.reviewAndConfirmTaskMultiplesParagraph2 | safe }}</p>
             {% endif %}
         {% endif %}
         {{ taskAction(
             prevTaskStatus = previousTaskStatus,
             status = fields.ReviewAndConfirmTask.value.status,
-            nextURL = 'summary/declaration',
+            nextURL = "summary/declaration",
             checkYourAnswersURL = fields.ReviewAndConfirmTask.value.checkYourAnswersLink,
             content = content,
             title = content.reviewAndConfirmTask,

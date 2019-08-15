@@ -1,16 +1,11 @@
 <script src="/public/javascripts/jquery-1.11.3.js"></script>
 
-<!-- govuk_frontend_toolkit js -->
-<script src="/public/javascripts/vendor/polyfills/bind.js"></script>
-<script src="/public/javascripts/govuk/details.polyfill.js"></script>
-<script src="/public/javascripts/govuk/shim-links-with-button-role.js"></script>
-<script src="/public/javascripts/govuk/show-hide-content.js"></script>
+<script src="/public/javascripts/govuk-frontend/govuk/all.js"></script>
+<script nonce="{{ globals.nonce }}">window.GOVUKFrontend.initAll()</script>
 
-<script src="/public/javascripts/application.js"></script>
-
-{% if enableTracking === 'true' %}
-    <script nonce="{{ nonce }}">
-        const gatrackingid = "{{ gaTrackingId }}";
+{% if globals.enableTracking == "true" %}
+    <script nonce="{{ globals.nonce }}">
+        const gatrackingid = "{{ globals.gaTrackingId }}";
     </script>
     <script src="/public/javascripts/ga-tracking.js"></script>
     <noscript>
@@ -18,27 +13,29 @@
     </noscript>
 {% endif %}
 
+<script src="/public/javascripts/cookie.js"></script>
+
 <script src="/public/javascripts/dropzone.js"></script>
-<script nonce="{{ nonce }}">
+<script nonce="{{ globals.nonce }}">
     const documentUploadConfig = {
         csrfToken: '{{ csrfToken }}',
-        validMimeTypes: '{{ documentUpload.validMimeTypes }}',
-        maxFiles: '{{ documentUpload.maxFiles }}',
-        maxSizeBytes: '{{ documentUpload.maxSizeBytes }}',
-        timeout: '{{ documentUpload.timeout }}',
+        validMimeTypes: '{{ globals.documentUpload.validMimeTypes }}',
+        maxFiles: '{{ globals.documentUpload.maxFiles }}',
+        maxSizeBytes: '{{ globals.documentUpload.maxSizeBytes }}',
+        timeout: '{{ globals.documentUpload.timeout }}',
         content: {
             removeFileText: '{{ common.documentUploadRemoveFile }}',
             errorSummaryHeading: '{{ common.errorSummaryHeading }}',
-            invalidFileType: '{{ common['documentUpload-invalidFileType'] }}',
-            invalidFileTypeSummary: '{{ common['documentUpload-invalidFileTypeSummary'] }}',
-            maxFiles: '{{ common['documentUpload-maxFiles'] }}',
-            maxFilesSummary: '{{ common['documentUpload-maxFilesSummary'] }}',
-            maxSize: '{{ common['documentUpload-maxSize'] }}',
-            maxSizeSummary: '{{ common['documentUpload-maxSizeSummary'] }}',
-            uploadFailed: '{{ common['documentUpload-uploadFailed'] }}',
-            uploadFailedSummary: '{{ common['documentUpload-uploadFailedSummary'] }}',
-            uploadTimeout: '{{ common['documentUpload-uploadTimeout'] }}',
-            uploadTimeoutSummary: '{{ common['documentUpload-uploadTimeoutSummary'] }}'
+            invalidFileType: '{{ common["documentUpload-invalidFileType"] }}',
+            invalidFileTypeSummary: '{{ common["documentUpload-invalidFileTypeSummary"] }}',
+            maxFiles: '{{ common["documentUpload-maxFiles"] }}',
+            maxFilesSummary: '{{ common["documentUpload-maxFilesSummary"] }}',
+            maxSize: '{{ common["documentUpload-maxSize"] }}',
+            maxSizeSummary: '{{ common["documentUpload-maxSizeSummary"] }}',
+            uploadFailed: '{{ common["documentUpload-uploadFailed"] }}',
+            uploadFailedSummary: '{{ common["documentUpload-uploadFailedSummary"] }}',
+            uploadTimeout: '{{ common["documentUpload-uploadTimeout"] }}',
+            uploadTimeoutSummary: '{{ common["documentUpload-uploadTimeoutSummary"] }}'
         }
     };
 </script>
@@ -50,16 +47,16 @@
 
 {% if fields.featureToggles.value.webchat == "true" %}
     <script src="/webchat/javascript/hmcts-webchat.js"></script>
-    <script nonce="{{ nonce }}">
+    <script nonce="{{ globals.nonce }}">
         webchat_init({
-            uuid: 'script_{{ webChat.chatId }}',
-            tenant: '{{ webChat.tenant }}',
+            uuid: 'script_{{ globals.webChat.chatId }}',
+            tenant: '{{ globals.webChat.tenant }}',
             channel: 'Probate',
-            stylesheetURL: 'https://' + window.location.hostname + '/public/stylesheets/hmcts-webchat.css',
+            stylesheetURL: 'https://' + window.location.hostname + '/webchat/css/hmcts-webchat-gds-v3.css',
             busHandlerURL: 'https://' + window.location.hostname + '/webchat/javascript/hmcts-webchat-busHandler.js',
-            btnNoAgents: '/{{ webChat.tenant }}/button_{{ webChat.buttonNoAgents }}/img/logo',
-            btnAgentsBusy: '/{{ webChat.tenant }}/button_{{ webChat.buttonAgentsBusy }}/img/logo',
-            btnServiceClosed: '/{{ webChat.tenant }}/button_{{ webChat.buttonServiceClosed }}/img/logo',
+            btnNoAgents: '/{{ globals.webChat.tenant }}/button_{{ globals.webChat.buttonNoAgents }}/img/logo',
+            btnAgentsBusy: '/{{ globals.webChat.tenant }}/button_{{ globals.webChat.buttonAgentsBusy }}/img/logo',
+            btnServiceClosed: '/{{ globals.webChat.tenant }}/button_{{ globals.webChat.buttonServiceClosed }}/img/logo',
             chatDownAction: 'showMessage',
             chatLinkFocusable: false,
             textChatDown: '{{ common.chatDown | replace("\n", "\\n") }}',
@@ -68,7 +65,8 @@
             textNoAgentsAvailable: '{{ common.noAgentsAvailable | replace("\n", "\\n") }}',
             textAllAgentsBusy: '{{ common.allAgentsBusy | replace("\n", "\\n") }}',
             textChatAlreadyOpen: '{{ common.chatAlreadyOpen | replace("\\n", "\\\\n") }}',
-            textAdditional: '{{ common.chatOpeningHours | replace("\n", "\\n") }}.'
+            textAdditional: '{{ common.chatOpeningHours | replace("\n", "\\n") }}.',
+            gdsMajorVersion: 3
         });
     </script>
 {% endif %}

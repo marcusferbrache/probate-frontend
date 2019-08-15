@@ -3,8 +3,8 @@
   "question": "Did {executorFullName} die before the person who died?",
   "optionYes": "Yes",
   "optionNo": "No",
-  "legend": "When did the executor die?",
   "executorFullName": "",
+
   "errors": {
     "diedbefore": {
       "required": {

@@ -62,10 +62,11 @@ describe('DivorcePlace', () => {
             };
             const errors = [
                 {
-                    param: 'divorcePlace',
+                    field: 'divorcePlace',
+                    href: '#divorcePlace',
                     msg: {
-                        summary: 'You haven&rsquo;t answered the question about where the {legalProcess} took place',
-                        message: 'Answer &lsquo;yes&rsquo; if the {legalProcess} took place in England or Wales'
+                        summary: content.errors.divorcePlace.required.summary,
+                        message: content.errors.divorcePlace.required.message
                     }
                 }
             ];
@@ -74,18 +75,17 @@ describe('DivorcePlace', () => {
             expect(fields).to.deep.equal({
                 divorcePlace: {
                     error: true,
+                    href: '#divorcePlace',
                     errorMessage: {
-                        message: 'Answer &lsquo;yes&rsquo; if the divorce took place in England or Wales',
-                        summary: 'You haven&rsquo;t answered the question about where the divorce took place'
+                        summary: content.errors.divorcePlace.required.summary.replace('{legalProcess}', 'divorce'),
+                        message: content.errors.divorcePlace.required.message.replace('{legalProcess}', 'divorce')
                     }
                 },
                 legalProcess: {
                     error: false,
                     value: 'divorce'
                 },
-                title: {
-                    value: `Where the divorce took place - ${commonContent.serviceName}`
-                }
+                title: `Where the divorce took place - ${commonContent.serviceName}`
             });
             done();
         });

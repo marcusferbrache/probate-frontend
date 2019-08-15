@@ -107,11 +107,11 @@ async function createCallsRequired(formdata, headers, featureToggles, feesLookup
  * if no fee_amount is returned, we assume an error has occurred
  * this caters for 404 type messages etc.
  */
-function identifyAnyErrors(res) {
+const identifyAnyErrors = (res) => {
     if (res.fee_amount) {
         return false;
     }
     return true;
-}
+};
 
 module.exports = FeesCalculator;

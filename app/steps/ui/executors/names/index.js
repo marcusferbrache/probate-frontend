@@ -4,7 +4,7 @@ const ValidationStep = require('app/core/steps/ValidationStep');
 const FieldError = require('app/components/error');
 const resourcePath = 'executors.names';
 const i18next = require('i18next');
-const {isEmpty, size, forEach} = require('lodash');
+const {isEmpty, size} = require('lodash');
 const FormatName = require('app/utils/FormatName');
 
 class ExecutorsNames extends ValidationStep {
@@ -27,12 +27,14 @@ class ExecutorsNames extends ValidationStep {
     }
 
     createExecutorFullNameArray(ctx) {
-        ctx.executorName=[];
-        forEach(ctx.list, (executor) => {
-            if (executor && 'fullName' in executor) {
-                ctx.executorName.push(executor.fullName);
-            }
-        });
+        ctx.executorName = [];
+        if (ctx.list) {
+            ctx.list.forEach((executor) => {
+                if (executor && 'fullName' in executor) {
+                    ctx.executorName.push(executor.fullName);
+                }
+            });
+        }
     }
 
     handlePost(ctx, errors) {
@@ -81,18 +83,18 @@ class ExecutorsNames extends ValidationStep {
     createErrorMessages (validationErrors, ctx) {
         const self = this;
         const errorMessages = [];
-        errorMessages.length = [ctx.executorsNumber -1];
+        errorMessages.length = [ctx.executorsNumber - 1];
         validationErrors.forEach((validationError) => {
             const index = self.getIndexFromErrorParameter(validationError);
             errorMessages[index] = self.composeMessage(ctx.executorName[index], parseInt(index) + 2);
-            validationError.msg = errorMessages[index].errorMessage;
-            validationError.param = `executorName_${index}`;
+            validationError.msg = errorMessages[index].msg;
+            validationError.field = `executorName_${index}`;
         });
         return errorMessages;
     }
 
     getIndexFromErrorParameter(validationError) {
-        return validationError.param.split('[')[1].split(']')[0];
+        return validationError.field.split('[')[1].split(']')[0];
     }
 
     composeMessage (inputTextFieldValue, screenExecutorNumber) {
@@ -100,7 +102,7 @@ class ExecutorsNames extends ValidationStep {
         const errorMessage = FieldError('executorName', messageType, resourcePath);
         const displayExecutor = i18next.t(`${resourcePath}.executor`);
         errorMessage.msg.summary = `${displayExecutor} ${screenExecutorNumber}: ${errorMessage.msg.summary}`;
-        return {error: true, errorMessage: errorMessage.msg};
+        return errorMessage;
     }
 }
 

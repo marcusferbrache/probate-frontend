@@ -3,7 +3,7 @@
 const initSteps = require('app/core/initSteps');
 const {assert, expect} = require('chai');
 
-describe('Executor-Additional-Invite', function () {
+describe('Executor-Additional-Invite', () => {
     let ctx;
     let req;
     const steps = initSteps([`${__dirname}/../../app/steps/action/`, `${__dirname}/../../app/steps/ui`]);

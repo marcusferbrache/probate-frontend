@@ -4,7 +4,7 @@ const commonContent = require('app/resources/en/translation/common');
 const pageUnderTest = require('app/steps/ui/executors/contactdetails');
 const testConfig = require('test/config');
 
-module.exports = function (executorNumber, firstRecord) {
+module.exports = (executorNumber, firstRecord) => {
     const I = this;
 
     if (firstRecord) {

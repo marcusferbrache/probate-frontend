@@ -6,7 +6,7 @@
   "hintText3": "You may need to provide your certificate of marriage or civil partnership.",
   "optionYes": "Yes",
   "optionNo": "No",
-  "legend": "Are you the spouse, civil partner or child of the person who died?",
+
   "errors": {
     "related": {
       "required": {

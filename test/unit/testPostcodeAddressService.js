@@ -31,25 +31,25 @@ const expectedResponse = [{
 
 const expectedError = 'Error: Failed to retrieve address list';
 
-describe('addressLookup service tests', function () {
+describe('addressLookup service tests', () => {
     let lookupByPostcodeStub, findAddressSpy;
 
-    beforeEach(function () {
+    beforeEach(() => {
         findAddressSpy = sinon.spy(postcodeAddress, 'get');
         lookupByPostcodeStub = sinon
             .stub(OSPlacesClient.prototype, 'lookupByPostcode');
     });
 
-    afterEach(function () {
+    afterEach(() => {
         lookupByPostcodeStub.restore();
         findAddressSpy.restore();
     });
 
-    it('Should successfully retrieve address list with postcode', function (done) {
+    it('Should successfully retrieve address list with postcode', (done) => {
         lookupByPostcodeStub.returns(when(osPlacesClientResponse));
 
         postcodeAddress.get('postcode')
-            .then(function(actualResponse) {
+            .then((actualResponse) => {
                 sinon.assert.alwaysCalledWith(findAddressSpy, 'postcode');
                 assert.strictEqual(JSON.stringify(expectedResponse), JSON.stringify(actualResponse));
                 done();
@@ -57,11 +57,11 @@ describe('addressLookup service tests', function () {
             .catch(done);
     });
 
-    it('Should retrieve an empty list for a non valid response.', function (done) {
+    it('Should retrieve an empty list for a non valid response.', (done) => {
         lookupByPostcodeStub.returns(when({valid: false, httpStatus: 200}));
 
         postcodeAddress.get('postcode')
-            .then(function(actualResponse) {
+            .then((actualResponse) => {
                 sinon.assert.alwaysCalledWith(findAddressSpy, 'postcode');
                 assert.equal('{}', JSON.stringify(actualResponse));
                 done();
@@ -69,7 +69,7 @@ describe('addressLookup service tests', function () {
             .catch(done);
     });
 
-    it('Should fail to retrieve the address list', function (done) {
+    it('Should fail to retrieve the address list', (done) => {
         lookupByPostcodeStub.returns(Promise.reject(expectedError));
 
         postcodeAddress.get('postcode')

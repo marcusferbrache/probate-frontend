@@ -13,7 +13,7 @@
       "if": { "properties": { "aliasReason": { "enum": ["other"] } } },
       "then": {
         "properties": {
-          "other": {
+          "otherReason": {
             "type": "string",
             "minLength": 1,
             "maxLength": 50

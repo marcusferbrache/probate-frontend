@@ -2,7 +2,7 @@
 
 const pageUnderTest = require('app/steps/ui/screeners/startapply');
 
-module.exports = function () {
+module.exports = () => {
     const I = this;
 
     I.amOnLoadedPage(pageUnderTest.getUrl());

@@ -20,13 +20,13 @@ describe('summary-executor-section', () => {
 
     describe('Verify Content, Errors and Redirection', () => {
         it('test correct content loaded on the summary page executors section, when no data is entered', (done) => {
-            const playbackData = {};
-            playbackData.firstName = applicantContent.name.firstName;
-            playbackData.lastName = applicantContent.name.lastName;
-            playbackData.phoneNumber = applicantContent.phone.phoneNumber;
-            playbackData.applicantAddress = applicantContent.address.question;
-            playbackData.applicantNameAsOnWill = applicantContent.nameasonwill.questionWithoutName;
-
+            const playbackData = {
+                firstName: applicantContent.name.firstName,
+                lastName: applicantContent.name.lastName,
+                phoneNumber: applicantContent.phone.phoneNumber,
+                applicantAddress: applicantContent.address.question,
+                applicantNameAsOnWill: applicantContent.nameasonwill.questionWithoutName
+            };
             testWrapper.testDataPlayback(done, playbackData);
         });
 
@@ -38,13 +38,13 @@ describe('summary-executor-section', () => {
                         throw err;
                     }
 
-                    const playbackData = {};
-                    playbackData.firstName = applicantContent.name.firstName;
-                    playbackData.lastName = applicantContent.name.lastName;
-                    playbackData.phoneNumber = applicantContent.phone.phoneNumber;
-                    playbackData.applicantAddress = applicantContent.address.question;
-                    playbackData.applicantNameAsOnWill = applicantContent.nameasonwill.question.replace('{applicantName}', FormatName.format(sessionData.applicant));
-
+                    const playbackData = {
+                        firstName: applicantContent.name.firstName,
+                        lastName: applicantContent.name.lastName,
+                        phoneNumber: applicantContent.phone.phoneNumber,
+                        applicantAddress: applicantContent.address.question,
+                        applicantNameAsOnWill: applicantContent.nameasonwill.question.replace('{applicantName}', FormatName.format(sessionData.applicant))
+                    };
                     testWrapper.testDataPlayback(done, playbackData);
                 });
         });
@@ -60,15 +60,15 @@ describe('summary-executor-section', () => {
                         throw err;
                     }
 
-                    const playbackData = {};
-                    playbackData.firstName = applicantContent.name.firstName;
-                    playbackData.lastName = applicantContent.name.lastName;
-                    playbackData.alias = applicantContent.alias.nameOnWill;
-                    playbackData.aliasReason = applicantContent.aliasreason.optionOtherHint;
-                    playbackData.phoneNumber = applicantContent.phone.phoneNumber;
-                    playbackData.applicantAddress = applicantContent.address.question;
-                    playbackData.applicantNameAsOnWill = applicantContent.nameasonwill.question.replace('{applicantName}', FormatName.format(sessionData.applicant));
-
+                    const playbackData = {
+                        firstName: applicantContent.name.firstName,
+                        lastName: applicantContent.name.lastName,
+                        alias: applicantContent.alias.nameOnWill,
+                        aliasReason: applicantContent.aliasreason.optionOtherHint,
+                        phoneNumber: applicantContent.phone.phoneNumber,
+                        applicantAddress: applicantContent.address.question,
+                        applicantNameAsOnWill: applicantContent.nameasonwill.question.replace('{applicantName}', FormatName.format(sessionData.applicant))
+                    };
                     testWrapper.testDataPlayback(done, playbackData);
                 });
         });
@@ -85,15 +85,15 @@ describe('summary-executor-section', () => {
                         throw err;
                     }
 
-                    const playbackData = {};
-                    playbackData.firstName = applicantContent.name.firstName;
-                    playbackData.lastName = applicantContent.name.lastName;
-                    playbackData.alias = applicantContent.alias.nameOnWill;
-                    playbackData.aliasReason = applicantContent.aliasreason.optionOtherHint;
-                    playbackData.phoneNumber = applicantContent.phone.phoneNumber;
-                    playbackData.applicantAddress = applicantContent.address.question;
-                    playbackData.applicantNameAsOnWill = applicantContent.nameasonwill.question.replace('{applicantName}', FormatName.format(sessionData.applicant));
-
+                    const playbackData = {
+                        firstName: applicantContent.name.firstName,
+                        lastName: applicantContent.name.lastName,
+                        alias: applicantContent.alias.nameOnWill,
+                        aliasReason: applicantContent.aliasreason.optionOtherHint,
+                        phoneNumber: applicantContent.phone.phoneNumber,
+                        applicantAddress: applicantContent.address.question,
+                        applicantNameAsOnWill: applicantContent.nameasonwill.question.replace('{applicantName}', FormatName.format(sessionData.applicant))
+                    };
                     testWrapper.testDataPlayback(done, playbackData);
                 });
         });
@@ -106,11 +106,12 @@ describe('summary-executor-section', () => {
                         throw err;
                     }
 
-                    const playbackData = {};
-                    playbackData.firstName = applicantContent.name.firstName;
-                    playbackData.lastName = applicantContent.name.lastName;
-                    playbackData.phoneNumber = applicantContent.phone.phoneNumber;
-                    playbackData.applicantAddress = applicantContent.address.question;
+                    const playbackData = {
+                        firstName: applicantContent.name.firstName,
+                        lastName: applicantContent.name.lastName,
+                        phoneNumber: applicantContent.phone.phoneNumber,
+                        applicantAddress: applicantContent.address.question
+                    };
 
                     Object.assign(playbackData, executorsData.applicant);
                     playbackData.address = executorsData.applicant.address.formattedAddress;

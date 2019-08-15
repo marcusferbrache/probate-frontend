@@ -93,7 +93,8 @@ describe('AddressLookup', () => {
                 yield addressLookup.handlePost(ctxToTest, errorsToTest, formdata, req);
                 expect(formdata.applicant.addressFound).to.equal('false');
                 expect(formdata.applicant.errors[0]).to.deep.equal({
-                    param: 'postcode',
+                    field: 'postcode',
+                    href: '#postcode',
                     msg: {
                         summary: 'addressLookup.errors.postcode.noAddresses.summary',
                         message: 'addressLookup.errors.postcode.noAddresses.message'

@@ -18,12 +18,12 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-router.all('*', function (req, res, next) {
+router.all('*', (req, res, next) => {
     console.log(req.url);
     next();
 });
 
-router.post('/users/:userId/payments', function (req, res) {
+router.post('/users/:userId/payments', (req, res) => {
     const data = require('test/data/payments/create.json');
     if (req.body.reference.indexOf(FAILURE_NAME) > -1) {
         lastId = FAILURE_PAY_ID;
@@ -38,7 +38,7 @@ router.post('/users/:userId/payments', function (req, res) {
     delete require.cache[require.resolve('test/data/payments/create.json')];
 });
 
-router.get('/users/:userId/payments/:paymentId', function (req, res) {
+router.get('/users/:userId/payments/:paymentId', (req, res) => {
     const data = require('test/data/payments/find.json');
     if (req.params.paymentId === UNDEFINED_PAY_ID) {
         res.status(500);

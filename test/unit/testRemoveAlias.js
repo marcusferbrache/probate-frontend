@@ -48,8 +48,8 @@ describe('RemoveAlias', () => {
         });
     });
 
-    describe('handlePost', function () {
-        it('updates formdata from the context', function (done) {
+    describe('handlePost', () => {
+        it('updates formdata from the context', (done) => {
             let ctx = {
                 otherNames: {
                     name_0: {

@@ -8,7 +8,7 @@ const app = express();
 const router = require('express').Router();
 const SUBMIT_SERVICE_PORT = config.services.submit.port;
 
-router.all('*', function (req, res, next) {
+router.all('*', (req, res, next) => {
     console.log('Submit Service URL being called: ' + req.url);
     next();
 });
@@ -40,7 +40,7 @@ router.get('/health', (req, res) => {
     res.send({'status': 'UP'});
 });
 
-router.get('/info', function (req, res) {
+router.get('/info', (req, res) => {
     res.send({
         'git': {
             'commit': {

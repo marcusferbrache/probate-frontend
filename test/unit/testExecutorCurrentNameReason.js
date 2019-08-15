@@ -140,7 +140,7 @@ describe('ExecutorCurrentNameReason', () => {
                     isApplying: true
                 }, {
                     isApplying: true,
-                    currentNameReason: 'marriage'
+                    currentNameReason: 'Marriage'
                 }],
                 index: 1
             };
@@ -151,14 +151,14 @@ describe('ExecutorCurrentNameReason', () => {
             const [ctx] = ExecutorCurrentNameReason.handleGet(testCtx);
 
             expect(ctx).to.deep.equal({
-                currentNameReason: 'marriage',
+                currentNameReason: 'Marriage',
                 index: 1,
                 list: [
                     {
                         isApplying: true
                     },
                     {
-                        currentNameReason: 'marriage',
+                        currentNameReason: 'Marriage',
                         isApplying: true,
                         otherReason: 'Yolo'
                     }
@@ -231,12 +231,12 @@ describe('ExecutorCurrentNameReason', () => {
         });
 
         it('removed otherReason when option is not "other"', (done) => {
-            testCtx.currentNameReason = 'marriage';
+            testCtx.currentNameReason = 'Marriage';
             testCtx.otherReason = 'it was a dare';
             const [ctx, errors] = ExecutorCurrentNameReason.handlePost(testCtx, testErrors, formdata);
 
             expect(ctx.list[0]).to.deep.equal({
-                currentNameReason: 'marriage',
+                currentNameReason: 'Marriage',
                 isApplying: true
             });
             expect(errors).to.deep.equal(testErrors);
@@ -374,5 +374,4 @@ describe('ExecutorCurrentNameReason', () => {
             done();
         });
     });
-
 });

@@ -148,6 +148,7 @@ const config = {
         whoInherits: 'https://www.gov.uk/inherits-someone-dies-without-will',
         ifYoureAnExecutor: 'https://www.gov.uk/wills-probate-inheritance/if-youre-an-executor',
         renunciationForm: 'https://www.gov.uk/government/publications/form-pa15-apply-for-renunciation-will',
+        assessingMentalCapacity: 'https://www.gov.uk/make-decisions-for-someone/assessing-mental-capacity',
         applyForProbate: 'https://www.gov.uk/wills-probate-inheritance/applying-for-a-grant-of-representation'
     },
     helpline: {

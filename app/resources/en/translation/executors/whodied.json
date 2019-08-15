@@ -1,7 +1,6 @@
 {
   "title": "Which executors have died",
   "question": "Which executors have died?",
-  "legend": "Which executors have died?",
 
   "errors": {
     "executorsWhoDied": {
