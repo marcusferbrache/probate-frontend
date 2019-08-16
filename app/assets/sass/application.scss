@@ -1,5 +1,6 @@
 $path: "/public/images/";
 
+// Import GOV.UK Frontend
 @import "node_modules/govuk-frontend/govuk/settings/all";
 @import "node_modules/govuk-frontend/govuk/core/all";
 @import "node_modules/govuk-frontend/govuk/objects/all";
@@ -28,6 +29,7 @@ $path: "/public/images/";
 @import "node_modules/govuk-frontend/govuk/utilities/all";
 @import "node_modules/govuk-frontend/govuk/overrides/all";
 
+// Import HMCTS Frontend
 @import "node_modules/@hmcts/frontend/settings/assets";
 @import 'node_modules/@hmcts/frontend/components/hmcts-progress-bar/progress-bar';
 
