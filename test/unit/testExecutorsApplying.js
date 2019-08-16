@@ -2,7 +2,7 @@
 const initSteps = require('app/core/initSteps');
 const assert = require('chai').assert;
 
-describe('Executors-Applying', function () {
+describe('Executors-Applying', () => {
     let ctx;
     const ExecsApplying = initSteps([`${__dirname}/../../app/steps/action/`, `${__dirname}/../../app/steps/ui`]).ExecutorsApplying;
 

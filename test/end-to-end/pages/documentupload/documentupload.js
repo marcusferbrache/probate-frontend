@@ -2,9 +2,8 @@
 
 const commonContent = require('app/resources/en/translation/common');
 const pageUnderTest = require('app/steps/ui/documentupload');
-//const testConfig = require('test/config');
 
-module.exports = function (uploadDocument) {
+module.exports = (uploadDocument) => {
     const I = this;
 
     I.amOnLoadedPage(pageUnderTest.getUrl());

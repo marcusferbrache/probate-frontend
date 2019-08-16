@@ -3,7 +3,7 @@
 const commonContent = require('app/resources/en/translation/common');
 const pageUnderTest = require('app/steps/ui/screeners/willleft');
 
-module.exports = function (answer) {
+module.exports = (answer) => {
     const I = this;
 
     I.amOnLoadedPage(pageUnderTest.getUrl());

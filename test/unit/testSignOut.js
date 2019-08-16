@@ -5,7 +5,7 @@ const assert = require('chai').assert;
 const rewire = require('rewire');
 const SignOut = rewire('app/steps/ui/signout');
 
-describe('Sign-Out', function () {
+describe('Sign-Out', () => {
     const steps = initSteps([`${__dirname}/../../app/steps/action/`, `${__dirname}/../../app/steps/ui`]);
     let section;
     let templatePath;
@@ -38,7 +38,7 @@ describe('Sign-Out', function () {
                     payloadVersion: '4.1.0',
                     applicantEmail: 'test@email.com'
                 },
-                destroy: function () {
+                destroy: () => {
                     delete req.session;
                     delete req.sessionStore;
                 }

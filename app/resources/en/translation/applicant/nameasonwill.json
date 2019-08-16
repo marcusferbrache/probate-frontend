@@ -3,8 +3,6 @@
   "question": "Is your name &lsquo;{applicantName}&rsquo; exactly what appears on the will?",
   "questionWithoutName": "Is your name exactly what appears on the will?",
   "questionWithCodicil": "Is your name &lsquo;{applicantName}&rsquo; exactly what appears on the will or codicil?",
-  "legend": "Is your name &lsquo;{applicantName}&rsquo; exactly what appears on the will?",
-  "legendWithCodicil": "Is your name &lsquo;{applicantName}&rsquo; exactly what appears on the will or codicil?",
   "optionYes": "Yes",
   "optionNo": "No",
 

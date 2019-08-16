@@ -10,18 +10,18 @@ class LegalDocumentJSONObjectBuilder {
         const legalDeclaration = {};
         legalDeclaration.headers = [];
         legalDeclaration.sections = [];
-        const pageSections = $('.declaration-header, .declaration-subheader, .declaration-item, .list-bullet');
+        const pageSections = $('.declaration-header-item, .declaration-subheader, .declaration-item, .govuk-list--bullet');
 
         for (const sectElement of Object.entries(pageSections)) {
             const $element = $(sectElement);
-            if ($element.hasClass('declaration-header')) {
+            if ($element.hasClass('declaration-header-item')) {
                 legalDeclaration.headers.push($element.text());
             } else if ($element.hasClass('declaration-subheader')) {
                 const section = buildSection($element);
                 legalDeclaration.sections.push(section);
             } else if ($element.hasClass('declaration-item')) {
                 buildDeclarationItem($element, legalDeclaration);
-            } else if ($element.hasClass('list-bullet')) {
+            } else if ($element.hasClass('govuk-list--bullet')) {
                 buildDeclarationItemValues($element, legalDeclaration);
             }
         }
@@ -32,7 +32,7 @@ class LegalDocumentJSONObjectBuilder {
     }
 }
 
-function buildDeclarationItemValues($element, legalDeclaration) {
+const buildDeclarationItemValues = ($element, legalDeclaration) => {
     const section = legalDeclaration.sections[legalDeclaration.sections.length - 1];
     const declarationItem = section.declarationItems.pop();
     declarationItem.values = [];
@@ -47,18 +47,18 @@ function buildDeclarationItemValues($element, legalDeclaration) {
         }
     }
     section.declarationItems.push(declarationItem);
-}
+};
 
-function buildDeclarationItem($element, legalDeclaration) {
+const buildDeclarationItem = ($element, legalDeclaration) => {
     const declarationItem = {};
     declarationItem.title = $element.text();
     const section = legalDeclaration.sections[legalDeclaration.sections.length - 1];
     section.declarationItems.push(declarationItem);
-}
+};
 
-function buildSection($element) {
+const buildSection = ($element) => {
     const section = {};
-    if ($element.hasClass('heading-medium') || $element.hasClass('heading-large')) {
+    if ($element.hasClass('govuk-heading-m') || $element.hasClass('govuk-heading-l')) {
         section.headingType = 'large';
     } else {
         section.headingType = 'small';
@@ -66,6 +66,6 @@ function buildSection($element) {
     section.title = $element.text();
     section.declarationItems = [];
     return section;
-}
+};
 
 module.exports = LegalDocumentJSONObjectBuilder;

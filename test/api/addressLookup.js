@@ -6,20 +6,20 @@ const testConfig = require('test/config');
 const PostcodeAddress = require('app/services/PostcodeAddress');
 const postcodeAddress = new PostcodeAddress();
 
-describe('addressLookup tests', function () {
+describe('addressLookup tests', () => {
     let findAddressSpy;
 
-    beforeEach(function () {
+    beforeEach(() => {
         findAddressSpy = sinon.spy(PostcodeAddress.prototype, 'get');
     });
 
-    afterEach(function () {
+    afterEach(() => {
         findAddressSpy.restore();
     });
 
-    it('Should successfully retrieve address list with postcode', function (done) {
+    it('Should successfully retrieve address list with postcode', (done) => {
         postcodeAddress.get(testConfig.postcodeLookup.singleAddressPostcode)
-            .then(function(actualResponse) {
+            .then((actualResponse) => {
                 sinon.assert.alwaysCalledWith(findAddressSpy, testConfig.postcodeLookup.singleAddressPostcode);
                 assert.isArray(actualResponse);
                 assert.equal(actualResponse.length, 1);
@@ -31,7 +31,7 @@ describe('addressLookup tests', function () {
             .catch(done);
     });
 
-    it('Should reject the process using an empty postcode', function (done) {
+    it('Should reject the process using an empty postcode', (done) => {
         postcodeAddress.get(testConfig.postcodeLookup.emptyAddressPostcode)
             .then(() => {
                 done(new Error('Expected method to reject.'));

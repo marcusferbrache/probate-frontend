@@ -1,12 +1,14 @@
-'use strict';
-
+// eslint-disable-line max-lines
 /* eslint no-console: 0 no-unused-vars: 0 */
+
+'use strict';
 
 const logger = require('app/components/logger');
 const path = require('path');
 const express = require('express');
 const session = require('express-session');
-const nunjucks = require('express-nunjucks');
+const nunjucks = require('nunjucks');
+const filters = require('app/components/filters.js');
 const routes = require(`${__dirname}/app/routes`);
 const favicon = require('serve-favicon');
 const bodyParser = require('body-parser');
@@ -30,6 +32,7 @@ const uuidv4 = require('uuid/v4');
 const uuid = uuidv4();
 const EligibilityCookie = require('app/utils/EligibilityCookie');
 const eligibilityCookie = new EligibilityCookie();
+const caseTypes = require('app/utils/CaseTypes');
 const featureToggles = require('app/featureToggles');
 const sanitizeRequestBody = require('app/middleware/sanitizeRequestBody');
 
@@ -64,9 +67,18 @@ exports.init = function() {
 
     // Application settings
     app.set('view engine', 'html');
-    app.set('views', ['app/steps', 'app/views', 'node_modules/govuk_template_jinja/views/layouts']);
+    app.set('views', ['app/steps', 'app/views']);
 
-    const filters = require('app/components/filters.js');
+    const njkEnv = nunjucks.configure([
+        'app/steps',
+        'app/views',
+        'node_modules/govuk-frontend/'
+    ], {
+        autoescape: true,
+        watch: true,
+        noCache: true
+    });
+
     const globals = {
         currentYear: new Date().getFullYear(),
         gaTrackingId: config.gaTrackingId,
@@ -85,16 +97,16 @@ exports.init = function() {
             buttonNoAgents: config.webChat.buttonNoAgents,
             buttonAgentsBusy: config.webChat.buttonAgentsBusy,
             buttonServiceClosed: config.webChat.buttonServiceClosed
+        },
+        caseTypes: {
+            gop: caseTypes.GOP,
+            intestacy: caseTypes.INTESTACY
         }
     };
+    njkEnv.addGlobal('globals', globals);
 
-    const njk = nunjucks(app, {
-        autoescape: true,
-        watch: true,
-        noCache: true,
-        globals: globals
-    });
-    filters(njk.env);
+    filters(njkEnv);
+    njkEnv.express(app);
 
     app.enable('trust proxy');
 
@@ -137,6 +149,7 @@ exports.init = function() {
         browserSniff: true,
         setAllHeaders: true
     }));
+
     // Http public key pinning
     app.use(helmet.hpkp({
         maxAge: 900,
@@ -149,22 +162,21 @@ exports.init = function() {
     }));
 
     app.use(helmet.noCache());
-
     app.use(helmet.xssFilter({setOnOldIE: true}));
 
-    app.use('/webchat', express.static(`${__dirname}/node_modules/@hmcts/ctsc-web-chat/assets`));
+    const caching = {cacheControl: true, setHeaders: (res) => res.setHeader('Cache-Control', 'max-age=604800')};
 
     // Middleware to serve static assets
-    app.use('/public/stylesheets', express.static(`${__dirname}/public/stylesheets`));
-    app.use('/public/images', express.static(`${__dirname}/app/assets/images`));
-    app.use('/public/javascripts', express.static(`${__dirname}/app/assets/javascripts`));
+    app.use('/webchat', express.static(`${__dirname}/node_modules/@hmcts/ctsc-web-chat/assets`, caching));
+    app.use('/public/stylesheets', express.static(`${__dirname}/public/stylesheets`, caching));
+    app.use('/public/images', express.static(`${__dirname}/app/assets/images`, caching));
+    app.use('/public/javascripts/govuk-frontend', express.static(`${__dirname}/node_modules/govuk-frontend`, caching));
+    app.use('/public/javascripts', express.static(`${__dirname}/app/assets/javascripts`, caching));
     app.use('/public/pdf', express.static(`${__dirname}/app/assets/pdf`));
-    app.use('/public', express.static(`${__dirname}/node_modules/govuk_template_jinja/assets`));
-    app.use('/public', express.static(`${__dirname}/node_modules/govuk_frontend_toolkit`));
-    app.use('/public/images/icons', express.static(`${__dirname}/node_modules/govuk_frontend_toolkit/images`));
+    app.use('/assets', express.static(`${__dirname}/node_modules/govuk-frontend/govuk/assets`, caching));
 
     // Elements refers to icon folder instead of images folder
-    app.use(favicon(path.join(__dirname, 'node_modules', 'govuk_template_jinja', 'assets', 'images', 'favicon.ico')));
+    app.use(favicon(path.join(__dirname, 'node_modules', 'govuk-frontend', 'govuk', 'assets', 'images', 'favicon.ico')));
 
     // Support for parsing data in POSTs
     app.use(bodyParser.json());
@@ -215,7 +227,7 @@ exports.init = function() {
     }
 
     // Add variables that are available in all views
-    app.use(function (req, res, next) {
+    app.use((req, res, next) => {
         res.locals.serviceName = commonContent.serviceName;
         res.locals.cookieText = commonContent.cookieText;
         res.locals.releaseVersion = `v${releaseVersion}`;

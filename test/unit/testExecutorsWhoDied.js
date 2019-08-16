@@ -2,7 +2,7 @@
 const initSteps = require('app/core/initSteps');
 const {assert, expect} = require('chai');
 
-describe('Executors-Who-Died', function () {
+describe('Executors-Who-Died', () => {
     const steps = initSteps([`${__dirname}/../../app/steps/action/`, `${__dirname}/../../app/steps/ui`]);
     const executorsWhoDied = steps.ExecutorsWhoDied;
 

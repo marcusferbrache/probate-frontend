@@ -3,7 +3,7 @@
 const initSteps = require('app/core/initSteps');
 const assert = require('chai').assert;
 
-describe('Timeout', function () {
+describe('Timeout', () => {
     const steps = initSteps([`${__dirname}/../../app/steps/action/`, `${__dirname}/../../app/steps/ui`]);
     const timeout = steps.Timeout;
 
@@ -19,7 +19,7 @@ describe('Timeout', function () {
                     payloadVersion: '4.1.0',
                     applicantEmail: 'test@email.com'
                 },
-                destroy: function () {
+                destroy: () => {
                     delete req.session;
                     delete req.sessionStore;
                 }

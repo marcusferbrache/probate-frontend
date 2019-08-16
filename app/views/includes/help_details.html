@@ -1,24 +1,27 @@
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+
 {% block help_info %}
-    <details class="help-panel help-details">
-        <summary><span class="summary help-details-summary">{{ common.helpTitle }}</span></summary>
-        <div class="panel panel-border-narrow">
-            <h4 class="heading-small">{{common.helpHeadingTelephone | safe}}</h4>
-            <p>{{ helpline.number | safe }}</p>
-            <p>{{ common.contactOpeningTimes | replace('{openingTimes}', helpline.hours) | safe }}</p>
+    {% set helpContent = "<p class=\"govuk-heading-s\">" + (common.helpHeadingTelephone) + "</p>" %}
+    {% set helpContent = helpContent + "<p class=\"govuk-body\">" + globals.helpline.number + "</p>" %}
+    {% set helpContent = helpContent + "<p class=\"govuk-body\">" + globals.helpline.hours + ".</p>" %}
 
-            {% if fields.featureToggles.value.webforms == "true" %}
-                <h4 class="heading-small">{{common.helpHeadingOnlineForm | safe}}</h4>
-                <p>{{ common.sendUsAMessage | replace('{webForms}', links.webForms) | safe }} {{ common.opensInNewWindow }}</p>
-                <p>{{ common.responseTime | safe }}</p>
-            {% else %}
-                <h4 class="heading-small">{{common.helpHeadingEmail | safe}}</h4>
-                <p>{{ common.helpEmailLabel | replace('{contactEmailAddress}', links.contactEmailAddress) | safe }}</p>
-            {% endif %}
+    {% if fields.featureToggles.value.webforms == "true" %}
+        {% set helpContent = helpContent + "<p class=\"govuk-heading-s\">" + (common.helpHeadingOnlineForm) + "</p>" %}
+        {% set helpContent = helpContent + "<p class=\"govuk-body\">" + (common.sendUsAMessage | replace('{webForms}', globals.links.webForms) | safe) + " " + common.opensInNewWindow + ".</p>" %}
+        {% set helpContent = helpContent + "<p class=\"govuk-body\">" + common.responseTime | safe + ".</p>" %}
+    {% else %}
+        {% set helpContent = helpContent + "<p class=\"govuk-heading-s\">" + (common.helpHeadingEmail) + "</p>" %}
+        {% set helpContent = helpContent + "<p class=\"govuk-body\">" + (common.helpEmailLabel | replace("{contactEmailAddress}", globals.links.contactEmailAddress)) + "</p>" %}
+    {% endif %}
 
-            {% if fields.featureToggles.value.webchat == "true" %}
-                <h4 id="ctsc-web-chat-header" class="heading-small">{{ common.helpHeadingWebchat | safe }}</h4>
-                <div id="ctsc-web-chat"></div>
-            {% endif %}
-        </div>
-    </details>
+    {% if fields.featureToggles.value.webchat == "true" %}
+        {% set helpContent = helpContent + "<p class=\"govuk-heading-s\" id=\"ctsc-web-chat-header\">" + (common.helpHeadingWebchat) + "</p>" %}
+        {% set helpContent = helpContent + "<div id=\"ctsc-web-chat\"></div>" %}
+    {% endif %}
+
+    {{ govukDetails({
+        summaryText: common.helpTitle,
+        text: helpContent | safe,
+        id: "contact-us-for-help"
+    }) }}
 {% endblock %}

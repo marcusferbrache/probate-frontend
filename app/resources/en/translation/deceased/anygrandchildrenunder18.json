@@ -1,7 +1,6 @@
 {
   "title": "Any grandchildren under 18",
   "question": "Did that child have any children who are under 18?",
-  "legend": "Did that child have any children who are under 18?",
   "hint": "These children would be {deceasedName}&rsquo;s grandchildren.",
   "optionYes": "Yes",
   "optionNo": "No",

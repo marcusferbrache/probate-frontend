@@ -156,9 +156,9 @@ describe('Summary', () => {
                     form: {
                         caseType: 'intestacy',
                         deceased: {
-                            firstName: 'Dee',
-                            lastName: 'Ceased',
-                            dod_formattedDate: '2 February 2015'
+                            'firstName': 'Dee',
+                            'lastName': 'Ceased',
+                            'dod-formattedDate': '2 February 2015'
                         },
                         iht: {
                             netValue: 300000,
@@ -192,9 +192,9 @@ describe('Summary', () => {
                     form: {
                         caseType: 'intestacy',
                         deceased: {
-                            dod_formattedDate: '2 February 2015',
-                            firstName: 'Dee',
-                            lastName: 'Ceased'
+                            'dod-formattedDate': '2 February 2015',
+                            'firstName': 'Dee',
+                            'lastName': 'Ceased'
                         },
                         iht: {
                             assetsOutside: 'Yes',

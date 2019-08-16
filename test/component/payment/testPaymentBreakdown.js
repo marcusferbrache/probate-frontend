@@ -23,6 +23,7 @@ describe('payment-breakdown', () => {
 
     beforeEach(() => {
         testWrapper = new TestWrapper('PaymentBreakdown');
+
         nock(IDAM_S2S_URL).post('/lease')
             .reply(200, 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJSRUZFUkVOQ0UifQ.Z_YYn0go02ApdSMfbehsLXXbxJxLugPG' +
                 '8v_3ktCpQurK8tHkOy1qGyTo02bTdilX4fq4M5glFh80edDuhDJXPA');

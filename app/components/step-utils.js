@@ -1,21 +1,21 @@
 'use strict';
 
 const i18next = require('i18next');
-const mapValues = require('lodash').mapValues;
+const {mapValues} = require('lodash');
 const JourneyMap = require('app/core/JourneyMap');
 
-const commonContent = function (lang = 'en') {
+const commonContent = (lang = 'en') => {
     i18next.changeLanguage(lang);
     const common = require('app/resources/en/translation/common');
     return mapValues(common, (value, key) => i18next.t(`common.${key}`));
 };
 
-const updateTaskStatus = function (ctx, req, steps) {
+const updateTaskStatus = (ctx, req, steps) => {
     const formdata = req.session.form;
     const journeyMap = new JourneyMap(req.session.journey);
     const taskList = journeyMap.taskList();
 
-    Object.keys(taskList).forEach(taskName => {
+    Object.keys(taskList).forEach((taskName) => {
         const task = taskList[taskName];
         let status = 'notStarted';
         let step = steps[task.firstStep];

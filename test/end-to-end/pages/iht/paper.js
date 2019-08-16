@@ -3,7 +3,7 @@
 const pageUnderTest = require('app/steps/ui/iht/paper');
 const commonContent = require('app/resources/en/translation/common');
 
-module.exports = function (formName, grossAmount, netAmount) {
+module.exports = (formName, grossAmount, netAmount) => {
     const I = this;
 
     I.amOnLoadedPage(pageUnderTest.getUrl());

@@ -2,7 +2,7 @@
 
 const pageUnderTest = require('app/steps/ui/pin/signin');
 
-module.exports = function (pinCode) {
+module.exports = (pinCode) => {
     const I = this;
 
     I.amOnLoadedPage(pageUnderTest.getUrl());

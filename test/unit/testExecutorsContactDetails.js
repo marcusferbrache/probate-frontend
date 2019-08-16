@@ -7,7 +7,7 @@ const journey = require('app/journeys/probate');
 const rewire = require('rewire');
 const ContactDetails = rewire('app/steps/ui/executors/contactdetails');
 
-describe('Contact-Details', function () {
+describe('Contact-Details', () => {
     let ctx;
     let errors;
     const steps = initSteps([`${__dirname}/../../app/steps/action/`, `${__dirname}/../../app/steps/ui`]);

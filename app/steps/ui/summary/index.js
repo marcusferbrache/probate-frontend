@@ -50,8 +50,7 @@ class Summary extends Step {
     generateContent(ctx, formdata) {
         const content = {};
 
-        Object.keys(this.steps)
-            .filter((stepName) => stepName !== this.name)
+        Object.keys(this.steps).filter((stepName) => stepName !== this.name)
             .forEach((stepName) => {
                 const step = this.steps[stepName];
                 content[stepName] = step.generateContent(formdata[step.section], formdata);
@@ -64,8 +63,7 @@ class Summary extends Step {
 
     generateFields(ctx, errors, formdata) {
         const fields = {};
-        Object.keys(this.steps)
-            .filter((stepName) => stepName !== this.name)
+        Object.keys(this.steps).filter((stepName) => stepName !== this.name)
             .forEach((stepName) => {
                 const step = this.steps[stepName];
                 if (isEmpty(fields[step.section])) {
@@ -122,7 +120,7 @@ class Summary extends Step {
                 .replace('{deceasedName}', deceasedName ? deceasedName : content.AnyOtherChildren.theDeceased);
             ctx.deceasedAnyDeceasedChildrenQuestion = content.AnyDeceasedChildren.question
                 .replace('{deceasedName}', deceasedName ? deceasedName : content.AnyDeceasedChildren.theDeceased)
-                .replace('{deceasedDoD}', (formdata.deceased && formdata.deceased.dod_formattedDate) ? formdata.deceased.dod_formattedDate : '');
+                .replace('{deceasedDoD}', (formdata.deceased && formdata.deceased['dod-formattedDate']) ? formdata.deceased['dod-formattedDate'] : '');
             ctx.deceasedAllChildrenOver18Question = content.AllChildrenOver18.question
                 .replace('{deceasedName}', deceasedName ? deceasedName : content.AllChildrenOver18.theDeceased);
             ctx.deceasedSpouseNotApplyingReasonQuestion = content.SpouseNotApplyingReason.question

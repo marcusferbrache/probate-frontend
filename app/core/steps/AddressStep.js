@@ -59,7 +59,7 @@ class AddressStep extends ValidationStep {
 
     getFormattedAddress(address) {
         let formattedAddress = '';
-        Object.values(address).forEach(value => {
+        Object.values(address).forEach((value) => {
             if (value) {
                 formattedAddress = `${formattedAddress}${value} `;
             }

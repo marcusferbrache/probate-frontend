@@ -19,8 +19,8 @@
     "optionYes": "Yes, I agree that the information is correct",
     "optionNo": "No, something is wrong with the information",
     "optionNoText": "If you&rsquo;re not sure about any of the information in the legal statement, you should contact {mainApplicantName} before saving and continuing.",
-    "legend" : "Do you agree with this information?",
     "submit": "Submit your response",
+
     "errors": {
       "agreement": {
         "required": {

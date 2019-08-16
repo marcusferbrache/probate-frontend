@@ -136,43 +136,39 @@ class TestWrapper {
     }
 
     substituteContent(data, contentToSubstitute) {
-        Object.entries(contentToSubstitute)
-            .forEach(([key, contentValue]) => {
-                contentValue = contentValue.replace(/\n/g, '<br />\n');
-                if (contentValue.match(/\{(.*?)\}/g)) {
-                    forEach(contentValue.match(/\{(.*?)\}/g), (placeholder) => {
-                        const placeholderRegex = new RegExp(placeholder, 'g');
-                        placeholder = placeholder.replace(/[{}]/g, '');
-                        if (Array.isArray(data[placeholder])) {
-                            forEach(data[placeholder], (contentData) => {
-                                const contentValueReplace = contentValue.replace(placeholderRegex, contentData);
-                                contentToSubstitute.push(contentValueReplace);
-                            });
-                            contentToSubstitute[key] = 'undefined';
-                        } else {
-                            contentValue = contentValue.replace(placeholderRegex, data[placeholder]);
-                            contentToSubstitute[key] = contentValue;
-                        }
-                    });
-                } else {
-                    contentToSubstitute[key] = contentValue;
-                }
-            });
+        forEach(Object.entries(contentToSubstitute), ([key, contentValue]) => {
+            contentValue = contentValue.replace(/\n/g, '<br />\n');
+            if (contentValue.match(/\{(.*?)\}/g)) {
+                forEach(contentValue.match(/\{(.*?)\}/g), (placeholder) => {
+                    const placeholderRegex = new RegExp(placeholder, 'g');
+                    placeholder = placeholder.replace(/[{}]/g, '');
+                    if (Array.isArray(data[placeholder])) {
+                        forEach(data[placeholder], (contentData) => {
+                            const contentValueReplace = contentValue.replace(placeholderRegex, contentData);
+                            contentToSubstitute.push(contentValueReplace);
+                        });
+                        contentToSubstitute[key] = 'undefined';
+                    } else {
+                        contentValue = contentValue.replace(placeholderRegex, data[placeholder]);
+                        contentToSubstitute[key] = contentValue;
+                    }
+                });
+            } else {
+                contentToSubstitute[key] = contentValue;
+            }
+        });
         return contentToSubstitute.filter(content => content !== 'undefined');
     }
 
     substituteErrorsContent(data, contentToSubstitute, type) {
-        Object.entries(contentToSubstitute)
-            .forEach(([key, contentValue]) => {
-                forEach(contentValue[type], (errorMessageItem) => {
-                    forEach(errorMessageItem.match(/\{(.*?)\}/g), (placeholder) => {
-                        const placeholderRegex = new RegExp(placeholder, 'g');
-                        placeholder = placeholder.replace(/[{}]/g, '');
-                        errorMessageItem = errorMessageItem.replace(placeholderRegex, data[placeholder]);
-                        contentToSubstitute[key][type] = errorMessageItem;
-                    });
+        forEach(Object.entries(contentToSubstitute), ([contentKey, contentValue]) => {
+            forEach(Object.entries(contentValue[type]), ([errorMessageKey, errorMessageValue]) => {
+                forEach(errorMessageValue.match(/\{(.*?)\}/g), (placeholder) => {
+                    const placeholderRegex = new RegExp(placeholder, 'g');
+                    contentToSubstitute[contentKey][type][errorMessageKey] = contentToSubstitute[contentKey][type][errorMessageKey].replace(placeholderRegex, data[placeholder]);
                 });
             });
+        });
     }
 
     assertContentIsPresent(actualContent, expectedContent) {

@@ -8,6 +8,7 @@ const SUBMIT_SERVICE_URL = config.services.submit.url;
 const CREATE_PAYMENT_SERVICE_URL = config.services.payment.url + config.services.payment.paths.createPayment;
 const IDAM_S2S_URL = config.services.idam.s2s_url;
 const PERSISTENCE_URL = config.services.persistence.url;
+const testHelpBlockContent = require('test/component/common/testHelpBlockContent.js');
 let sessionData = require('test/data/complete-form-undeclared').formdata;
 
 describe('payment-status', () => {
@@ -47,6 +48,8 @@ describe('payment-status', () => {
     });
 
     describe('Verify Content, Errors and Redirection', () => {
+        testHelpBlockContent.runTest('PaymentStatus');
+
         it('test right content loaded on the page when net value is greater than 5000£', (done) => {
             testWrapper.agent.post('/prepare-session/form')
                 .send(sessionData)
