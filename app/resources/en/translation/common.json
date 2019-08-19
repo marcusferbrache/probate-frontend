@@ -40,7 +40,6 @@
   "helpHeadingEmail": "Email",
   "helpHeadingOnlineForm": "Online form",
   "helpHeadingWebchat": "Web chat",
-  "contactOpeningTimes" : "{openingTimes}.",
   "helpEmailLabel" : "Email us at <a href=\"mailto:{contactEmailAddress}\" class=\"govuk-link\" tabindex=\"-1\">{contactEmailAddress}</a>.",
   "sendUsAMessage": "<a href=\"{webForms}\" rel=\"external\" target=\"_blank\" aria-label=\"send us a message\">Send us a message</a>",
   "opensInNewWindow": "(opens in a new window)",

@@ -56,7 +56,6 @@ describe('executors-contact-details', () => {
                         helpTitle: commonContent.helpTitle,
                         helpHeadingTelephone: commonContent.helpHeadingTelephone,
                         helpHeadingEmail: commonContent.helpHeadingEmail,
-                        contactOpeningTimes: commonContent.contactOpeningTimes.replace('{openingTimes}', config.helpline.hours),
                         helpEmailLabel: commonContent.helpEmailLabel.replace(/{contactEmailAddress}/g, config.links.contactEmailAddress)
                     };
 
