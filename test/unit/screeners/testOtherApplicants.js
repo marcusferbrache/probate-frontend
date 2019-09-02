@@ -37,7 +37,6 @@ describe('OtherApplicants', () => {
                 otherApplicants: content.optionYes,
                 caseType: 'gop',
                 featureToggles: {
-                    webchat: 'false',
                     webforms: 'false'
                 }
             });

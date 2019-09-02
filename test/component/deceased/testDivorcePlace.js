@@ -10,19 +10,7 @@ const config = require('app/config');
 const caseTypes = require('app/utils/CaseTypes');
 const nock = require('nock');
 const featureToggleUrl = config.featureToggles.url;
-const intestacyQuestionsFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.intestacy_questions}`;
-const webchatFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.webchat}`;
 const webformsFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.webforms}`;
-const featureTogglesNockIntestacyQuestions = (status = 'true') => {
-    nock(featureToggleUrl)
-        .get(intestacyQuestionsFeatureTogglePath)
-        .reply(200, status);
-};
-const featureTogglesNockWebchat = (status = 'true') => {
-    nock(featureToggleUrl)
-        .get(webchatFeatureTogglePath)
-        .reply(200, status);
-};
 const featureTogglesNockWebforms = (status = 'true') => {
     nock(featureToggleUrl)
         .get(webformsFeatureTogglePath)
@@ -42,12 +30,10 @@ describe('divorce-place', () => {
 
     beforeEach(() => {
         testWrapper = new TestWrapper('DivorcePlace');
-        featureTogglesNockIntestacyQuestions();
     });
 
     afterEach(() => {
         testWrapper.destroy();
-        nock.cleanAll();
     });
 
     describe('Verify Content, Errors and Redirection', () => {
@@ -60,20 +46,6 @@ describe('divorce-place', () => {
                         helpHeadingTelephone: commonContent.helpHeadingTelephone,
                         helpHeadingEmail: commonContent.helpHeadingEmail,
                         helpEmailLabel: commonContent.helpEmailLabel.replace(/{contactEmailAddress}/g, config.links.contactEmailAddress)
-                    };
-
-                    testWrapper.testDataPlayback(done, playbackData);
-                });
-        });
-
-        it('test webchat help block content is loaded on page', (done) => {
-            featureTogglesNockWebchat();
-
-            testWrapper.agent.post('/prepare-session/form')
-                .send(sessionData)
-                .end(() => {
-                    const playbackData = {
-                        helpHeadingWebchat: commonContent.helpHeadingWebchat,
                     };
 
                     testWrapper.testDataPlayback(done, playbackData);

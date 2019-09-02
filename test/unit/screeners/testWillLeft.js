@@ -37,7 +37,6 @@ describe('WillLeft', () => {
                 left: content.optionYes,
                 caseType: 'gop',
                 featureToggles: {
-                    webchat: 'false',
                     webforms: 'false'
                 }
             });
@@ -125,43 +124,20 @@ describe('WillLeft', () => {
                 left: content.optionNo
             };
             const nextStepUrl = WillLeft.nextStepUrl(req, ctx);
-            expect(nextStepUrl).to.equal('/stop-page/noWill');
+            expect(nextStepUrl).to.equal('/died-after-october-2014');
             done();
         });
     });
 
     describe('nextStepOptions()', () => {
-        it('should return the correct options when the FT is off', (done) => {
-            const ctx = {
-                isIntestacyQuestionsToggleEnabled: false
-            };
-            const nextStepOptions = WillLeft.nextStepOptions(ctx);
-            expect(nextStepOptions).to.deep.equal({
-                options: [{
-                    key: 'left',
-                    value: content.optionYes,
-                    choice: 'withWill'
-                }]
-            });
-            done();
-        });
-
-        it('should return the correct options when the FT is on', (done) => {
-            const ctx = {
-                isIntestacyQuestionsToggleEnabled: true
-            };
-            const nextStepOptions = WillLeft.nextStepOptions(ctx);
+        it('should return the correct options', (done) => {
+            const nextStepOptions = WillLeft.nextStepOptions();
             expect(nextStepOptions).to.deep.equal({
                 options: [
                     {
                         key: 'left',
                         value: content.optionYes,
                         choice: 'withWill'
-                    },
-                    {
-                        key: 'left',
-                        value: content.optionNo,
-                        choice: 'withoutWillToggleOn'
                     }
                 ]
             });
@@ -170,12 +146,12 @@ describe('WillLeft', () => {
     });
 
     describe('action()', () => {
-        it('test isIntestacyQuestionsToggleEnabled is removed from the context', () => {
+        it('test \'left\' is removed from the context', () => {
             const ctx = {
-                isIntestacyQuestionsToggleEnabled: false
+                left: 'Yes'
             };
             WillLeft.action(ctx);
-            assert.isUndefined(ctx.isIntestacyQuestionsToggleEnabled);
+            assert.isUndefined(ctx.left);
         });
     });
 });

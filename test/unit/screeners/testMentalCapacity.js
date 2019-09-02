@@ -37,7 +37,6 @@ describe('MentalCapacity', () => {
                 mentalCapacity: content.optionYes,
                 caseType: 'gop',
                 featureToggles: {
-                    webchat: 'false',
                     webforms: 'false'
                 }
             });

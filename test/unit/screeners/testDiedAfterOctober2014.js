@@ -37,7 +37,6 @@ describe('DiedAfterOctober2014', () => {
                 diedAfter: content.optionYes,
                 caseType: 'gop',
                 featureToggles: {
-                    webchat: 'false',
                     webforms: 'false'
                 }
             });

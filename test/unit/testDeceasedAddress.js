@@ -42,7 +42,6 @@ describe('DeceasedAddress', () => {
                 sessionID: 'dummy_sessionId',
                 caseType: 'gop',
                 featureToggles: {
-                    webchat: 'false',
                     webforms: 'false'
                 }
             });

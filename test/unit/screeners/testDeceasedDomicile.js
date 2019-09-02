@@ -37,7 +37,6 @@ describe('DeceasedDomicile', () => {
                 domicile: content.optionYes,
                 caseType: 'gop',
                 featureToggles: {
-                    webchat: 'false',
                     webforms: 'false'
                 }
             });

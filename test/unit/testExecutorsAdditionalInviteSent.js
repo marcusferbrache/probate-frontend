@@ -42,7 +42,6 @@ describe('Executor-Additional-Invite-Sent', () => {
                 sessionID: 'dummy_sessionId',
                 caseType: 'gop',
                 featureToggles: {
-                    webchat: 'false',
                     webforms: 'false'
                 }
             });
@@ -72,7 +71,6 @@ describe('Executor-Additional-Invite-Sent', () => {
                 sessionID: 'dummy_sessionId',
                 caseType: 'gop',
                 featureToggles: {
-                    webchat: 'false',
                     webforms: 'false'
                 }
             });

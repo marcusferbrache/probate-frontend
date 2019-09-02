@@ -34,7 +34,6 @@ describe('CodicilsNumber', () => {
                 sessionID: 'dummy_sessionId',
                 caseType: 'gop',
                 featureToggles: {
-                    webchat: 'false',
                     webforms: 'false'
                 }
             });
@@ -60,7 +59,6 @@ describe('CodicilsNumber', () => {
                 sessionID: 'dummy_sessionId',
                 caseType: 'gop',
                 featureToggles: {
-                    webchat: 'false',
                     webforms: 'false'
                 }
             });

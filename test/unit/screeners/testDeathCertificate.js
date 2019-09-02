@@ -37,7 +37,6 @@ describe('DeathCertificate', () => {
                 deathCertificate: content.optionYes,
                 caseType: 'gop',
                 featureToggles: {
-                    webchat: 'false',
                     webforms: 'false'
                 }
             });
