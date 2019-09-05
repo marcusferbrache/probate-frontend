@@ -11,16 +11,10 @@ const ExecutorsApplying = require('app/steps/ui/executors/applying');
 const contentData = {executorFullName: 'many clouds'};
 const commonContent = require('app/resources/en/translation/common');
 const config = require('app/config');
-const webchatFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.webchat}`;
 const webformsFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.webforms}`;
 const nock = require('nock');
 const featureToggleUrl = config.featureToggles.url;
 
-const featureTogglesNockWebchat = (status = 'true') => {
-    nock(featureToggleUrl)
-        .get(webchatFeatureTogglePath)
-        .reply(200, status);
-};
 const featureTogglesNockWebforms = (status = 'true') => {
     nock(featureToggleUrl)
         .get(webformsFeatureTogglePath)
@@ -98,8 +92,6 @@ describe('executors-when-died', () => {
         });
 
         it('test webchat help block content is loaded on page', (done) => {
-            featureTogglesNockWebchat();
-
             testWrapper.agent.post('/prepare-session/form')
                 .send(sessionData)
                 .end(() => {

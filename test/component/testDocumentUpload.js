@@ -8,13 +8,8 @@ const content = require('app/resources/en/translation/documentupload');
 const config = require('app/config');
 const nock = require('nock');
 const featureToggleUrl = config.featureToggles.url;
-const webchatFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.webchat}`;
 const webformsFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.webforms}`;
-const featureTogglesNockWebchat = (status = 'true') => {
-    nock(featureToggleUrl)
-        .get(webchatFeatureTogglePath)
-        .reply(200, status);
-};
+
 const featureTogglesNockWebforms = (status = 'true') => {
     nock(featureToggleUrl)
         .get(webformsFeatureTogglePath)
@@ -47,8 +42,6 @@ describe('document-upload', () => {
         });
 
         it('test webchat help block content is loaded on page', (done) => {
-            featureTogglesNockWebchat();
-
             const playbackData = {
                 helpHeadingWebchat: commonContent.helpHeadingWebchat,
             };
