@@ -13,7 +13,7 @@ const featureTogglesNockWebforms = (status = 'true') => {
     nock(featureToggleUrl)
         .get(webformsFeatureTogglePath)
         .reply(200, status);
-
+};
 const afterEachNocks = (done) => {
     return () => {
         nock.cleanAll();
@@ -49,8 +49,6 @@ describe('pin-page', () => {
         });
 
         it('test webchat help block content is loaded on page', (done) => {
-            featureTogglesNockWebchat();
-
             testWrapper.agent.post('/prepare-session-field/validLink/true')
                 .end(() => {
                     const playbackData = {
