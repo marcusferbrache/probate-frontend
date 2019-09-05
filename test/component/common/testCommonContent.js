@@ -16,8 +16,9 @@ class TestCommonContent {
 
                 const playbackData = {
                     helpTitle: commonContent.helpTitle,
-                    helpHeading1: commonContent.helpHeading1,
-                    helpHeading2: commonContent.helpHeading2,
+                    helpHeadingTelephone: commonContent.helpHeadingTelephone,
+                    helpHeadingEmail: commonContent.helpHeadingEmail,
+                    helpHeadingWebchat: commonContent.helpHeadingWebchat,
                     helpEmailLabel: commonContent.helpEmailLabel.replace(/{contactEmailAddress}/g, config.links.contactEmailAddress)
                 };
 
