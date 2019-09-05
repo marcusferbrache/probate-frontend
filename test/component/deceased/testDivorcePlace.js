@@ -75,7 +75,7 @@ describe('divorce-place', () => {
                 .end(() => {
                     const contentData = {legalProcess: contentMaritalStatus.divorce};
 
-                    testWrapper.testContent(done, [], contentData);
+                    testWrapper.testContent(done, contentData);
                 });
         });
 
@@ -83,10 +83,10 @@ describe('divorce-place', () => {
             testWrapper.agent.post('/prepare-session/form')
                 .send(sessionData)
                 .end(() => {
-                    const replacementData = {
+                    const data = {
                         '{legalProcess}': 'divorce'
                     };
-                    testWrapper.testErrors(done, replacementData, 'required', []);
+                    testWrapper.testErrors(done, data, 'required');
                 });
         });
 
