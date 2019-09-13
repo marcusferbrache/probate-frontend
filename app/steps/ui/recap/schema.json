@@ -3,5 +3,7 @@
   "id": "recap",
   "type": "object",
   "properties": {},
-  "required": ["sentDocuments"]
+  "required": [
+    "sentDocuments"
+  ]
 }
