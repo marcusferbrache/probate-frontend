@@ -22,10 +22,12 @@ class Recap extends ValidationStep {
         const formdata = req.session.form || {};
         const registryAddress = (new RegistryWrapper(formdata.registry)).address();
 
+        formdata.ccdCase = {
+            id: '1234-5678-9012-3456' // For demo purposes only
+        };
+
         ctx.ccdReferenceNumber = FormatCcdCaseId.format(formdata.ccdCase);
-        ctx.ccdReferenceNumber = '1234-5678-9012-3456'; // For demo purposes only
-        ctx.ccdReferenceNumberAccessible = ctx.ccdReferenceNumber.split('').join(' ');
-        ctx.ccdReferenceNumberAccessible = ctx.ccdReferenceNumberAccessible.replace(/ - /g, ', -, ');
+        ctx.ccdReferenceNumberAccessible = FormatCcdCaseId.formatAccessible(formdata.ccdCase);
         ctx.registryAddress = registryAddress ? registryAddress : content.block1Text8;
 
         ctx.checkAnswersSummary = false;

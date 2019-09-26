@@ -2,16 +2,14 @@
   "title": "Your probate application",
 
   "progressStep1": "Online application submitted",
-  "progressStep2-1": "Post paper documents",
-  "progressStep2-2": "Paper documents posted",
-  "progressStep3-1": "Documents not yet received",
-  "progressStep3-2": "Documents received",
+  "progressStep2": "Documents posted",
+  "progressStep3": "Documents received",
 
-  "block1Heading1": "Post documents",
-  "block1Heading2": "Post your documents to the probate registry",
-  "block1Text1": "Reference number <strong class=\"no-wrap\", aria-label=\"{ccdReferenceNumberAccessible}\">{ccdReferenceNumber}</strong>",
+  "block1Heading1": "Post your documents",
+  "block1Heading2": "Post your documents to the Probate Registry",
+  "block1Text1": "Reference number <strong class=\"no-wrap\" aria-label=\"{ccdReferenceNumberAccessible}\">{ccdReferenceNumber}</strong>",
   "block1Text2": "You must send these documents:",
-  "block1Text3": "Print off <a href=\"/cover-sheet-pdf\" class=\"govuk-link\" target=\"_blank\" rel=\"external noopener\">this coversheet</a> and send it with your documents.",
+  "block1Text3": "Print <a href=\"/cover-sheet-pdf\" class=\"govuk-link\" target=\"_blank\" rel=\"external noopener\">this coversheet</a> and include it with your documents.",
   "block1Text4": "If you do not have a printer, write your reference number <strong class=\"no-wrap\", aria-label=\"{ccdReferenceNumberAccessible}\">{ccdReferenceNumber}</strong> on a sheet of paper and send it with your documents.",
   "block1Text5": "If the will or codicils have changed in any way since you&rsquo;ve had them, you&rsquo;ll need to include a letter explaining what&rsquo;s changed and why.",
   "block1Text6": "The grant of probate won&rsquo;t be issued if you don&rsquo;t have all the necessary documents.",
@@ -25,12 +23,15 @@
   "block1Checklist-item5-spouse-renunciated": "a <a href=\"{renunciationFormLink}\" class=\"govuk-link\" target=\"_blank\" rel=\"external noopener\">renunciation form</a> filled in by any executors who are permanently giving up their right to make this application for probate",
   "block1Checklist-item6-deed-poll": "copy of the deed poll document for {executorCurrentName}",
 
-  "block2Heading": "What happens next",
-  "block2Text1": "It currently takes us up to 8 weeks from when we receive your documents to fully process your probate application and issue you a grant of probate.",
-  "block2Text2": "We will be in contact once we have reviewed your application. You do not need to do anything until then.",
-  "block2Text3": "Find out what to do <a href=\"{findOutNext}\" class=\"govuk-link\" target=\"_blank\" rel=\"external noopener\">when you receive your grant of probate</a>.",
+  "block2Heading": "Latest Update",
+  "block2Text1": "You have posted the documents needed for your probate application.",
+  "block2Text2": "You will receive another update when the Probate Registry has received your documents.",
+  "block2Text3": "You do not need to do anything.",
 
-  "block3Heading": "Start a new application",
+  "block3Text1": "Your documents were received by the Probate Registry on [__DATE_HERE__]",
+  "block3Text2": "Your probate application will be processed and you will receive your &lsquo;grant of probate&rsquo; in the post. This currently takes about 8 weeks.",
+  "block3Text3": "You will be contacted if there are any issues with your probate application.",
+
   "block4Heading": "View your application so far",
 
   "sentDocuments": "I have sent my documents to the Probate Registry",
@@ -38,7 +39,7 @@
   "declarationPdf": "Legal declaration (30kb PDF)",
   "caseOverviewPdf": "Case overview (10kb PDF)",
   "coverSheetPdf": "Application coversheet (20kb PDF)",
-  "documentsListPdf": "Documents checklist (15kb PDF)",
+  "documentsListPdf": "Documents to post (15kb PDF)",
 
   "errors": {
     "sentDocuments": {

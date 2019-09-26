@@ -28,7 +28,7 @@ const taskList = {
     },
     DocumentsTask: {
         firstStep: 'Recap',
-        lastStep: 'Recap',
+        lastStep: 'TaskList',
         summary: 'Summary'
     }
 };

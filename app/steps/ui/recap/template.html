@@ -61,12 +61,12 @@
             complete: true
         }, {
             label: {
-                text: content["progressStep2-2"] if fields.sentDocuments.value == "true" else content["progressStep2-1"]
+                text: content["progressStep2"]
             },
             complete: fields.sentDocuments.value == "true"
         }, {
             label: {
-                text: content["progressStep3-2"] if fields.documentsReceived.value == "true" else content["progressStep3-1"]
+                text: content["progressStep3"]
             },
             complete: fields.documentsReceived.value == "true"
         }]
@@ -124,12 +124,16 @@
         </div>
     {% else %}
         <h2 class="govuk-heading-m">{{ content.block2Heading | safe }}</h2>
-        <p class="govuk-body">{{ content.block2Text1 | safe }}</p>
-        <p class="govuk-body">{{ content.block2Text2 | safe }}</p>
 
-        {{ govukInsetText({
-            text: content.block2Text3 | replace('{findOutNext}', globals.links.findOutNext) | safe
-        }) }}
+        {% if fields.receivedDocuments.value != "true" %}
+            <p class="govuk-body">{{ content.block2Text1 }}</p>
+            <p class="govuk-body">{{ content.block2Text2 }}</p>
+            <p class="govuk-body">{{ content.block2Text3 }}</p>
+        {% else %}
+            <p class="govuk-body">{{ content.block3Text1 }}</p>
+            <p class="govuk-body">{{ content.block3Text2 | safe }}</p>
+            <p class="govuk-body">{{ content.block3Text3 }}</p>
+        {% endif %}
     {% endif %}
 
     {% block save_and_close %}{% endblock %}
@@ -138,19 +142,6 @@
 {% block aside %}
     <div class="govuk-grid-column-one-third">
     <aside class="app-related-items" role="complementary">
-{#
-        <div class="margin-bottom50">
-            <h3 class="govuk-heading-s">{{ content.block3Heading | safe }}</h3>
-            <div class="govuk-form-group">
-                {{ govukButton({
-                    text: common.checkApply,
-                    href: "/start-eligibility",
-                    classes: "govuk-button--start"
-                }) }}
-            </div>
-        </div>
-#}
-
         <h3 class="govuk-heading-s">{{ content.block4Heading | safe }}</h3>
         {% if fields.checkAnswersSummary.value == "true" %}
             <p class="govuk-body save-this-page-link">
