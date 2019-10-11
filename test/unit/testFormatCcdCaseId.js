@@ -15,15 +15,6 @@ describe('FormatCcdCaseId', () => {
             done();
         });
 
-        it('should return an empty string when a ccd case state is not given', (done) => {
-            const ccdCase = {
-                id: '1234-5678-9012-3456'
-            };
-            const ccdCaseId = FormatCcdCaseId.format(ccdCase);
-            expect(ccdCaseId).to.equal('');
-            done();
-        });
-
         it('should return the correctly formatted ccd case id when the ccd case id is given with dashes', (done) => {
             const ccdCase = {
                 id: '1234-5678-9012-3456',
