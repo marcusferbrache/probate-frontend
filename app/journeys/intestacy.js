@@ -157,7 +157,10 @@ const stepList = {
     PaymentStatus: 'TaskList',
     TaskList: 'TaskList',
     StopPage: 'StopPage',
-    Recap: 'TaskList'
+    Recap: {
+        documentsNotSentOrReceived: 'Recap',
+        otherwise: 'TaskList'
+    }
 };
 
 module.exports.stepList = stepList;

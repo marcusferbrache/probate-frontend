@@ -190,7 +190,10 @@ const stepList = {
     },
     CoApplicantAgreePage: 'CoApplicantAgreePage',
     CoApplicantDisagreePage: 'CoApplicantDisagreePage',
-    Recap: 'TaskList'
+    Recap: {
+        documentsNotSentOrReceived: 'Recap',
+        otherwise: 'TaskList'
+    }
 };
 
 module.exports.stepList = stepList;

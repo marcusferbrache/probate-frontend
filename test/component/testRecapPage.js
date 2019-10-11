@@ -23,8 +23,6 @@ describe('recap', () => {
                 }
             };
             const contentToExclude = [
-                'progressStep2-2',
-                'progressStep3-2',
                 'block1Checklist-item1-will-codicils',
                 'block1Checklist-item2-spouse-renouncing',
                 'block1Checklist-item4-iht205',
@@ -34,7 +32,10 @@ describe('recap', () => {
                 'block2Text1',
                 'block2Text2',
                 'block2Text3',
-                'block3Heading'
+                'block3Heading',
+                'block3Text1',
+                'block3Text2',
+                'block3Text3'
             ];
             testWrapper.agent.post('/prepare-session/form')
                 .send(sessionData)
@@ -61,8 +62,6 @@ describe('recap', () => {
                 }
             };
             const contentToExclude = [
-                'progressStep2-2',
-                'progressStep3-2',
                 'block1Checklist-item1-will-no-codicils',
                 'block1Checklist-item1-will-codicils',
                 'block1Checklist-item2-spouse-renouncing',
@@ -80,7 +79,9 @@ describe('recap', () => {
                 'block1Text7',
                 'block1Text8',
                 'block3Heading',
-                'progressStep2-1',
+                'block3Text1',
+                'block3Text2',
+                'block3Text3',
                 'sentDocuments'
             ];
             testWrapper.agent.post('/prepare-session/form')

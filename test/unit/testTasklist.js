@@ -283,7 +283,8 @@ describe('Tasklist', () => {
             it('Updates the context: DeceasedTask, Executors, Review and confirm, Copies and Document tasks complete', () => {
                 req.session.form = completedForm;
                 req.session.form.recap = {
-                    sentDocuments: 'true'
+                    sentDocuments: 'true',
+                    receivedDocuments: 'true'
                 };
                 req.body = {};
                 ctx = taskList.getContextData(req);

@@ -60,6 +60,16 @@ class Recap extends ValidationStep {
         return ctx;
     }
 
+    nextStepOptions(ctx) {
+        ctx.documentsNotSentOrReceived = ctx.sentDocuments !== 'true' && ctx.receivedDocuments !== 'true';
+
+        return {
+            options: [
+                {key: 'documentsNotSentOrReceived', value: true, choice: 'documentsNotSentOrReceived'}
+            ]
+        };
+    }
+
     action(ctx, formdata) {
         super.action(ctx, formdata);
         delete ctx.ccdReferenceNumber;

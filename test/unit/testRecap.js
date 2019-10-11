@@ -92,6 +92,20 @@ describe('Recap', () => {
         });
     });
 
+    describe('nextStepOptions()', () => {
+        it('should return the correct options', (done) => {
+            const nextStepOptions = Recap.nextStepOptions({});
+            expect(nextStepOptions).to.deep.equal({
+                options: [{
+                    key: 'documentsNotSentOrReceived',
+                    value: true,
+                    choice: 'documentsNotSentOrReceived'
+                }]
+            });
+            done();
+        });
+    });
+
     describe('action()', () => {
         it('test it cleans up context', () => {
             const ctx = {
