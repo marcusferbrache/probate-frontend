@@ -156,6 +156,7 @@ const stepList = {
     PaymentBreakdown: 'PaymentStatus',
     PaymentStatus: 'TaskList',
     TaskList: 'TaskList',
+    Dashboard: 'TaskList',
     StopPage: 'StopPage',
     Recap: {
         documentsNotSentOrReceived: 'Recap',

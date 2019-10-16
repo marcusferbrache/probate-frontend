@@ -16,7 +16,8 @@ class CoApplicantDeclaration extends ValidationStep {
         ctx.inviteId = req.session.inviteId;
         ctx.formdataId = req.session.formdataId;
         ctx.applicant = formdata.applicant;
-
+        ctx.authToken = req.authToken;
+        ctx.serviceAuthorization = req.session.serviceAuthorization;
         Object.assign(ctx, formdata.declaration);
         return ctx;
     }
@@ -30,13 +31,18 @@ class CoApplicantDeclaration extends ValidationStep {
         return nextStepOptions;
     }
 
+    shouldPersistFormData() {
+        return false;
+    }
+
     * handlePost(ctx, errors) {
         const data = {
+            inviteId: ctx.inviteId,
             agreed: this.content.optionYes === ctx.agreement
         };
-        const inviteData = new InviteData(config.services.persistence.url, ctx.sessionID);
+        const inviteData = new InviteData(config.services.orchestrator.url, ctx.sessionID);
 
-        yield inviteData.patch(ctx.inviteId, data)
+        yield inviteData.setAgreedFlag(ctx.ccdCase.id, data)
             .then(result => {
                 if (result.name === 'Error') {
                     throw new ReferenceError('Error updating co-applicant\'s data');
@@ -52,6 +58,8 @@ class CoApplicantDeclaration extends ValidationStep {
         delete ctx.formdataId;
         delete ctx.applicant;
         delete ctx.declaration;
+        delete ctx.serviceAuthorization;
+        delete ctx.authToken;
         return [ctx, formdata];
     }
 }

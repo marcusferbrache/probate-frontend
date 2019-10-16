@@ -6,7 +6,7 @@ class PinNumber extends Service {
     get(phoneNumber) {
         this.log('Get pin number');
         phoneNumber = encodeURIComponent(phoneNumber);
-        const url = this.formatUrl.format(this.endpoint, `/pin?phoneNumber=${phoneNumber}`);
+        const url = this.formatUrl.format(this.endpoint, `/invite/pin?phoneNumber=${phoneNumber}`);
         const headers = {
             'Content-Type': 'application/json',
             'Session-Id': this.sessionId

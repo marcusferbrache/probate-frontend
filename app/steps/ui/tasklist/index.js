@@ -36,6 +36,7 @@ class TaskList extends Step {
         utils.updateTaskStatus(ctx, req, this.steps);
 
         ctx.alreadyDeclared = this.alreadyDeclared(req.session);
+        ctx.alreadyDeclaredType = typeof ctx.alreadyDeclared;
 
         if (ctx.caseType === caseTypes.GOP) {
             const executorsWrapper = new ExecutorsWrapper(formdata.executors);
