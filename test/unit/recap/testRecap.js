@@ -2,7 +2,7 @@
 
 const initSteps = require('app/core/initSteps');
 const {expect} = require('chai');
-const steps = initSteps([`${__dirname}/../../app/steps/action/`, `${__dirname}/../../app/steps/ui`]);
+const steps = initSteps([`${__dirname}/../../../app/steps/action/`, `${__dirname}/../../../app/steps/ui`]);
 const Recap = steps.Recap;
 const contentWillCodicils = require('app/resources/en/translation/will/codicils');
 const contentDeceasedMaritalStatus = require('app/resources/en/translation/deceased/maritalstatus');
@@ -25,6 +25,10 @@ describe('Recap', () => {
                 session: {
                     form: {
                         caseType: 'gop',
+                        ccdCase: {
+                            id: 1234567890123456,
+                            state: 'CaseCreated'
+                        },
                         will: {
                             codicils: contentWillCodicils.optionYes,
                             codicilsNumber: '3'
@@ -32,7 +36,8 @@ describe('Recap', () => {
                         iht: {
                             method: contentIhtMethod.optionPaper,
                             form: 'IHT205'
-                        }
+                        },
+                        userLoggedIn: true
                     },
                     caseType: 'gop'
                 }
@@ -41,6 +46,10 @@ describe('Recap', () => {
             expect(ctx).to.deep.equal({
                 sessionID: 'dummy_sessionId',
                 caseType: 'gop',
+                ccdCase: {
+                    id: 1234567890123456,
+                    state: 'CaseCreated'
+                },
                 ccdReferenceNumber: '1234-5678-9012-3456',
                 ccdReferenceNumberAccessible: '1 2 3 4, -, 5 6 7 8, -, 9 0 1 2, -, 3 4 5 6',
                 registryAddress: 'Digital Application\nOxford District Probate Registry\nCombined Court Building\nSt Aldates\nOxford\nOX1 1LY',
@@ -51,7 +60,8 @@ describe('Recap', () => {
                 executorsNameChangedByDeedPollList: [],
                 is205: true,
                 checkAnswersSummary: true,
-                legalDeclaration: true
+                legalDeclaration: true,
+                userLoggedIn: true
             });
             done();
         });
@@ -62,6 +72,10 @@ describe('Recap', () => {
                 session: {
                     form: {
                         caseType: 'intestacy',
+                        ccdCase: {
+                            id: 1234567890123456,
+                            state: 'CaseCreated'
+                        },
                         deceased: {
                             maritalStatus: contentDeceasedMaritalStatus.optionMarried
                         },
@@ -71,7 +85,8 @@ describe('Recap', () => {
                         iht: {
                             method: contentIhtMethod.optionPaper,
                             form: 'IHT205'
-                        }
+                        },
+                        userLoggedIn: true
                     },
                     caseType: 'intestacy'
                 }
@@ -80,13 +95,18 @@ describe('Recap', () => {
             expect(ctx).to.deep.equal({
                 sessionID: 'dummy_sessionId',
                 caseType: 'intestacy',
+                ccdCase: {
+                    id: 1234567890123456,
+                    state: 'CaseCreated'
+                },
                 ccdReferenceNumber: '1234-5678-9012-3456',
                 ccdReferenceNumberAccessible: '1 2 3 4, -, 5 6 7 8, -, 9 0 1 2, -, 3 4 5 6',
                 registryAddress: 'Digital Application\nOxford District Probate Registry\nCombined Court Building\nSt Aldates\nOxford\nOX1 1LY',
                 is205: true,
                 spouseRenouncing: true,
                 checkAnswersSummary: true,
-                legalDeclaration: true
+                legalDeclaration: true,
+                userLoggedIn: true
             });
             done();
         });
