@@ -55,7 +55,16 @@ describe('RelatedToDeceased', () => {
         it('should return the correct url when Yes is given', (done) => {
             const req = {
                 session: {
-                    journey: journey
+                    journey: journey,
+                    form: {
+                        screeners: {
+                            deathCertificate: 'Yes',
+                            domicile: 'Yes',
+                            completed: 'Yes',
+                            left: 'No',
+                            diedAfter: 'Yes'
+                        }
+                    }
                 }
             };
             const ctx = {
@@ -69,7 +78,16 @@ describe('RelatedToDeceased', () => {
         it('should return the correct url when No is given', (done) => {
             const req = {
                 session: {
-                    journey: journey
+                    journey: journey,
+                    form: {
+                        screeners: {
+                            deathCertificate: 'Yes',
+                            domicile: 'Yes',
+                            completed: 'Yes',
+                            left: 'No',
+                            diedAfter: 'Yes'
+                        }
+                    }
                 }
             };
             const ctx = {

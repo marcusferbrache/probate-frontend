@@ -11,11 +11,11 @@
         {% set caseClasses = "case draft" if not application.deceasedFullName and application.ccdCase.state == "Draft" else "" %}
         {% set caseIdClasses = caseClasses + " govuk-table__cell--numeric case-id" %}
         {% set caseDateClasses = caseClasses + " govuk-table__cell--numeric" %}
-        {% set caseStatusClasses = "case-status submitted" if application.ccdCase.state == "CaseCreated" %}
+        {% set caseStatusClasses = caseClasses + (" case-status submitted" if application.ccdCase.state == "CaseCreated" else "") %}
 
         {% set applicationRows = (applicationRows.push([
             { text: application.ccdCase.idFormatted, classes: caseIdClasses, attributes: {'aria-label': application.ccdCase.idFormattedAccessible } },
-            { text: application.deceasedFullName if application.deceasedFullName else content.statusDraft, classes: caseClasses },
+            { text: application.deceasedFullName if application.deceasedFullName else(content.statusDraftProbate if application.caseType == "PA" else content.statusDraftIntestacy), classes: caseClasses },
             { text: application.dateCreated, classes: caseDateClasses},
             { text: content.statusInProgress if (application.ccdCase.state == "Draft" or application.ccdCase.state == "PAAppCreated" or application.ccdCase.state == "CasePaymentFailed") else content.statusSubmitted, classes: caseStatusClasses },
             { html: "<a href=\"" + actionUrl + "\" class=\"govuk-link\">" + actionText + "</a>"  }

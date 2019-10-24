@@ -29,9 +29,9 @@ class PinPage extends ValidationStep {
             errors.push(FieldError('pin', 'incorrect', this.resourcePath, this.generateContent()));
         } else {
             const authorise = new Authorise(config.services.idam.s2s_url, ctx.sessionID);
-            const serviceAuthResult = yield authorise.post();
-            if (serviceAuthResult.name === 'Error') {
-                logger.info(`serviceAuthResult Error = ${serviceAuthResult}`);
+            const serviceAuthorisation = yield authorise.post();
+            if (serviceAuthorisation.name === 'Error') {
+                logger.info(`serviceAuthResult Error = ${serviceAuthorisation}`);
                 const keyword = 'failure';
                 errors.push(FieldError('authorisation', keyword, this.resourcePath, ctx));
                 return [ctx, errors];
@@ -39,7 +39,7 @@ class PinPage extends ValidationStep {
             const security = new Security();
             const authToken = yield security.getUserToken(hostname);
             if (authToken.name === 'Error') {
-                logger.info(`failed to obtain authToken = ${serviceAuthResult}`);
+                logger.info(`failed to obtain authToken = ${serviceAuthorisation}`);
                 errors.push(FieldError('authorisation', 'failure', this.resourcePath, ctx));
                 return;
             }
@@ -49,7 +49,7 @@ class PinPage extends ValidationStep {
                 [config.services.orchestrator.url, ctx.sessionID]
             );
             const probateType = caseTypes.getProbateType(ctx.caseType);
-            yield formData.get(authToken, serviceAuthResult, session.formdataId, probateType)
+            yield formData.get(authToken, serviceAuthorisation, session.formdataId, probateType)
                 .then(result => {
                     if (result.name === 'Error') {
                         throw new ReferenceError('Error getting data for the co-applicant');

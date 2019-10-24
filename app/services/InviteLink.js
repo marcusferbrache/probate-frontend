@@ -3,21 +3,25 @@
 const Service = require('./Service');
 
 class InviteLink extends Service {
-    get(inviteId) {
+    get(inviteId, authToken, serviceAuthorisation) {
         this.log('Get invite link');
         const url = this.formatUrl.format(this.endpoint, `/invite/data/${inviteId}`);
-        const fetchOptions = this.fetchOptions({}, 'GET', {});
+        const headers = {
+            'Authorization': authToken,
+            'ServiceAuthorization': serviceAuthorisation
+        };
+        const fetchOptions = this.fetchOptions({}, 'GET', headers);
         return this.fetchJson(url, fetchOptions);
     }
 
-    post(data, authToken, serviceAuthorization) {
+    post(data, authToken, serviceAuthorisation) {
         this.log('Post invite link');
         const url = this.formatUrl.format(this.endpoint, '/invite');
         const headers = {
             'Content-Type': 'application/json',
             'Session-Id': this.sessionId,
             'Authorization': authToken,
-            'ServiceAuthorization': serviceAuthorization
+            'ServiceAuthorization': serviceAuthorisation
         };
         const fetchOptions = this.fetchOptions(data, 'POST', headers);
         return this.fetchJson(url, fetchOptions);

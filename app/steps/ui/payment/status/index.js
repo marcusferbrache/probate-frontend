@@ -26,10 +26,20 @@ class PaymentStatus extends Step {
         ctx.reference = get(formdata, 'payment.reference');
         ctx.userId = req.userId;
         ctx.authToken = req.authToken;
+        logger.error('LUCA ============================================================');
+        if (!get(formdata, 'payment.amount')) {
+            set(formdata, 'payment.amount', 0);
+            logger.error('LUCA payment.amount initialised to 0');
+        }
         if (formdata.payment && formdata.payment.total) {
             set(formdata, 'payment.amount', formdata.payment.total);
+            logger.error('LUCA payment.total: ', formdata.payment.total);
+            logger.error('LUCA copy payment.total into payment.amount: ', formdata.payment.total);
         }
         ctx.paymentDue = get(formdata, 'payment.amount') > 0;
+
+        logger.error('LUCA payment.amount: ', formdata.payment.amount);
+        logger.error('LUCA paymentDue: ', ctx.paymentDue);
 
         ctx.regId = req.session.regId;
         ctx.sessionId = req.session.id;
@@ -56,6 +66,8 @@ class PaymentStatus extends Step {
         const authorise = new Authorise(config.services.idam.s2s_url, ctx.sessionID);
         const serviceAuthResult = yield authorise.post();
 
+        logger.error('LUCA serviceAuthResult.name: ', serviceAuthResult.name);
+
         if (serviceAuthResult.name === 'Error') {
             options.redirect = true;
             options.url = `${this.steps.PaymentBreakdown.constructor.getUrl()}?status=failure`;
@@ -69,10 +81,13 @@ class PaymentStatus extends Step {
                 userId: ctx.userId,
                 paymentId: ctx.reference
             };
+            logger.error('LUCA data: ', data);
 
             const paymentCreateServiceUrl = config.services.payment.url + config.services.payment.paths.createPayment;
             const payment = new Payment(paymentCreateServiceUrl, ctx.sessionID);
             const getPaymentResponse = yield payment.get(data);
+            logger.error('LUCA getPaymentResponse.name: ', getPaymentResponse.name);
+            logger.error('LUCA getPaymentResponse.status: ', getPaymentResponse.status);
             logger.info('Payment retrieval in status for reference = ' + ctx.reference + ' with response = ' + JSON.stringify(getPaymentResponse));
             if (getPaymentResponse.name === 'Error' || getPaymentResponse.status === 'Initiated') {
                 logger.error('Payment retrieval failed for reference = ' + ctx.reference + ' with status = ' + getPaymentResponse.status);
@@ -83,6 +98,7 @@ class PaymentStatus extends Step {
             }
 
             const [updateCcdCaseResponse, errors] = yield this.updateForm(formdata, ctx, getPaymentResponse, serviceAuthResult);
+            logger.error('LUCA updateCcdCaseResponse.payment: ', updateCcdCaseResponse.payment);
             set(formdata, 'ccdCase', updateCcdCaseResponse.ccdCase);
             set(formdata, 'payment', updateCcdCaseResponse.payment);
 
@@ -92,14 +108,18 @@ class PaymentStatus extends Step {
                 options.redirect = true;
                 options.url = `${this.steps.PaymentBreakdown.constructor.getUrl()}?status=failure`;
                 logger.error('Unable to retrieve a payment response.');
+                logger.error('LUCA Unable to retrieve a payment response.');
             } else if (updateCcdCaseResponse.ccdCase.state !== 'CaseCreated') {
                 options.redirect = false;
                 logger.warn('Did not get a successful case created state.');
+                logger.error('LUCA Did not get a successful case created state.');
             } else {
+                logger.error('LUCA Do not redirect.');
                 options.redirect = false;
             }
         } else {
             const paymentDto = {status: 'not_required'};
+            logger.error('LUCA Payment not required');
             const [updateCcdCaseResponse, errors] = yield this.updateForm(formdata, ctx, paymentDto, serviceAuthResult);
             set(formdata, 'ccdCase', updateCcdCaseResponse.ccdCase);
             set(formdata, 'payment', updateCcdCaseResponse.payment);

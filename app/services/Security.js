@@ -22,11 +22,10 @@ class Security {
             .catch((err) => err);
     }
 
-    getOauth2Code(redirect_url) {
+    getOauth2Code(redirect_uri) {
         logger.info('calling getOauth2Code to get code');
         const client_id = config.services.idam.probate_oauth2_client;
         const idam_api_url = config.services.idam.apiUrl;
-        const redirect_uri = redirect_url;
         const username = config.services.idam.probate_user_email;
         const userpassword = config.services.idam.probate_user_password;
         const headers = {

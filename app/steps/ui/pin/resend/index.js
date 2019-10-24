@@ -33,24 +33,24 @@ class PinResend extends Step {
     * handlePost(ctx, errors, formdata, session, hostname) {
         const phoneNumber = session.phoneNumber;
         const authorise = new Authorise(config.services.idam.s2s_url, ctx.sessionID);
-        const serviceAuthResult = yield authorise.post();
-        if (serviceAuthResult.name === 'Error') {
-            logger.info(`serviceAuthResult Error = ${serviceAuthResult}`);
+        const serviceAuthorisation = yield authorise.post();
+        if (serviceAuthorisation.name === 'Error') {
+            logger.info(`serviceAuthResult Error = ${serviceAuthorisation}`);
             const keyword = 'failure';
             errors.push(FieldError('authorisation', keyword, this.resourcePath, ctx));
             return [ctx, errors];
         }
+
         const security = new Security();
         const authToken = yield security.getUserToken(hostname);
         if (authToken.name === 'Error') {
-            logger.info(`failed to obtain authToken = ${serviceAuthResult}`);
+            logger.info(`failed to obtain authToken = ${authToken}`);
             errors.push(FieldError('authorisation', 'failure', this.resourcePath, ctx));
             return;
         }
 
         const pinNumber = new PinNumber(config.services.orchestrator.url, ctx.sessionID);
-        yield pinNumber
-            .get(phoneNumber)
+        yield pinNumber.get(phoneNumber)
             .then(generatedPin => {
                 if (generatedPin.name === 'Error') {
                     throw new ReferenceError('Error when trying to resend pin');
@@ -58,6 +58,7 @@ class PinResend extends Step {
                     session.pin = generatedPin;
                 }
             });
+
         return [ctx, errors];
     }
 }

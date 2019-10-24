@@ -63,7 +63,7 @@ const stepList = {
         noOthers: 'StartApply',
         otherwise: 'StopPage'
     },
-    StartApply: 'TaskList',
+    StartApply: 'Dashboard',
     DeceasedDetails: 'DeceasedAddress',
     DeceasedAddress: 'DocumentUpload',
     DocumentUpload: {

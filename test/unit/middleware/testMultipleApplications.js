@@ -223,7 +223,7 @@ describe('multipleApplicationsMiddleware', () => {
             });
         });
 
-        it('should create a new draft application if all screeners are present and no Draft applications found', (done) => {
+        it('should create a new draft application if all screeners are present and no Draft applications of same case type found', (done) => {
             delete allApplicationsExpectedResponse.applications[4];
             const revert = multipleApplicationsMiddleware.__set__('renderDashboard', () => {
                 req.session.form.applications = allApplicationsExpectedResponse.applications;

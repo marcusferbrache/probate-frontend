@@ -42,7 +42,8 @@ const config = {
                 payment_submissions: '/forms/{ccdCaseId}/payment-submissions',
                 fees: '/forms/{ccdCaseId}/fees',
                 validations: '/forms/{ccdCaseId}/validations',
-                applications: '/forms/cases'
+                applications: '/forms/cases',
+                declarationStatuses: '/invites/{ccdCaseId}'
             },
             port: 8888
         },
@@ -198,13 +199,30 @@ const config = {
     whitelistedPagesAfterSubmission: ['/recap', '/check-answers-pdf', '/declaration-pdf', '/sign-out'],
     whitelistedPagesAfterPayment: ['/task-list', '/payment-status', '/recap', '/check-answers-pdf', '/declaration-pdf', '/sign-out'],
     whitelistedPagesAfterDeclaration: ['/task-list', '/executors-invites-sent', '/copies-uk', '/assets-overseas', '/copies-overseas', '/copies-summary', '/payment-breakdown', '/payment-breakdown?status=failure', '/payment-status', '/recap', '/check-answers-pdf', '/declaration-pdf', '/sign-out'],
-    eligibilityQuestionsProbate: ['deathCertificate', 'domicile', 'completed', 'left', 'original', 'executor', 'mentalCapacity'],
-    eligibilityQuestionsIntestacy: ['deathCertificate', 'domicile', 'completed', 'left', 'diedAfter', 'related', 'otherApplicants'],
+    eligibilityQuestionsProbate: {
+        deathCertificate: 'Yes',
+        domicile: 'Yes',
+        completed: 'Yes',
+        left: 'Yes',
+        original: 'Yes',
+        executor: 'Yes',
+        mentalCapacity: 'Yes'
+    },
+    eligibilityQuestionsIntestacy: {
+        deathCertificate: 'Yes',
+        domicile: 'Yes',
+        completed: 'Yes',
+        left: 'No',
+        diedAfter: 'Yes',
+        related: 'Yes',
+        otherApplicants: 'No'
+    },
     hardStopParams: {
         gop: [],
         intestacy: []
     },
-    nonIdamPages: ['health/*', 'stop-page/*', 'time-out', 'error', 'sign-in', 'sign-out', 'pin-resend', 'pin-sent', 'co-applicant-*', 'pin', 'inviteIdList', 'start-eligibility', 'death-certificate', 'deceased-domicile', 'iht-completed', 'will-left', 'will-original', 'applicant-executor', 'mental-capacity', 'died-after-october-2014', 'related-to-deceased', 'other-applicants', 'start-apply', 'contact-us', 'accessibility-statement', 'terms-conditions', 'privacy-policy', 'cookies'],
+    nonIdamPages: ['health/*', 'stop-page/*', 'error', 'sign-in', 'pin-resend', 'pin-sent', 'co-applicant-*', 'pin', 'inviteIdList', 'start-eligibility', 'death-certificate', 'deceased-domicile', 'iht-completed', 'will-left', 'will-original', 'applicant-executor', 'mental-capacity', 'died-after-october-2014', 'related-to-deceased', 'other-applicants', 'start-apply', 'contact-us', 'accessibility-statement', 'terms-conditions', 'privacy-policy', 'cookies'],
+    noCcdCaseIdPages: ['health/*', 'stop-page/*', 'error', 'sign-in', 'pin-resend', 'pin-sent', 'co-applicant-*', 'pin', 'inviteIdList', 'start-eligibility', 'death-certificate', 'deceased-domicile', 'iht-completed', 'will-left', 'will-original', 'applicant-executor', 'mental-capacity', 'died-after-october-2014', 'related-to-deceased', 'other-applicants', 'start-apply', 'contact-us', 'accessibility-statement', 'terms-conditions', 'privacy-policy', 'cookies', 'dashboard', 'sign-out', 'time-out'],
     endpoints: {
         health: '/health',
         info: '/info'

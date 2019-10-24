@@ -38,6 +38,7 @@ describe('task-list', () => {
                 'alreadyDeclared'
             ];
             sessionData.caseType = caseTypes.GOP;
+            sessionData.applicantEmail = 'test@email.com';
 
             testWrapper.agent.post('/prepare-session/form')
                 .send(sessionData)
@@ -63,6 +64,7 @@ describe('task-list', () => {
                 'alreadyDeclared'
             ];
             sessionData.caseType = caseTypes.INTESTACY;
+            sessionData.applicantEmail = 'test@email.com';
 
             testWrapper.agent.post('/prepare-session/form')
                 .send(sessionData)
@@ -83,7 +85,8 @@ describe('task-list', () => {
                 applicant: sessionData.applicant,
                 deceased: sessionData.deceased,
                 executors: sessionData.executors,
-                declaration: sessionData.declaration
+                declaration: sessionData.declaration,
+                applicantEmail: 'test@email.com'
             };
             const contentToExclude = [
                 'applicantsTask',
@@ -115,7 +118,8 @@ describe('task-list', () => {
                 applicant: sessionData.applicant,
                 deceased: sessionData.deceased,
                 executors: singleApplicantData.executors,
-                declaration: sessionData.declaration
+                declaration: sessionData.declaration,
+                applicantEmail: 'test@email.com'
             };
             const contentToExclude = [
                 'applicantsTask',
