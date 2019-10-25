@@ -78,40 +78,43 @@ router.use((req, res, next) => {
 
     const allPageUrls = [];
     Object.entries(steps).forEach(([, step]) => {
-        allPageUrls.push(step.constructor.getUrl());
+        const stepUrl = step.constructor.getUrl().split('/')[1];
+        if (!includes(allPageUrls, stepUrl)) {
+            allPageUrls.push(stepUrl);
+        }
     });
 
     const noCcdCaseIdPages = config.noCcdCaseIdPages.map(item => '/' + item);
 
-    if (config.app.requreCcdCaseId === 'true' && includes(allPageUrls, req.originalUrl) && req.method === 'GET' && !includes(noCcdCaseIdPages, req.originalUrl) && !get(formdata, 'ccdCase.id')) {
-        res.redirect('dashboard');
+    if (config.app.requreCcdCaseId === 'true' && includes(allPageUrls, req.originalUrl.split('/')[1]) && req.method === 'GET' && !includes(noCcdCaseIdPages, req.originalUrl.split('/')[1]) && !get(formdata, 'ccdCase.id')) {
+        res.redirect('/dashboard');
     } else if (get(formdata, 'ccdCase.state') === 'CaseCreated' && (get(formdata, 'recap.sentDocuments', 'false') === 'false') && (get(formdata, 'payment.status') === 'Success' || get(formdata, 'payment.status') === 'not_required') &&
         !includes(config.whitelistedPagesAfterSubmission, req.originalUrl)
     ) {
-        res.redirect('recap');
+        res.redirect('/recap');
     } else if (get(formdata, 'ccdCase.state') === 'CaseCreated' && (get(formdata, 'recap.sentDocuments', 'false') === 'true') && (get(formdata, 'payment.status') === 'Success' || get(formdata, 'payment.status') === 'not_required') &&
         !includes(config.whitelistedPagesAfterSubmission, req.originalUrl)
     ) {
-        res.redirect('thank-you');
+        res.redirect('/thank-you');
     } else if ((get(formdata, 'payment.total') === 0 || get(formdata, 'payment.status') === 'Success') &&
         !includes(config.whitelistedPagesAfterPayment, req.originalUrl)
     ) {
-        res.redirect('task-list');
+        res.redirect('/task-list');
     } else if (get(formdata, 'declaration.declarationCheckbox') &&
         !includes(config.whitelistedPagesAfterDeclaration, req.originalUrl) &&
             (!hasMultipleApplicants || (get(formdata, 'executors.invitesSent') && req.session.haveAllExecutorsDeclared === 'true'))
     ) {
-        res.redirect('task-list');
+        res.redirect('/task-list');
     } else if (get(formdata, 'declaration.declarationCheckbox') &&
         (!hasMultipleApplicants || (get(formdata, 'executors.invitesSent'))) &&
             isEqual('/executors-invite', req.originalUrl)
     ) {
-        res.redirect('task-list');
+        res.redirect('/task-list');
     } else if (get(formdata, 'declaration.declarationCheckbox') &&
         (!hasMultipleApplicants || !(get(formdata, 'executors.executorsEmailChanged'))) &&
             isEqual('/executors-update-invite', req.originalUrl)
     ) {
-        res.redirect('task-list');
+        res.redirect('/task-list');
     } else if (req.originalUrl.includes('summary') && isHardStop(formdata, caseTypes.getCaseType(req.session))) {
         res.redirect('/task-list');
     } else {
