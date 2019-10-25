@@ -29,7 +29,7 @@ describe('redirect to recap', () => {
             .send(sessionData)
             .end(() => {
                 testWrapper.agent.get(testWrapper.pageUrl)
-                    .expect('location', 'recap')
+                    .expect('location', '/recap')
                     .expect(302)
                     .end((err) => {
                         testWrapper.server.http.close();
