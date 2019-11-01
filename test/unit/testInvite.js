@@ -19,7 +19,7 @@ describe('Executors invite endpoints', () => {
             session: {
                 ccdCase: {
                     id: 1234567890123456,
-                    state: 'Draft'
+                    state: 'Pending'
                 },
                 form: {
                     caseType: 'gop'

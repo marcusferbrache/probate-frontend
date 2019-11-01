@@ -15,7 +15,7 @@ describe('divorce-place', () => {
     const expectedNextUrlForTaskList = TaskList.getUrl();
     const sessionData = {
         ccdCase: {
-            state: 'Draft',
+            state: 'Pending',
             id: 1234567890123456
         },
         caseType: caseTypes.INTESTACY,

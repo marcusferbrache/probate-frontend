@@ -71,7 +71,7 @@ class UIStepRunner {
                     formdata.declaration.hasDataChanged = true;
                 }
 
-                if (get(formdata, 'ccdCase.state') === 'Draft' && session.regId && step.shouldPersistFormData()) {
+                if (get(formdata, 'ccdCase.state') === 'Pending' && session.regId && step.shouldPersistFormData()) {
                     const ccdCaseId = formdata.ccdCase.id;
                     const result = yield step.persistFormData(ccdCaseId, formdata, session.id, req);
 
@@ -99,7 +99,9 @@ class UIStepRunner {
             }
         }).catch((error) => {
             req.log.error(error);
-            res.status(500).render('errors/500', {common: commonContent});
+            const ctx = step.getContextData(req, res);
+            const fields = step.generateFields(ctx, [], {});
+            res.status(500).render('errors/500', {fields, common: commonContent});
         });
     }
 }

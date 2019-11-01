@@ -44,7 +44,7 @@ describe('EligibilityValidationStep', () => {
                         caseType: 'gop',
                         ccdCase: {
                             id: 1234567890123456,
-                            state: 'Draft'
+                            state: 'Pending'
                         }
                     },
                     caseType: 'gop'
@@ -67,7 +67,7 @@ describe('EligibilityValidationStep', () => {
                 userLoggedIn: false,
                 ccdCase: {
                     id: 1234567890123456,
-                    state: 'Draft'
+                    state: 'Pending'
                 }
             });
 
@@ -87,7 +87,7 @@ describe('EligibilityValidationStep', () => {
                 deathCertificate: 'Yes',
                 ccdCase: {
                     id: 1234567890123456,
-                    state: 'Draft'
+                    state: 'Pending'
                 }
             });
 
@@ -100,7 +100,7 @@ describe('EligibilityValidationStep', () => {
             req.session.form = {
                 ccdCase: {
                     id: 1234567890123456,
-                    state: 'Draft'
+                    state: 'Pending'
                 },
                 deceased: {
                     deathCertificate: 'Yes'
@@ -116,7 +116,7 @@ describe('EligibilityValidationStep', () => {
             const ctx = eligibilityValidationStep.getContextData(req, res, pageUrl, fieldKey, featureToggles);
 
             expect(nextStepUrlStub.calledOnce).to.equal(true);
-            expect(nextStepUrlStub.calledWith(req, {sessionID: 'abc123', caseType: 'gop', deathCertificate: 'Yes', isTestToggleEnabled: true, userLoggedIn: false, ccdCase: {id: 1234567890123456, state: 'Draft'}})).to.equal(true);
+            expect(nextStepUrlStub.calledWith(req, {sessionID: 'abc123', caseType: 'gop', deathCertificate: 'Yes', isTestToggleEnabled: true, userLoggedIn: false, ccdCase: {id: 1234567890123456, state: 'Pending'}})).to.equal(true);
             expect(setEligibilityCookieStub.calledOnce).to.equal(true);
             expect(setEligibilityCookieStub.calledWith(req, res, nextStepUrl, fieldKey, fieldValue)).to.equal(true);
             expect(ctx).to.deep.equal({
@@ -127,7 +127,7 @@ describe('EligibilityValidationStep', () => {
                 isTestToggleEnabled: true,
                 ccdCase: {
                     id: 1234567890123456,
-                    state: 'Draft'
+                    state: 'Pending'
                 }
             });
 

@@ -25,7 +25,7 @@ describe('iht-method', () => {
         it('test correct iht method page content is loaded', (done) => {
             const sessionData = {
                 ccdCase: {
-                    state: 'Draft',
+                    state: 'Pending',
                     id: 1234567890123456
                 }
             };

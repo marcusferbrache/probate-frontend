@@ -23,7 +23,7 @@ describe('applicant-name-as-on-will', () => {
         it('test correct content is loaded on the page', (done) => {
             const sessionData = {
                 ccdCase: {
-                    state: 'Draft',
+                    state: 'Pending',
                     id: 1234567890123456
                 },
                 applicant: {
@@ -47,7 +47,7 @@ describe('applicant-name-as-on-will', () => {
         it('test correct content is loaded on the page when there is a codicil', (done) => {
             const sessionData = {
                 ccdCase: {
-                    state: 'Draft',
+                    state: 'Pending',
                     id: 1234567890123456
                 },
                 applicant: {

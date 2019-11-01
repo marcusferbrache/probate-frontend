@@ -22,7 +22,7 @@ describe('iht-identifier', () => {
         it('test correct iht identifier page content is loaded', (done) => {
             const sessionData = {
                 ccdCase: {
-                    state: 'Draft',
+                    state: 'Pending',
                     id: 1234567890123456
                 }
             };

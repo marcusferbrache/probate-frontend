@@ -20,7 +20,7 @@ const initDashboard = (req, res, next) => {
         .then(result => {
             if (result.applications && result.applications.length) {
                 if (allEligibilityQuestionsPresent(formdata)) {
-                    if (!result.applications.some(application => application.ccdCase.state === 'Draft' && !application.deceasedFullName && application.caseType === caseTypes.getProbateType(formdata.caseType))) {
+                    if (!result.applications.some(application => application.ccdCase.state === 'Pending' && !application.deceasedFullName && application.caseType === caseTypes.getProbateType(formdata.caseType))) {
                         createNewApplication(req, res, formdata, formData, result, next);
                     } else {
                         delete formdata.caseType;
@@ -121,7 +121,7 @@ const getCase = (req, res) => {
             .then(result => {
                 session.form = result;
 
-                if (session.form.ccdCase.state === 'Draft' || session.form.ccdCase.state === 'PAAppCreated' || session.form.ccdCase.state === 'CasePaymentFailed') {
+                if (session.form.ccdCase.state === 'Pending' || session.form.ccdCase.state === 'PAAppCreated' || session.form.ccdCase.state === 'CasePaymentFailed') {
                     res.redirect('/task-list');
                 } else {
                     res.redirect('/thank-you');
@@ -150,9 +150,10 @@ const getDeclarationStatuses = (req, res, next) => {
             [config.services.orchestrator.url, req.sessionID]
         );
 
+        session.form.executorsDeclarations = [];
+
         formData.getDeclarationStatuses(req.authToken, req.session.serviceAuthorization, ccdCaseId)
             .then(result => {
-                session.form.executorsDeclarations = [];
                 forEach(result.invitations, executor => (
                     session.form.executorsDeclarations.push({
                         executorName: executor.executorName,

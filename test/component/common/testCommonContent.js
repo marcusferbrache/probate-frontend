@@ -5,7 +5,7 @@ const commonContent = require('app/resources/en/translation/common');
 const config = require('app/config');
 const sessionData = {
     ccdCase: {
-        state: 'Draft',
+        state: 'Pending',
         id: 1234567890123456
     }
 };

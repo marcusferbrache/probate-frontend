@@ -174,7 +174,7 @@ describe('Declaration', () => {
         const ctx = {
             ccdCase: {
                 id: 1234567890123456,
-                state: 'Draft'
+                state: 'Pending'
             },
             executors: executorsList,
             executorsWrapper: new ExecutorsWrapper(executorsList)

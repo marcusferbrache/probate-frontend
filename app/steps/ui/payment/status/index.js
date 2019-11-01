@@ -33,7 +33,7 @@ class PaymentStatus extends Step {
             set(formdata, 'payment.amount', formdata.payment.total);
         }
         ctx.paymentDue = get(formdata, 'payment.amount') > 0;
-
+        ctx.paymentPending = !ctx.paymentDue && ctx.applicationFee !== 0;
         ctx.regId = req.session.regId;
         ctx.sessionId = req.session.id;
         ctx.errors = req.errors;
@@ -47,6 +47,7 @@ class PaymentStatus extends Step {
         delete ctx.regId;
         delete ctx.sessionId;
         delete ctx.errors;
+        delete ctx.paymentPending;
         return [ctx, formdata];
     }
 
@@ -102,10 +103,15 @@ class PaymentStatus extends Step {
                 options.redirect = false;
             }
         } else {
-            const paymentDto = {status: 'not_required'};
+            const paymentStatus = ctx.paymentPending ? 'Pending' : 'not_required';
+            const paymentDto = {status: paymentStatus};
             const [updateCcdCaseResponse, errors] = yield this.updateForm(formdata, ctx, paymentDto, serviceAuthResult);
-            set(formdata, 'ccdCase', updateCcdCaseResponse.ccdCase);
-            set(formdata, 'payment', updateCcdCaseResponse.payment);
+
+            if (!ctx.paymentPending) {
+                set(formdata, 'ccdCase', updateCcdCaseResponse.ccdCase);
+                set(formdata, 'payment', updateCcdCaseResponse.payment);
+            }
+
             this.setErrors(options, errors);
             options.redirect = false;
         }

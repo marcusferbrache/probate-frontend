@@ -39,7 +39,7 @@ describe('DeceasedAlias', () => {
                         caseType: 'gop',
                         ccdCase: {
                             id: 1234567890123456,
-                            state: 'Draft'
+                            state: 'Pending'
                         },
                         deceased: {
                             firstName: 'Dee',
@@ -59,7 +59,7 @@ describe('DeceasedAlias', () => {
                 userLoggedIn: false,
                 ccdCase: {
                     id: 1234567890123456,
-                    state: 'Draft'
+                    state: 'Pending'
                 }
             });
             done();

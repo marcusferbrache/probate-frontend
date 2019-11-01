@@ -16,7 +16,7 @@ describe('executor-notified', () => {
         testWrapper = new TestWrapper('ExecutorNotified');
         sessionData = {
             ccdCase: {
-                state: 'Draft',
+                state: 'Pending',
                 id: 1234567890123456
             },
             executors: {

@@ -15,7 +15,7 @@ describe('executor-current-name', () => {
         testWrapper = new TestWrapper('ExecutorCurrentName');
         sessionData = {
             ccdCase: {
-                state: 'Draft',
+                state: 'Pending',
                 id: 1234567890123456
             },
             executors: {

@@ -24,7 +24,7 @@ describe('executor-roles', () => {
         testWrapper = new TestWrapper('ExecutorRoles');
         sessionData = {
             ccdCase: {
-                state: 'Draft',
+                state: 'Pending',
                 id: 1234567890123456
             },
             applicant: {

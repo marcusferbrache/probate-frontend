@@ -61,7 +61,7 @@ describe('Contact-Details', () => {
                 executorsEmailChanged: false,
                 ccdCase: {
                     id: 1234567890123456,
-                    state: 'Draft'
+                    state: 'Pending'
                 }
             };
             errors = [];
@@ -107,7 +107,7 @@ describe('Contact-Details', () => {
                     executorsEmailChanged: true,
                     ccdCase: {
                         id: 1234567890123456,
-                        state: 'Draft'
+                        state: 'Pending'
                     }
                 });
                 done();
@@ -158,7 +158,7 @@ describe('Contact-Details', () => {
                     executorsEmailChanged: false,
                     ccdCase: {
                         id: 1234567890123456,
-                        state: 'Draft'
+                        state: 'Pending'
                     }
                 });
                 done();
@@ -217,7 +217,7 @@ describe('Contact-Details', () => {
                     executorsEmailChanged: true,
                     ccdCase: {
                         id: 1234567890123456,
-                        state: 'Draft'
+                        state: 'Pending'
                     }
                 });
                 revert();

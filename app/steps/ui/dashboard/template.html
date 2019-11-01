@@ -6,9 +6,9 @@
     {% set applicationRows = [] %}
     {% for application in fields.applications.value %}
         {% set actionUrl = "/get-case/" + application.ccdCase.id + '?probateType=' + application.caseType %}
-        {% set actionText = content.actionContinue if (application.ccdCase.state == "Draft" or application.ccdCase.state == "PAAppCreated" or application.ccdCase.state == "CasePaymentFailed") else content.actionView %}
+        {% set actionText = content.actionContinue if (application.ccdCase.state == "Pending" or application.ccdCase.state == "PAAppCreated" or application.ccdCase.state == "CasePaymentFailed") else content.actionView %}
 
-        {% set caseClasses = "case draft" if not application.deceasedFullName and application.ccdCase.state == "Draft" else "" %}
+        {% set caseClasses = "case draft" if not application.deceasedFullName and application.ccdCase.state == "Pending" else "" %}
         {% set caseIdClasses = caseClasses + " govuk-table__cell--numeric case-id" %}
         {% set caseDateClasses = caseClasses + " govuk-table__cell--numeric" %}
         {% set caseStatusClasses = caseClasses + (" case-status submitted" if application.ccdCase.state == "CaseCreated" else "") %}
@@ -17,7 +17,7 @@
             { text: application.ccdCase.idFormatted, classes: caseIdClasses, attributes: {'aria-label': application.ccdCase.idFormattedAccessible } },
             { text: application.deceasedFullName if application.deceasedFullName else(content.statusDraftProbate if application.caseType == "PA" else content.statusDraftIntestacy), classes: caseClasses },
             { text: application.dateCreated, classes: caseDateClasses},
-            { text: content.statusInProgress if (application.ccdCase.state == "Draft" or application.ccdCase.state == "PAAppCreated" or application.ccdCase.state == "CasePaymentFailed") else content.statusSubmitted, classes: caseStatusClasses },
+            { text: content.statusInProgress if (application.ccdCase.state == "Pending" or application.ccdCase.state == "PAAppCreated" or application.ccdCase.state == "CasePaymentFailed") else content.statusSubmitted, classes: caseStatusClasses },
             { html: "<a href=\"" + actionUrl + "\" class=\"govuk-link\">" + actionText + "</a>"  }
         ]), applicationRows) %}
     {% endfor %}

@@ -22,7 +22,7 @@ describe('deceased-married', () => {
         it('test correct content is loaded on the page', (done) => {
             const sessionData = {
                 ccdCase: {
-                    state: 'Draft',
+                    state: 'Pending',
                     id: 1234567890123456
                 },
                 deceased: {
@@ -44,7 +44,7 @@ describe('deceased-married', () => {
         it('test correct content is loaded on the page when there are codicils', (done) => {
             const sessionData = {
                 ccdCase: {
-                    state: 'Draft',
+                    state: 'Pending',
                     id: 1234567890123456
                 },
                 deceased: {

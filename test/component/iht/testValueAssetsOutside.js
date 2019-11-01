@@ -23,7 +23,7 @@ describe('value-assets-outside-england-wales', () => {
         it('test content loaded on the page', (done) => {
             const sessionData = {
                 ccdCase: {
-                    state: 'Draft',
+                    state: 'Pending',
                     id: 1234567890123456
                 }
             };

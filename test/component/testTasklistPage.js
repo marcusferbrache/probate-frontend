@@ -76,7 +76,7 @@ describe('task-list', () => {
         it('[PROBATE] test right content loaded in Review and Confirm section (Multiple Applicants)', (done) => {
             const multipleApplicantSessionData = {
                 ccdCase: {
-                    state: 'Draft',
+                    state: 'Pending',
                     id: 1234567890123456
                 },
                 caseType: caseTypes.GOP,
@@ -109,7 +109,7 @@ describe('task-list', () => {
         it('[PROBATE] test right content loaded in Review and Confirm section (Single Applicant)', (done) => {
             const singleApplicantSessionData = {
                 ccdCase: {
-                    state: 'Draft',
+                    state: 'Pending',
                     id: 1234567890123456
                 },
                 caseType: caseTypes.GOP,
@@ -144,7 +144,7 @@ describe('task-list', () => {
         it('[INTESTACY] test right content loaded in Review and Confirm section', (done) => {
             const singleApplicantSessionData = {
                 ccdCase: {
-                    state: 'Draft',
+                    state: 'Pending',
                     id: 1234567890123456
                 },
                 caseType: caseTypes.INTESTACY,

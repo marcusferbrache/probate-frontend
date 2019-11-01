@@ -19,7 +19,7 @@ describe('summary-iht-section', () => {
         it('test correct content loaded on the summary page iht section, when no data is entered', (done) => {
             const sessionData = {
                 ccdCase: {
-                    state: 'Draft',
+                    state: 'Pending',
                     id: 1234567890123456
                 }
             };
@@ -38,7 +38,7 @@ describe('summary-iht-section', () => {
         it('test correct content loaded on the summary page iht section, when section is complete (online)', (done) => {
             const sessionData = require('test/data/ihtOnline');
             sessionData.ccdCase = {
-                state: 'Draft',
+                state: 'Pending',
                 id: 1234567890123456
             };
 
@@ -63,7 +63,7 @@ describe('summary-iht-section', () => {
         it('test correct content loaded on the summary page iht section, when section is complete (paper)', (done) => {
             const sessionData = require('test/data/ihtPaper');
             sessionData.ccdCase = {
-                state: 'Draft',
+                state: 'Pending',
                 id: 1234567890123456
             };
             sessionData.iht.form = 'IHT205';
@@ -89,7 +89,7 @@ describe('summary-iht-section', () => {
         it('test data is played back correctly on the summary page iht section (online)', (done) => {
             const sessionData = require('test/data/ihtOnline');
             sessionData.ccdCase = {
-                state: 'Draft',
+                state: 'Pending',
                 id: 1234567890123456
             };
 
@@ -115,7 +115,7 @@ describe('summary-iht-section', () => {
         it('test data is played back correctly on the summary page iht section (paper205)', (done) => {
             const sessionData = require('test/data/ihtPaper');
             sessionData.ccdCase = {
-                state: 'Draft',
+                state: 'Pending',
                 id: 1234567890123456
             };
             sessionData.iht.form = 'IHT205';
@@ -142,7 +142,7 @@ describe('summary-iht-section', () => {
         it('test data is played back correctly on the summary page iht section (paper207)', (done) => {
             const sessionData = require('test/data/ihtPaper');
             sessionData.ccdCase = {
-                state: 'Draft',
+                state: 'Pending',
                 id: 1234567890123456
             };
             sessionData.iht.form = 'IHT207';
@@ -169,7 +169,7 @@ describe('summary-iht-section', () => {
         it('test data is played back correctly on the summary page iht section (paper400)', (done) => {
             const sessionData = require('test/data/ihtPaper');
             sessionData.ccdCase = {
-                state: 'Draft',
+                state: 'Pending',
                 id: 1234567890123456
             };
             sessionData.iht.form = 'IHT400421';

@@ -22,5 +22,7 @@
   "taskComplete": "Completed",
   "alreadyDeclared": "Already declared",
   "declared": "Declared",
-  "notDeclared": "Not declared"
+  "notDeclared": "Not declared",
+  "executorName": "Executor name",
+  "declarationStatus": "Declaration Status"
 }

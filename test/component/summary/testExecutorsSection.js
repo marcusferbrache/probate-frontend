@@ -17,7 +17,7 @@ describe('summary-executor-section', () => {
         testWrapper = new TestWrapper('Summary');
         sessionData = require('test/data/summary-executors');
         sessionData.ccdCase = {
-            state: 'Draft',
+            state: 'Pending',
             id: 1234567890123456
         };
     });
@@ -39,7 +39,7 @@ describe('summary-executor-section', () => {
         it('test correct content loaded on the summary page executors section, when no data is entered', (done) => {
             const sessionData = {
                 ccdCase: {
-                    state: 'Draft',
+                    state: 'Pending',
                     id: 1234567890123456
                 }
             };

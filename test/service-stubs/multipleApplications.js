@@ -18,7 +18,7 @@ router.get('/forms/cases', (req, res) => {
                 caseType: 'PA',
                 ccdCase: {
                     id: '1234567890123456',
-                    state: 'Draft'
+                    state: 'Pending'
                 }
             },
             {
@@ -36,7 +36,7 @@ router.get('/forms/cases', (req, res) => {
                 caseType: 'PA',
                 ccdCase: {
                     id: '9012345612345678',
-                    state: 'Draft'
+                    state: 'Pending'
                 }
             },
             {
@@ -45,7 +45,7 @@ router.get('/forms/cases', (req, res) => {
                 caseType: 'INTESTACY',
                 ccdCase: {
                     id: '3456123456789012',
-                    state: 'Draft'
+                    state: 'Pending'
                 }
             },
             {
@@ -53,7 +53,7 @@ router.get('/forms/cases', (req, res) => {
                 caseType: 'PA',
                 ccdCase: {
                     id: '9999999999999999',
-                    state: 'Draft'
+                    state: 'Pending'
                 }
             }
         ]
@@ -73,7 +73,7 @@ router.get('/forms/case/*', (req, res) => {
             caseType: caseTypes.GOP,
             ccdCase: {
                 id: '1234567890123456',
-                state: 'Draft'
+                state: 'Pending'
             },
             executors: {},
             deceased: {
@@ -107,7 +107,7 @@ router.get('/forms/case/*', (req, res) => {
             caseType: caseTypes.GOP,
             ccdCase: {
                 id: '9012345612345678',
-                state: 'Draft'
+                state: 'Pending'
             },
             executors: {},
         };
@@ -117,7 +117,7 @@ router.get('/forms/case/*', (req, res) => {
             caseType: caseTypes.INTESTACY,
             ccdCase: {
                 id: '3456123456789012',
-                state: 'Draft'
+                state: 'Pending'
             },
             executors: {},
         };
@@ -127,7 +127,7 @@ router.get('/forms/case/*', (req, res) => {
             caseType: caseTypes.GOP,
             ccdCase: {
                 id: '9999999999999999',
-                state: 'Draft'
+                state: 'Pending'
             },
             executors: {},
         };
@@ -153,7 +153,7 @@ router.post('/forms/newcase', (req, res) => {
                 caseType: 'PA',
                 ccdCase: {
                     id: 1234567890123456,
-                    state: 'Draft'
+                    state: 'Pending'
                 }
             },
             {
@@ -171,7 +171,7 @@ router.post('/forms/newcase', (req, res) => {
                 caseType: 'PA',
                 ccdCase: {
                     id: 9012345612345678,
-                    state: 'Draft'
+                    state: 'Pending'
                 }
             },
             {
@@ -180,7 +180,7 @@ router.post('/forms/newcase', (req, res) => {
                 caseType: 'INTESTACY',
                 ccdCase: {
                     id: 3456123456789012,
-                    state: 'Draft'
+                    state: 'Pending'
                 }
             },
             {
@@ -188,7 +188,7 @@ router.post('/forms/newcase', (req, res) => {
                 caseType: 'PA',
                 ccdCase: {
                     id: 8888888888888888,
-                    state: 'Draft'
+                    state: 'Pending'
                 }
             }
         ]

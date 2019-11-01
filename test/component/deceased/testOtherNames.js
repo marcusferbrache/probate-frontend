@@ -23,7 +23,7 @@ describe('deceased-otherNames', () => {
         it('test right content loaded on the page', (done) => {
             const sessionData = {
                 ccdCase: {
-                    state: 'Draft',
+                    state: 'Pending',
                     id: 1234567890123456
                 },
                 deceased: {
@@ -45,7 +45,7 @@ describe('deceased-otherNames', () => {
         it('test right content loaded on the page when deceased has other names', (done) => {
             const sessionData = {
                 ccdCase: {
-                    state: 'Draft',
+                    state: 'Pending',
                     id: 1234567890123456
                 },
                 deceased: {
@@ -100,7 +100,7 @@ describe('deceased-otherNames', () => {
         it(`test it redirects to deceased married page: ${expectedNextUrlForDeceasedMarried}`, (done) => {
             const sessionData = {
                 ccdCase: {
-                    state: 'Draft',
+                    state: 'Pending',
                     id: 1234567890123456
                 }
             };

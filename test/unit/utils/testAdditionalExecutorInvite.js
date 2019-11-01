@@ -15,7 +15,7 @@ describe('AdditionalExecutorInvite', () => {
                 form: {
                     ccdCase: {
                         id: 1234567890123456,
-                        state: 'Draft'
+                        state: 'Pending'
                     },
                     deceased: {
                         firstName: 'Dee',

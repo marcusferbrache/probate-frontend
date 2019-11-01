@@ -11,7 +11,7 @@ describe('summary-documentupload-section', () => {
         testWrapper = new TestWrapper('Summary');
         sessionData = require('test/data/documentupload');
         sessionData.ccdCase = {
-            state: 'Draft',
+            state: 'Pending',
             id: 1234567890123456
         };
     });
@@ -44,7 +44,7 @@ describe('summary-documentupload-section', () => {
         it('test content loaded on the page when there is no data', (done) => {
             const sessionData = {
                 ccdCase: {
-                    state: 'Draft',
+                    state: 'Pending',
                     id: 1234567890123456
                 }
             };
@@ -99,7 +99,7 @@ describe('summary-documentupload-section', () => {
         it('test correct content loaded on document upload section of the summary page, when no data is entered', (done) => {
             const sessionData = {
                 ccdCase: {
-                    state: 'Draft',
+                    state: 'Pending',
                     id: 1234567890123456
                 }
             };

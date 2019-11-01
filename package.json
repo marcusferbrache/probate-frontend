@@ -39,7 +39,7 @@
     "test:codecov-upload": "NODE_ENV=test NODE_PATH=. istanbul cover _mocha './test/**/test*.js' -- -R spec && codecov",
     "test:coverage": "NODE_ENV=test NODE_PATH=. istanbul cover _mocha './test/unit/**/test*.js' './test/component/**/test*.js' -- --timeout 10000",
     "sonar-scanner": "node_modules/sonar-scanner/bin/sonar-scanner",
-    "sonar-scan": "node_modules/sonar-scanner/bin/sonar-scanner -Dsonar.projectName='Probate :: frontend' -Dsonar.sources=app -Dsonar.language=js -Dsonar.cpd.exclusions=app/**/*.njk,app/**/template.html,app/steps/**/index.js -Dsonar.exclusions=app/assets/** -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info",
+    "sonar-scan": "node_modules/sonar-scanner/bin/sonar-scanner -Dsonar.projectName='Probate :: frontend' -Dsonar.sources=app -Dsonar.language=js -Dsonar.cpd.exclusions=app/**/*.njk,app/**/template.html,app/steps/**/index.js -Dsonar.exclusions=app/routes.js,app/assets/** -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info",
     "git-info": "node-git-info-json",
     "//": "The below scripts are just stubs, don't use them in production",
     "stub:s2s": "NODE_PATH=. node test/service-stubs/idam.js",

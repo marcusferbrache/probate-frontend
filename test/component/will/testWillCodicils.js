@@ -24,7 +24,7 @@ describe('will-codicils', () => {
         it('test correct content loaded on the page', (done) => {
             const sessionData = {
                 ccdCase: {
-                    state: 'Draft',
+                    state: 'Pending',
                     id: 1234567890123456
                 }
             };

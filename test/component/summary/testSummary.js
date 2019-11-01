@@ -19,7 +19,7 @@ describe('summary', () => {
         it('test content loaded on the page and documents uploaded', (done) => {
             const sessionData = require('test/data/documentupload');
             sessionData.ccdCase = {
-                state: 'Draft',
+                state: 'Pending',
                 id: 1234567890123456
             };
             const contentToExclude = [
@@ -51,7 +51,7 @@ describe('summary', () => {
         it('[INTESTACY] test content loaded on the page', (done) => {
             const sessionData = {
                 ccdCase: {
-                    state: 'Draft',
+                    state: 'Pending',
                     id: 1234567890123456
                 },
                 caseType: 'intestacy'
@@ -83,7 +83,7 @@ describe('summary', () => {
         it('test it redirects to submit', (done) => {
             const sessionData = {
                 ccdCase: {
-                    state: 'Draft',
+                    state: 'Pending',
                     id: 1234567890123456
                 },
                 applicant: {
@@ -113,7 +113,7 @@ describe('summary', () => {
         it(`test it redirects to Task List: ${expectedNextUrlForTaskList}`, (done) => {
             const sessionData = {
                 ccdCase: {
-                    state: 'Draft',
+                    state: 'Pending',
                     id: 1234567890123456
                 }
             };

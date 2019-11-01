@@ -32,7 +32,7 @@ describe('pin-page', () => {
         it('test help block content is loaded on page', (done) => {
             const sessionData = {
                 ccdCase: {
-                    state: 'Draft',
+                    state: 'Pending',
                     id: 1234567890123456
                 }
             };
@@ -56,7 +56,7 @@ describe('pin-page', () => {
         it('test right content loaded on the page', (done) => {
             const sessionData = {
                 ccdCase: {
-                    state: 'Draft',
+                    state: 'Pending',
                     id: 1234567890123456
                 }
             };

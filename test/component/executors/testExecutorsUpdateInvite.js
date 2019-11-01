@@ -13,7 +13,7 @@ describe('executors-update-invite', () => {
         testWrapper = new TestWrapper('ExecutorsUpdateInvite');
         sessionData = require('test/data/executors-invites');
         sessionData.ccdCase = {
-            state: 'Draft',
+            state: 'Pending',
             id: 1234567890123456
         };
     });

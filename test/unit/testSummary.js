@@ -89,7 +89,7 @@ describe('Summary', () => {
                     form: {
                         ccdCase: {
                             id: 1234567890123456,
-                            state: 'Draft'
+                            state: 'Pending'
                         },
                         caseType: 'gop',
                         deceased: {
@@ -108,7 +108,7 @@ describe('Summary', () => {
             expect(ctx).to.deep.equal({
                 ccdCase: {
                     id: 1234567890123456,
-                    state: 'Draft'
+                    state: 'Pending'
                 },
                 authToken: '1234',
                 alreadyDeclared: false,
@@ -122,7 +122,7 @@ describe('Summary', () => {
                     form: {
                         ccdCase: {
                             id: 1234567890123456,
-                            state: 'Draft'
+                            state: 'Pending'
                         },
                         caseType: 'gop',
                         deceased: {
@@ -150,7 +150,7 @@ describe('Summary', () => {
                     form: {
                         ccdCase: {
                             id: 1234567890123456,
-                            state: 'Draft'
+                            state: 'Pending'
                         },
                         caseType: 'intestacy',
                         deceased: {
@@ -172,7 +172,7 @@ describe('Summary', () => {
             expect(ctx).to.deep.equal({
                 ccdCase: {
                     id: 1234567890123456,
-                    state: 'Draft'
+                    state: 'Pending'
                 },
                 authToken: '12345',
                 alreadyDeclared: false,
@@ -193,7 +193,7 @@ describe('Summary', () => {
                     form: {
                         ccdCase: {
                             id: 1234567890123456,
-                            state: 'Draft'
+                            state: 'Pending'
                         },
                         caseType: 'intestacy',
                         deceased: {

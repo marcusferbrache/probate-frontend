@@ -1242,7 +1242,7 @@ describe('declaration, single applicant', () => {
         it(`test it redirects to next page: ${expectedNextUrlForExecInvite}`, (done) => {
             sessionData = {
                 ccdCase: {
-                    state: 'Draft',
+                    state: 'Pending',
                     id: 1234567890123456
                 },
                 executors: {

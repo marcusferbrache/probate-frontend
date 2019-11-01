@@ -26,7 +26,7 @@ describe('applicant-address', () => {
         it('test right content loaded on the page', (done) => {
             const sessionData = {
                 ccdCase: {
-                    state: 'Draft',
+                    state: 'Pending',
                     id: 1234567890123456
                 }
             };
@@ -59,7 +59,7 @@ describe('applicant-address', () => {
         it('test the address dropdown box displays all addresses when the user returns to the page', (done) => {
             const sessionData = {
                 ccdCase: {
-                    state: 'Draft',
+                    state: 'Pending',
                     id: 1234567890123456
                 }
             };

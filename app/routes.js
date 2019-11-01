@@ -84,7 +84,7 @@ router.use((req, res, next) => {
         }
     });
 
-    const noCcdCaseIdPages = config.noCcdCaseIdPages.map(item => '/' + item);
+    const noCcdCaseIdPages = config.noCcdCaseIdPages.map(item => item.split('/')[0]);
 
     if (config.app.requreCcdCaseId === 'true' && includes(allPageUrls, req.originalUrl.split('/')[1]) && req.method === 'GET' && !includes(noCcdCaseIdPages, req.originalUrl.split('/')[1]) && !get(formdata, 'ccdCase.id')) {
         res.redirect('/dashboard');

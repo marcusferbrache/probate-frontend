@@ -22,7 +22,7 @@ describe('copies-summary', () => {
         it('test correct content loaded on the copies summary page, when no data is entered', (done) => {
             const sessionData = {
                 ccdCase: {
-                    state: 'Draft',
+                    state: 'Pending',
                     id: 1234567890123456
                 }
             };

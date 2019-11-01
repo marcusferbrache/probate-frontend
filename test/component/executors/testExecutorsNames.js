@@ -12,7 +12,7 @@ describe('executors-names', () => {
         testWrapper = new TestWrapper('ExecutorsNames');
         sessionData = {
             ccdCase: {
-                state: 'Draft',
+                state: 'Pending',
                 id: 1234567890123456
             },
             applicant: {

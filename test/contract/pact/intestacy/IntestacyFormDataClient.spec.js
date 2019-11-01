@@ -47,7 +47,7 @@ describe('Pact IntestacyFormData', () => {
         const expectedJSON = JSON.parse(JSON.stringify(FORM_DATA_BODY_PAYLOAD));
         expectedJSON.ccdCase = {
             'id': 1535574519543819,
-            'state': 'Draft'
+            'state': 'Pending'
         };
         expectedJSON.type = 'Intestacy';
         return expectedJSON;

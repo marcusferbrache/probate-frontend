@@ -16,7 +16,7 @@ const allApplicationsExpectedResponse = {
             caseType: 'PA',
             ccdCase: {
                 id: '1234567890123456',
-                state: 'Draft'
+                state: 'Pending'
             }
         },
         {
@@ -34,7 +34,7 @@ const allApplicationsExpectedResponse = {
             caseType: 'PA',
             ccdCase: {
                 id: '9012345612345678',
-                state: 'Draft'
+                state: 'Pending'
             }
         },
         {
@@ -43,7 +43,7 @@ const allApplicationsExpectedResponse = {
             caseType: 'INTESTACY',
             ccdCase: {
                 id: '3456123456789012',
-                state: 'Draft'
+                state: 'Pending'
             }
         },
         {
@@ -51,7 +51,7 @@ const allApplicationsExpectedResponse = {
             caseType: 'PA',
             ccdCase: {
                 id: '9999999999999999',
-                state: 'Draft'
+                state: 'Pending'
             }
         }
     ]
@@ -432,7 +432,7 @@ describe('multipleApplicationsMiddleware', () => {
                 applicantEmail: 'test@email.com',
                 ccdCase: {
                     id: 1234567890123456,
-                    state: 'Draft'
+                    state: 'Pending'
                 }
             };
 
@@ -473,7 +473,7 @@ describe('multipleApplicationsMiddleware', () => {
                 applicantEmail: 'test@email.com',
                 ccdCase: {
                     id: 1234567890123456,
-                    state: 'Draft'
+                    state: 'Pending'
                 }
             };
 

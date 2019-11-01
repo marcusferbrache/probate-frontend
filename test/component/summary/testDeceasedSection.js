@@ -22,7 +22,7 @@ describe('summary-deceased-section', () => {
         it('test correct content loaded on the deceased section of the summary page, when no data is entered', (done) => {
             const sessionData = {
                 ccdCase: {
-                    state: 'Draft',
+                    state: 'Pending',
                     id: 1234567890123456
                 }
             };
@@ -49,7 +49,7 @@ describe('summary-deceased-section', () => {
 
         it('test correct content loaded on the deceased section of the summary page, when section is complete', (done) => {
             sessionData.ccdCase = {
-                state: 'Draft',
+                state: 'Pending',
                 id: 1234567890123456
             };
 
@@ -78,7 +78,7 @@ describe('summary-deceased-section', () => {
 
         it('test data is played back correctly on the deceased section of the summary page', (done) => {
             sessionData.ccdCase = {
-                state: 'Draft',
+                state: 'Pending',
                 id: 1234567890123456
             };
 

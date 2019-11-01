@@ -87,7 +87,7 @@ describe('co-applicant-declaration', () => {
                 .send({
                     ccdCase: {
                         id: 1234567890123456,
-                        state: 'Draft'
+                        state: 'Pending'
                     }
                 })
                 .end(() => {
@@ -108,7 +108,7 @@ describe('co-applicant-declaration', () => {
                 .send({
                     ccdCase: {
                         id: 1234567890123456,
-                        state: 'Draft'
+                        state: 'Pending'
                     }
                 })
                 .end(() => {

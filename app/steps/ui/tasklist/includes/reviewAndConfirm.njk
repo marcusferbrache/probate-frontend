@@ -24,33 +24,35 @@
         ) }}
         {% if fields.ReviewAndConfirmTask.value.status == "complete" %}
             {% if fields.hasMultipleApplicants.value == "true" and fields.alreadyDeclared.value == "false" %}
-                {% set declarationStatusRows = [] %}
-                {% for executor in fields.declarationStatuses.value %}
-                    {% set declarationStatusRows = (declarationStatusRows.push([
-                        { text: executor.executorName | safe },
-                        { text: content.declared if executor.agreed else content.notDeclared }
-                    ]), declarationStatusRows) %}
-                {% endfor %}
-
                 <p class="govuk-body">{{ content.reviewAndConfirmTaskMultiplesParagraph1 }}</p>
                 <p class="govuk-body">{{ content.reviewAndConfirmTaskMultiplesParagraph2 }}</p>
-                <h3 class="govuk-heading-s">{{ content.reviewAndConfirmTaskMultiplesParagraph3Heading }}</h3>
-                <p class="govuk-body">{{ content.reviewAndConfirmTaskMultiplesParagraph3 }}</p>
 
-                {{ govukTable({
-                  caption: content.reviewAndConfirmTaskMultiplesParagraph3Heading,
-                  captionClasses: "govuk-visually-hidden",
-                  firstCellIsHeader: false,
-                  head: [
-                    {
-                      text: "Executor name"
-                    },
-                    {
-                      text: "Declaration Status"
-                    }
-                  ],
-                  rows: declarationStatusRows
-                }) }}
+                {% if fields.declarationStatuses.value | length > 0 %}
+                    {% set declarationStatusRows = [] %}
+                    {% for executor in fields.declarationStatuses.value %}
+                        {% set declarationStatusRows = (declarationStatusRows.push([
+                            { text: executor.executorName | safe },
+                            { text: content.declared if executor.agreed else content.notDeclared }
+                        ]), declarationStatusRows) %}
+                    {% endfor %}
+                    <h3 class="govuk-heading-s">{{ content.reviewAndConfirmTaskMultiplesParagraph3Heading }}</h3>
+                    <p class="govuk-body">{{ content.reviewAndConfirmTaskMultiplesParagraph3 }}</p>
+
+                    {{ govukTable({
+                      caption: content.reviewAndConfirmTaskMultiplesParagraph3Heading,
+                      captionClasses: "govuk-visually-hidden",
+                      firstCellIsHeader: false,
+                      head: [
+                        {
+                          text: content.executorName
+                        },
+                        {
+                          text: content.declarationStatus
+                        }
+                      ],
+                      rows: declarationStatusRows
+                    }) }}
+                {% endif %}
             {% endif %}
         {% endif %}
     </div>
