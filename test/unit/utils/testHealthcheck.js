@@ -9,7 +9,6 @@ let persistenceStub;
 const startStubs = () => {
     businessStub = require('test/service-stubs/business');
     submitStub = require('test/service-stubs/submit');
-    persistenceStub = require('test/service-stubs/persistence');
 };
 const stopStubs = () => {
     businessStub.close();
@@ -17,7 +16,6 @@ const stopStubs = () => {
     persistenceStub.close();
     delete require.cache[require.resolve('test/service-stubs/business')];
     delete require.cache[require.resolve('test/service-stubs/submit')];
-    delete require.cache[require.resolve('test/service-stubs/persistence')];
 };
 
 describe('Healthcheck.js', () => {
