@@ -22,6 +22,10 @@ describe('divorce-place', () => {
     const expectedNextUrlForStopPage = StopPage.getUrl('divorcePlace');
     const expectedNextUrlForTaskList = TaskList.getUrl();
     const sessionData = {
+        ccdCase: {
+            state: 'Pending',
+            id: 1234567890123456
+        },
         caseType: caseTypes.INTESTACY,
         deceased: {
             maritalStatus: contentMaritalStatus.optionDivorced
@@ -86,6 +90,7 @@ describe('divorce-place', () => {
                     const data = {
                         '{legalProcess}': 'divorce'
                     };
+
                     testWrapper.testErrors(done, data, 'required');
                 });
         });

@@ -5,6 +5,8 @@ const {assert} = require('chai');
 const CoApplicantStartPage = require('app/steps/ui/coapplicant/startpage');
 const commonContent = require('app/resources/en/translation/common');
 const config = require('app/config');
+const S2S_URL = config.services.idam.s2s_url;
+const IDAM_URL = config.services.idam.apiUrl;
 const featureToggleUrl = config.featureToggles.url;
 const webformsFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.webforms}`;
 const nock = require('nock');
@@ -31,31 +33,32 @@ describe('pin-page', () => {
 
     afterEach(() => {
         testWrapper.destroy();
+        nock.cleanAll();
     });
 
     describe('Verify Content, Errors and Redirection', () => {
         it('test help block content is loaded on page', (done) => {
-            testWrapper.agent.post('/prepare-session-field/validLink/true')
+            const sessionData = {
+                ccdCase: {
+                    state: 'Pending',
+                    id: 1234567890123456
+                }
+            };
+
+            testWrapper.agent.post('/prepare-session/form')
+                .send(sessionData)
                 .end(() => {
-                    const playbackData = {
-                        helpTitle: commonContent.helpTitle,
-                        helpHeadingTelephone: commonContent.helpHeadingTelephone,
-                        helpHeadingEmail: commonContent.helpHeadingEmail,
-                        helpEmailLabel: commonContent.helpEmailLabel.replace(/{contactEmailAddress}/g, config.links.contactEmailAddress)
-                    };
-
-                    testWrapper.testDataPlayback(done, playbackData);
-                });
-        });
-
-        it('test webchat help block content is loaded on page', (done) => {
-            testWrapper.agent.post('/prepare-session-field/validLink/true')
-                .end(() => {
-                    const playbackData = {
-                        helpHeadingWebchat: commonContent.helpHeadingWebchat,
-                    };
-
-                    testWrapper.testDataPlayback(afterEachNocks(done), playbackData);
+                    testWrapper.agent.post('/prepare-session-field/validLink/true')
+                        .end(() => {
+                            const playbackData = {
+                                helpTitle: commonContent.helpTitle,
+                                helpHeadingTelephone: commonContent.helpHeadingTelephone,
+                                helpHeadingEmail: commonContent.helpHeadingEmail,
+                                helpHeadingWebchat: commonContent.helpHeadingWebchat,
+                                helpEmailLabel: commonContent.helpEmailLabel.replace(/{contactEmailAddress}/g, config.links.contactEmailAddress)
+                            };
+                            testWrapper.testDataPlayback(done, playbackData);
+                        });
                 });
         });
 
@@ -76,31 +79,50 @@ describe('pin-page', () => {
         });
 
         it('test right content loaded on the page', (done) => {
-            testWrapper.agent.post('/prepare-session-field/validLink/true')
+            const sessionData = {
+                ccdCase: {
+                    state: 'Pending',
+                    id: 1234567890123456
+                }
+            };
+
+            testWrapper.agent.post('/prepare-session/form')
+                .send(sessionData)
                 .end(() => {
-                    testWrapper.testContent(done);
+                    testWrapper.agent.post('/prepare-session-field/validLink/true')
+                        .end(() => {
+                            testWrapper.testContent(done);
+                        });
                 });
         });
 
         it(`test it redirects to next page: ${expectedNextUrlForCoAppStartPage}`, (done) => {
             const formDataReturnData = {
-                formdata: {
-                    declaration: {
-                        declarationCheckbox: 'Yes'
-                    }
+                declaration: {
+                    declarationCheckbox: 'true'
                 }
             };
             const data = {
                 pin: '12345',
-                formdataId: '12'
+                formdataId: '12',
+                caseType: 'gop'
             };
 
-            nock(config.services.persistence.url)
-                .get('/12')
+            nock(config.services.orchestrator.url)
+                .get('/forms/12?probateType=PA')
                 .reply(200, formDataReturnData);
 
-            testWrapper.agent
-                .post('/prepare-session-field')
+            nock(S2S_URL).post('/lease')
+                .reply(200, 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJSRUZFUkVOQ0UifQ.Z_YYn0go02ApdSMfbehsLXXbxJxLugPG' +
+                    '8v_3ktCpQurK8tHkOy1qGyTo02bTdilX4fq4M5glFh80edDuhDJXPA');
+
+            nock(IDAM_URL).post('/oauth2/authorize')
+                .reply(200, {code: '12345'});
+
+            nock(IDAM_URL).post('/oauth2/token')
+                .reply(200, {'access_token': 'sdkfhdskhf'});
+
+            testWrapper.agent.post('/prepare-session-field')
                 .send(data)
                 .end(() => {
                     testWrapper.testRedirect(afterEachNocks(done), data, expectedNextUrlForCoAppStartPage);
@@ -123,8 +145,7 @@ describe('pin-page', () => {
 
         it('test error messages displayed for incorrect pin data', (done) => {
             const data = {pin: '12345'};
-            testWrapper.agent
-                .post('/prepare-session-field/pin/54321')
+            testWrapper.agent.post('/prepare-session-field/pin/54321')
                 .end(() => {
                     const errorsToTest = ['pin'];
 
@@ -138,8 +159,21 @@ describe('pin-page', () => {
                 formdataId: '12'
             };
 
-            nock(config.services.persistence.url)
-                .get('/12')
+            nock(S2S_URL)
+                .post('/lease')
+                .reply(200, 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJSRUZFUkVOQ0UifQ.Z_YYn0go02ApdSMfbehsLXXbxJxLugPG' +
+                    '8v_3ktCpQurK8tHkOy1qGyTo02bTdilX4fq4M5glFh80edDuhDJXPA');
+
+            nock(IDAM_URL)
+                .post('/oauth2/authorize')
+                .reply(200, {code: '12345'});
+
+            nock(IDAM_URL)
+                .post('/oauth2/token')
+                .reply(200, {'access_token': 'sdkfhdskhf'});
+
+            nock(config.services.orchestrator.url)
+                .get('/forms/12')
                 .reply(200, new Error('ReferenceError'));
 
             testWrapper.agent
@@ -162,9 +196,11 @@ describe('pin-page', () => {
                 });
         });
 
-        it('test "save and close" link is not displayed on the page', (done) => {
+        it('test "save and close", "my applications" and "sign out" links are not displayed on the page', (done) => {
             const playbackData = {
-                saveAndClose: commonContent.saveAndClose
+                saveAndClose: commonContent.saveAndClose,
+                myApplications: commonContent.myApplications,
+                signOut: commonContent.signOut
             };
 
             testWrapper.testContentNotPresent(done, playbackData);

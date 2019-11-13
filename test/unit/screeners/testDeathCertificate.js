@@ -22,7 +22,12 @@ describe('DeathCertificate', () => {
                 method: 'GET',
                 sessionID: 'dummy_sessionId',
                 session: {
-                    form: {},
+                    form: {
+                        ccdCase: {
+                            id: 1234567890123456,
+                            state: 'Pending'
+                        }
+                    },
                     caseType: 'gop'
                 },
                 body: {
@@ -38,6 +43,11 @@ describe('DeathCertificate', () => {
                 caseType: 'gop',
                 featureToggles: {
                     webforms: 'false'
+                },
+                userLoggedIn: false,
+                ccdCase: {
+                    id: 1234567890123456,
+                    state: 'Pending'
                 }
             });
             done();

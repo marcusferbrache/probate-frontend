@@ -17,6 +17,8 @@ const InviteData = require('app/services/InviteData');
 const config = require('app/config');
 const caseTypes = require('app/utils/CaseTypes');
 const UploadLegalDeclaration = require('app/services/UploadLegalDeclaration');
+const ServiceMapper = require('app/utils/ServiceMapper');
+const FieldError = require('app/components/error');
 
 class Declaration extends ValidationStep {
     static getUrl() {
@@ -31,11 +33,28 @@ class Declaration extends ValidationStep {
     }
 
     * handlePost(ctx, errors, formdata, session) {
+        const result = yield this.validateFormData(formdata, ctx, session.req);
+        let returnErrors;
+
+        if (result.type === 'VALIDATION') {
+            returnErrors = [FieldError('businessError', 'validationError', this.resourcePath, ctx)];
+        } else {
+            returnErrors = errors;
+        }
+
         const uploadLegalDec = new UploadLegalDeclaration();
         formdata.statementOfTruthDocument =
-            yield uploadLegalDec.generateAndUpload(ctx.sessionID, session.req.userId, formdata, ctx.caseType);
+            yield uploadLegalDec.generateAndUpload(ctx.sessionID, session.req.userId, session.req);
         session.form.statementOfTruthDocument = formdata.statementOfTruthDocument;
-        return [ctx, errors];
+        return [ctx, returnErrors];
+    }
+
+    * validateFormData(data, ctx, req) {
+        const validateData = ServiceMapper.map(
+            'ValidateData',
+            [config.services.orchestrator.url, ctx.sessionID]
+        );
+        return yield validateData.put(data, req.authToken, req.session.serviceAuthorization, caseTypes.getCaseType(req.session));
     }
 
     getFormDataForTemplate(content, formdata) {
@@ -81,17 +100,16 @@ class Declaration extends ValidationStep {
         } else {
             ctx.executorsWrapper = new ExecutorsWrapper(formdata.executors);
             ctx.invitesSent = get(formdata, 'executors.invitesSent');
-            ctx.hasMultipleApplicants = ctx.executorsWrapper.hasMultipleApplicants(get(formdata, 'executors.list'));
+            ctx.hasMultipleApplicants = ctx.executorsWrapper.hasMultipleApplicants();
             ctx.executorsEmailChanged = ctx.executorsWrapper.hasExecutorsEmailChanged();
             ctx.hasExecutorsToNotify = ctx.executorsWrapper.hasExecutorsToNotify() && ctx.invitesSent === 'true';
 
             const hasCodicils = (new WillWrapper(formdata.will)).hasCodicils();
             const codicilsNumber = (new WillWrapper(formdata.will)).codicilsNumber();
-            const hasMultipleApplicants = ctx.executorsWrapper.hasMultipleApplicants();
-            const multipleApplicantSuffix = this.multipleApplicantSuffix(hasMultipleApplicants);
+            const multipleApplicantSuffix = this.multipleApplicantSuffix(ctx.hasMultipleApplicants);
 
             const executorsApplying = ctx.executorsWrapper.executorsApplying();
-            const executorsApplyingText = this.executorsApplying(hasMultipleApplicants, executorsApplying, content, hasCodicils, codicilsNumber, formdata.deceasedName, formdata.applicantName);
+            const executorsApplyingText = this.executorsApplying(ctx.hasMultipleApplicants, executorsApplying, content, hasCodicils, codicilsNumber, formdata.deceasedName, formdata.applicantName);
 
             const executorsNotApplying = ctx.executorsWrapper.executorsNotApplying();
             const executorsNotApplyingText = this.executorsNotApplying(executorsNotApplying, content, formdata.deceasedName, hasCodicils);
@@ -200,12 +218,9 @@ class Declaration extends ValidationStep {
     }
 
     resetAgreedFlags(ctx) {
-        const data = {agreed: null};
-        const inviteData = new InviteData(config.services.persistence.url, ctx.sessionID);
-        const promises = ctx.executorsWrapper
-            .executorsInvited()
-            .map(exec => inviteData.patch(exec.inviteId, data));
-        return Promise.all(promises);
+        const inviteData = new InviteData(config.services.orchestrator.url, ctx.sessionID);
+        const promise = inviteData.resetAgreedFlag(ctx.ccdCase.id, ctx);
+        return promise;
     }
 
     action(ctx, formdata) {
@@ -224,13 +239,19 @@ class Declaration extends ValidationStep {
         delete ctx.executorsEmailChanged;
         delete ctx.hasDataChangedAfterEmailSent;
         delete ctx.invitesSent;
+        delete ctx.serviceAuthorization;
+        delete ctx.authToken;
         return [ctx, formdata];
     }
 
     renderPage(res, html) {
         const formdata = res.req.session.form;
-        formdata.legalDeclaration = legalDocumentJSONObjBuilder.build(formdata, html);
+        res.req.session.form.legalDeclaration = legalDocumentJSONObjBuilder.build(formdata, html);
         res.send(html);
+    }
+
+    isComplete(ctx, formdata) {
+        return [get(formdata, 'declaration.declarationCheckbox') === 'true', 'inProgress'];
     }
 }
 

@@ -22,7 +22,12 @@ describe('DiedAfterOctober2014', () => {
                 method: 'GET',
                 sessionID: 'dummy_sessionId',
                 session: {
-                    form: {},
+                    form: {
+                        ccdCase: {
+                            id: 1234567890123456,
+                            state: 'Pending'
+                        }
+                    },
                     caseType: 'gop'
                 },
                 body: {
@@ -38,6 +43,11 @@ describe('DiedAfterOctober2014', () => {
                 caseType: 'gop',
                 featureToggles: {
                     webforms: 'false'
+                },
+                userLoggedIn: false,
+                ccdCase: {
+                    id: 1234567890123456,
+                    state: 'Pending'
                 }
             });
             done();
@@ -48,7 +58,15 @@ describe('DiedAfterOctober2014', () => {
         it('should return the correct url when Yes is given', (done) => {
             const req = {
                 session: {
-                    journey: journey
+                    journey: journey,
+                    form: {
+                        screeners: {
+                            deathCertificate: 'Yes',
+                            domicile: 'Yes',
+                            completed: 'Yes',
+                            left: 'No'
+                        }
+                    }
                 }
             };
             const ctx = {
@@ -62,7 +80,15 @@ describe('DiedAfterOctober2014', () => {
         it('should return the correct url when No is given', (done) => {
             const req = {
                 session: {
-                    journey: journey
+                    journey: journey,
+                    form: {
+                        screeners: {
+                            deathCertificate: 'Yes',
+                            domicile: 'Yes',
+                            completed: 'Yes',
+                            left: 'No'
+                        }
+                    }
                 }
             };
             const ctx = {

@@ -1,7 +1,7 @@
 'use strict';
 
 const initSteps = require('app/core/initSteps');
-const {expect} = require('chai');
+const expect = require('chai').expect;
 const steps = initSteps([`${__dirname}/../../../app/steps/action/`, `${__dirname}/../../../app/steps/ui`]);
 const DeceasedAddress = steps.DeceasedAddress;
 
@@ -20,7 +20,11 @@ describe('DeceasedAddress', () => {
                 sessionID: 'dummy_sessionId',
                 session: {
                     form: {
-                        caseType: 'gop'
+                        caseType: 'gop',
+                        ccdCase: {
+                            id: 1234567890123456,
+                            state: 'Pending'
+                        }
                     },
                     caseType: 'gop'
                 },
@@ -43,6 +47,11 @@ describe('DeceasedAddress', () => {
                 caseType: 'gop',
                 featureToggles: {
                     webforms: 'false'
+                },
+                userLoggedIn: false,
+                ccdCase: {
+                    id: 1234567890123456,
+                    state: 'Pending'
                 }
             });
             done();

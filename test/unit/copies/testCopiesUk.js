@@ -20,7 +20,11 @@ describe('CopiesUk', () => {
                 sessionID: 'dummy_sessionId',
                 session: {
                     form: {
-                        caseType: 'gop'
+                        caseType: 'gop',
+                        ccdCase: {
+                            id: 1234567890123456,
+                            state: 'Pending'
+                        }
                     },
                     caseType: 'gop'
                 },
@@ -35,6 +39,11 @@ describe('CopiesUk', () => {
                 caseType: 'gop',
                 featureToggles: {
                     webforms: 'false'
+                },
+                userLoggedIn: false,
+                ccdCase: {
+                    id: 1234567890123456,
+                    state: 'Pending'
                 }
             });
             done();

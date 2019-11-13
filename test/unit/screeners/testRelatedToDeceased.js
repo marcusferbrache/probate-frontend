@@ -22,7 +22,12 @@ describe('RelatedToDeceased', () => {
                 method: 'GET',
                 sessionID: 'dummy_sessionId',
                 session: {
-                    form: {},
+                    form: {
+                        ccdCase: {
+                            id: 1234567890123456,
+                            state: 'Pending'
+                        }
+                    },
                     caseType: 'gop'
                 },
                 body: {
@@ -38,6 +43,11 @@ describe('RelatedToDeceased', () => {
                 caseType: 'gop',
                 featureToggles: {
                     webforms: 'false'
+                },
+                userLoggedIn: false,
+                ccdCase: {
+                    id: 1234567890123456,
+                    state: 'Pending'
                 }
             });
             done();
@@ -48,7 +58,16 @@ describe('RelatedToDeceased', () => {
         it('should return the correct url when Yes is given', (done) => {
             const req = {
                 session: {
-                    journey: journey
+                    journey: journey,
+                    form: {
+                        screeners: {
+                            deathCertificate: 'Yes',
+                            domicile: 'Yes',
+                            completed: 'Yes',
+                            left: 'No',
+                            diedAfter: 'Yes'
+                        }
+                    }
                 }
             };
             const ctx = {
@@ -62,7 +81,16 @@ describe('RelatedToDeceased', () => {
         it('should return the correct url when No is given', (done) => {
             const req = {
                 session: {
-                    journey: journey
+                    journey: journey,
+                    form: {
+                        screeners: {
+                            deathCertificate: 'Yes',
+                            domicile: 'Yes',
+                            completed: 'Yes',
+                            left: 'No',
+                            diedAfter: 'Yes'
+                        }
+                    }
                 }
             };
             const ctx = {

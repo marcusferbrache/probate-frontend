@@ -24,6 +24,10 @@ describe('executor-notified', () => {
     beforeEach(() => {
         testWrapper = new TestWrapper('ExecutorNotified');
         sessionData = {
+            ccdCase: {
+                state: 'Pending',
+                id: 1234567890123456
+            },
             executors: {
                 list: [
                     {firstName: 'John', lastName: 'TheApplicant', isApplying: 'Yes', isApplicant: true},
@@ -49,19 +53,8 @@ describe('executor-notified', () => {
                         helpTitle: commonContent.helpTitle,
                         helpHeadingTelephone: commonContent.helpHeadingTelephone,
                         helpHeadingEmail: commonContent.helpHeadingEmail,
-                        helpEmailLabel: commonContent.helpEmailLabel.replace(/{contactEmailAddress}/g, config.links.contactEmailAddress)
-                    };
-
-                    testWrapper.testDataPlayback(done, playbackData);
-                });
-        });
-
-        it('test webchat help block content is loaded on page', (done) => {
-            testWrapper.agent.post('/prepare-session/form')
-                .send(sessionData)
-                .end(() => {
-                    const playbackData = {
                         helpHeadingWebchat: commonContent.helpHeadingWebchat,
+                        helpEmailLabel: commonContent.helpEmailLabel.replace(/{contactEmailAddress}/g, config.links.contactEmailAddress)
                     };
 
                     testWrapper.testDataPlayback(done, playbackData);
@@ -86,7 +79,6 @@ describe('executor-notified', () => {
         });
 
         it('test right content loaded on the page', (done) => {
-
             testWrapper.agent.post('/prepare-session/form')
                 .send(sessionData)
                 .end(() => {
