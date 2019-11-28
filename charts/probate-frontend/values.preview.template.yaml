@@ -42,6 +42,7 @@ nodejs:
   ingressHost: ${SERVICE_FQDN}
 
 
+
 rpe-feature-toggle-api:
   releaseNameOverride: ${SERVICE_NAME}-ftr-tgl-api
   java:
@@ -49,6 +50,7 @@ rpe-feature-toggle-api:
     ingressIP: ${INGRESS_IP}
     consulIP: ${CONSUL_LB_IP}
     postgresql:
+      enabled: true # for rpe-feature-toggle-api
       image:
         tag: '11.3.0'
     registerAdditionalDns:
@@ -64,8 +66,6 @@ rpe-feature-toggle-api:
       oneoff:
         enabled: false
 
-postgresql:
-  enabled: true # for rpe-feature-toggle-api
 
 idam-pr:
   redirect_uris:

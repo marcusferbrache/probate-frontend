@@ -252,7 +252,8 @@ const config = {
             declaration: 'legalDeclaration',
             coverSheet: 'bulkScanCoversheet'
         },
-        path: '/documents/generate'
+        path: '/documents/generate',
+        timeoutMs: 30000
     },
     assetsValueThreshold: 250000
 };
