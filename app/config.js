@@ -196,9 +196,11 @@ const config = {
         currency: process.env.currency || 'GBP'
     },
     noHeaderLinksPages: ['/time-out', '/sign-out', '/co-applicant-start-page', '/co-applicant-declaration', '/co-applicant-agree-page', '/co-applicant-disagree-page', '/co-applicant-all-agreed-page', '/pin-resend', '/pin-sent', '/sign-in'],
-    whitelistedPagesAfterSubmission: ['/recap', '/check-answers-pdf', '/declaration-pdf', '/sign-out'],
-    whitelistedPagesAfterPayment: ['/task-list', '/payment-status', '/recap', '/check-answers-pdf', '/declaration-pdf', '/sign-out'],
-    whitelistedPagesAfterDeclaration: ['/task-list', '/executors-invites-sent', '/copies-uk', '/assets-overseas', '/copies-overseas', '/copies-summary', '/payment-breakdown', '/payment-breakdown?status=failure', '/payment-status', '/recap', '/check-answers-pdf', '/declaration-pdf', '/sign-out'],
+    alwaysWhitelistedPages: ['/time-out', '/sign-out', '/contact-us', '/accessibility-statement', '/terms-conditions', '/privacy-policy', '/cookies', '/health', '/stop-page', '/error'],
+    whitelistedPagesAfterSubmission: ['/recap', '/check-answers-pdf', '/declaration-pdf'],
+    whitelistedPagesAfterPayment: ['/payment-status', '/recap', '/check-answers-pdf', '/declaration-pdf'],
+    whitelistedPagesAfterDeclaration: ['/task-list', '/executors-invites-sent', '/copies-uk', '/assets-overseas', '/copies-overseas', '/copies-summary', '/payment-breakdown', '/payment-status', '/recap', '/check-answers-pdf', '/declaration-pdf'],
+    blacklistedPagesBeforeDeclaration: ['/executors-invites-sent', '/copies-uk', '/assets-overseas', '/copies-overseas', '/copies-summary', '/payment-breakdown', '/payment-status', '/recap', '/check-answers-pdf', '/declaration-pdf'],
     eligibilityQuestionsProbate: {
         deathCertificate: 'Yes',
         domicile: 'Yes',
