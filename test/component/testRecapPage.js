@@ -2,6 +2,7 @@
 
 const TestWrapper = require('test/util/TestWrapper');
 const config = require('app/config');
+const caseTypes = require('app/utils/CaseTypes');
 
 describe('recap', () => {
     let testWrapper;
@@ -17,9 +18,16 @@ describe('recap', () => {
     describe('Verify Content, Errors and Redirection', () => {
         it('test content loaded on the page before sending the documents', (done) => {
             const sessionData = {
+                caseType: caseTypes.GOP,
                 ccdCase: {
-                    id: '1234-5678-9012-3456',
                     state: 'CaseCreated',
+                    id: 1234123512361237
+                },
+                declaration: {
+                    declarationCheckbox: 'true'
+                },
+                payment: {
+                    total: 0
                 }
             };
             const contentToExclude = [
@@ -53,9 +61,16 @@ describe('recap', () => {
 
         it('test content loaded on the page after sending the documents', (done) => {
             const sessionData = {
+                caseType: caseTypes.GOP,
                 ccdCase: {
-                    id: '1234-5678-9012-3456',
                     state: 'CaseCreated',
+                    id: 1234123512361237
+                },
+                declaration: {
+                    declarationCheckbox: 'true'
+                },
+                payment: {
+                    total: 0
                 },
                 recap: {
                     sentDocuments: true
