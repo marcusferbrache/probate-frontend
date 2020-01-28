@@ -349,7 +349,7 @@ describe('Tasklist', () => {
                         'dob-formattedDate': '1 February 1900',
                         'dod-day': 2,
                         'dod-month': 3,
-                        'dod-year': 2010,
+                        'dod-year': 2015,
                         'dod-date': '2010-03-02T00:00:00.000Z',
                         'dod-formattedDate': '1 February 2000'
                     }
@@ -420,7 +420,7 @@ describe('Tasklist', () => {
                         'dob-formattedDate': '1 February 1900',
                         'dod-day': 2,
                         'dod-month': 3,
-                        'dod-year': 2010,
+                        'dod-year': 2015,
                         'dod-date': '2010-03-02T00:00:00.000Z',
                         'dod-formattedDate': '1 February 2000'
                     },
