@@ -7,9 +7,6 @@ const WillWrapper = require('app/wrappers/Will');
 const RegistryWrapper = require('app/wrappers/Registry');
 const FormatCcdCaseId = require('app/utils/FormatCcdCaseId');
 const content = require('app/resources/en/translation/recap');
-const contentDeceasedMaritalStatus = require('app/resources/en/translation/deceased/maritalstatus');
-const contentRelationshipToDeceased = require('app/resources/en/translation/applicant/relationshiptodeceased');
-const contentIhtMethod = require('app/resources/en/translation/iht/method');
 
 class Recap extends ValidationStep {
 
@@ -52,10 +49,10 @@ class Recap extends ValidationStep {
             ctx.hasRenunciated = executorsWrapper.hasRenunciated();
             ctx.executorsNameChangedByDeedPollList = executorsWrapper.executorsNameChangedByDeedPoll();
         } else {
-            ctx.spouseRenouncing = formdata.deceased && formdata.deceased.maritalStatus === contentDeceasedMaritalStatus.optionMarried && (formdata.applicant.relationshipToDeceased === contentRelationshipToDeceased.optionChild || formdata.applicant.relationshipToDeceased === contentRelationshipToDeceased.optionAdoptedChild);
+            ctx.spouseRenouncing = formdata.deceased && formdata.deceased.maritalStatus === 'optionMarried' && (formdata.applicant.relationshipToDeceased === 'optionChild' || formdata.applicant.relationshipToDeceased === 'optionAdoptedChild');
         }
 
-        ctx.is205 = formdata.iht && formdata.iht.method === contentIhtMethod.optionPaper && formdata.iht.form === 'IHT205';
+        ctx.is205 = formdata.iht && formdata.iht.method === 'optionPaper' && formdata.iht.form === 'optionIHT205';
 
         return ctx;
     }

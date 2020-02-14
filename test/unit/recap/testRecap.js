@@ -4,10 +4,6 @@ const initSteps = require('app/core/initSteps');
 const {expect} = require('chai');
 const steps = initSteps([`${__dirname}/../../../app/steps/action/`, `${__dirname}/../../../app/steps/ui`]);
 const Recap = steps.Recap;
-const contentWillCodicils = require('app/resources/en/translation/will/codicils');
-const contentDeceasedMaritalStatus = require('app/resources/en/translation/deceased/maritalstatus');
-const contentRelationshipToDeceased = require('app/resources/en/translation/applicant/relationshiptodeceased');
-const contentIhtMethod = require('app/resources/en/translation/iht/method');
 
 describe('Recap', () => {
     describe('getUrl()', () => {
@@ -30,12 +26,12 @@ describe('Recap', () => {
                             state: 'CaseCreated'
                         },
                         will: {
-                            codicils: contentWillCodicils.optionYes,
+                            codicils: 'optionYes',
                             codicilsNumber: '3'
                         },
                         iht: {
-                            method: contentIhtMethod.optionPaper,
-                            form: 'IHT205'
+                            method: 'optionPaper',
+                            form: 'optionIHT205'
                         },
                         userLoggedIn: true
                     },
@@ -77,14 +73,14 @@ describe('Recap', () => {
                             state: 'CaseCreated'
                         },
                         deceased: {
-                            maritalStatus: contentDeceasedMaritalStatus.optionMarried
+                            maritalStatus: 'optionMarried'
                         },
                         applicant: {
-                            relationshipToDeceased: contentRelationshipToDeceased.optionChild
+                            relationshipToDeceased: 'optionChild'
                         },
                         iht: {
-                            method: contentIhtMethod.optionPaper,
-                            form: 'IHT205'
+                            method: 'optionPaper',
+                            form: 'optionIHT205'
                         },
                         userLoggedIn: true
                     },

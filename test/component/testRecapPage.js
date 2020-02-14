@@ -2,6 +2,7 @@
 
 const TestWrapper = require('test/util/TestWrapper');
 const config = require('app/config');
+const commonContent = require('app/resources/en/translation/common');
 const caseTypes = require('app/utils/CaseTypes');
 
 describe('recap', () => {
@@ -49,7 +50,7 @@ describe('recap', () => {
                 .send(sessionData)
                 .end(() => {
                     const contentData = {
-                        helpLineNumber: config.helpline.number,
+                        helpLineNumber: commonContent.helpTelephoneNumber,
                         findOutNext: config.links.findOutNext,
                         ccdReferenceNumberAccessible: '1 2 3 4, -, 5 6 7 8, -, 9 0 1 2, -, 3 4 5 6',
                         ccdReferenceNumber: '1234-5678-9012-3456'
@@ -103,7 +104,7 @@ describe('recap', () => {
                 .send(sessionData)
                 .end(() => {
                     const contentData = {
-                        helpLineNumber: config.helpline.number,
+                        helpLineNumber: commonContent.helpTelephoneNumber,
                         findOutNext: config.links.findOutNext,
                         ccdReferenceNumberAccessible: '1 2 3 4, -, 5 6 7 8, -, 9 0 1 2, -, 3 4 5 6',
                         ccdReferenceNumber: '1234-5678-9012-3456'
