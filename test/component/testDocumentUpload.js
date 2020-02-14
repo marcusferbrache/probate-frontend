@@ -58,9 +58,9 @@ describe('document-upload', () => {
 
             const playbackData = {
                 helpHeadingOnlineForm: commonContent.helpHeadingOnlineForm,
-                sendUsAMessage: commonContent.sendUsAMessage.replace('{webForms}', config.links.webForms),
-                opensInNewWindow: commonContent.opensInNewWindow,
-                responseTime: commonContent.responseTime
+                sendUsAMessage: commonContent.helpSendUsAMessage.replace('{webForms}', config.links.webForms),
+                opensInNewWindow: commonContent.helpOpensInNewWindow,
+                responseTime: commonContent.helpResponseTime
             };
 
             testWrapper.testDataPlayback(done, playbackData);
