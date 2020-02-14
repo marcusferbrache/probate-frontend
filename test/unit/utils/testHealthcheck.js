@@ -79,7 +79,8 @@ describe('Healthcheck.js', () => {
                     Promise.all(promises).then((data) => {
                         expect(data).to.deep.equal([
                             {gitCommitId: 'e210e75b38c6b8da03551b9f83fd909fe80832e1'},
-                            {gitCommitId: 'e210e75b38c6b8da03551b9f83fd909fe80832e2'}
+                            {gitCommitId: 'e210e75b38c6b8da03551b9f83fd909fe80832e2'},
+                            {gitCommitId: 'e210e75b38c6b8da03551b9f83fd909fe80832e3'}
                         ]);
                         done();
                     });
