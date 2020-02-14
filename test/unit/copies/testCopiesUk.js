@@ -19,6 +19,7 @@ describe('CopiesUk', () => {
             const req = {
                 sessionID: 'dummy_sessionId',
                 session: {
+                    language: 'en',
                     form: {
                         caseType: 'gop',
                         ccdCase: {
@@ -100,7 +101,7 @@ describe('CopiesUk', () => {
     });
 
     describe('isComplete()', () => {
-        it('should return the completion status correcty', (done) => {
+        it('should return the completion status correctly', (done) => {
             const ctx = {
                 uk: 3
             };

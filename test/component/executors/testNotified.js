@@ -30,7 +30,7 @@ describe('executor-notified', () => {
             },
             executors: {
                 list: [
-                    {firstName: 'John', lastName: 'TheApplicant', isApplying: 'Yes', isApplicant: true},
+                    {firstName: 'John', lastName: 'TheApplicant', isApplying: 'optionYes', isApplicant: true},
                     {fullName: 'Manah Mana'},
                     {fullName: 'Dave Bass'},
                     {fullName: 'Ann Watt'}
@@ -104,7 +104,7 @@ describe('executor-notified', () => {
                 .send(sessionData)
                 .end(() => {
                     const data = {
-                        executorNotified: 'Yes',
+                        executorNotified: 'optionYes',
                     };
                     testWrapper.testRedirect(done, data, expectedNextUrlForFirstExec);
                 });
@@ -115,7 +115,7 @@ describe('executor-notified', () => {
                 .send(sessionData)
                 .end(() => {
                     const data = {
-                        executorNotified: 'Yes'
+                        executorNotified: 'optionYes'
                     };
                     testWrapper.pageUrl = testWrapper.pageToTest.constructor.getUrl(2);
                     testWrapper.testRedirect(done, data, expectedNextUrlForSecondExec);
@@ -127,7 +127,7 @@ describe('executor-notified', () => {
                 .send(sessionData)
                 .end(() => {
                     const data = {
-                        executorNotified: 'No'
+                        executorNotified: 'optionNo'
                     };
                     testWrapper.pageUrl = testWrapper.pageToTest.constructor.getUrl(3);
                     testWrapper.testRedirect(done, data, expectedNextUrlForThirdExec);

@@ -57,6 +57,7 @@ describe('pin-page', () => {
                                 helpHeadingWebchat: commonContent.helpHeadingWebchat,
                                 helpEmailLabel: commonContent.helpEmailLabel.replace(/{contactEmailAddress}/g, config.links.contactEmailAddress)
                             };
+
                             testWrapper.testDataPlayback(done, playbackData);
                         });
                 });

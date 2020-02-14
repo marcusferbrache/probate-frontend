@@ -5,7 +5,6 @@ const StopPage = require('app/steps/ui/stoppage');
 const TaskList = require('app/steps/ui/tasklist');
 const commonContent = require('app/resources/en/translation/common');
 const contentMaritalStatus = require('app/resources/en/translation/deceased/maritalstatus');
-const content = require('app/resources/en/translation/deceased/divorceplace');
 const config = require('app/config');
 const caseTypes = require('app/utils/CaseTypes');
 const nock = require('nock');
@@ -28,7 +27,7 @@ describe('divorce-place', () => {
         },
         caseType: caseTypes.INTESTACY,
         deceased: {
-            maritalStatus: contentMaritalStatus.optionDivorced
+            maritalStatus: 'optionDivorced'
         }
     };
 
@@ -97,7 +96,7 @@ describe('divorce-place', () => {
 
         it(`test it redirects to stop page: ${expectedNextUrlForStopPage}`, (done) => {
             const data = {
-                divorcePlace: content.optionNo
+                divorcePlace: 'optionNo'
             };
 
             testWrapper.agent.post('/prepare-session/form')
@@ -109,7 +108,7 @@ describe('divorce-place', () => {
 
         it(`test it redirects to tasklist: ${expectedNextUrlForTaskList}`, (done) => {
             const data = {
-                divorcePlace: content.optionYes
+                divorcePlace: 'optionYes'
             };
 
             testWrapper.agent.post('/prepare-session/form')

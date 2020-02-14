@@ -5,7 +5,6 @@ const initSteps = require('../../../app/core/initSteps');
 const expect = require('chai').expect;
 const steps = initSteps([`${__dirname}/../../../app/steps/action/`, `${__dirname}/../../../app/steps/ui`]);
 const DiedAfterOctober2014 = steps.DiedAfterOctober2014;
-const content = require('app/resources/en/translation/screeners/diedafteroctober2014');
 
 describe('DiedAfterOctober2014', () => {
     describe('getUrl()', () => {
@@ -22,6 +21,7 @@ describe('DiedAfterOctober2014', () => {
                 method: 'GET',
                 sessionID: 'dummy_sessionId',
                 session: {
+                    language: 'en',
                     form: {
                         ccdCase: {
                             id: 1234567890123456,
@@ -31,7 +31,7 @@ describe('DiedAfterOctober2014', () => {
                     caseType: 'gop'
                 },
                 body: {
-                    diedAfter: content.optionYes
+                    diedAfter: 'optionYes'
                 }
             };
             const res = {};
@@ -39,7 +39,7 @@ describe('DiedAfterOctober2014', () => {
             const ctx = DiedAfterOctober2014.getContextData(req, res);
             expect(ctx).to.deep.equal({
                 sessionID: 'dummy_sessionId',
-                diedAfter: content.optionYes,
+                diedAfter: 'optionYes',
                 caseType: 'gop',
                 featureToggles: {
                     webforms: 'false'
@@ -61,16 +61,16 @@ describe('DiedAfterOctober2014', () => {
                     journey: journey,
                     form: {
                         screeners: {
-                            deathCertificate: 'Yes',
-                            domicile: 'Yes',
-                            completed: 'Yes',
-                            left: 'No'
+                            deathCertificate: 'optionYes',
+                            domicile: 'optionYes',
+                            completed: 'optionYes',
+                            left: 'optionNo'
                         }
                     }
                 }
             };
             const ctx = {
-                diedAfter: content.optionYes
+                diedAfter: 'optionYes'
             };
             const nextStepUrl = DiedAfterOctober2014.nextStepUrl(req, ctx);
             expect(nextStepUrl).to.equal('/related-to-deceased');
@@ -83,16 +83,16 @@ describe('DiedAfterOctober2014', () => {
                     journey: journey,
                     form: {
                         screeners: {
-                            deathCertificate: 'Yes',
-                            domicile: 'Yes',
-                            completed: 'Yes',
-                            left: 'No'
+                            deathCertificate: 'optionYes',
+                            domicile: 'optionYes',
+                            completed: 'optionYes',
+                            left: 'optionNo'
                         }
                     }
                 }
             };
             const ctx = {
-                diedAfter: content.optionNo
+                diedAfter: 'optionNo'
             };
             const nextStepUrl = DiedAfterOctober2014.nextStepUrl(req, ctx);
             expect(nextStepUrl).to.equal('/stop-page/notDiedAfterOctober2014');
@@ -106,7 +106,7 @@ describe('DiedAfterOctober2014', () => {
             expect(nextStepOptions).to.deep.equal({
                 options: [{
                     key: 'diedAfter',
-                    value: content.optionYes,
+                    value: 'optionYes',
                     choice: 'diedAfter'
                 }]
             });

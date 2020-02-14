@@ -86,6 +86,7 @@ describe('Summary', () => {
             const req = {
                 sessionID: 'dummy_sessionId',
                 session: {
+                    language: 'en',
                     form: {
                         ccdCase: {
                             id: 1234567890123456,
@@ -122,6 +123,7 @@ describe('Summary', () => {
                 userLoggedIn: false,
                 readyToDeclare: false,
                 session: {
+                    language: 'en',
                     form: {
                         ccdCase: {
                             id: 1234567890123456,
@@ -150,6 +152,7 @@ describe('Summary', () => {
             const req = {
                 sessionID: 'dummy_sessionId',
                 session: {
+                    language: 'en',
                     form: {
                         ccdCase: {
                             id: 1234567890123456,
@@ -164,7 +167,7 @@ describe('Summary', () => {
                         iht: {
                             netValue: 300000,
                             netValueAssetsOutside: 250000,
-                            assetsOutside: 'Yes'
+                            assetsOutside: 'optionYes'
                         }
                     }
                 },
@@ -196,6 +199,7 @@ describe('Summary', () => {
                 userLoggedIn: false,
                 readyToDeclare: false,
                 session: {
+                    language: 'en',
                     form: {
                         ccdCase: {
                             id: 1234567890123456,
@@ -208,7 +212,7 @@ describe('Summary', () => {
                             'lastName': 'Ceased'
                         },
                         iht: {
-                            assetsOutside: 'Yes',
+                            assetsOutside: 'optionYes',
                             netValue: 300000,
                             netValueAssetsOutside: 250000
                         },
