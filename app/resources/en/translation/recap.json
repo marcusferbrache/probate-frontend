@@ -1,10 +1,8 @@
 {
   "title": "Your probate application",
-
   "progressStep1": "Online application submitted",
   "progressStep2": "Documents posted",
   "progressStep3": "Documents received",
-
   "block1Heading1": "Post your documents",
   "block1Heading2": "Post your documents to the Probate Registry",
   "block1Text1": "Reference number <strong class=\"no-wrap\" aria-label=\"{ccdReferenceNumberAccessible}\">{ccdReferenceNumber}</strong>",
@@ -22,18 +20,14 @@
   "block1Checklist-item4-iht205": "the completed inheritance tax form IHT 205",
   "block1Checklist-item5-spouse-renunciated": "a <a href=\"{renunciationFormLink}\" class=\"govuk-link\" target=\"_blank\" rel=\"external noopener\">renunciation form</a> filled in by any executors who are permanently giving up their right to make this application for probate",
   "block1Checklist-item6-deed-poll": "copy of the deed poll document for {executorCurrentName}",
-
   "block2Heading": "Latest Update",
   "block2Text1": "You have posted the documents needed for your probate application.",
   "block2Text2": "You will receive another update when the Probate Registry has received your documents.",
   "block2Text3": "You do not need to do anything.",
-
   "block3Text1": "Your documents were received by the Probate Registry on [__DATE_HERE__]",
   "block3Text2": "Your probate application will be processed and you will receive your &lsquo;grant of probate&rsquo; in the post. This currently takes about 8 weeks.",
   "block3Text3": "You will be contacted if there are any issues with your probate application.",
-
   "block4Heading": "View your application so far",
-
   "sentDocuments": "I have sent my documents to the Probate Registry",
   "continue": "Continue",
   "declarationPdf": "Legal declaration (30kb PDF)",

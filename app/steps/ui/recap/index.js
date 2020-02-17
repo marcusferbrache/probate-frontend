@@ -19,10 +19,6 @@ class Recap extends ValidationStep {
         const formdata = req.session.form || {};
         const registryAddress = (new RegistryWrapper(formdata.registry)).address();
 
-        formdata.ccdCase = {
-            id: '1234-5678-9012-3456' // For demo purposes only
-        };
-
         ctx.ccdReferenceNumber = FormatCcdCaseId.format(formdata.ccdCase);
         ctx.ccdReferenceNumberAccessible = FormatCcdCaseId.formatAccessible(formdata.ccdCase);
         ctx.registryAddress = registryAddress ? registryAddress : content.block1Text8;
@@ -36,8 +32,8 @@ class Recap extends ValidationStep {
             ctx.legalDeclaration = true;
         }
 
-        ctx.checkAnswersSummary = true; // For demo purposes only
-        ctx.legalDeclaration = true; // For demo purposes only
+        ctx.checkAnswersSummary = false; // Set to true/false for demo purposes only - REMOVE ONCE THE FLAGS ARE ADDED IN CCD
+        ctx.legalDeclaration = false; // Set to true/false demo purposes only - REMOVE ONCE THE FLAGS ARE ADDED IN CCD
 
         if (ctx.caseType === caseTypes.GOP) {
             const executorsWrapper = new ExecutorsWrapper(formdata.executors);
