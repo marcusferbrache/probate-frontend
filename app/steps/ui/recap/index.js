@@ -32,9 +32,6 @@ class Recap extends ValidationStep {
             ctx.legalDeclaration = true;
         }
 
-        ctx.checkAnswersSummary = false; // Set to true/false for demo purposes only - REMOVE ONCE THE FLAGS ARE ADDED IN CCD
-        ctx.legalDeclaration = false; // Set to true/false demo purposes only - REMOVE ONCE THE FLAGS ARE ADDED IN CCD
-
         if (ctx.caseType === caseTypes.GOP) {
             const executorsWrapper = new ExecutorsWrapper(formdata.executors);
             const willWrapper = new WillWrapper(formdata.will);

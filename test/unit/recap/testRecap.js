@@ -55,8 +55,8 @@ describe('Recap', () => {
                 hasRenunciated: false,
                 executorsNameChangedByDeedPollList: [],
                 is205: true,
-                checkAnswersSummary: true,
-                legalDeclaration: true,
+                checkAnswersSummary: false,
+                legalDeclaration: false,
                 userLoggedIn: true
             });
             done();
@@ -100,8 +100,8 @@ describe('Recap', () => {
                 registryAddress: 'Digital Application\nOxford District Probate Registry\nCombined Court Building\nSt Aldates\nOxford\nOX1 1LY',
                 is205: true,
                 spouseRenouncing: true,
-                checkAnswersSummary: true,
-                legalDeclaration: true,
+                checkAnswersSummary: false,
+                legalDeclaration: false,
                 userLoggedIn: true
             });
             done();
