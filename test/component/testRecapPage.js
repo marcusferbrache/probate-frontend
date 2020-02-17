@@ -22,14 +22,16 @@ describe('recap', () => {
                 caseType: caseTypes.GOP,
                 ccdCase: {
                     state: 'CaseCreated',
-                    id: 1234123512361237
+                    id: 1234567890123456
                 },
                 declaration: {
                     declarationCheckbox: 'true'
                 },
                 payment: {
                     total: 0
-                }
+                },
+                checkAnswersSummary: 'check answers summary',
+                legalDeclaration: 'legal declaration'
             };
             const contentToExclude = [
                 'block1Checklist-item1-will-codicils',
@@ -65,7 +67,7 @@ describe('recap', () => {
                 caseType: caseTypes.GOP,
                 ccdCase: {
                     state: 'CaseCreated',
-                    id: 1234123512361237
+                    id: 1234567890123456
                 },
                 declaration: {
                     declarationCheckbox: 'true'
@@ -73,6 +75,8 @@ describe('recap', () => {
                 payment: {
                     total: 0
                 },
+                checkAnswersSummary: 'check answers summary',
+                legalDeclaration: 'legal declaration',
                 recap: {
                     sentDocuments: true
                 }
