@@ -142,6 +142,7 @@ module "probate-frontend" {
   asp_rg       = "${var.asp_rg}"
 
   app_settings = {
+    WEBSITE_NODE_DEFAULT_VERSION = "12.15.0"
 
     // Node specific vars
     //NODE_ENV = "${var.node_env}"
