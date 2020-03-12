@@ -20,6 +20,7 @@ const featureTogglesNockWebforms = (status = 'true') => {
         .get(webformsFeatureTogglePath)
         .reply(200, status);
 };
+const caseTypes = require('app/utils/CaseTypes');
 
 describe('executors-when-died', () => {
     let testWrapper, sessionData;
@@ -53,6 +54,7 @@ describe('executors-when-died', () => {
     beforeEach(() => {
         testWrapper = new TestWrapper('ExecutorsWhenDied');
         sessionData = {
+            type: caseTypes.GOP,
             ccdCase: {
                 state: 'Pending',
                 id: 1234567890123456

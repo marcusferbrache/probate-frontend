@@ -13,6 +13,7 @@ const featureTogglesNockWebforms = (status = 'true') => {
         .get(webformsFeatureTogglePath)
         .reply(200, status);
 };
+const caseTypes = require('app/utils/CaseTypes');
 
 describe('executors-contact-details', () => {
     let testWrapper, sessionData;
@@ -21,6 +22,7 @@ describe('executors-contact-details', () => {
     beforeEach(() => {
         testWrapper = new TestWrapper('ExecutorContactDetails');
         sessionData = {
+            type: caseTypes.GOP,
             ccdCase: {
                 state: 'Pending',
                 id: 1234567890123456

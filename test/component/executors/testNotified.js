@@ -14,6 +14,7 @@ const featureTogglesNockWebforms = (status = 'true') => {
         .get(webformsFeatureTogglePath)
         .reply(200, status);
 };
+const caseTypes = require('app/utils/CaseTypes');
 
 describe('executor-notified', () => {
     let testWrapper, sessionData;
@@ -24,6 +25,7 @@ describe('executor-notified', () => {
     beforeEach(() => {
         testWrapper = new TestWrapper('ExecutorNotified');
         sessionData = {
+            type: caseTypes.GOP,
             ccdCase: {
                 state: 'Pending',
                 id: 1234567890123456
