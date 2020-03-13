@@ -4,12 +4,12 @@ const TestWrapper = require('test/util/TestWrapper');
 const {assert} = require('chai');
 const CoApplicantStartPage = require('app/steps/ui/coapplicant/startpage');
 const commonContent = require('app/resources/en/translation/common');
-const config = require('app/config');
+const config = require('config');
+const nock = require('nock');
 const S2S_URL = config.services.idam.s2s_url;
 const IDAM_URL = config.services.idam.apiUrl;
 const featureToggleUrl = config.featureToggles.url;
 const webformsFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.webforms}`;
-const nock = require('nock');
 
 const featureTogglesNockWebforms = (status = 'true') => {
     nock(featureToggleUrl)
