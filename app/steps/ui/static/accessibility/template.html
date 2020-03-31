@@ -15,20 +15,18 @@
 
             <h2 class="govuk-heading-m">{{ content.heading2 | safe }}</h2>
             <p class="govuk-body">{{ content.paragraph5 | safe }}</p>
-            <p class="govuk-body">{{ content.paragraph6 | safe }}</p>
-            {{ unorderedList([content["list2-item1"], content["list2-item2"], content["list2-item3"], content["list2-item4"]]) }}
+            {{ unorderedList([content["list2-item1"], content["list2-item2"], content["list2-item3"], content["list2-item4"], content["list2-item5"], content["list2-item6"], content["list2-item7"], content["list2-item8"]]) }}
 
             <h2 class="govuk-heading-m">{{ content.heading3 | safe }}</h2>
+            <p class="govuk-body">{{ content.paragraph6 | safe }}</p>
+            {{ unorderedList([content["list3-item1"], content["list3-item2" | replace("{helpLineNumber}", globals.links.helpLineNumber) | replace("{helpLineHours}", globals.links.helpLineHours) | replace("{callChargesLink}", globals.links.callChargesLink)]]) }}
             <p class="govuk-body">{{ content.paragraph7 | safe }}</p>
-            <p class="govuk-body">{{ content.paragraph8 | replace("{helpLineNumber}", common.helpTelephoneNumber) | replace("{helpLineHours}", common.helpTelephoneOpeningHours) | safe }}</p>
-            <p class="govuk-body">{{ content.paragraph9 | replace("{callChargesLink}", globals.links.callCharges) | safe }}</p>
-            <p class="govuk-body">{{ content.paragraph10 | safe }}</p>
 
             <h2 class="govuk-heading-m">{{ content.heading4 | safe }}</h2>
-            <p class="govuk-body">{{ content.paragraph11 | safe }}</p>
-            <p class="govuk-body">{{ content.paragraph8 | replace("{helpLineNumber}", common.helpTelephoneNumber) | replace("{helpLineHours}", common.helpTelephoneOpeningHours) | safe }}</p>
-            <p class="govuk-body">{{ content.paragraph9 | replace("{callChargesLink}", globals.links.callCharges) | safe }}</p>
-            <p class="govuk-body">{{ content.paragraph10 | safe }}</p>
+            <p class="govuk-body">{{ content.paragraph8 | safe }}</p>
+            <p class="govuk-body">{{ content.paragraph9 | replace("{helpLineNumber}", common.helpTelephoneNumber) | safe }}</p>
+            <p class="govuk-body">{{ content.paragraph10 | replace("{helpLineHours}", common.helpTelephoneOpeningHours) | safe }}</p>
+            <p class="govuk-body">{{ content.paragraph11 | replace("{callChargesLink}", globals.links.callCharges) | safe }}</p>
 
             <h2 class="govuk-heading-m">{{ content.heading5 | safe }}</h2>
             <p class="govuk-body">{{ content.paragraph12 | replace("{equalityAdvisorLink}", globals.links.equalityAdvisorLink) | safe }}</p>
@@ -36,39 +34,49 @@
             <h2 class="govuk-heading-m">{{ content.heading6 | safe }}</h2>
             <p class="govuk-body">{{ content.paragraph13 | safe }}</p>
             <p class="govuk-body">{{ content.paragraph14 | safe }}</p>
+            <p class="govuk-body">{{ content.paragraph15 | safe }}</p>
+            <p class="govuk-body">{{ content.paragraph16 | replace("{helpLineNumber}", common.helpTelephoneNumber) | safe }}</p>
+            <p class="govuk-body">{{ content.paragraph17 | replace("{helpLineHours}", common.helpTelephoneOpeningHours) | safe }}</p>
+            <p class="govuk-body">{{ content.paragraph18 | replace("{callChargesLink}", globals.links.callCharges) | safe }}</p>
 
             <h2 class="govuk-heading-m">{{ content.heading7 | safe }}</h2>
-            <p class="govuk-body">{{ content.paragraph15 | safe }}</p>
-            <p class="govuk-body">{{ content.paragraph16 | replace("{wcag21Link}", globals.links.wcag21Link) | safe }}</p>
+            <p class="govuk-body">{{ content.paragraph19 | safe }}</p>
+            <p class="govuk-body">{{ content.paragraph20 | replace("{wcag21Link}", globals.links.wcag21Link) | safe }}</p>
 
             <h2 class="govuk-heading-m">{{ content.heading8 | safe }}</h2>
-            <p class="govuk-body">{{ content.paragraph17 | safe }}</p>
-            {{ unorderedList([content["list3-item1"], content["list3-item2"], content["list3-item3"], content["list3-item4"]]) }}
-            <p class="govuk-body">{{ content.paragraph18 | safe }}</p>
+            <p class="govuk-body">{{ content.paragraph21 | safe }}</p>
+            <h3 class="govuk-heading-s">{{ content["heading8-1"] | safe }}</h3>
+            {{ unorderedList([content["list4-item1"], content["list4-item2"], content["list4-item3"], content["list4-item4"], content["list4-item5"], content["list4-item6"], content["list4-item7"], content["list4-item8"]]) }}
+            <p class="govuk-body">{{ content.paragraph22 | safe }}</p>
 
             <h2 class="govuk-heading-m">{{ content.heading9 | safe }}</h2>
             <h3 class="govuk-heading-s">{{ content["heading9-1"] | safe }}</h3>
-            <p class="govuk-body">{{ content.paragraph19 | safe }}</p>
-            <h3 class="govuk-heading-s">{{ content["heading9-2"] | safe }}</h3>
-            <p class="govuk-body">{{ content.paragraph20 | safe }}</p>
-            {{ unorderedList([content["list4-item1"] | replace("{applicationFormPA15}", globals.links.applicationFormPA15), content["list4-item2"], content["list4-item3"], content["list4-item4"] | replace("{deathReportedToCoroner}", globals.links.deathReportedToCoroner), content["list4-item5"]]) }}
+            <p class="govuk-body">{{ content.paragraph23 | safe }}</p>
+            <p class="govuk-body">{{ content.paragraph24 | safe }}</p>
+            <p class="govuk-body">{{ content.paragraph25 | replace("{disproportionateBurden}", globals.links.disproportionateBurden) | safe }}</p>
+
 
             <h2 class="govuk-heading-m">{{ content.heading10 | safe }}</h2>
-            <p class="govuk-body">{{ content.paragraph21 | safe }}</p>
-            <p class="govuk-body">{{ content.paragraph22 | safe }}</p>
-            {{ govukInsetText({
-                text: content.paragraph23 | safe
-            }) }}
-            <p class="govuk-body">{{ content.paragraph23_2 | safe }}</p>
-            <p class="govuk-body">{{ content.paragraph24 | safe }}</p>
-            <p class="govuk-body">{{ content.paragraph25 | safe }}</p>
+            <h3 class="govuk-heading-s">{{ content["heading10-1"] | safe }}</h3>
             <p class="govuk-body">{{ content.paragraph26 | safe }}</p>
             <p class="govuk-body">{{ content.paragraph27 | safe }}</p>
+            <p class="govuk-body">{{ content.paragraph28 | replace("{accessibilityRegulations}", globals.links.accessibilityRegulations)| safe }}</p>
+            <p class="govuk-body">{{ content.paragraph29 | safe }}</p>
+            <h3 class="govuk-heading-s">{{ content["heading10-2"] | safe }}</h3>
+            <p class="govuk-body">{{ content.paragraph30 | safe }}</p>
+            <p class="govuk-body">{{ content.paragraph31 | safe }}</p>
+            {{ unorderedList([content["list5-item1"], content["list5-item2"], content["list5-item3"], content["list5-item4"], content["list5-item5"]]) }}
 
             <h2 class="govuk-heading-m">{{ content.heading11 | safe }}</h2>
-            <p class="govuk-body">{{ content.paragraph28 | safe }}</p>
-            <p class="govuk-body">{{ content.paragraph29 | safe }}</p>
-            <p class="govuk-body">{{ content.paragraph30 | safe }}</p>
+            <p class="govuk-body">{{ content.paragraph32 | safe }}</p>
+            <p class="govuk-body">{{ content.paragraph33 | safe }}</p>
+            {{ unorderedList([content["list6-item1"]]) }}
+            <p class="govuk-body">{{ content.paragraph34 | safe }}</p>
+
+            <h2 class="govuk-heading-m">{{ content.heading12 | safe }}</h2>
+            <p class="govuk-body">{{ content.paragraph35 | safe }}</p>
+            <p class="govuk-body">{{ content.paragraph36 | safe }}</p>
+            <p class="govuk-body">{{ content.paragraph37 | safe }}</p>
         </div>
     </div>
 {% endblock %}
