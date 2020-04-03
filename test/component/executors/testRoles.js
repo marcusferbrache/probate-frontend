@@ -6,6 +6,7 @@ const TestWrapper = require('test/util/TestWrapper');
 const ExecutorNotified = require('app/steps/ui/executors/notified');
 const TaskList = require('app/steps/ui/tasklist');
 const commonContent = require('app/resources/en/translation/common');
+const caseTypes = require('app/utils/CaseTypes');
 const config = require('config');
 const webformsFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.webforms}`;
 const nock = require('nock');
@@ -16,8 +17,6 @@ const featureTogglesNockWebforms = (status = 'true') => {
         .get(webformsFeatureTogglePath)
         .reply(200, status);
 };
-const caseTypes = require('app/utils/CaseTypes');
-const config = require('config');
 
 describe('executor-roles', () => {
     const expectedNextUrlForTaskList = TaskList.getUrl();
