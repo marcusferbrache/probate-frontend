@@ -17,6 +17,7 @@ const featureTogglesNockWebforms = (status = 'true') => {
         .reply(200, status);
 };
 const caseTypes = require('app/utils/CaseTypes');
+const config = require('config');
 
 describe('executor-roles', () => {
     const expectedNextUrlForTaskList = TaskList.getUrl();
@@ -97,7 +98,10 @@ describe('executor-roles', () => {
             testWrapper.agent.post('/prepare-session/form')
                 .send(sessionData)
                 .end(() => {
-                    const contentData = {executorFullName: 'Mana Manah'};
+                    const contentData = {
+                        executorFullName: 'Mana Manah',
+                        applicationFormPA15: config.links.applicationFormPA15
+                    };
 
                     testWrapper.pageUrl = testWrapper.pageToTest.constructor.getUrl(1);
                     testWrapper.testContent(done, contentData);
