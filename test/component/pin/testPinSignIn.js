@@ -16,12 +16,6 @@ const featureTogglesNockWebforms = (status = 'true') => {
         .get(webformsFeatureTogglePath)
         .reply(200, status);
 };
-const afterEachNocks = (done) => {
-    return () => {
-        nock.cleanAll();
-        done();
-    };
-};
 
 describe('pin-page', () => {
     let testWrapper;
@@ -32,8 +26,8 @@ describe('pin-page', () => {
     });
 
     afterEach(() => {
-        testWrapper.destroy();
         nock.cleanAll();
+        testWrapper.destroy();
     });
 
     describe('Verify Content, Errors and Redirection', () => {
@@ -75,7 +69,7 @@ describe('pin-page', () => {
                         responseTime: commonContent.helpResponseTime
                     };
 
-                    testWrapper.testDataPlayback(afterEachNocks(done), playbackData);
+                    testWrapper.testDataPlayback(done, playbackData);
                 });
         });
 
@@ -110,7 +104,7 @@ describe('pin-page', () => {
             };
 
             nock(config.services.orchestrator.url)
-                .get('/forms/12?probateType=PA')
+                .get('/forms/case/12?probateType=PA')
                 .reply(200, formDataReturnData);
 
             nock(S2S_URL).post('/lease')
@@ -126,7 +120,7 @@ describe('pin-page', () => {
             testWrapper.agent.post('/prepare-session-field')
                 .send(data)
                 .end(() => {
-                    testWrapper.testRedirect(afterEachNocks(done), data, expectedNextUrlForCoAppStartPage);
+                    testWrapper.testRedirect(done, data, expectedNextUrlForCoAppStartPage);
                 });
         });
 
