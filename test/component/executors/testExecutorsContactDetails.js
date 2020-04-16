@@ -5,7 +5,7 @@ const ExecutorContactDetails = require('app/steps/ui/executors/contactdetails');
 const ExecutorAddress = require('app/steps/ui/executors/address');
 const commonContent = require('app/resources/en/translation/common');
 const config = require('config');
-const webformsFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.webforms}`;
+const webformsFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.ft_webforms}`;
 const nock = require('nock');
 const featureToggleUrl = config.featureToggles.url;
 

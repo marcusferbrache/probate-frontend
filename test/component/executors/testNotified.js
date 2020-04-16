@@ -5,7 +5,7 @@ const TaskList = require('app/steps/ui/tasklist');
 const ExecutorRoles = require('app/steps/ui/executors/roles');
 const commonContent = require('app/resources/en/translation/common');
 const config = require('config');
-const webformsFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.webforms}`;
+const webformsFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.ft_webforms}`;
 const nock = require('nock');
 const featureToggleUrl = config.featureToggles.url;
 

@@ -65,7 +65,10 @@ describe('Pin-Resend', () => {
                     state: 'Pending'
                 },
                 leadExecutorName: 'leadExecName',
-                phoneNumber: '0123456789'
+                phoneNumber: '0123456789',
+                featureToggles: {
+                    ft_webforms: 'false'
+                }
             });
 
             done();

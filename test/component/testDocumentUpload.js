@@ -8,7 +8,7 @@ const content = require('app/resources/en/translation/documentupload');
 const config = require('config');
 const nock = require('nock');
 const featureToggleUrl = config.featureToggles.url;
-const webformsFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.webforms}`;
+const webformsFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.ft_webforms}`;
 
 const featureTogglesNockWebforms = (status = 'true') => {
     nock(featureToggleUrl)

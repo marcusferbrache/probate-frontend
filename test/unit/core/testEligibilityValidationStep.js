@@ -66,7 +66,7 @@ describe('EligibilityValidationStep', () => {
                 sessionID: 'abc123',
                 caseType: 'gop',
                 featureToggles: {
-                    webforms: 'false'
+                    ft_webforms: 'false'
                 },
                 userLoggedIn: false,
                 ccdCase: {
@@ -89,7 +89,7 @@ describe('EligibilityValidationStep', () => {
                 caseType: 'gop',
                 deathCertificate: 'optionYes',
                 featureToggles: {
-                    webforms: 'false'
+                    ft_webforms: 'false'
                 },
                 userLoggedIn: false,
                 ccdCase: {
@@ -123,7 +123,7 @@ describe('EligibilityValidationStep', () => {
             const ctx = eligibilityValidationStep.getContextData(req, res, pageUrl, fieldKey, featureToggles);
 
             expect(nextStepUrlStub.calledOnce).to.equal(true);
-            expect(nextStepUrlStub.calledWith(req, {sessionID: 'abc123', caseType: 'gop', deathCertificate: 'optionYes', isTestToggleEnabled: true, featureToggles: {webforms: 'false'}, userLoggedIn: false, ccdCase: {id: 1234567890123456, state: 'Pending'}})).to.equal(true);
+            expect(nextStepUrlStub.calledWith(req, {sessionID: 'abc123', caseType: 'gop', deathCertificate: 'optionYes', isTestToggleEnabled: true, featureToggles: {ft_webforms: 'false'}, userLoggedIn: false, ccdCase: {id: 1234567890123456, state: 'Pending'}})).to.equal(true);
             expect(setEligibilityCookieStub.calledOnce).to.equal(true);
             expect(setEligibilityCookieStub.calledWith(req, res, nextStepUrl, fieldKey, fieldValue)).to.equal(true);
             expect(ctx).to.deep.equal({
@@ -133,7 +133,7 @@ describe('EligibilityValidationStep', () => {
                 deathCertificate: 'optionYes',
                 isTestToggleEnabled: true,
                 featureToggles: {
-                    webforms: 'false'
+                    ft_webforms: 'false'
                 },
                 ccdCase: {
                     id: 1234567890123456,

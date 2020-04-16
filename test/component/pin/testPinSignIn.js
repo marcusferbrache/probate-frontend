@@ -9,7 +9,7 @@ const nock = require('nock');
 const S2S_URL = config.services.idam.s2s_url;
 const IDAM_URL = config.services.idam.apiUrl;
 const featureToggleUrl = config.featureToggles.url;
-const webformsFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.webforms}`;
+const webformsFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.ft_webforms}`;
 
 const featureTogglesNockWebforms = (status = 'true') => {
     nock(featureToggleUrl)

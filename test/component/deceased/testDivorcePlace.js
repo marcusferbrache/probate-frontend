@@ -9,7 +9,7 @@ const config = require('config');
 const caseTypes = require('app/utils/CaseTypes');
 const nock = require('nock');
 const featureToggleUrl = config.featureToggles.url;
-const webformsFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.webforms}`;
+const webformsFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.ft_webforms}`;
 const featureTogglesNockWebforms = (status = 'true') => {
     nock(featureToggleUrl)
         .get(webformsFeatureTogglePath)

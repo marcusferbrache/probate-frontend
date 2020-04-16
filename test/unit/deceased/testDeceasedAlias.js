@@ -56,7 +56,7 @@ describe('DeceasedAlias', () => {
                 sessionID: 'dummy_sessionId',
                 caseType: 'gop',
                 featureToggles: {
-                    webforms: 'false'
+                    ft_webforms: 'false'
                 },
                 userLoggedIn: false,
                 ccdCase: {

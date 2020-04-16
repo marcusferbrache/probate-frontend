@@ -42,7 +42,7 @@ describe('DiedAfterOctober2014', () => {
                 diedAfter: 'optionYes',
                 caseType: 'gop',
                 featureToggles: {
-                    webforms: 'false'
+                    ft_webforms: 'false'
                 },
                 userLoggedIn: false,
                 ccdCase: {

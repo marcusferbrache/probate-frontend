@@ -42,7 +42,7 @@ describe('WillLeft', () => {
                 left: 'optionYes',
                 caseType: 'gop',
                 featureToggles: {
-                    webforms: 'false'
+                    ft_webforms: 'false'
                 },
                 userLoggedIn: false,
                 ccdCase: {
