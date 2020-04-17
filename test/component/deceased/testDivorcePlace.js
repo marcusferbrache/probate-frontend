@@ -7,14 +7,6 @@ const commonContent = require('app/resources/en/translation/common');
 const contentMaritalStatus = require('app/resources/en/translation/deceased/maritalstatus');
 const config = require('config');
 const caseTypes = require('app/utils/CaseTypes');
-const nock = require('nock');
-const featureToggleUrl = config.featureToggles.url;
-const webformsFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.ft_webforms}`;
-const featureTogglesNockWebforms = (status = 'true') => {
-    nock(featureToggleUrl)
-        .get(webformsFeatureTogglePath)
-        .reply(200, status);
-};
 
 describe('divorce-place', () => {
     let testWrapper;
@@ -32,33 +24,16 @@ describe('divorce-place', () => {
         }
     };
 
-    beforeEach(() => {
-        testWrapper = new TestWrapper('DivorcePlace');
-    });
-
     afterEach(() => {
         testWrapper.destroy();
     });
 
-    describe('Verify Content, Errors and Redirection', () => {
-        it('test help block content is loaded on page', (done) => {
-            testWrapper.agent.post('/prepare-session/form')
-                .send(sessionData)
-                .end(() => {
-                    const playbackData = {
-                        helpTitle: commonContent.helpTitle,
-                        helpHeadingTelephone: commonContent.helpHeadingTelephone,
-                        helpHeadingEmail: commonContent.helpHeadingEmail,
-                        helpEmailLabel: commonContent.helpEmailLabel.replace(/{contactEmailAddress}/g, config.links.contactEmailAddress)
-                    };
-
-                    testWrapper.testDataPlayback(done, playbackData);
-                });
+    describe('Verify Content, Errors and Redirection - Webforms FT ON', () => {
+        beforeEach(() => {
+            testWrapper = new TestWrapper('DivorcePlace', {ft_webforms: true});
         });
 
         it('test webforms help block content is loaded on page', (done) => {
-            featureTogglesNockWebforms();
-
             testWrapper.agent.post('/prepare-session/form')
                 .send(sessionData)
                 .end(() => {
@@ -67,6 +42,28 @@ describe('divorce-place', () => {
                         sendUsAMessage: commonContent.helpSendUsAMessage.replace('{webForms}', config.links.webForms),
                         opensInNewWindow: commonContent.helpOpensInNewWindow,
                         responseTime: commonContent.helpResponseTime
+                    };
+
+                    testWrapper.testDataPlayback(done, playbackData);
+                });
+        });
+    });
+
+    describe('Verify Content, Errors and Redirection - Webforms FT OFF', () => {
+        beforeEach(() => {
+            testWrapper = new TestWrapper('DivorcePlace');
+        });
+
+        it('test help block content is loaded on page', (done) => {
+            testWrapper.agent.post('/prepare-session/form')
+                .send(sessionData)
+                .end(() => {
+                    const playbackData = {
+                        helpTitle: commonContent.helpTitle,
+                        helpHeadingTelephone: commonContent.helpHeadingTelephone,
+                        helpHeadingEmail: commonContent.helpHeadingEmail,
+                        helpHeadingWebchat: commonContent.helpHeadingWebchat,
+                        helpEmailLabel: commonContent.helpEmailLabel.replace(/{contactEmailAddress}/g, config.links.contactEmailAddress)
                     };
 
                     testWrapper.testDataPlayback(done, playbackData);

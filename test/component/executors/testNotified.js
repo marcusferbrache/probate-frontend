@@ -5,15 +5,6 @@ const TaskList = require('app/steps/ui/tasklist');
 const ExecutorRoles = require('app/steps/ui/executors/roles');
 const commonContent = require('app/resources/en/translation/common');
 const config = require('config');
-const webformsFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.ft_webforms}`;
-const nock = require('nock');
-const featureToggleUrl = config.featureToggles.url;
-
-const featureTogglesNockWebforms = (status = 'true') => {
-    nock(featureToggleUrl)
-        .get(webformsFeatureTogglePath)
-        .reply(200, status);
-};
 const caseTypes = require('app/utils/CaseTypes');
 
 describe('executor-notified', () => {
@@ -23,7 +14,6 @@ describe('executor-notified', () => {
     const expectedNextUrlForThirdExec = TaskList.getUrl();
 
     beforeEach(() => {
-        testWrapper = new TestWrapper('ExecutorNotified');
         sessionData = {
             type: caseTypes.GOP,
             ccdCase: {
@@ -43,10 +33,34 @@ describe('executor-notified', () => {
 
     afterEach(() => {
         testWrapper.destroy();
-        nock.cleanAll();
     });
 
-    describe('Verify Content, Errors and Redirection', () => {
+    describe('Verify Content, Errors and Redirection - Webforms FT ON', () => {
+        beforeEach(() => {
+            testWrapper = new TestWrapper('ExecutorNotified', {ft_webforms: true});
+        });
+
+        it('test webforms help block content is loaded on page', (done) => {
+            testWrapper.agent.post('/prepare-session/form')
+                .send(sessionData)
+                .end(() => {
+                    const playbackData = {
+                        helpHeadingOnlineForm: commonContent.helpHeadingOnlineForm,
+                        sendUsAMessage: commonContent.helpSendUsAMessage.replace('{webForms}', config.links.webForms),
+                        opensInNewWindow: commonContent.helpOpensInNewWindow,
+                        responseTime: commonContent.helpResponseTime
+                    };
+
+                    testWrapper.testDataPlayback(done, playbackData);
+                });
+        });
+    });
+
+    describe('Verify Content, Errors and Redirection - Webforms FT OFF', () => {
+        beforeEach(() => {
+            testWrapper = new TestWrapper('ExecutorNotified');
+        });
+
         it('test help block content is loaded on page', (done) => {
             testWrapper.agent.post('/prepare-session/form')
                 .send(sessionData)
@@ -57,23 +71,6 @@ describe('executor-notified', () => {
                         helpHeadingEmail: commonContent.helpHeadingEmail,
                         helpHeadingWebchat: commonContent.helpHeadingWebchat,
                         helpEmailLabel: commonContent.helpEmailLabel.replace(/{contactEmailAddress}/g, config.links.contactEmailAddress)
-                    };
-
-                    testWrapper.testDataPlayback(done, playbackData);
-                });
-        });
-
-        it('test webforms help block content is loaded on page', (done) => {
-            featureTogglesNockWebforms();
-
-            testWrapper.agent.post('/prepare-session/form')
-                .send(sessionData)
-                .end(() => {
-                    const playbackData = {
-                        helpHeadingOnlineForm: commonContent.helpHeadingOnlineForm,
-                        sendUsAMessage: commonContent.helpSendUsAMessage.replace('{webForms}', config.links.webForms),
-                        opensInNewWindow: commonContent.helpOpensInNewWindow,
-                        responseTime: commonContent.helpResponseTime
                     };
 
                     testWrapper.testDataPlayback(done, playbackData);

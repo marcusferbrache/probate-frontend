@@ -4,6 +4,7 @@ const TestWrapper = require('test/util/TestWrapper');
 const ExecutorCurrentName = require('app/steps/ui/executors/currentname');
 const ExecutorCurrentNameReason = require('app/steps/ui/executors/currentnamereason');
 const commonContent = require('app/resources/en/translation/common');
+const config = require('config');
 const caseTypes = require('app/utils/CaseTypes');
 
 describe('executor-current-name', () => {
@@ -46,12 +47,10 @@ describe('executor-current-name', () => {
                 .end(() => {
                     const playbackData = {
                         helpTitle: commonContent.helpTitle,
-                        helpHeading1: commonContent.helpHeading1,
-                        helpHeading2: commonContent.helpHeading2,
-                        helpHeading3: commonContent.helpHeading3,
-                        helpTelephoneNumber: commonContent.helpTelephoneNumber,
-                        helpTelephoneOpeningHours: commonContent.helpTelephoneOpeningHours,
-                        helpEmailLabel: commonContent.helpEmailLabel.replace(/{contactEmailAddress}/g, commonContent.helpEmail)
+                        helpHeadingTelephone: commonContent.helpHeadingTelephone,
+                        helpHeadingEmail: commonContent.helpHeadingEmail,
+                        helpHeadingWebchat: commonContent.helpHeadingWebchat,
+                        helpEmailLabel: commonContent.helpEmailLabel.replace(/{contactEmailAddress}/g, config.links.contactEmailAddress)
                     };
 
                     testWrapper.testDataPlayback(done, playbackData);

@@ -8,29 +8,52 @@ const config = require('config');
 const nock = require('nock');
 const S2S_URL = config.services.idam.s2s_url;
 const IDAM_URL = config.services.idam.apiUrl;
-const featureToggleUrl = config.featureToggles.url;
-const webformsFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.ft_webforms}`;
-
-const featureTogglesNockWebforms = (status = 'true') => {
-    nock(featureToggleUrl)
-        .get(webformsFeatureTogglePath)
-        .reply(200, status);
-};
 
 describe('pin-page', () => {
     let testWrapper;
     const expectedNextUrlForCoAppStartPage = CoApplicantStartPage.getUrl();
-
-    beforeEach(() => {
-        testWrapper = new TestWrapper('PinPage');
-    });
 
     afterEach(() => {
         nock.cleanAll();
         testWrapper.destroy();
     });
 
-    describe('Verify Content, Errors and Redirection', () => {
+    describe('Verify Content, Errors and Redirection - Webforms FT ON', () => {
+        beforeEach(() => {
+            testWrapper = new TestWrapper('PinPage', {ft_webforms: true});
+        });
+
+        it('test webforms help block content is loaded on page', (done) => {
+            const sessionData = {
+                ccdCase: {
+                    state: 'Pending',
+                    id: 1234567890123456
+                }
+            };
+
+            testWrapper.agent.post('/prepare-session/form')
+                .send(sessionData)
+                .end(() => {
+                    testWrapper.agent.post('/prepare-session-field/validLink/true')
+                        .end(() => {
+                            const playbackData = {
+                                helpHeadingOnlineForm: commonContent.helpHeadingOnlineForm,
+                                sendUsAMessage: commonContent.helpSendUsAMessage.replace('{webForms}', config.links.webForms),
+                                opensInNewWindow: commonContent.helpOpensInNewWindow,
+                                responseTime: commonContent.helpResponseTime
+                            };
+
+                            testWrapper.testDataPlayback(done, playbackData);
+                        });
+                });
+        });
+    });
+
+    describe('Verify Content, Errors and Redirection - Webforms FT OFF', () => {
+        beforeEach(() => {
+            testWrapper = new TestWrapper('PinPage');
+        });
+
         it('test help block content is loaded on page', (done) => {
             const sessionData = {
                 ccdCase: {
@@ -54,22 +77,6 @@ describe('pin-page', () => {
 
                             testWrapper.testDataPlayback(done, playbackData);
                         });
-                });
-        });
-
-        it('test webforms help block content is loaded on page', (done) => {
-            featureTogglesNockWebforms();
-
-            testWrapper.agent.post('/prepare-session-field/validLink/true')
-                .end(() => {
-                    const playbackData = {
-                        helpHeadingOnlineForm: commonContent.helpHeadingOnlineForm,
-                        sendUsAMessage: commonContent.helpSendUsAMessage.replace('{webForms}', config.links.webForms),
-                        opensInNewWindow: commonContent.helpOpensInNewWindow,
-                        responseTime: commonContent.helpResponseTime
-                    };
-
-                    testWrapper.testDataPlayback(done, playbackData);
                 });
         });
 
@@ -181,11 +188,9 @@ describe('pin-page', () => {
                         .then(response => {
                             assert(response.status === 500);
                             assert(response.text.includes('having technical problems'));
-                            nock.cleanAll();
                             done();
                         })
                         .catch(err => {
-                            nock.cleanAll();
                             done(err);
                         });
                 });

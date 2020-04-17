@@ -7,29 +7,38 @@ const expect = require('chai').expect;
 const content = require('app/resources/en/translation/documentupload');
 const config = require('config');
 const nock = require('nock');
-const featureToggleUrl = config.featureToggles.url;
-const webformsFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.ft_webforms}`;
-
-const featureTogglesNockWebforms = (status = 'true') => {
-    nock(featureToggleUrl)
-        .get(webformsFeatureTogglePath)
-        .reply(200, status);
-};
 
 describe('document-upload', () => {
     let testWrapper;
     const expectedNextUrlForIhtMethod = IhtMethod.getUrl();
-
-    beforeEach(() => {
-        testWrapper = new TestWrapper('DocumentUpload');
-    });
 
     afterEach(() => {
         testWrapper.destroy();
         nock.cleanAll();
     });
 
-    describe('Verify Content, Errors and Redirection', () => {
+    describe('Verify Content, Errors and Redirection - Webforms FT ON', () => {
+        beforeEach(() => {
+            testWrapper = new TestWrapper('DocumentUpload', {ft_webforms: true});
+        });
+
+        it('test webforms help block content is loaded on page', (done) => {
+            const playbackData = {
+                helpHeadingOnlineForm: commonContent.helpHeadingOnlineForm,
+                sendUsAMessage: commonContent.helpSendUsAMessage.replace('{webForms}', config.links.webForms),
+                opensInNewWindow: commonContent.helpOpensInNewWindow,
+                responseTime: commonContent.helpResponseTime
+            };
+
+            testWrapper.testDataPlayback(done, playbackData);
+        });
+    });
+
+    describe('Verify Content, Errors and Redirection - Webforms FT OFF', () => {
+        beforeEach(() => {
+            testWrapper = new TestWrapper('DocumentUpload');
+        });
+
         it('test help block content loaded on the page', (done) => {
             const sessionData = {
                 ccdCase: {
@@ -51,19 +60,6 @@ describe('document-upload', () => {
 
                     testWrapper.testDataPlayback(done, playbackData);
                 });
-        });
-
-        it('test webforms help block content is loaded on page', (done) => {
-            featureTogglesNockWebforms();
-
-            const playbackData = {
-                helpHeadingOnlineForm: commonContent.helpHeadingOnlineForm,
-                sendUsAMessage: commonContent.helpSendUsAMessage.replace('{webForms}', config.links.webForms),
-                opensInNewWindow: commonContent.helpOpensInNewWindow,
-                responseTime: commonContent.helpResponseTime
-            };
-
-            testWrapper.testDataPlayback(done, playbackData);
         });
 
         it('test content loaded on the page', (done) => {
@@ -98,7 +94,6 @@ describe('document-upload', () => {
                         .expect('location', testWrapper.pageUrl)
                         .expect(302)
                         .then(() => {
-                            nock.cleanAll();
                             done();
                         })
                         .catch(done);
