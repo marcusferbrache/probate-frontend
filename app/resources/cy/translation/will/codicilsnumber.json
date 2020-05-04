@@ -6,7 +6,7 @@
   "errors": {
     "codicilsNumber": {
       "required": "Nodwch nifer y diweddariadau (&rsquo;codisiliau&rsquo;)",
-      "invalid": "[CY] Enter a valid number"
+      "invalid": "Rhowch rif dilys"
     }
   }
 }

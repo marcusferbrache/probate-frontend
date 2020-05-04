@@ -6,7 +6,7 @@
 
   "errors": {
     "bilingual": {
-      "required": "[CY] Answer &lsquo;yes&rsquo; if you need a bilingual (English/Welsh) grant"
+      "required": "Dewiswch &lsquo;oes&rsquo; os ydych chi angen grant dwyieithog (Cymraeg/Saesneg)"
     }
   }
 }

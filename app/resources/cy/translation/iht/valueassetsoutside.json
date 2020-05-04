@@ -7,7 +7,7 @@
   "errors": {
     "netValueAssetsOutsideField": {
       "required": "Nodwch swm yr asedau y tu allan i Gymru a Lloegr",
-      "invalid": "[CY] Enter a valid net amount",
+      "invalid": "Rhowch swm net dilys",
       "invalidCurrencyFormat": "Rhaid i&rsquo;r gwerth net fod yn rhif cyfan neu&rsquo;n rhif gyda 2 le degol"
     }
   }
