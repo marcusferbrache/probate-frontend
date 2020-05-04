@@ -12,15 +12,17 @@
             isPageHeading: true
         }
     }) %}
-        <p class="govuk-hint">{{ content.currentNameHint | safe }}</p>
         {{ govukInput({
             label: {
                 text: content.currentName | safe
             },
             id: "currentName",
             name: "currentName",
+            hint: {
+                text: content.currentNameHint | safe
+            },
             value: fields.currentName.value | safe,
-            errorMessage: { text: fields.currentName.errorMessage.message | safe } if fields.currentName.errorMessage,
+            errorMessage: { text: fields.currentName.errorMessage | safe } if fields.currentName.errorMessage,
             attributes: {
                 maxlength: 200
             },

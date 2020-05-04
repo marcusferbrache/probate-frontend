@@ -12,7 +12,7 @@ module.exports = {
     TestInvitationUrl: process.env.INVITATION_URL,
     TestInviteIdListUrl: process.env.INVITE_ID_LIST_URL,
     TestOutputDir: process.env.E2E_OUTPUT_DIR || './output',
-    TestPathToRun: './paths/**/*.js',
+    TestPathToRun: './paths/**/singleExecutorsPath.js',
     TestPinUrl: process.env.PIN_URL,
     TestProxy: process.env.TEST_PROXY || 'socks5:proxyout.reform.hmcts.net:8080',
     TestRetryFeatures: process.env.RETRY_FEATURES || 4,

@@ -20,10 +20,11 @@ describe('deceased-details', () => {
     });
 
     describe('Verify Content, Errors and Redirection', () => {
-        testCommonContent.runTest('DeceasedDetails');
+        testCommonContent.runTest('DeceasedDetails', null, null, [], false, {type: caseTypes.INTESTACY});
 
         it('test right content loaded on the page', (done) => {
             const sessionData = {
+                type: caseTypes.INTESTACY,
                 ccdCase: {
                     state: 'Pending',
                     id: 1234567890123456
@@ -38,7 +39,7 @@ describe('deceased-details', () => {
         });
 
         it('test errors message displayed for missing data', (done) => {
-            const errorsToTest = ['firstName', 'lastName', 'dob-day', 'dob-month', 'dob-year', 'dod-day', 'dod-month', 'dod-year'];
+            const errorsToTest = ['firstName', 'lastName', 'dob-date', 'dod-date'];
 
             testWrapper.testErrors(done, {}, 'required', errorsToTest);
         });

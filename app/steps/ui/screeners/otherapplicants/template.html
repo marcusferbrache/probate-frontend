@@ -18,7 +18,7 @@
         hint: {
             text: content.hintText | safe
         },
-        errorMessage: { text: fields.otherApplicants.errorMessage.message | safe } if fields.otherApplicants.errorMessage,
+        errorMessage: { text: fields.otherApplicants.errorMessage | safe } if fields.otherApplicants.errorMessage,
         items: [
             {
                 value: "optionYes",
@@ -39,6 +39,7 @@
             preventDoubleClick: true
         }) }}
     </div>
+    <script src="/public/javascripts/disable-submit.js"></script>
 {% endblock %}
 
 {% block save_and_close %}{% endblock %}

@@ -4,16 +4,10 @@ const TestWrapper = require('test/util/TestWrapper');
 const {assert} = require('chai');
 const CoApplicantStartPage = require('app/steps/ui/coapplicant/startpage');
 const commonContent = require('app/resources/en/translation/common');
-const config = require('app/config');
+const config = require('config');
 const nock = require('nock');
 const S2S_URL = config.services.idam.s2s_url;
 const IDAM_URL = config.services.idam.apiUrl;
-const afterEachNocks = (done) => {
-    return () => {
-        nock.cleanAll();
-        done();
-    };
-};
 
 describe('pin-page', () => {
     let testWrapper;
@@ -24,8 +18,8 @@ describe('pin-page', () => {
     });
 
     afterEach(() => {
-        testWrapper.destroy();
         nock.cleanAll();
+        testWrapper.destroy();
     });
 
     describe('Verify Content, Errors and Redirection', () => {
@@ -88,7 +82,7 @@ describe('pin-page', () => {
             };
 
             nock(config.services.orchestrator.url)
-                .get('/forms/12?probateType=PA')
+                .get('/forms/case/12?probateType=PA')
                 .reply(200, formDataReturnData);
 
             nock(S2S_URL).post('/lease')
@@ -104,7 +98,7 @@ describe('pin-page', () => {
             testWrapper.agent.post('/prepare-session-field')
                 .send(data)
                 .end(() => {
-                    testWrapper.testRedirect(afterEachNocks(done), data, expectedNextUrlForCoAppStartPage);
+                    testWrapper.testRedirect(done, data, expectedNextUrlForCoAppStartPage);
                 });
         });
 

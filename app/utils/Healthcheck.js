@@ -2,7 +2,7 @@
 
 const FormatUrl = require('app/utils/FormatUrl');
 const {asyncFetch, fetchOptions} = require('app/components/api-utils');
-const config = require('app/config');
+const config = require('config');
 const statusUp = 'UP';
 const statusDown = 'DOWN';
 
@@ -14,7 +14,6 @@ class Healthcheck {
     createServicesList(urlFormatter, servicesConfig) {
         return [
             {name: 'Business Service', url: urlFormatter(servicesConfig.validation.url)},
-            {name: 'Submit Service', url: urlFormatter(servicesConfig.submit.url)},
             {name: 'Orchestrator Service', url: urlFormatter(servicesConfig.orchestrator.url)}
         ];
     }

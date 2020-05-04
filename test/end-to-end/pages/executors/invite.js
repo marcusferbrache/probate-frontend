@@ -3,10 +3,10 @@
 const content = require('app/resources/en/translation/executors/invite');
 const pageUnderTest = require('app/steps/ui/executors/invite');
 
-module.exports = () => {
+module.exports = function() {
     const I = this;
 
-    I.amOnLoadedPage(pageUnderTest.getUrl());
+    I.seeCurrentUrlEquals(pageUnderTest.getUrl());
 
     I.navByClick(content.sendInvites);
 };

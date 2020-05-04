@@ -2,7 +2,7 @@
 
 const ValidationStep = require('app/core/steps/ValidationStep');
 const InviteData = require('app/services/InviteData');
-const config = require('app/config');
+const config = require('config');
 const FieldError = require('app/components/error');
 const Security = require('app/services/Security');
 const Authorise = require('app/services/Authorise');
@@ -47,12 +47,11 @@ class CoApplicantDeclaration extends ValidationStep {
     }
 
     nextStepOptions() {
-        const nextStepOptions = {
+        return {
             options: [
                 {key: 'agreement', value: 'optionYes', choice: 'agreed'}
             ]
         };
-        return nextStepOptions;
     }
 
     shouldPersistFormData() {

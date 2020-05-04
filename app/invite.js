@@ -5,7 +5,7 @@ const {isEmpty} = require('lodash');
 const steps = require('app/core/initSteps').steps;
 const InviteLinkService = require('app/services/InviteLink');
 const AllExecutorsAgreed = require('app/services/AllExecutorsAgreed');
-const config = require('app/config');
+const config = require('config');
 const PinNumber = require('app/services/PinNumber');
 const Security = require('app/services/Security');
 const Authorise = require('app/services/Authorise');
@@ -20,6 +20,12 @@ class InviteLink {
                 (res) => res.redirect('/sign-in'),
                 (res) => res.redirect('/errors/404'));
         };
+    }
+
+    sleep(ms) {
+        return new Promise((resolve) => {
+            setTimeout(resolve, ms);
+        });
     }
 
     checkLinkIsValid(req, res, success, failure) {
@@ -76,9 +82,11 @@ class InviteLink {
             }
 
             this.getAuth(req, res)
-                .then(([authToken, serviceAuthorisation]) => {
+                .then(async([authToken, serviceAuthorisation]) => {
                     const ccdCaseId = req.session.form && req.session.form.ccdCase ? req.session.form.ccdCase.id : 'undefined';
                     const allExecutorsAgreed = new AllExecutorsAgreed(config.services.orchestrator.url, req.sessionID);
+
+                    await this.sleep(1000);
 
                     allExecutorsAgreed.get(authToken, serviceAuthorisation, ccdCaseId)
                         .then(result => {

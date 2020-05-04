@@ -4,7 +4,7 @@ const {forEach, filter, isEmpty, set, get, cloneDeep} = require('lodash');
 const {expect, assert} = require('chai');
 const app = require('app');
 const routes = require('app/routes');
-const config = require('app/config');
+const config = require('config');
 const request = require('supertest');
 const JourneyMap = require('app/core/JourneyMap');
 const initSteps = require('app/core/initSteps');
@@ -12,7 +12,7 @@ const journey = require('app/journeys/probate');
 const steps = initSteps([`${__dirname}/../../app/steps/action/`, `${__dirname}/../../app/steps/ui`], 'en');
 
 class TestWrapper {
-    constructor(stepName) {
+    constructor(stepName, ftValue) {
         this.pageToTest = steps[stepName];
         this.pageUrl = this.pageToTest.constructor.getUrl();
 
@@ -31,7 +31,7 @@ class TestWrapper {
         });
 
         config.app.useCSRFProtection = 'false';
-        this.server = app.init();
+        this.server = app.init(false, {}, ftValue);
         this.agent = request.agent(this.server.app);
     }
 
@@ -50,7 +50,7 @@ class TestWrapper {
                 this.assertContentIsPresent(response.text, substitutedContent);
                 done();
             })
-            .catch(done);
+            .catch((err) => done(err));
     }
 
     testDataPlayback(done, data = {}, excludeKeys = [], cookies = []) {
@@ -105,8 +105,7 @@ class TestWrapper {
             .expect('Content-type', 'text/html; charset=utf-8')
             .then(res => {
                 forEach(expectedErrors, (value) => {
-                    expect(res.text).to.contain(value[type].summary);
-                    expect(res.text).to.contain(value[type].message);
+                    expect(res.text).to.contain(value[type]);
                 });
                 done();
             })
@@ -174,15 +173,13 @@ class TestWrapper {
 
     substituteErrorsContent(data, contentToSubstitute, type) {
         Object.entries(contentToSubstitute).forEach(([contentKey, contentValue]) => {
-            Object.entries(contentValue[type]).forEach(([errorMessageKey, errorMessageValue]) => {
-                const errorMessageValueMatch = errorMessageValue.match(/{(.*?)}/g);
-                if (errorMessageValueMatch) {
-                    errorMessageValueMatch.forEach(placeholder => {
-                        const placeholderRegex = new RegExp(placeholder, 'g');
-                        contentToSubstitute[contentKey][type][errorMessageKey] = contentToSubstitute[contentKey][type][errorMessageKey].replace(placeholderRegex, data[placeholder]);
-                    });
-                }
-            });
+            const errorMessageValueMatch = contentValue[type].match(/{(.*?)}/g);
+            if (errorMessageValueMatch) {
+                errorMessageValueMatch.forEach(placeholder => {
+                    const placeholderRegex = new RegExp(placeholder, 'g');
+                    contentToSubstitute[contentKey][type] = contentToSubstitute[contentKey][type].replace(placeholderRegex, data[placeholder]);
+                });
+            }
         });
     }
 

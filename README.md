@@ -2,27 +2,30 @@
 
 This is the frontend application for the Probate Personal Applicants online service. The service provides a clear interface for citizens, presented as sequence of HTML 5 web pages designed to GDS Service Design guidelines, so that they can apply for Probate online. The service provides functionality for both single and multiple applicant journeys.
 
-The Frontend Application delegates a number of backend logic to the underlying services, including Persistence, Business and Submit services.
+The Frontend Application uses Orchestrator to route specific requests to the underlying services such as Business Service and Submit Service.
 
 
 ## Getting Started
 ### Prerequisites
 
-- [Node.js](nodejs.org) >= 8.9.0
+- [Node.js](nodejs.org) >= 12.5.0
 - [yarn](yarnpkg.com)
 
 ### Installation
 
 Install dependencies by executing the following command:
-
 ```
 $ yarn install
 ```
 
-Sass:
-
+Compile SASS stylesheets by running the following command:
 ```
 $ yarn setup
+```
+
+Build a `git.properties.json` by running the following command:
+```
+$ yarn git-info
 ```
 
 Git hooks:
@@ -32,52 +35,39 @@ We have git hooks that enforce rules for commit messages.
 These can be activated by running the following commands:
 ```
 $ ln -s ../../pre-commit.sh .git/hooks/pre-commit
-```
-
-```
 $ ln -s ../../commit-msg.sh .git/hooks/commit-msg
 ```
 
 ### Running the application
 
 Run the application local server:
-
 ```
 $ yarn start
 ```
 
-By navigating to [https://localhost:3000](https://localhost:3000) you can partially complete an application locally.
+The application can be completed locally at [https://localhost:3000](https://localhost:3000), provided all services are running in the background as described in the next section.
 
-To complete an end to end journey on the application locally without building the other services, you can run the following command which utilises stubs to mimic certain actions carried out during an end to end journey:
+### Running the other services in Docker
 
-`$ yarn start & yarn submit-stub & yarn persistence-stub & yarn business-stub & yarn payment-stub & yarn find-address-stub`
+To run probate-frontend with the other services locally you will need to clone and run the following services:
 
-As before, the application can be completed locally at [https://localhost:3000](https://localhost:3000).
-
-### Running the application in Docker
-
-Once you `cd ..` out of the repository you can run the following command:
-```
-$ docker build -t frontend-app .
-```
-This command will build the Frontend Docker image using the *Dockerfile*.
-
-To run the Docker container:
-```
-$ docker run -p 3000:3000 frontend-app
-```
-
-### Running the application with other services
-
-To run probate-frontend with the other services locally you will need to clone the probate-back-office repo: `https://github.com/hmcts/probate-back-office`. Follow the instructions in `probate-back-office/compose/README.md`. 
+- probate-back-office: `https://github.com/hmcts/probate-back-office` - Follow the instructions in `probate-back-office/compose/README.md`.
+- probate-orchestrator-service: `https://github.com/hmcts/probate-orchestrator-service` - Follow the instructions in `probate-orchestrator-service/README.md`
+- probate-submit-service: `https://github.com/hmcts/probate-submit-service` - Follow the instructions in `probate-submit-service/README.md`
 
 ## Developing
 ### Code style
 
-Before submitting a Pull Request you will be required to run:
-`$ yarn eslint`
+Before submitting a Pull Request you will be required to run `$ yarn eslint` (which is also run automatically when trying to commit anyway).
 
 We have a number of rules relating to code style that can be found in [.eslintrc.js](https://github.com/hmcts/probate-frontend/blob/develop/.eslintrc.js).
+
+### Config
+
+For development only config, use the `dev.yaml` file. Running the app with the node environment set to `dev` will ensure this file is used.
+This file is not version controlled so any config here will not be pushed to git.
+
+As an example, if you want to use LanuchDarkly locally, place the SDK Key in this file. You can keep the key there as this file is not version controlled.
 
 ### Running the tests
 
@@ -96,7 +86,7 @@ For accessibility tests:
 `$ yarn test-accessibility`
 
 For test coverage:
-`$ yarn test-coverage`
+`$ yarn test:coverage`
 
 ## License
 

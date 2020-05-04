@@ -15,6 +15,27 @@ describe('IhtPaper', () => {
         });
     });
 
+    describe('getContextData()', () => {
+        let ctx;
+        let req;
+
+        it('should return the context with the IHT threshold', (done) => {
+            req = {
+                session: {
+                    form: {
+                        deceased: {
+                            'dod-date': '2016-10-12'
+                        }
+                    }
+                }
+            };
+
+            ctx = IhtPaper.getContextData(req);
+            expect(ctx.ihtThreshold).to.equal(250000);
+            done();
+        });
+    });
+
     describe('handlePost()', () => {
         let ctx;
         let errors;
@@ -104,26 +125,17 @@ describe('IhtPaper', () => {
                 {
                     field: 'grossValueFieldIHT205',
                     href: '#grossValueFieldIHT205',
-                    msg: {
-                        summary: content.errors.grossValueFieldIHT205.invalidCurrencyFormat.summary,
-                        message: content.errors.grossValueFieldIHT205.invalidCurrencyFormat.message
-                    }
+                    msg: content.errors.grossValueFieldIHT205.invalidCurrencyFormat
                 },
                 {
                     field: 'netValueFieldIHT205',
                     href: '#netValueFieldIHT205',
-                    msg: {
-                        summary: content.errors.netValueFieldIHT205.invalidCurrencyFormat.summary,
-                        message: content.errors.netValueFieldIHT205.invalidCurrencyFormat.message
-                    }
+                    msg: content.errors.netValueFieldIHT205.invalidCurrencyFormat
                 },
                 {
                     field: 'netValueFieldIHT205',
                     href: '#netValueFieldIHT205',
-                    msg: {
-                        summary: content.errors.netValueFieldIHT205.netValueGreaterThanGross.summary,
-                        message: content.errors.netValueFieldIHT205.netValueGreaterThanGross.message
-                    }
+                    msg: content.errors.netValueFieldIHT205.netValueGreaterThanGross
                 }
             ]);
             done();
@@ -138,9 +150,9 @@ describe('IhtPaper', () => {
             const result = IhtPaper.nextStepOptions(ctx);
             expect(result).to.deep.equal({
                 options: [{
-                    key: 'lessThanOrEqualTo250k',
+                    key: 'lessThanOrEqualToIhtThreshold',
                     value: true,
-                    choice: 'lessThanOrEqualTo250k'
+                    choice: 'lessThanOrEqualToIhtThreshold'
                 }]
             });
             done();
@@ -148,10 +160,11 @@ describe('IhtPaper', () => {
     });
 
     describe('action()', () => {
-        it('test it cleans up context when netValue > £250k', () => {
+        it('test it cleans up context when netValue is more than the IHT threshold', () => {
             const ctx = {
+                ihtThreshold: 250000,
                 netValue: 400000,
-                lessThanOrEqualTo250k: false,
+                lessThanOrEqualToIhtThreshold: false,
                 grossValuePaper: 500000,
                 netValuePaper: 400000,
                 assetsOutside: 'optionYes',
@@ -167,10 +180,11 @@ describe('IhtPaper', () => {
             });
         });
 
-        it('test it cleans up context and formdata when netValue <= £250k', () => {
+        it('test it cleans up context and formdata when netValue is less than or equal to the IHT threshold', () => {
             const ctx = {
+                ihtThreshold: 250000,
                 netValue: 200000,
-                lessThanOrEqualTo250k: true,
+                lessThanOrEqualToIhtThreshold: true,
                 grossValuePaper: 300000,
                 netValuePaper: 200000
             };

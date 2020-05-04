@@ -3,18 +3,12 @@
 const TestWrapper = require('test/util/TestWrapper');
 const commonContent = require('app/resources/en/translation/common');
 const nock = require('nock');
-const config = require('app/config');
+const config = require('config');
 const orchestratorServiceUrl = config.services.orchestrator.url;
 const beforeEachNocks = () => {
     nock(orchestratorServiceUrl)
-        .get('/invite/allAgreed/undefined')
+        .get('/invite/allAgreed/1234567890123456')
         .reply(200, true);
-};
-const afterEachNocks = (done) => {
-    return () => {
-        nock.cleanAll();
-        done();
-    };
 };
 
 describe('co-applicant-all-agreed-page', () => {
@@ -29,6 +23,7 @@ describe('co-applicant-all-agreed-page', () => {
 
     afterEach(() => {
         delete require.cache[require.resolve('test/data/complete-form-undeclared')];
+        nock.cleanAll();
         testWrapper.destroy();
     });
 
@@ -41,7 +36,7 @@ describe('co-applicant-all-agreed-page', () => {
             testWrapper.agent.post('/prepare-session/form')
                 .send(sessionData)
                 .end(() => {
-                    testWrapper.testContent((afterEachNocks(done)), contentData);
+                    testWrapper.testContent(done, contentData);
                 });
         });
 
@@ -53,7 +48,7 @@ describe('co-applicant-all-agreed-page', () => {
             testWrapper.agent.post('/prepare-session/form')
                 .send(sessionData)
                 .end(() => {
-                    testWrapper.testContent((afterEachNocks(done)), contentData);
+                    testWrapper.testContent(done, contentData);
                 });
         });
 

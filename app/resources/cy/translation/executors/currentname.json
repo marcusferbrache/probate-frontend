@@ -1,19 +1,13 @@
 {
   "title": "Enw cyfredol",
   "question": "Beth yw enw cyfredol {executorFullName}?",
-  "currentNameHint": "Bydd eu henwau cyfredol yn cael eu cynnwys ar y grant profiant",
+  "currentNameHint": "Gan gynnwys enwau canol",
   "currentName": "Enw cyfredol",
 
   "errors": {
     "currentName": {
-      "required": {
-        "summary": "Nodwch enw cyfredol yr ysgutor",
-        "message": "Nodwch enw cyfredol yr ysgutor"
-      },
-      "invalid": {
-        "summary": "Gall yr enw ond gynnwys llythrennau a i z, bylchau, cysylltnodau a chollnodau",
-        "message": "Gall yr enw ond gynnwys llythrennau a i z, bylchau, cysylltnodau a chollnodau"
-      }
+      "required": "Nodwch enw cyfredol yr ysgutor",
+      "invalid": "Rhowch enw ysgutor dilys - dim ond llythrennau a i z, bylchau, cysylltnodau a chollnodau y gellir eu cynnwys"
     }
   }
 }

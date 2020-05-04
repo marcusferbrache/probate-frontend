@@ -3,6 +3,7 @@
 const TestWrapper = require('test/util/TestWrapper');
 const DeceasedDod = require('app/steps/ui/deceased/dod');
 const testCommonContent = require('test/component/common/testCommonContent.js');
+const caseTypes = require('app/utils/CaseTypes');
 
 describe('deceased-dob', () => {
     let testWrapper;
@@ -17,10 +18,11 @@ describe('deceased-dob', () => {
     });
 
     describe('Verify Content, Errors and Redirection', () => {
-        testCommonContent.runTest('DeceasedDob');
+        testCommonContent.runTest('DeceasedDob', null, null, [], false, {type: caseTypes.GOP});
 
         it('test right content loaded on the page', (done) => {
             const sessionData = {
+                type: caseTypes.GOP,
                 ccdCase: {
                     state: 'Pending',
                     id: 1234567890123456
@@ -35,7 +37,7 @@ describe('deceased-dob', () => {
         });
 
         it('test errors message displayed for missing data', (done) => {
-            const errorsToTest = ['dob-day', 'dob-month', 'dob-year'];
+            const errorsToTest = ['dob-date'];
 
             testWrapper.testErrors(done, {}, 'required', errorsToTest);
         });

@@ -3,37 +3,20 @@
 const TestWrapper = require('test/util/TestWrapper');
 const DeathCertificate = require('app/steps/ui/screeners/deathcertificate');
 const commonContent = require('app/resources/en/translation/common');
-const config = require('app/config');
-const featureToggleUrl = config.featureToggles.url;
-const feesApiFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.fees_api}`;
 const nock = require('nock');
-const beforeEachNocks = (status = 'true') => {
-    nock(featureToggleUrl)
-        .get(feesApiFeatureTogglePath)
-        .reply(200, status);
-};
-const afterEachNocks = (done) => {
-    return () => {
-        nock.cleanAll();
-        done();
-    };
-};
 
 describe('start-eligibility', () => {
     let testWrapper;
     const expectedNextUrlForDeathCertificate = DeathCertificate.getUrl();
 
-    beforeEach(() => {
-        testWrapper = new TestWrapper('StartEligibility');
-    });
-
     afterEach(() => {
+        nock.cleanAll();
         testWrapper.destroy();
     });
 
-    describe('Verify Content, Errors and Redirection', () => {
-        it('test right content loaded on the page with the fees_api toggle ON', (done) => {
-            beforeEachNocks('true');
+    describe('Verify Content, Errors and Redirection - Feature toggles', () => {
+        it('test right content loaded on the page with the ft_fees_api toggle ON', (done) => {
+            testWrapper = new TestWrapper('StartEligibility', {ft_fees_api: true});
 
             const contentToExclude = [
                 'paragraph2',
@@ -41,11 +24,11 @@ describe('start-eligibility', () => {
                 'paragraph8old'
             ];
 
-            testWrapper.testContent(afterEachNocks(done), {}, contentToExclude);
+            testWrapper.testContent(done, {}, contentToExclude);
         });
 
-        it('test right content loaded on the page with the fees_api toggle OFF', (done) => {
-            beforeEachNocks('false');
+        it('test right content loaded on the page with the ft_fees_api toggle OFF', (done) => {
+            testWrapper = new TestWrapper('StartEligibility', {ft_fees_api: false});
 
             const contentToExclude = [
                 'paragraph2',
@@ -69,7 +52,13 @@ describe('start-eligibility', () => {
                 'tableBodyFeeRange7Value'
             ];
 
-            testWrapper.testContent(afterEachNocks(done), {}, contentToExclude);
+            testWrapper.testContent(done, {}, contentToExclude);
+        });
+    });
+
+    describe('Verify Content, Errors and Redirection', () => {
+        beforeEach(() => {
+            testWrapper = new TestWrapper('StartEligibility');
         });
 
         it(`test it redirects to next page: ${expectedNextUrlForDeathCertificate}`, (done) => {

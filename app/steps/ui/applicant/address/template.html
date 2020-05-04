@@ -39,7 +39,7 @@
                         classes: "govuk-visually-hidden"
                     }
                 }) %}
-                    <details class="govuk-details" id="details-panel" {{ "open" if (
+                    <details class="govuk-details" id="details-panel" data-module="govuk-details" {{ "open" if (
                     fields.addressLine1.value or
                     fields.addressLine2.value or
                     fields.addressLine3.value or
@@ -53,7 +53,7 @@
                         <summary class="govuk-details__summary">
                             <span class="govuk-details__summary-text">{{ content.enterManually | safe }}</span>
                         </summary>
-                        <div class="govuk-form-group govuk-details__text">
+                        <div class="govuk-details__text">
                             {{ govukInput({
                                 label: {
                                     text: content.addressLabel | safe
@@ -61,7 +61,7 @@
                                 id: "addressLine1",
                                 name: "addressLine1",
                                 value: fields.addressLine1.value | safe,
-                                errorMessage: { text: fields.addressLine1.errorMessage.message | safe } if fields.addressLine1.errorMessage,
+                                errorMessage: { text: fields.addressLine1.errorMessage | safe } if fields.addressLine1.errorMessage,
                                 attributes: {
                                     maxlength: 150
                                 },
@@ -70,8 +70,7 @@
                             }) }}
                             {{ govukInput({
                                 label: {
-                                    text: content.addressLabel2 | safe,
-                                    classes: "govuk-visually-hidden"
+                                    text: content.addressLabel2 | safe
                                 },
                                 id: "addressLine2",
                                 name: "addressLine2",
@@ -84,8 +83,7 @@
                             }) }}
                             {{ govukInput({
                                 label: {
-                                    text: content.addressLabel3 | safe,
-                                    classes: "govuk-visually-hidden"
+                                    text: content.addressLabel3 | safe
                                 },
                                 id: "addressLine3",
                                 name: "addressLine3",
@@ -103,7 +101,7 @@
                                 id: "postTown",
                                 name: "postTown",
                                 value: fields.postTown.value | safe,
-                                errorMessage: { text: fields.postTown.errorMessage.message | safe } if fields.postTown.errorMessage,
+                                errorMessage: { text: fields.postTown.errorMessage | safe } if fields.postTown.errorMessage,
                                 attributes: {
                                     maxlength: 50
                                 },
@@ -117,7 +115,7 @@
                                 id: "newPostCode",
                                 name: "newPostCode",
                                 value: fields.newPostCode.value | safe,
-                                errorMessage: { text: fields.newPostCode.errorMessage.message | safe } if fields.newPostCode.errorMessage,
+                                errorMessage: { text: fields.newPostCode.errorMessage | safe } if fields.newPostCode.errorMessage,
                                 attributes: {
                                     maxlength: 14
                                 },

@@ -3,13 +3,13 @@
   "question": "Why isn&rsquo;t {executorFullName} applying for probate?",
   "optionPowerReserved": "This executor doesn&rsquo;t want to apply now, but may do in the future (this is also known as power reserved)",
   "optionRenunciated": "This executor doesn&rsquo;t want to apply now, and gives up the right to do so in the future (this is also known as renunciation, and the executor will need to fill in a form)",
+  "optionRenunciatedHint": "Fill in either <a href=\"{applicationFormPA15}\" class=\"govuk-link\" target=\"_blank\" rel=\"external noopener\" aria-label=\"form PA15 or PA16 (opens in a new window)\">form PA15 or PA16 (opens in a new window)</a> if you want to give up your legal responsibility and role permanently (also known as ‘renunciation’) to apply for probate to manage the estate of someone who died as either:",
+  "optionRenunciatedHintBullet1": "an executor named in their will or",
+  "optionRenunciatedHintBullet2": "their spouse or civil partner acting as an administrator.",
 
   "errors": {
     "notApplyingReason": {
-      "required": {
-        "summary": "You haven&rsquo;t selected why this executor isn&rsquo;t applying",
-        "message": "Select the reason why the executor isn&rsquo;t applying"
-      }
+      "required": "Select the reason why the executor isn&rsquo;t applying"
     }
   }
 }

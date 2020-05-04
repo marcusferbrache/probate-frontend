@@ -5,7 +5,7 @@ const UIStepRunner = require('app/core/runners/UIStepRunner');
 const JourneyMap = require('app/core/JourneyMap');
 const mapErrorsToFields = require('app/components/error').mapErrorsToFields;
 const ExecutorsWrapper = require('app/wrappers/Executors');
-const config = require('app/config');
+const config = require('config');
 const ServiceMapper = require('app/utils/ServiceMapper');
 const FeatureToggle = require('app/utils/FeatureToggle');
 const caseTypes = require('app/utils/CaseTypes');
@@ -107,9 +107,9 @@ class Step {
     generateFields(language, ctx, errors) {
         let fields = mapValues(ctx, (value, key) => {
             let returnValue;
+            const dateName = key.split('-')[0];
 
-            if (key.includes('formattedDate')) {
-                const dateName = key.split('-')[0];
+            if (key.includes('formattedDate') && ctx[`${dateName}-day`] && ctx[`${dateName}-month`] && ctx[`${dateName}-year`]) {
                 const date = moment(ctx[`${dateName}-day`] + '/' + ctx[`${dateName}-month`] + '/' + ctx[`${dateName}-year`], config.dateFormat).parseZone();
                 returnValue = utils.formattedDate(date, language);
             } else {

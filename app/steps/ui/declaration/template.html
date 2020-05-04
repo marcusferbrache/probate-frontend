@@ -47,7 +47,7 @@
 
                     {{ lists(content.cy, fields.declaration.value.cy) }}
                 </div>
-                {{ download(content.cy) }}
+                {{ download('cy', content.cy) }}
             </div>
         {% endif %}
 
@@ -75,12 +75,16 @@
 
                     {{ lists(content.cy, fields.declaration.value.cy) }}
                 </div>
-                {{ download(content.cy) }}
+                {{ download('cy', content.cy) }}
             </div>
         {% endif %}
     {% endif %}
 
-    <h1 class="govuk-heading-l">{{ content.en.title | safe }}</h1>
+    {% if fields.bilingual.value === "true" %}
+        <h2 class="govuk-heading-l">{{ content.en.title | safe }}</h2>
+    {% else %}
+        <h1 class="govuk-heading-l">{{ content.en.title | safe }}</h1>
+    {% endif %}
     <p class="govuk-body word-break">{{ fields.legalStatement.value.en.intro | safe }}</p>
     {% ifAsync fields.caseType.value === globals.caseTypes.gop %}
         <div class="declaration-wrapper word-break declaration-language language-en">
@@ -116,7 +120,7 @@
 
                 {{ lists(content.en, fields.declaration.value.en) }}
             </div>
-            {{ download(content.en) }}
+            {{ download('en', content.en) }}
         </div>
     {% endif %}
 
@@ -144,7 +148,7 @@
 
                 {{ lists(content.en, fields.declaration.value.en) }}
             </div>
-            {{ download(content.en) }}
+            {{ download('en', content.en) }}
         </div>
     {% endif %}
 
@@ -157,7 +161,7 @@
                 classes: "govuk-visually-hidden"
             }
         },
-        errorMessage: { text: fields.declarationCheckbox.errorMessage.message | safe } if fields.declarationCheckbox.errorMessage,
+        errorMessage: { text: fields.declarationCheckbox.errorMessage | safe } if fields.declarationCheckbox.errorMessage,
         items: [
             {
                 value: true,

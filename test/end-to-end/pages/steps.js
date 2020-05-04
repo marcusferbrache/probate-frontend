@@ -25,10 +25,14 @@ module.exports = () => {
         // Sign In to IDAM
         authenticateWithIdamIfAvailable: steps.IDAM.signIn,
 
+        // Choose Application on Dashboard
+        chooseApplication: steps.dashboard.dashboard,
+
         // Start application
         selectATask: steps.tasklist.tasklist,
 
         // Deceased
+        chooseBiLingualGrant: steps.language.bilingualgrant,
         enterDeceasedName: steps.deceased.name,
         enterDeceasedDateOfBirth: steps.deceased.dob,
         enterDeceasedDateOfDeath: steps.deceased.dod,
@@ -83,7 +87,7 @@ module.exports = () => {
 
         // Additional executors Agree/Disagree with Statement of Truth
         seeCoApplicantStartPage: steps.coapplicant.startPage,
-        agreeDisagreeDeclaration: steps.coapplicant.declaration,
+        agreeDeclaration: steps.coapplicant.declaration,
         seeAgreePage: steps.coapplicant.agree,
 
         // Asset pages
@@ -114,5 +118,8 @@ module.exports = () => {
         selectDeceasedDivorcePlace: steps.deceased.divorceplace,
         selectRelationshipToDeceased: steps.applicant.relationshiptodeceased,
         selectSpouseNotApplyingReason: steps.applicant.spousenotapplyingreason,
+
+        // Sign Out
+        seeSignOut: steps.signout.signout
     });
 };

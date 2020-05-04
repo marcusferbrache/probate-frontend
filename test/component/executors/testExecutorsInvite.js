@@ -3,16 +3,11 @@
 const TestWrapper = require('test/util/TestWrapper');
 const {assert} = require('chai');
 const ExecutorsInvitesSent = require('app/steps/ui/executors/invitesent');
+const caseTypes = require('app/utils/CaseTypes');
 const testCommonContent = require('test/component/common/testCommonContent.js');
 const nock = require('nock');
-const config = require('app/config');
+const config = require('config');
 const orchestratorServiceUrl = config.services.orchestrator.url;
-const afterEachNocks = (done) => {
-    return () => {
-        nock.cleanAll();
-        done();
-    };
-};
 
 describe('executors-invite', () => {
     let testWrapper;
@@ -22,6 +17,7 @@ describe('executors-invite', () => {
     beforeEach(() => {
         testWrapper = new TestWrapper('ExecutorsInvite');
         sessionData = require('test/data/executors-invites');
+        sessionData.type = caseTypes.GOP;
         sessionData.ccdCase = {
             state: 'Pending',
             id: 1234567890123456
@@ -30,11 +26,12 @@ describe('executors-invite', () => {
 
     afterEach(() => {
         delete require.cache[require.resolve('test/data/executors-invites')];
+        nock.cleanAll();
         testWrapper.destroy();
     });
 
     describe('Verify Content, Errors and Redirection', () => {
-        testCommonContent.runTest('ExecutorsInvite');
+        testCommonContent.runTest('ExecutorsInvite', null, null, [], false, {type: caseTypes.GOP});
 
         it('test correct content loaded on the page when more than 1 other executor', (done) => {
             const contentToExclude = ['heading3'];
@@ -91,7 +88,7 @@ describe('executors-invite', () => {
                 ]
             };
 
-            testWrapper.testRedirect(afterEachNocks(done), data, expectedNextUrlForExecInvites);
+            testWrapper.testRedirect(done, data, expectedNextUrlForExecInvites);
         });
 
         it('test an error page is rendered if there is an error calling invite service', (done) => {

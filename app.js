@@ -12,7 +12,7 @@ const routes = require(`${__dirname}/app/routes`);
 const favicon = require('serve-favicon');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const config = require(`${__dirname}/app/config`);
+const config = require('config');
 const utils = require(`${__dirname}/app/components/utils`);
 const packageJson = require(`${__dirname}/package`);
 const Security = require(`${__dirname}/app/components/security`);
@@ -34,8 +34,9 @@ const caseTypes = require('app/utils/CaseTypes');
 const featureToggles = require('app/featureToggles');
 const sanitizeRequestBody = require('app/middleware/sanitizeRequestBody');
 const isEmpty = require('lodash').isEmpty;
+const LaunchDarkly = require('launchdarkly-node-server-sdk');
 
-exports.init = function(isA11yTest = false, a11yTestSession = {}) {
+exports.init = function(isA11yTest = false, a11yTestSession = {}, ftValue) {
     const app = express();
     const port = config.app.port;
     const releaseVersion = packageJson.version;
@@ -81,7 +82,6 @@ exports.init = function(isA11yTest = false, a11yTestSession = {}) {
 
     const globals = {
         currentYear: new Date().getFullYear(),
-        gaTrackingId: config.gaTrackingId,
         enableTracking: config.enableTracking,
         links: config.links,
         nonce: uuid,
@@ -112,33 +112,50 @@ exports.init = function(isA11yTest = false, a11yTestSession = {}) {
     // Content security policy to allow just assets from same domain
     app.use(helmet.contentSecurityPolicy({
         directives: {
-            defaultSrc: ['\'self\''],
-            fontSrc: ['\'self\' data:'],
+            defaultSrc: [
+                '\'self\''
+            ],
+            fontSrc: [
+                '\'self\' data:',
+                'fonts.gstatic.com'
+            ],
             scriptSrc: [
                 '\'self\'',
                 '\'sha256-+6WnXIl4mbFTCARd8N3COQmT3bJJmo32N8q8ZSQAIcU=\'',
                 '\'sha256-AaA9Rn5LTFZ5vKyp3xOfFcP4YbyOjvWn2up8IKHVAKk=\'',
                 '\'sha256-G29/qSW/JHHANtFhlrZVDZW1HOkCDRc78ggbqwwIJ2g=\'',
                 'www.google-analytics.com',
+                'www.googletagmanager.com',
                 'vcc-eu4.8x8.com',
                 'vcc-eu4b.8x8.com',
                 `'nonce-${uuid}'`
             ],
-            connectSrc: ['\'self\''],
-            mediaSrc: ['\'self\''],
+            connectSrc: [
+                '\'self\'',
+                'www.google-analytics.com'
+            ],
+            mediaSrc: [
+                '\'self\''
+            ],
             frameSrc: [
                 'vcc-eu4.8x8.com',
                 'vcc-eu4b.8x8.com'
             ],
             imgSrc: [
                 '\'self\'',
+                '\'self\' data:',
                 'www.google-analytics.com',
+                'stats.g.doubleclick.net',
                 'vcc-eu4.8x8.com',
-                'vcc-eu4b.8x8.com'
+                'vcc-eu4b.8x8.com',
+                'ssl.gstatic.com',
+                'www.gstatic.com'
             ],
             styleSrc: [
                 '\'self\'',
-                '\'unsafe-inline\''
+                '\'unsafe-inline\'',
+                'tagmanager.google.com',
+                'fonts.googleapis.com'
             ],
             frameAncestors: ['\'self\'']
         },
@@ -266,6 +283,21 @@ exports.init = function(isA11yTest = false, a11yTestSession = {}) {
     app.use('/executors-additional-invite', additionalInvite);
     app.use('/executors-update-invite', updateInvite);
     app.use('/declaration', declaration);
+
+    app.use((req, res, next) => {
+        if (['test', 'testing'].includes(app.get('env'))) {
+            res.locals.launchDarkly = {
+                client: LaunchDarkly.init(config.featureToggles.launchDarklyKey, {offline: true}),
+                ftValue: ftValue
+            };
+        } else {
+            res.locals.launchDarkly = {
+                client: LaunchDarkly.init(config.featureToggles.launchDarklyKey)
+            };
+        }
+
+        next();
+    });
 
     app.use(featureToggles);
 

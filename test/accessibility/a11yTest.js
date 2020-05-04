@@ -6,10 +6,11 @@ const a11y = require('test/util/a11y');
 const expect = require('chai').expect;
 const app = require('app');
 const initSteps = require('app/core/initSteps');
-const {endsWith} = require('lodash');
+const {endsWith, merge} = require('lodash');
 const commonContent = {
     en: require('app/resources/en/translation/common')
 };
+const caseTypes = require('app/utils/CaseTypes');
 const stepsToExclude = [
     'Dashboard', 'Summary', 'TaskList', 'PinPage', 'PinSent', 'PinResend', 'AddressLookup', 'ExecutorAddress', 'ExecutorContactDetails', 'ExecutorName',
     'ExecutorNotified', 'ExecutorNameAsOnWill', 'ExecutorApplying', 'DeleteExecutor', 'PaymentStatus', 'AddAlias', 'RemoveAlias', 'ExecutorRoles', 'ExecutorsWhenDied',
@@ -17,7 +18,7 @@ const stepsToExclude = [
 ];
 const steps = initSteps([`${__dirname}/../../app/steps/action/`, `${__dirname}/../../app/steps/ui`], 'en');
 const nock = require('nock');
-const config = require('app/config');
+const config = require('config');
 const commonSessionData = {
     form: {
         payloadVersion: config.payloadVersion,
@@ -35,11 +36,12 @@ Object.keys(steps)
 for (const step in steps) {
     ((step) => {
         const stepUrl = step.constructor.getUrl();
+        const stepUrlFirstSegment = '/' + stepUrl.split('/')[1];
         let results;
         let sessionData = {};
 
-        if (config.whitelistedPagesAfterSubmission.includes(stepUrl)) {
-            sessionData = Object.assign(commonSessionData, {
+        if (config.whitelistedPagesAfterSubmission.includes(stepUrlFirstSegment)) {
+            sessionData = merge(commonSessionData, {
                 form: {
                     declaration: {
                         declarationCheckbox: 'true'
@@ -52,13 +54,29 @@ for (const step in steps) {
                     }
                 }
             });
-        } else if (config.whitelistedPagesAfterDeclaration.includes(stepUrl)) {
-            sessionData = Object.assign(commonSessionData, {
+        } else if (config.whitelistedPagesAfterDeclaration.includes(stepUrlFirstSegment)) {
+            sessionData = merge(commonSessionData, {
                 form: {
                     declaration: {
                         declarationCheckbox: 'true'
                     }
                 }
+            });
+        }
+
+        if (config.gopOnlyPages.includes(stepUrlFirstSegment)) {
+            sessionData = merge(sessionData, {
+                form: {
+                    type: caseTypes.GOP
+                },
+                back: []
+            });
+        } else if (config.intestacyOnlyPages.includes(stepUrlFirstSegment)) {
+            sessionData = merge(sessionData, {
+                form: {
+                    type: caseTypes.INTESTACY
+                },
+                back: []
             });
         }
 
@@ -82,15 +100,11 @@ for (const step in steps) {
                     .get('/invite/allAgreed/undefined')
                     .reply(200, 'false');
 
-                nock(config.featureToggles.url)
-                    .get(`${config.featureToggles.path}/${config.featureToggles.fees_api}`)
-                    .reply(200, 'true');
-
                 server = app.init(true, sessionData);
                 agent = request.agent(server.app);
                 co(function* () {
                     let urlSuffix = '';
-                    if (endsWith(agent.get(step.constructor.getUrl()), '*')) {
+                    if (endsWith(agent.get(stepUrl), '*')) {
                         urlSuffix = '/0';
                     }
                     results = yield a11y(agent.get(stepUrl).url + urlSuffix, title);

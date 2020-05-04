@@ -1,7 +1,7 @@
 'use strict';
 
 const FormatUrl = require('app/utils/FormatUrl');
-const config = require('../config');
+const config = require('config');
 const logger = require('app/components/logger');
 const URL = require('url');
 const UUID = require('uuid/v4');
@@ -85,6 +85,7 @@ class Security {
 
         const callbackUrl = FormatUrl.format(returnUrl, idamConfig.probate_oauth_callback_path);
         const redirectUrl = URL.parse(this.loginUrl, true);
+        redirectUrl.query.ui_locales = req.session.language;
         redirectUrl.query.response_type = 'code';
         redirectUrl.query.state = state;
         redirectUrl.query.client_id = idamConfig.probate_oauth2_client;

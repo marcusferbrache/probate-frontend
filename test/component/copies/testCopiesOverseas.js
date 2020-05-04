@@ -3,21 +3,15 @@
 const TestWrapper = require('test/util/TestWrapper');
 const CopiesSummary = require('app/steps/ui/copies/summary');
 const testCommonContent = require('test/component/common/testCommonContent.js');
-const config = require('app/config');
-const featureToggleUrl = config.featureToggles.url;
-const feesApiFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.fees_api}`;
+const config = require('config');
+const orchestratorServiceUrl = config.services.orchestrator.url;
 const nock = require('nock');
-const beforeEachNocks = (status = 'true') => {
-    nock(featureToggleUrl)
-        .get(feesApiFeatureTogglePath)
-        .reply(200, status);
+const invitesAllAgreedNock = () => {
+    nock(orchestratorServiceUrl)
+        .get('/invite/allAgreed/1234567890123456')
+        .reply(200, 'true');
 };
-const afterEachNocks = (done) => {
-    return () => {
-        nock.cleanAll();
-        done();
-    };
-};
+
 const sessionData = {
     declaration: {
         declarationCheckbox: 'true'
@@ -28,40 +22,69 @@ describe('copies-overseas', () => {
     let testWrapper;
     const expectedNextUrlForCopiesSummary = CopiesSummary.getUrl();
 
-    beforeEach(() => {
-        testWrapper = new TestWrapper('CopiesOverseas');
-    });
-
     afterEach(() => {
+        nock.cleanAll();
         testWrapper.destroy();
     });
 
+    describe('Verify Content, Errors and Redirection - Feature toggles', () => {
+        it('test right content loaded on the page with the ft_fees_api toggle ON', (done) => {
+            testWrapper = new TestWrapper('CopiesOverseas', {ft_fees_api: true});
+
+            invitesAllAgreedNock();
+
+            const sessionData = require('test/data/copiesUk');
+            sessionData.ccdCase = {
+                state: 'Pending',
+                id: 1234567890123456
+            };
+
+            testWrapper.agent.post('/prepare-session/form')
+                .send(sessionData)
+                .end(() => {
+                    delete require.cache[require.resolve('test/data/copiesUk')];
+                    const contentToExclude = [
+                        'questionOld',
+                        'paragraph1Old'
+                    ];
+
+                    testWrapper.testContent(done, {}, contentToExclude);
+                });
+        });
+
+        it('test right content loaded on the page with the ft_fees_api toggle OFF', (done) => {
+            testWrapper = new TestWrapper('CopiesOverseas', {ft_fees_api: false});
+
+            invitesAllAgreedNock();
+
+            const sessionData = require('test/data/copiesUk');
+            sessionData.ccdCase = {
+                state: 'Pending',
+                id: 1234567890123456
+            };
+
+            testWrapper.agent.post('/prepare-session/form')
+                .send(sessionData)
+                .end(() => {
+                    delete require.cache[require.resolve('test/data/copiesUk')];
+                    const contentToExclude = [
+                        'paragraph1',
+                        'bullet1',
+                        'bullet2',
+                        'copies'
+                    ];
+
+                    testWrapper.testContent(done, {}, contentToExclude);
+                });
+        });
+    });
+
     describe('Verify Content, Errors and Redirection', () => {
+        beforeEach(() => {
+            testWrapper = new TestWrapper('CopiesOverseas');
+        });
+
         testCommonContent.runTest('CopiesOverseas', null, null, [], false, {ccdCase: {state: 'CaseCreated'}, declaration: {declarationCheckbox: 'true'}});
-
-        it('test right content loaded on the page with the fees_api toggle ON', (done) => {
-            beforeEachNocks('true');
-
-            const contentToExclude = [
-                'questionOld',
-                'paragraph1Old'
-            ];
-
-            testWrapper.testContent(afterEachNocks(done), {}, contentToExclude);
-        });
-
-        it('test right content loaded on the page with the fees_api toggle OFF', (done) => {
-            beforeEachNocks('false');
-
-            const contentToExclude = [
-                'paragraph1',
-                'bullet1',
-                'bullet2',
-                'copies'
-            ];
-
-            testWrapper.testContent(afterEachNocks(done), {}, contentToExclude);
-        });
 
         it('test errors message displayed for invalid data, text values', (done) => {
             testWrapper.agent.post('/prepare-session/form')

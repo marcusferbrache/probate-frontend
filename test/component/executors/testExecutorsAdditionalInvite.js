@@ -3,15 +3,10 @@
 const TestWrapper = require('test/util/TestWrapper');
 const {assert} = require('chai');
 const ExecutorsAdditionalInviteSent = require('app/steps/ui/executors/additionalinvitesent');
+const caseTypes = require('app/utils/CaseTypes');
 const nock = require('nock');
-const config = require('app/config');
+const config = require('config');
 const orchestratorServiceUrl = config.services.orchestrator.url;
-const afterEachNocks = (done) => {
-    return () => {
-        nock.cleanAll();
-        done();
-    };
-};
 
 describe('executors-additional-invite', () => {
     let testWrapper;
@@ -21,6 +16,7 @@ describe('executors-additional-invite', () => {
     beforeEach(() => {
         testWrapper = new TestWrapper('ExecutorsAdditionalInvite');
         sessionData = require('test/data/executors-invites');
+        sessionData.type = caseTypes.GOP;
         sessionData.ccdCase = {
             state: 'Pending',
             id: 1234567890123456
@@ -29,6 +25,7 @@ describe('executors-additional-invite', () => {
 
     afterEach(() => {
         delete require.cache[require.resolve('test/data/executors-invites')];
+        nock.cleanAll();
         testWrapper.destroy();
     });
 
@@ -127,7 +124,8 @@ describe('executors-additional-invite', () => {
                 .reply(200, {
                     invitations: [
                         {
-                            inviteId: '1234'
+                            inviteId: '1234',
+                            id: 1
                         }
                     ]
                 });
@@ -140,7 +138,7 @@ describe('executors-additional-invite', () => {
             testWrapper.agent.post('/prepare-session/form')
                 .send(sessionData)
                 .end(() => {
-                    testWrapper.testRedirect(afterEachNocks(done), {}, expectedNextUrlForExecutorsAdditionalInviteSent);
+                    testWrapper.testRedirect(done, {}, expectedNextUrlForExecutorsAdditionalInviteSent);
                 });
         });
     });

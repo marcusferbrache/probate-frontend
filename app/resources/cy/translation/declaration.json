@@ -43,6 +43,11 @@
   "optionDiedAfter": "oherwydd bu iddynt farw ar &ocirc;l i {deceasedName} farw.",
   "optionPowerReserved": "ond maent yn cadw&rsquo;r hawl i wneud hynny ar ddyddiad diweddarach.",
   "optionRenunciated": "nawr ac maent yn rhoi fyny yr hawl i wneud hynny yn y dyfodol.",
+  "optionMarried": "Wedi priodi neu mewn partneriaeth sifil",
+  "optionDivorced": "Wedi ysgaru neu roedd eu partneriaeth sifil wedi&rsquo;i diddymu",
+  "optionWidowed": "Gweddw",
+  "optionNotMarried": "Erioed wedi priodi",
+  "optionSeparated": "Ymwahaniad cyfreithiol",
   "additionalExecutorNotified": "Maent wedi cael eu hysbysu am hyn yn ysgrifenedig.",
   "declarationHeader": "Datganiad",
   "declarationConfirm": "Rwy&rsquo;n cadarnhau y byddaf yn gweinyddu ystad {deceasedName}, yn unol &acirc;&rsquo;r gyfraith. Byddaf yn:",
@@ -80,26 +85,23 @@
   "intestacyDeceasedNotMarriedChildApplyingHasSiblingsIsNotAdopted": "Fi yw plentyn {deceasedName} ac rwy&rsquo;n un o&rsquo;r bobl sydd nawr &acirc; hawl i gyfran o&rsquo;r ystad.",
   "intestacyDeceasedNotMarriedChildApplyingHasNoSiblingsIsAdopted": "Fi yw plentyn a fabwysiadwyd yn gyfreithiol {deceasedName} a&rsquo;r unig unigolyn sydd nawr &acirc; hawl i gyfran o&rsquo;r ystad.",
   "intestacyDeceasedNotMarriedChildApplyingHasNoSiblingsIsNotAdopted": "Fi yw plentyn {deceasedName} a&rsquo;r unig unigolyn sydd nawr &acirc; hawl i gyfran o&rsquo;r ystad.",
-  "intestacyDeceasedMarriedSpouseRenouncingChildApplyingEstateLessThan250kHasSiblingsIsAdopted": "Mae g&wcirc;r/gwraig neu bartner sifil {deceasedName} wedi rhoi fyny yr hawl i wneud cais am lythyrau gweinyddu nawr ac yn y dyfodol. Fi yw plentyn a fabwysiadwyd yn gyfreithiol {deceasedName} ac rwy&rsquo;n un o&rsquo;r bobl a allai fod &acirc; hawl i gyfran o&rsquo;r ystad.",
-  "intestacyDeceasedMarriedSpouseRenouncingChildApplyingEstateLessThan250kHasSiblingsIsNotAdopted": "Mae g&wcirc;r/gwraig neu bartner sifil {deceasedName} wedi rhoi fyny yr hawl i wneud cais am lythyrau gweinyddu nawr ac yn y dyfodol. Fi yw plentyn {deceasedName} ac rwy&rsquo;n un o&rsquo;r bobl a allai fod &acirc; hawl i gyfran o&rsquo;r ystad.",
-  "intestacyDeceasedMarriedSpouseRenouncingChildApplyingEstateLessThan250kHasNoSiblingsIsAdopted": "Mae g&wcirc;r/gwraig neu bartner sifil {deceasedName} wedi rhoi fyny yr hawl i wneud cais am lythyrau gweinyddu nawr ac yn y dyfodol. Fi yw plentyn a fabwysiadwyd yn gyfreithiol {deceasedName} ac fe alla&rsquo;i fod &acirc; hawl i gyfran o&rsquo;r ystad.",
-  "intestacyDeceasedMarriedSpouseRenouncingChildApplyingEstateLessThan250kHasNoSiblingsIsNotAdopted": "Mae g&wcirc;r/gwraig neu bartner sifil {deceasedName} wedi rhoi fyny yr hawl i wneud cais am lythyrau gweinyddu nawr ac yn y dyfodol. Fi yw plentyn {deceasedName} ac fe alla&rsquo;i fod &acirc; hawl i gyfran o&rsquo;r ystad.",
-  "intestacyDeceasedMarriedSpouseRenouncingChildApplyingEstateMoreThan250kHasSiblingsIsAdopted": "Mae g&wcirc;r/gwraig neu bartner sifil {deceasedName} wedi rhoi fyny yr hawl i wneud cais am lythyrau gweinyddu nawr ac yn y dyfodol. Fi yw plentyn a fabwysiadwyd yn gyfreithiol {deceasedName} ac rwy&rsquo;n un o&rsquo;r bobl sydd &acirc; hawl i gyfran o&rsquo;r ystad.",
-  "intestacyDeceasedMarriedSpouseRenouncingChildApplyingEstateMoreThan250kHasSiblingsIsNotAdopted": "Mae g&wcirc;r/gwraig neu bartner sifil {deceasedName} wedi rhoi fyny yr hawl i wneud cais am lythyrau gweinyddu nawr ac yn y dyfodol. Fi yw plentyn {deceasedName} ac rwy&rsquo;n un o&rsquo;r bobl sydd &acirc; hawl i gyfran o&rsquo;r ystad.",
-  "intestacyDeceasedMarriedSpouseRenouncingChildApplyingEstateMoreThan250kHasNoSiblingsIsAdopted": "Mae g&wcirc;r/gwraig neu bartner sifil {deceasedName} wedi rhoi fyny yr hawl i wneud cais am lythyrau gweinyddu nawr ac yn y dyfodol. Fi yw plentyn a fabwysiadwyd yn gyfreithiol {deceasedName} ac rwy&rsquo;n un o&rsquo;r bobl sydd &acirc; hawl i gyfran o&rsquo;r ystad.",
-  "intestacyDeceasedMarriedSpouseRenouncingChildApplyingEstateMoreThan250kHasNoSiblingsIsNotAdopted": "Mae g&wcirc;r/gwraig neu bartner sifil {deceasedName} wedi rhoi fyny yr hawl i wneud cais am lythyrau gweinyddu nawr ac yn y dyfodol. Fi yw plentyn {deceasedName} ac rwy&rsquo;n un o&rsquo;r bobl sydd &acirc; hawl i gyfran o&rsquo;r ystad.",
+  "intestacyDeceasedMarriedSpouseRenouncingChildApplyingEstateLessThanIhtThresholdHasSiblingsIsAdopted": "Mae g&wcirc;r/gwraig neu bartner sifil {deceasedName} wedi rhoi fyny yr hawl i wneud cais am lythyrau gweinyddu nawr ac yn y dyfodol. Fi yw plentyn a fabwysiadwyd yn gyfreithiol {deceasedName} ac rwy&rsquo;n un o&rsquo;r bobl a allai fod &acirc; hawl i gyfran o&rsquo;r ystad.",
+  "intestacyDeceasedMarriedSpouseRenouncingChildApplyingEstateLessThanIhtThresholdHasSiblingsIsNotAdopted": "Mae g&wcirc;r/gwraig neu bartner sifil {deceasedName} wedi rhoi fyny yr hawl i wneud cais am lythyrau gweinyddu nawr ac yn y dyfodol. Fi yw plentyn {deceasedName} ac rwy&rsquo;n un o&rsquo;r bobl a allai fod &acirc; hawl i gyfran o&rsquo;r ystad.",
+  "intestacyDeceasedMarriedSpouseRenouncingChildApplyingEstateLessThanIhtThresholdHasNoSiblingsIsAdopted": "Mae g&wcirc;r/gwraig neu bartner sifil {deceasedName} wedi rhoi fyny yr hawl i wneud cais am lythyrau gweinyddu nawr ac yn y dyfodol. Fi yw plentyn a fabwysiadwyd yn gyfreithiol {deceasedName} ac fe alla&rsquo;i fod &acirc; hawl i gyfran o&rsquo;r ystad.",
+  "intestacyDeceasedMarriedSpouseRenouncingChildApplyingEstateLessThanIhtThresholdHasNoSiblingsIsNotAdopted": "Mae g&wcirc;r/gwraig neu bartner sifil {deceasedName} wedi rhoi fyny yr hawl i wneud cais am lythyrau gweinyddu nawr ac yn y dyfodol. Fi yw plentyn {deceasedName} ac fe alla&rsquo;i fod &acirc; hawl i gyfran o&rsquo;r ystad.",
+  "intestacyDeceasedMarriedSpouseRenouncingChildApplyingEstateMoreThanIhtThresholdHasSiblingsIsAdopted": "Mae g&wcirc;r/gwraig neu bartner sifil {deceasedName} wedi rhoi fyny yr hawl i wneud cais am lythyrau gweinyddu nawr ac yn y dyfodol. Fi yw plentyn a fabwysiadwyd yn gyfreithiol {deceasedName} ac rwy&rsquo;n un o&rsquo;r bobl sydd &acirc; hawl i gyfran o&rsquo;r ystad.",
+  "intestacyDeceasedMarriedSpouseRenouncingChildApplyingEstateMoreThanIhtThresholdHasSiblingsIsNotAdopted": "Mae g&wcirc;r/gwraig neu bartner sifil {deceasedName} wedi rhoi fyny yr hawl i wneud cais am lythyrau gweinyddu nawr ac yn y dyfodol. Fi yw plentyn {deceasedName} ac rwy&rsquo;n un o&rsquo;r bobl sydd &acirc; hawl i gyfran o&rsquo;r ystad.",
+  "intestacyDeceasedMarriedSpouseRenouncingChildApplyingEstateMoreThanIhtThresholdHasNoSiblingsIsAdopted": "Mae g&wcirc;r/gwraig neu bartner sifil {deceasedName} wedi rhoi fyny yr hawl i wneud cais am lythyrau gweinyddu nawr ac yn y dyfodol. Fi yw plentyn a fabwysiadwyd yn gyfreithiol {deceasedName} ac rwy&rsquo;n un o&rsquo;r bobl sydd &acirc; hawl i gyfran o&rsquo;r ystad.",
+  "intestacyDeceasedMarriedSpouseRenouncingChildApplyingEstateMoreThanIhtThresholdHasNoSiblingsIsNotAdopted": "Mae g&wcirc;r/gwraig neu bartner sifil {deceasedName} wedi rhoi fyny yr hawl i wneud cais am lythyrau gweinyddu nawr ac yn y dyfodol. Fi yw plentyn {deceasedName} ac rwy&rsquo;n un o&rsquo;r bobl sydd &acirc; hawl i gyfran o&rsquo;r ystad.",
   "intestacyDeceasedMarriedSpouseApplyingHadChildren": "Fi yw  g&wcirc;r/gwraig neu bartner sifil cyfreithiol {deceasedName} ac rwy&rsquo;n un o&rsquo;r bobl sydd nawr &acirc; hawl i gyfran o&rsquo;r ystad.",
-  "intestacyDeceasedMarriedSpouseApplyingHadNoChildrenOrEstateLessThan250k": "Fi yw g&wcirc;r/gwraig neu bartner sifil cyfreithiol {deceasedName} a&rsquo;r unig unigolyn sydd nawr &acirc; hawl i gyfran o&rsquo;r ystad.",
+  "intestacyDeceasedMarriedSpouseApplyingHadNoChildrenOrEstateLessThanIhtThreshold": "Fi yw g&wcirc;r/gwraig neu bartner sifil cyfreithiol {deceasedName} a&rsquo;r unig unigolyn sydd nawr &acirc; hawl i gyfran o&rsquo;r ystad.",
   "intestacyLettersOfAdministration": "Rwy&rsquo;n gwneud cais am lythyrau gweinyddu. Rwyf wedi darparu&rsquo;r hyn a gredaf i fod yn wybodaeth gywir a gwir am {deceasedName}.",
   "warning": "Rhybudd",
   "saveThisPage": "Arbed y dudalen hon",
 
   "errors": {
     "declarationCheckbox": {
-      "required": {
-        "summary": "Nid ydych wedi cytuno i&rsquo;r datganiad",
-        "message": "Ticiwch y blwch i gytuno i&rsquo;r datganiad"
-      }
+      "required": "Ticiwch y blwch i gytuno i&rsquo;r datganiad"
     }
   }
 }

@@ -3,26 +3,13 @@
 const TestWrapper = require('test/util/TestWrapper');
 const AssetsOverseas = require('app/steps/ui/assets/overseas');
 const testCommonContent = require('test/component/common/testCommonContent.js');
-const config = require('app/config');
-const featureToggleUrl = config.featureToggles.url;
+const config = require('config');
 const orchestratorServiceUrl = config.services.orchestrator.url;
-const feesApiFeatureTogglePath = `${config.featureToggles.path}/${config.featureToggles.fees_api}`;
 const nock = require('nock');
 const invitesAllAgreedNock = () => {
     nock(orchestratorServiceUrl)
-        .get('/invite/allAgreed/undefined')
+        .get('/invite/allAgreed/1234567890123456')
         .reply(200, 'true');
-};
-const beforeEachNocks = (status = 'true') => {
-    nock(featureToggleUrl)
-        .get(feesApiFeatureTogglePath)
-        .reply(200, status);
-};
-const afterEachNocks = (done) => {
-    return () => {
-        nock.cleanAll();
-        done();
-    };
 };
 const sessionData = {
     declaration: {
@@ -34,47 +21,75 @@ describe('copies-uk', () => {
     let testWrapper;
     const expectedNextUrlForAssetsOverseas = AssetsOverseas.getUrl();
 
-    beforeEach(() => {
-        testWrapper = new TestWrapper('CopiesUk');
-    });
-
     afterEach(() => {
+        nock.cleanAll();
         testWrapper.destroy();
     });
 
+    describe('Verify Content, Errors and Redirection - Feature toggles', () => {
+        it('test right content loaded on the page with the ft_fees_api toggle ON', (done) => {
+            testWrapper = new TestWrapper('CopiesUk', {ft_fees_api: true});
+
+            invitesAllAgreedNock();
+
+            const sessionData = require('test/data/copiesUk');
+            sessionData.ccdCase = {
+                state: 'Pending',
+                id: 1234567890123456
+            };
+
+            testWrapper.agent.post('/prepare-session/form')
+                .send(sessionData)
+                .end(() => {
+                    delete require.cache[require.resolve('test/data/copiesUk')];
+                    const contentToExclude = [
+                        'questionOld',
+                        'paragraph1Old',
+                        'paragraph2Old',
+                        'paragraph3Old',
+                        'copiesOld'
+                    ];
+
+                    testWrapper.testContent(done, {}, contentToExclude);
+                });
+        });
+
+        it('test right content loaded on the page with the ft_fees_api toggle OFF', (done) => {
+            testWrapper = new TestWrapper('CopiesUk', {ft_fees_api: false});
+
+            invitesAllAgreedNock();
+
+            const sessionData = require('test/data/copiesUk');
+            sessionData.ccdCase = {
+                state: 'Pending',
+                id: 1234567890123456
+            };
+
+            testWrapper.agent.post('/prepare-session/form')
+                .send(sessionData)
+                .end(() => {
+                    delete require.cache[require.resolve('test/data/copiesUk')];
+                    const contentToExclude = [
+                        'question',
+                        'paragraph1',
+                        'paragraph2',
+                        'paragraph3',
+                        'bullet1',
+                        'bullet2',
+                        'copies',
+                    ];
+
+                    testWrapper.testContent(done, {}, contentToExclude);
+                });
+        });
+    });
+
     describe('Verify Content, Errors and Redirection', () => {
+        beforeEach(() => {
+            testWrapper = new TestWrapper('CopiesUk');
+        });
+
         testCommonContent.runTest('CopiesUk', null, null, [], false, {ccdCase: {state: 'CaseCreated'}, declaration: {declarationCheckbox: 'true'}});
-
-        it('test right content loaded on the page with the fees_api toggle ON', (done) => {
-            beforeEachNocks('true');
-
-            const contentToExclude = [
-                'questionOld',
-                'paragraph1Old',
-                'paragraph2Old',
-                'paragraph3Old',
-                'copiesOld'
-            ];
-            testWrapper.testContent(afterEachNocks(done), {}, contentToExclude);
-        });
-
-        it('test right content loaded on the page with the fees_api toggle OFF', (done) => {
-            beforeEachNocks('false');
-
-            const contentToExclude = [
-                'question',
-                'paragraph1',
-                'paragraph2',
-                'paragraph3',
-                'bullet1',
-                'bullet2',
-                'copies',
-                'questionOld_1',
-                'copiesOld_1'
-            ];
-
-            testWrapper.testContent(afterEachNocks(done), {}, contentToExclude);
-        });
 
         it('test errors message displayed for invalid data, text values', (done) => {
             testWrapper.agent.post('/prepare-session/form')
@@ -121,6 +136,10 @@ describe('copies-uk', () => {
 
             const data = {uk: '0'};
             const sessionData = require('test/data/copiesUk');
+            sessionData.ccdCase = {
+                state: 'Pending',
+                id: 1234567890123456
+            };
 
             testWrapper.agent.post('/prepare-session/form')
                 .send(sessionData)
@@ -136,6 +155,10 @@ describe('copies-uk', () => {
 
             const data = {uk: '1'};
             const sessionData = require('test/data/copiesUk');
+            sessionData.ccdCase = {
+                state: 'Pending',
+                id: 1234567890123456
+            };
 
             testWrapper.agent.post('/prepare-session/form')
                 .send(sessionData)
