@@ -78,7 +78,7 @@ class InviteLink {
                 const commonContent = require(`app/resources/${req.session.language}/translation/common`);
 
                 res.status(404);
-                return res.render('errors/404', {common: commonContent, userLoggedIn: req.userLoggedIn});
+                return res.render('errors/error', {common: commonContent, error: '404', userLoggedIn: req.userLoggedIn});
             }
 
             this.getAuth(req, res)
@@ -94,7 +94,7 @@ class InviteLink {
                                 const commonContent = require(`app/resources/${req.session.language}/translation/common`);
 
                                 logger.error(`Error checking everyone has agreed: ${result.message}`);
-                                return res.status(500).render('errors/500', {common: commonContent, userLoggedIn: req.userLoggedIn});
+                                return res.status(500).render('errors/error', {common: commonContent, error: '500', userLoggedIn: req.userLoggedIn});
                             }
 
                             logger.info('Checking if all applicants have already agreed');

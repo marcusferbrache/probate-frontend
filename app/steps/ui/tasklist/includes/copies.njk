@@ -2,7 +2,7 @@
 
 <li class="task-item">
     {{ taskHeader(
-        number = "4.",
+        number = taskNumber + ".",
         content = content,
         title = (content.copiesTaskProbate if fields.caseType.value == "gop" else content.copiesTaskIntestacy) | safe,
         status = fields.CopiesTask.value.status,

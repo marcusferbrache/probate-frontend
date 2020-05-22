@@ -114,7 +114,7 @@ describe('Executors invite endpoints', () => {
         inviteLink.checkCoApplicant('true')(req, res, next);
 
         checkAsync(() => {
-            expect(res.render).to.have.been.calledWith('errors/404');
+            expect(res.render).to.have.been.calledWith('errors/error');
             done();
         });
     });

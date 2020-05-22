@@ -2,7 +2,7 @@
 
 <li class="task-item">
     {{ taskHeader(
-        number = "3.",
+        number = taskNumber + ".",
         content = content,
         title = content.reviewAndConfirmTask | safe,
         status = "pending" if (
@@ -34,8 +34,6 @@
 
                 <p class="govuk-body">{{ content.reviewAndConfirmTaskMultiplesParagraph1 | safe }}</p>
                 <p class="govuk-body">{{ content.reviewAndConfirmTaskMultiplesParagraph2 | safe }}</p>
-                <h3 class="govuk-heading-s">{{ content.reviewAndConfirmTaskMultiplesParagraph3Heading | safe }}</h3>
-                <p class="govuk-body">{{ content.reviewAndConfirmTaskMultiplesParagraph3 | safe }}</p>
 
                 {% set declarationStatusRows = [] %}
 

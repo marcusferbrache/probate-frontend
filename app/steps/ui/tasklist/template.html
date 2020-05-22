@@ -4,6 +4,8 @@
 {% from "widgets/lists.html" import taskAction, unorderedList %}
 {% from "widgets/taskheader.html" import taskHeader %}
 
+{% set taskNumber = 0 %}
+
 {% block content %}
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -13,18 +15,38 @@
             <p class="govuk-body">{{ content.paragraph2 | safe }}</p>
             <ol class="task-list">
                 {% ifAsync fields.caseType.value === globals.caseTypes.gop %}
+                    {% set taskNumber = taskNumber + 1 %}
                     {% include "ui/tasklist/includes/deceased.njk" %}
+
+                    {% set taskNumber = taskNumber + 1 %}
                     {% include "ui/tasklist/includes/executors.njk" %}
+
+                    {% set taskNumber = taskNumber + 1 %}
                     {% include "ui/tasklist/includes/reviewAndConfirm.njk" %}
+
+                    {% set taskNumber = taskNumber + 1 %}
                     {% include "ui/tasklist/includes/copies.njk" %}
+
+                    {% set taskNumber = taskNumber + 1 %}
                     {% include "ui/tasklist/includes/payment.njk" %}
+
+                    {% set taskNumber = taskNumber + 1 %}
                     {% include "ui/tasklist/includes/documents.njk" %}
                 {% endif %}
                 {% ifAsync fields.caseType.value === globals.caseTypes.intestacy %}
+                    {% set taskNumber = taskNumber + 1 %}
                     {% include "ui/tasklist/includes/deceased.njk" %}
+
+                    {% set taskNumber = taskNumber + 1 %}
                     {% include "ui/tasklist/includes/applicants.njk" %}
+
+                    {% set taskNumber = taskNumber + 1 %}
                     {% include "ui/tasklist/includes/reviewAndConfirm.njk" %}
+
+                    {% set taskNumber = taskNumber + 1 %}
                     {% include "ui/tasklist/includes/copies.njk" %}
+
+                    {% set taskNumber = taskNumber + 1 %}
                     {% include "ui/tasklist/includes/payment.njk" %}
                 {% endif %}
             </ol>

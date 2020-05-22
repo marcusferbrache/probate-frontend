@@ -5,16 +5,25 @@ const config = require('config');
 const expect = require('chai').expect;
 let businessStub;
 let orchestratorStub;
+let equalityStub;
 const startStubs = () => {
     businessStub = require('test/service-stubs/business');
     orchestratorStub = require('test/service-stubs/orchestrator');
+    equalityStub = require('test/service-stubs/equalityAndDiversityHealth');
 };
 const stopStubs = () => {
     businessStub.close();
     orchestratorStub.close();
+    equalityStub.close();
     delete require.cache[require.resolve('test/service-stubs/business')];
     delete require.cache[require.resolve('test/service-stubs/orchestrator')];
+    delete require.cache[require.resolve('test/service-stubs/equalityAndDiversityHealth')];
 };
+const services = [
+    {name: config.services.validation.name, url: config.services.validation.url, gitCommitIdPath: config.services.validation.gitCommitIdPath},
+    {name: config.services.orchestrator.name, url: config.services.orchestrator.url, gitCommitIdPath: config.services.orchestrator.gitCommitIdPath},
+    {name: config.services.equalityAndDiversity.name, url: config.services.equalityAndDiversity.url, gitCommitIdPath: config.services.equalityAndDiversity.gitCommitIdPath}
+];
 
 describe('Healthcheck.js', () => {
     describe('formatUrl()', () => {
@@ -37,10 +46,11 @@ describe('Healthcheck.js', () => {
         it('should return a list of services', (done) => {
             const healthcheck = new Healthcheck();
             const url = healthcheck.formatUrl(config.endpoints.health);
-            const services = healthcheck.createServicesList(url, config.services);
-            expect(services).to.deep.equal([
-                {name: 'Business Service', url: 'http://localhost:8081/health'},
-                {name: 'Orchestrator Service', url: 'http://localhost:8888/health'}
+            const serviceList = healthcheck.createServicesList(url, services);
+            expect(serviceList).to.deep.equal([
+                {name: 'Business Service', url: 'http://localhost:8081/health', gitCommitIdPath: 'git.commit.id'},
+                {name: 'Orchestrator Service', url: 'http://localhost:8888/health', gitCommitIdPath: 'git.commit.id'},
+                {name: 'Equality and Diversity Service', url: 'http://localhost:4000/health', gitCommitIdPath: 'buildInfo.extra.gitCommitId'}
             ]);
             done();
         });
@@ -54,12 +64,13 @@ describe('Healthcheck.js', () => {
                 it('when the backend services /health endpoint is up', (done) => {
                     const healthcheck = new Healthcheck();
                     const url = healthcheck.formatUrl(config.endpoints.health);
-                    const services = healthcheck.createServicesList(url, config.services);
-                    const promises = healthcheck.createPromisesList(services, healthcheck.health);
+                    const serviceList = healthcheck.createServicesList(url, services);
+                    const promises = healthcheck.createPromisesList(serviceList, healthcheck.health);
                     Promise.all(promises).then((data) => {
                         expect(data).to.deep.equal([
                             {name: 'Business Service', status: 'UP'},
-                            {name: 'Orchestrator Service', status: 'UP'}
+                            {name: 'Orchestrator Service', status: 'UP'},
+                            {name: 'Equality and Diversity Service', status: 'UP'}
                         ]);
                         done();
                     });
@@ -68,12 +79,13 @@ describe('Healthcheck.js', () => {
                 it('when the backend services /info endpoint is up', (done) => {
                     const healthcheck = new Healthcheck();
                     const url = healthcheck.formatUrl(config.endpoints.info);
-                    const services = healthcheck.createServicesList(url, config.services);
-                    const promises = healthcheck.createPromisesList(services, healthcheck.info);
+                    const serviceList = healthcheck.createServicesList(url, services);
+                    const promises = healthcheck.createPromisesList(serviceList, healthcheck.info);
                     Promise.all(promises).then((data) => {
                         expect(data).to.deep.equal([
                             {gitCommitId: 'e210e75b38c6b8da03551b9f83fd909fe80832e1'},
-                            {gitCommitId: 'e210e75b38c6b8da03551b9f83fd909fe80832e3'}
+                            {gitCommitId: 'e210e75b38c6b8da03551b9f83fd909fe80832e3'},
+                            {gitCommitId: 'e210e75b38c6b8da03551b9f83fd909fe80832e4'}
                         ]);
                         done();
                     });
@@ -85,8 +97,8 @@ describe('Healthcheck.js', () => {
             it('with a status of DOWN when the backend services are down', (done) => {
                 const healthcheck = new Healthcheck();
                 const url = healthcheck.formatUrl(config.endpoints.health);
-                const services = healthcheck.createServicesList(url, config.services);
-                const promises = healthcheck.createPromisesList(services, healthcheck.health);
+                const serviceList = healthcheck.createServicesList(url, services);
+                const promises = healthcheck.createPromisesList(serviceList, healthcheck.health);
                 Promise.all(promises).then((data) => {
                     expect(data).to.deep.equal([{
                         name: 'Business Service',
@@ -96,6 +108,10 @@ describe('Healthcheck.js', () => {
                         name: 'Orchestrator Service',
                         status: 'DOWN',
                         error: 'Error: FetchError: request to http://localhost:8888/health failed, reason: connect ECONNREFUSED 127.0.0.1:8888'
+                    }, {
+                        name: 'Equality and Diversity Service',
+                        status: 'DOWN',
+                        error: 'Error: FetchError: request to http://localhost:4000/health failed, reason: connect ECONNREFUSED 127.0.0.1:4000'
                     }]);
                     done();
                 });
@@ -127,7 +143,7 @@ describe('Healthcheck.js', () => {
         it('should return the git commit id when there is no error', (done) => {
             const healthcheck = new Healthcheck();
             const json = {git: {commit: {id: 'e210e75b38c6b8da03551b9f83fd909fe80832e1'}}};
-            const data = healthcheck.info({json: json});
+            const data = healthcheck.info({service: {gitCommitIdPath: 'git.commit.id'}, json: json});
             expect(data).to.deep.equal({gitCommitId: json.git.commit.id});
             done();
         });
@@ -146,10 +162,11 @@ describe('Healthcheck.js', () => {
 
         it('should return the correct downstream data', (done) => {
             const healthcheck = new Healthcheck();
-            healthcheck.getDownstream(healthcheck.health, downstream => {
+            healthcheck.getDownstream(services, healthcheck.health, downstream => {
                 expect(downstream).to.deep.equal([
                     {name: 'Business Service', status: 'UP'},
-                    {name: 'Orchestrator Service', status: 'UP'}
+                    {name: 'Orchestrator Service', status: 'UP'},
+                    {name: 'Equality and Diversity Service', status: 'UP'}
                 ]);
                 done();
             });
@@ -179,11 +196,13 @@ describe('Healthcheck.js', () => {
             const healthcheck = new Healthcheck();
             const healthDownstream = [
                 {name: 'Business Service', status: 'UP'},
-                {name: 'Orchestrator Service', status: 'UP'}
+                {name: 'Orchestrator Service', status: 'UP'},
+                {name: 'Equality and Diversity Service', status: 'UP'}
             ];
             const infoDownstream = [
                 {gitCommitId: 'e210e75b38c6b8da03551b9f83fd909fe80832e1'},
-                {gitCommitId: 'e210e75b38c6b8da03551b9f83fd909fe80832e3'}
+                {gitCommitId: 'e210e75b38c6b8da03551b9f83fd909fe80832e3'},
+                {gitCommitId: 'e210e75b38c6b8da03551b9f83fd909fe80832e4'}
             ];
             const mergedData = healthcheck.mergeInfoAndHealthData(healthDownstream, infoDownstream);
             expect(mergedData).to.deep.equal([{
@@ -194,6 +213,10 @@ describe('Healthcheck.js', () => {
                 name: 'Orchestrator Service',
                 status: 'UP',
                 gitCommitId: 'e210e75b38c6b8da03551b9f83fd909fe80832e3'
+            }, {
+                name: 'Equality and Diversity Service',
+                status: 'UP',
+                gitCommitId: 'e210e75b38c6b8da03551b9f83fd909fe80832e4'
             }]);
             done();
         });

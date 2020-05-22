@@ -16,7 +16,7 @@ class RedirectRunner extends UIStepRunner {
             }
 
             req.session.form.applicantEmail = req.session.regId;
-            const options = yield step.runnerOptions(ctx, req.session.form, req.session.language);
+            const options = yield step.runnerOptions(ctx, req.session, req.headers.host);
             if (options.redirect) {
                 res.redirect(options.url);
             } else {
@@ -27,7 +27,7 @@ class RedirectRunner extends UIStepRunner {
             const commonContent = require(`app/resources/${req.session.language}/translation/common`);
 
             req.log.error(error);
-            res.status(500).render('errors/500', {common: commonContent, userLoggedIn: req.userLoggedIn});
+            res.status(500).render('errors/error', {common: commonContent, error: '500', userLoggedIn: req.userLoggedIn});
         });
     }
 }
