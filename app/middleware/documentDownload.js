@@ -18,7 +18,7 @@ const documentDownload = (req, res, service, filename) => {
         })
         .catch(err => {
             req.log.error(err);
-            res.status(500).render('errors/500', {common: commonContent, userLoggedIn: req.userLoggedIn});
+            res.status(500).render('errors/error', {common: commonContent, error: '500', userLoggedIn: req.userLoggedIn});
         });
 };
 

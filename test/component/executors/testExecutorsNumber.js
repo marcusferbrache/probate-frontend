@@ -1,7 +1,7 @@
 'use strict';
 
 const TestWrapper = require('test/util/TestWrapper');
-const TaskList = require('app/steps/ui/tasklist');
+const Equality = require('app/steps/ui/equality');
 const ExecutorsNames = require('app/steps/ui/executors/names');
 const testCommonContent = require('test/component/common/testCommonContent.js');
 const caseTypes = require('app/utils/CaseTypes');
@@ -9,7 +9,7 @@ const caseTypes = require('app/utils/CaseTypes');
 describe('executors-number', () => {
     let testWrapper;
     const expectedNextUrlForExecNames = ExecutorsNames.getUrl();
-    const expectedNextUrlForTaskList = TaskList.getUrl();
+    const expectedNextUrlForEquality = Equality.getUrl();
 
     beforeEach(() => {
         testWrapper = new TestWrapper('ExecutorsNumber');
@@ -66,10 +66,10 @@ describe('executors-number', () => {
             testWrapper.testRedirect(done, data, expectedNextUrlForExecNames);
         });
 
-        it(`test it redirects to next page when there is only one executor: ${expectedNextUrlForTaskList}`, (done) => {
+        it(`test it redirects to next page when there is only one executor: ${expectedNextUrlForEquality}`, (done) => {
             const data = {executorsNumber: 1};
 
-            testWrapper.testRedirect(done, data, expectedNextUrlForTaskList);
+            testWrapper.testRedirect(done, data, expectedNextUrlForEquality);
         });
     });
 });

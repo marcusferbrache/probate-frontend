@@ -6,7 +6,7 @@ const initSteps = require('app/core/initSteps');
 const assert = require('chai').assert;
 const TestWrapper = require('test/util/TestWrapper');
 const ExecutorsWhenDied = require('app/steps/ui/executors/whendied');
-const TaskList = require('app/steps/ui/tasklist');
+const Equality = require('app/steps/ui/equality');
 const ExecutorsApplying = require('app/steps/ui/executors/applying');
 const contentData = {executorFullName: 'many clouds'};
 const commonContent = require('app/resources/en/translation/common');
@@ -15,7 +15,7 @@ const caseTypes = require('app/utils/CaseTypes');
 describe('executors-when-died', () => {
     let testWrapper, sessionData;
     const expectedNextUrlForExecsWhenDied = ExecutorsWhenDied.getUrl(2);
-    const expectedNextUrlForTaskList = TaskList.getUrl();
+    const expectedNextUrlForEquality = Equality.getUrl();
     const expectedNextUrlForExecsApplying = ExecutorsApplying.getUrl(2);
     const steps = initSteps([`${__dirname}/../../../app/steps/action/`, `${__dirname}/../../../app/steps/ui`]);
     const reasons = {
@@ -186,7 +186,7 @@ describe('executors-when-died', () => {
                 });
         });
 
-        it(`test it redirects to tasklist page when yes selected: ${expectedNextUrlForTaskList}`, (done) => {
+        it(`test it redirects to tasklist page when yes selected: ${expectedNextUrlForEquality}`, (done) => {
             sessionData = {
                 index: 1,
                 applicant: {
@@ -208,11 +208,11 @@ describe('executors-when-died', () => {
                         diedbefore: 'optionYes'
                     };
                     testWrapper.pageUrl = testWrapper.pageToTest.constructor.getUrl(1);
-                    testWrapper.testRedirect(done, data, expectedNextUrlForTaskList);
+                    testWrapper.testRedirect(done, data, expectedNextUrlForEquality);
                 });
         });
 
-        it(`test it redirects to tasklist page when no selected: ${expectedNextUrlForTaskList}`, (done) => {
+        it(`test it redirects to tasklist page when no selected: ${expectedNextUrlForEquality}`, (done) => {
             sessionData = {
                 index: 1,
                 applicant: {
@@ -234,11 +234,11 @@ describe('executors-when-died', () => {
                         diedbefore: 'optionNo'
                     };
                     testWrapper.pageUrl = testWrapper.pageToTest.constructor.getUrl(1);
-                    testWrapper.testRedirect(done, data, expectedNextUrlForTaskList);
+                    testWrapper.testRedirect(done, data, expectedNextUrlForEquality);
                 });
         });
 
-        it(`test it redirects to tasklist page when yes selected on last exec: ${expectedNextUrlForTaskList}`, (done) => {
+        it(`test it redirects to tasklist page when yes selected on last exec: ${expectedNextUrlForEquality}`, (done) => {
             sessionData = {
                 index: 1,
                 applicant: {
@@ -261,11 +261,11 @@ describe('executors-when-died', () => {
                         diedbefore: 'optionYes'
                     };
                     testWrapper.pageUrl = testWrapper.pageToTest.constructor.getUrl(2);
-                    testWrapper.testRedirect(done, data, expectedNextUrlForTaskList);
+                    testWrapper.testRedirect(done, data, expectedNextUrlForEquality);
                 });
         });
 
-        it(`test it redirects to tasklist page when no selected on last exec: ${expectedNextUrlForTaskList}`, (done) => {
+        it(`test it redirects to tasklist page when no selected on last exec: ${expectedNextUrlForEquality}`, (done) => {
             sessionData = {
                 index: 1,
                 applicant: {
@@ -288,7 +288,7 @@ describe('executors-when-died', () => {
                         diedbefore: 'optionNo'
                     };
                     testWrapper.pageUrl = testWrapper.pageToTest.constructor.getUrl(2);
-                    testWrapper.testRedirect(done, data, expectedNextUrlForTaskList);
+                    testWrapper.testRedirect(done, data, expectedNextUrlForEquality);
                 });
         });
     });

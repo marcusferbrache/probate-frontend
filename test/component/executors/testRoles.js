@@ -4,13 +4,13 @@ const initSteps = require('app/core/initSteps');
 const assert = require('chai').assert;
 const TestWrapper = require('test/util/TestWrapper');
 const ExecutorNotified = require('app/steps/ui/executors/notified');
-const TaskList = require('app/steps/ui/tasklist');
+const Equality = require('app/steps/ui/equality');
 const commonContent = require('app/resources/en/translation/common');
 const caseTypes = require('app/utils/CaseTypes');
 const config = require('config');
 
 describe('executor-roles', () => {
-    const expectedNextUrlForTaskList = TaskList.getUrl();
+    const expectedNextUrlForEquality = Equality.getUrl();
     const expectedNextUrlForExecNotified = ExecutorNotified.getUrl(1);
     const steps = initSteps([`${__dirname}/../../../app/steps/action/`, `${__dirname}/../../../app/steps/ui`]);
     const reasons = {
@@ -109,7 +109,7 @@ describe('executor-roles', () => {
                 });
         });
 
-        it(`test it redirects to tasklist page: ${expectedNextUrlForTaskList}`, (done) => {
+        it(`test it redirects to tasklist page: ${expectedNextUrlForEquality}`, (done) => {
             testWrapper.agent.post('/prepare-session/form')
                 .send(sessionData)
                 .end(() => {
@@ -118,7 +118,7 @@ describe('executor-roles', () => {
                     };
 
                     testWrapper.pageUrl = testWrapper.pageToTest.constructor.getUrl(2);
-                    testWrapper.testRedirect(done, data, expectedNextUrlForTaskList);
+                    testWrapper.testRedirect(done, data, expectedNextUrlForEquality);
                 });
         });
     });

@@ -39,6 +39,8 @@ services:
     tag: PACT_BRANCH_NAME
   feesRegister:
     url: FEES_REGISTRY_URL
+  equalityAndDiversity:
+    url: EQUALITY_URL
 redis:
   host: REDIS_HOST
   port: REDIS_PORT

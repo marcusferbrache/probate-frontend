@@ -135,7 +135,10 @@ describe('Tasklist', () => {
                     },
                     applicant: completedForm.applicant,
                     deceased: completedForm.deceased,
-                    executors: completedForm.executors
+                    executors: completedForm.executors,
+                    equality: {
+                        pcqId: 'dummy_id'
+                    }
                 };
                 req.session.form = formdata;
                 ctx = taskList.getContextData(req);
@@ -298,6 +301,9 @@ describe('Tasklist', () => {
                 req.session.form.language = {bilingual: 'optionNo'};
                 req.session.form.documentupload = {};
                 req.session.form.documents.sentDocuments = 'true';
+                req.session.form.equality = {
+                    pcqId: 'dummy_id'
+                };
                 req.body = {};
                 ctx = taskList.getContextData(req);
 
@@ -470,7 +476,10 @@ describe('Tasklist', () => {
                     },
                     applicant: completedForm.applicant,
                     deceased: completedForm.deceased,
-                    executors: completedForm.executors
+                    executors: completedForm.executors,
+                    equality: {
+                        pcqId: 'dummy_id'
+                    }
                 };
                 formdata.deceased.anyChildren = 'optionNo';
                 req.session.form = formdata;
@@ -596,6 +605,9 @@ describe('Tasklist', () => {
 
             it('Updates the context: DeceasedTask, Applicants, Review and confirm and Copies tasks complete', () => {
                 req.session.form = completedForm;
+                req.session.form.equality = {
+                    pcqId: 'dummy_id'
+                };
                 req.body = {};
                 ctx = taskList.getContextData(req);
 

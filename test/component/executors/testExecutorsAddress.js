@@ -1,14 +1,14 @@
 'use strict';
 
 const TestWrapper = require('test/util/TestWrapper');
-const TaskList = require('app/steps/ui/tasklist');
+const Equality = require('app/steps/ui/equality');
 const ExecutorContactDetails = require('app/steps/ui/executors/contactdetails');
 const ExecutorRoles = require('app/steps/ui/executors/roles');
 const caseTypes = require('app/utils/CaseTypes');
 
 describe('executors-address', () => {
     let testWrapper, sessionData;
-    const expectedNextUrlForTaskList = TaskList.getUrl();
+    const expectedNextUrlForEquality = Equality.getUrl();
     const expectedNextUrlForExecRoles = ExecutorRoles.getUrl('*');
     const expectedNextUrlForExecContactDetails = ExecutorContactDetails.getUrl(2);
 
@@ -166,7 +166,7 @@ describe('executors-address', () => {
                 });
         });
 
-        it(`test it redirects to next page: ${expectedNextUrlForTaskList}`, (done) => {
+        it(`test it redirects to next page: ${expectedNextUrlForEquality}`, (done) => {
             sessionData = {
                 applicant: {
                     firstName: 'Lead',
@@ -193,7 +193,7 @@ describe('executors-address', () => {
                     };
 
                     testWrapper.pageUrl = testWrapper.pageToTest.constructor.getUrl(2);
-                    testWrapper.testRedirect(done, data, expectedNextUrlForTaskList);
+                    testWrapper.testRedirect(done, data, expectedNextUrlForEquality);
                 });
         });
 

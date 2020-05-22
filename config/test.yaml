@@ -67,3 +67,6 @@ helpline:
 
 pact:
   pactBrokerUrl: 'http://localhost:80'
+
+featureToggles:
+  enabled: false

@@ -60,6 +60,7 @@ class Security {
                             req.session.regId = response.email;
                             req.userId = response.id;
                             req.authToken = securityCookie;
+                            req.session.authToken = req.authToken;
                             self._authorize(req, res, next, response.roles, authorisedRoles);
                         } else {
                             req.log.error('Error authorising user');

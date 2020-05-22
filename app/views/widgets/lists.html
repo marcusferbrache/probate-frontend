@@ -21,7 +21,7 @@
             <!-- Check your answers -->
             {% if alreadyDeclared == "true" %}
                 <p class="govuk-body">{{ content.alreadyDeclared | safe }}</p>
-            {% else %}
+            {% elif alreadyDeclared != "hide" %}
                 <p class="govuk-body"><a href="{{ checkYourAnswersURL }}" class="govuk-link">{{ content.checkYourAnswers | safe }} <span class="govuk-visually-hidden">{{ title | safe }}</span></a></p>
             {% endif %}
         {% endif %}

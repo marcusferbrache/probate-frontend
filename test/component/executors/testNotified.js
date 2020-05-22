@@ -1,7 +1,7 @@
 'use strict';
 
 const TestWrapper = require('test/util/TestWrapper');
-const TaskList = require('app/steps/ui/tasklist');
+const Equality = require('app/steps/ui/equality');
 const ExecutorRoles = require('app/steps/ui/executors/roles');
 const commonContent = require('app/resources/en/translation/common');
 const caseTypes = require('app/utils/CaseTypes');
@@ -10,7 +10,7 @@ describe('executor-notified', () => {
     let testWrapper, sessionData;
     const expectedNextUrlForFirstExec = ExecutorRoles.getUrl(2);
     const expectedNextUrlForSecondExec = ExecutorRoles.getUrl(3);
-    const expectedNextUrlForThirdExec = TaskList.getUrl();
+    const expectedNextUrlForThirdExec = Equality.getUrl();
 
     beforeEach(() => {
         testWrapper = new TestWrapper('ExecutorNotified');

@@ -164,11 +164,6 @@
   resolved "https://registry.yarnpkg.com/@types/cookiejar/-/cookiejar-2.1.1.tgz#90b68446364baf9efd8e8349bb36bd3852b75b80"
   integrity sha512-aRnpPa7ysx3aNW60hTiCtLHlQaIFsXFCgQlpakNgDNVFzbtusSY8PwjAQgRWfSk0ekNoBjO51eQRB6upA9uuyw==
 
-"@types/events@*":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@types/events/-/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"
-  integrity sha512-EaObqwIvayI5a8dCzhFrjKzVwKLxjoG9T6Ppd5CEo07LRKfQ8Yokw54r5+Wq7FaBQ+yXRvQAYPrHwya1/UFt9g==
-
 "@types/express-serve-static-core@*":
   version "4.17.3"
   resolved "https://registry.yarnpkg.com/@types/express-serve-static-core/-/express-serve-static-core-4.17.3.tgz#dc8068ee3e354d7fba69feb86b3dfeee49b10f09"
@@ -211,12 +206,11 @@
   resolved "https://registry.yarnpkg.com/@types/range-parser/-/range-parser-1.2.3.tgz#7ee330ba7caafb98090bece86a5ee44115904c2c"
   integrity sha512-ewFXqrQHlFsgc09MK5jP5iR7vumV/BYayNC6PgJO2LPe8vrnNFyjQjSppfEngITi0qvfKtzFvgKymGheFM9UOA==
 
-"@types/redis@2.8.6":
-  version "2.8.6"
-  resolved "https://registry.yarnpkg.com/@types/redis/-/redis-2.8.6.tgz#3674d07a13ad76bccda4c37dc3909e4e95757e7e"
-  integrity sha512-kaSI4XQwCfJtPiuyCXvLxCaw2N0fMZesdob3Jh01W20vNFct+3lfvJ/4yCJxbSopXOBOzpg+pGxkW6uWZrPZHA==
+"@types/redis@^2.8.18":
+  version "2.8.18"
+  resolved "https://registry.yarnpkg.com/@types/redis/-/redis-2.8.18.tgz#6e95de50d848cd9c0aacb89aa8a6aef07a0a34b3"
+  integrity sha512-29ffRZITbLRs4zboL31EPJVDhSC/pHommWpf0rRcpwz45fvH6U2VxdRM6wWPSJu23l/kXQNKrMR8SAlLB7OqbQ==
   dependencies:
-    "@types/events" "*"
     "@types/node" "*"
 
 "@types/request@^2.48.4":
@@ -2313,7 +2307,7 @@ delegates@^1.0.0:
   resolved "https://registry.yarnpkg.com/delegates/-/delegates-1.0.0.tgz#84c6e159b81904fdca59a0ef44cd870d31250f9a"
   integrity sha1-hMbhWbgZBP3KWaDvRM2HDTElD5o=
 
-denque@^1.1.0:
+denque@^1.1.0, denque@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/denque/-/denque-1.4.1.tgz#6744ff7641c148c3f8a69c307e51235c1f4a37cf"
   integrity sha512-OfzPuSZKGcgr96rf1oODnfjqBFmr1DVoc/TrItj3Ohe0Ah1C5WX5Baquw/9U9KovnQ88EqmJbD66rKYUQYN1tQ==
@@ -5123,24 +5117,24 @@ latest-version@^3.0.0:
   dependencies:
     package-json "^4.0.0"
 
-launchdarkly-eventsource@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/launchdarkly-eventsource/-/launchdarkly-eventsource-1.2.0.tgz#50116ed2a0528c26d5d948251f986282ff14df11"
-  integrity sha512-IolLOnCpcOpWt1ugxh3bTm0bSrbpvVJdUJzgTFtcClXZh+xT/fWj/3xWDFt8sIQP3gg7xMs2c85A3Zgzn/9mRg==
+launchdarkly-eventsource@1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/launchdarkly-eventsource/-/launchdarkly-eventsource-1.3.0.tgz#d52520aabf35b2594b4216c39b1f34f35ac84dde"
+  integrity sha512-g5zNPL+9N9jScOy2bRFihy34MmWSe2Wg7IYEhBtyXbitD8Sxpcxu9Sy204E54ICI+yF4NCk2oU9ZohlJ0zwc0Q==
   dependencies:
     original "^1.0.0"
 
-launchdarkly-node-server-sdk@^5.12.0:
-  version "5.12.0"
-  resolved "https://registry.yarnpkg.com/launchdarkly-node-server-sdk/-/launchdarkly-node-server-sdk-5.12.0.tgz#bde4edf8b0214ae0b37871463fb57b64d2e87af0"
-  integrity sha512-mGosGICQT3X19Ao7G9/AMk2PYEmchtDhLoYOW/Oc+pnCorzAIv7tRUruWLHkq7BcVTpJWE6c7tc2kHJ7Zi0hyw==
+launchdarkly-node-server-sdk@^5.13.1:
+  version "5.13.1"
+  resolved "https://registry.yarnpkg.com/launchdarkly-node-server-sdk/-/launchdarkly-node-server-sdk-5.13.1.tgz#6c7ea228c209a44f108fce324be5f2b47a2e80d5"
+  integrity sha512-14XVYNEVQ9FeAI1L02kwqeX9dQffUsaUee+4htlJ8cL72g5oDUfl4ei0eeBGOEDKwa2YSaPmphE2xDTe/S+QFg==
   dependencies:
-    "@types/redis" "2.8.6"
+    "@types/redis" "^2.8.18"
     async "^3.1.0"
-    launchdarkly-eventsource "1.2.0"
+    launchdarkly-eventsource "1.3.0"
     lrucache "^1.0.3"
     node-cache "^4.2.0"
-    redis "^2.6.0-2"
+    redis "^3.0.2"
     semver "^6.3.0"
     tunnel "0.0.6"
     uuid "^3.3.3"
@@ -7233,7 +7227,7 @@ redent@^1.0.0:
     indent-string "^2.1.0"
     strip-indent "^1.0.1"
 
-redis-commands@1.5.0, redis-commands@^1.2.0:
+redis-commands@1.5.0, redis-commands@^1.2.0, redis-commands@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/redis-commands/-/redis-commands-1.5.0.tgz#80d2e20698fe688f227127ff9e5164a7dd17e785"
   integrity sha512-6KxamqpZ468MeQC3bkWmCB1fp56XL64D4Kf0zJSwDZbVLLm7KFkoIcHrgRvQ+sk8dnhySs7+yBg94yIkAK7aJg==
@@ -7255,7 +7249,7 @@ redis-parser@^3.0.0:
   dependencies:
     redis-errors "^1.0.0"
 
-redis@^2.6.0-2, redis@^2.8.0:
+redis@^2.8.0:
   version "2.8.0"
   resolved "https://registry.yarnpkg.com/redis/-/redis-2.8.0.tgz#202288e3f58c49f6079d97af7a10e1303ae14b02"
   integrity sha512-M1OkonEQwtRmZv4tEWF2VgpG0JWJ8Fv1PhlgT5+B+uNq2cA3Rt1Yt/ryoR+vQNOQcIEgdCdfH0jr3bDpihAw1A==
@@ -7263,6 +7257,16 @@ redis@^2.6.0-2, redis@^2.8.0:
     double-ended-queue "^2.1.0-0"
     redis-commands "^1.2.0"
     redis-parser "^2.6.0"
+
+redis@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/redis/-/redis-3.0.2.tgz#bd47067b8a4a3e6a2e556e57f71cc82c7360150a"
+  integrity sha512-PNhLCrjU6vKVuMOyFu7oSP296mwBkcE6lrAjruBYG5LgdSqtRBoVQIylrMyVZD/lkF24RSNNatzvYag6HRBHjQ==
+  dependencies:
+    denque "^1.4.1"
+    redis-commands "^1.5.0"
+    redis-errors "^1.2.0"
+    redis-parser "^3.0.0"
 
 referrer-policy@1.2.0:
   version "1.2.0"

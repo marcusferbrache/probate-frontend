@@ -4,12 +4,14 @@ gitRevision: ''
 frontendPublicHttpProtocol: http
 languages: ['en', 'cy']
 featureToggles:
+  enabled: true
   launchDarklyKey: 'SDK_KEY'
   launchDarklyUser:
     firstName: 'Probate'
     lastName: 'Frontend'
     key: '35222af3-7867-44ea-a2a0-f8e533ad12de'
   ft_fees_api: 'probate-fees-api'
+  ft_pcq: 'probate-pcq'
   appwideToggles: []
 app:
   username:
@@ -25,8 +27,10 @@ app:
     ttl: 28800 # ms (8 hours)
 services:
   postcode:
+    name: 'Postcode Lookup Service'
     token:
   orchestrator:
+    name: 'Orchestrator Service'
     url: 'http://localhost:8888'
     paths:
       forms: '/forms/case/{ccdCaseId}'
@@ -40,9 +44,13 @@ services:
       applications: '/forms/cases'
       declarationStatuses: '/invites/{ccdCaseId}'
     port: 8888
+    gitCommitIdPath: 'git.commit.id'
   validation:
+    name: 'Business Service'
     url: 'http://localhost:8081/validate'
+    gitCommitIdPath: 'git.commit.id'
   idam:
+    name: 'IdAM Service'
     loginUrl: 'http://localhost:3501/login'
     apiUrl: 'http://localhost:5000'
     roles: ['probate-private-beta', 'citizen']
@@ -57,6 +65,7 @@ services:
     probate_user_password: 'Pa55word11'
     probate_redirect_base_url: 'http://localhost:3000'
   payment:
+    name: 'Payment Service'
     url: 'http://localhost:8383'
     authorization: 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4aDNlbWc4dmhqazVhMjFzYWE4Y2MzM3YzZyIsInN1YiI6IjQyIiwiaWF0IjoxNTU3OTk5MTIxLCJleHAiOjE1NTgwMjc5MjEsImRhdGEiOiJjYXNld29ya2VyLXByb2JhdGUsY2l0aXplbixjYXNld29ya2VyLGNhc2V3b3JrZXItcHJvYmF0ZS1sb2ExLGNpdGl6ZW4tbG9hMSxjYXNld29ya2VyLWxvYTEiLCJ0eXBlIjoiQUNDRVNTIiwiaWQiOiI0MiIsImZvcmVuYW1lIjoiVXNlciIsInN1cm5hbWUiOiJUZXN0IiwiZGVmYXVsdC1zZXJ2aWNlIjoiQ0NEIiwibG9hIjoxLCJkZWZhdWx0LXVybCI6Imh0dHBzOi8vbG9jYWxob3N0OjkwMDAvcG9jL2NjZCIsImdyb3VwIjoiY2FzZXdvcmtlciJ9.5sT0KGtWsPC-Ol6RKV6gHFJl5b-OsL7HGKqdScFdOdQ'
     serviceAuthorization: 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9iYXRlX2Zyb250ZW5kIiwiZXhwIjoxNTU4MDEzNTIyfQ.YEiOlFZleoA8u9fZ4iEqcrVKvOTaCRPfzM6W_DptlV63V-euNNGpJlMlz-9JWRoTQ0ZYIF9RWskTe_PlAZHJvg'
@@ -66,16 +75,24 @@ services:
       createPayment: '/card-payments'
       returnUrlPath: '/payment-status'
   pact:
-    brokerUrl: 'http://localhost:80'
+    name: 'PACT Service'
+    url: 'http://localhost:80'
     tag: 'Dev'
     pactDirectory: 'pacts'
   feesRegister:
+    name: 'Fees Register Service'
     url: 'http://localhost:4411/fees-register'
     port: 4411
     paths:
       fees: '/fees'
       feesLookup: '/fees/lookup'
     ihtMinAmt: 5000
+  equalityAndDiversity:
+    name: 'Equality and Diversity Service'
+    url: 'http://localhost:4000'
+    path: '/service-endpoint'
+    gitCommitIdPath: 'buildInfo.extra.gitCommitId'
+    port: 4000
 redis:
   host: 'localhost'
   port: 6379
@@ -157,7 +174,7 @@ noHeaderLinksPages: ['/time-out', '/sign-out', '/co-applicant-start-page', '/co-
 alwaysWhitelistedPages: ['/time-out', '/sign-out', '/contact-us', '/accessibility-statement', '/terms-conditions', '/privacy-policy', '/cookies', '/health', '/stop-page', '/error']
 whitelistedPagesAfterSubmission: ['/documents', '/thank-you', '/check-answers-pdf', '/declaration-pdf']
 whitelistedPagesAfterPayment: ['/payment-status', '/documents', '/thank-you', '/check-answers-pdf', '/declaration-pdf']
-whitelistedPagesAfterDeclaration: ['/task-list', '/executors-invites-sent', '/copies-uk', '/assets-overseas', '/copies-overseas', '/copies-summary', '/payment-breakdown', '/payment-status', '/documents', '/thank-you', '/check-answers-pdf', '/declaration-pdf']
+whitelistedPagesAfterDeclaration: ['/task-list', '/executors-invites-sent', '/copies-uk', '/assets-overseas', '/copies-overseas', '/copies-summary', '/payment-breakdown', '/payment-status', '/documents', '/thank-you', '/check-answers-pdf', '/declaration-pdf', '/equality-and-diversity']
 blacklistedPagesBeforeDeclaration: ['/executors-invites-sent', '/copies-uk', '/assets-overseas', '/copies-overseas', '/copies-summary', '/payment-breakdown', '/payment-status', '/documents', '/thank-you', '/check-answers-pdf', '/declaration-pdf']
 eligibilityQuestionsProbate:
   deathCertificate: 'optionYes'

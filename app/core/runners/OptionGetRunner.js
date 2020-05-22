@@ -18,7 +18,7 @@ class OptionGetRunner extends UIStepRunner {
 
         req.log.error('Post operation not defined for OptionGetRunner');
         res.status(404);
-        res.render('errors/404', {common: commonContent, userLoggedIn: req.userLoggedIn});
+        res.render('errors/error', {common: commonContent, error: '404', userLoggedIn: req.userLoggedIn});
     }
 }
 

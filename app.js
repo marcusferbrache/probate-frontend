@@ -27,16 +27,15 @@ const fs = require('fs');
 const https = require('https');
 const appInsights = require('applicationinsights');
 const uuidv4 = require('uuid/v4');
-const uuid = uuidv4();
+const nonce = uuidv4();
 const EligibilityCookie = require('app/utils/EligibilityCookie');
 const eligibilityCookie = new EligibilityCookie();
 const caseTypes = require('app/utils/CaseTypes');
 const featureToggles = require('app/featureToggles');
 const sanitizeRequestBody = require('app/middleware/sanitizeRequestBody');
 const isEmpty = require('lodash').isEmpty;
-const LaunchDarkly = require('launchdarkly-node-server-sdk');
 
-exports.init = function(isA11yTest = false, a11yTestSession = {}, ftValue) {
+exports.init = function (isA11yTest = false, a11yTestSession = {}, ftValue) {
     const app = express();
     const port = config.app.port;
     const releaseVersion = packageJson.version;
@@ -84,7 +83,7 @@ exports.init = function(isA11yTest = false, a11yTestSession = {}, ftValue) {
         currentYear: new Date().getFullYear(),
         enableTracking: config.enableTracking,
         links: config.links,
-        nonce: uuid,
+        nonce: nonce,
         documentUpload: {
             validMimeTypes: config.documentUpload.validMimeTypes,
             maxFiles: config.documentUpload.maxFiles,
@@ -128,7 +127,7 @@ exports.init = function(isA11yTest = false, a11yTestSession = {}, ftValue) {
                 'www.googletagmanager.com',
                 'vcc-eu4.8x8.com',
                 'vcc-eu4b.8x8.com',
-                `'nonce-${uuid}'`
+                `'nonce-${nonce}'`
             ],
             connectSrc: [
                 '\'self\'',
@@ -243,6 +242,8 @@ exports.init = function(isA11yTest = false, a11yTestSession = {}, ftValue) {
             req.session = Object.assign(req.session, a11yTestSession);
         }
 
+        req.session.uuid = uuidv4();
+
         next();
     });
 
@@ -279,23 +280,16 @@ exports.init = function(isA11yTest = false, a11yTestSession = {}, ftValue) {
 
     app.get('/executors/invitation/:inviteId', inviteSecurity.verify());
     app.use('/co-applicant-*', inviteSecurity.checkCoApplicant(useIDAM));
-    app.use('/health', healthcheck);
+    app.use(healthcheck);
     app.use('/executors-additional-invite', additionalInvite);
     app.use('/executors-update-invite', updateInvite);
     app.use('/declaration', declaration);
 
     app.use((req, res, next) => {
-        if (['test', 'testing'].includes(app.get('env'))) {
-            res.locals.launchDarkly = {
-                client: LaunchDarkly.init(config.featureToggles.launchDarklyKey, {offline: true}),
-                ftValue: ftValue
-            };
-        } else {
-            res.locals.launchDarkly = {
-                client: LaunchDarkly.init(config.featureToggles.launchDarklyKey)
-            };
+        res.locals.launchDarkly = {};
+        if (ftValue) {
+            res.locals.launchDarkly.ftValue = ftValue;
         }
-
         next();
     });
 
@@ -312,6 +306,7 @@ exports.init = function(isA11yTest = false, a11yTestSession = {}, ftValue) {
             }
             req.session.regId = req.query.id || req.session.regId || req.sessionID;
             req.authToken = config.services.payment.authorization;
+            req.session.authToken = req.authToken;
             req.userId = config.services.payment.userId;
             next();
         }, routes);
@@ -353,7 +348,12 @@ exports.init = function(isA11yTest = false, a11yTestSession = {}, ftValue) {
         const content = require(`app/resources/${req.session.language}/translation/errors/404`);
 
         logger(req.sessionID).error(`Unhandled request ${req.url}`);
-        res.status(404).render('errors/error', {common: commonContent, content: content, error: '404', userLoggedIn: req.userLoggedIn});
+        res.status(404).render('errors/error', {
+            common: commonContent,
+            content: content,
+            error: '404',
+            userLoggedIn: req.userLoggedIn
+        });
     });
 
     app.use((err, req, res, next) => {
@@ -361,7 +361,12 @@ exports.init = function(isA11yTest = false, a11yTestSession = {}, ftValue) {
         const content = require(`app/resources/${req.session.language}/translation/errors/500`);
 
         logger(req.sessionID).error(err);
-        res.status(500).render('errors/error', {common: commonContent, content: content, error: '500', userLoggedIn: req.userLoggedIn});
+        res.status(500).render('errors/error', {
+            common: commonContent,
+            content: content,
+            error: '500',
+            userLoggedIn: req.userLoggedIn
+        });
     });
 
     return {app, http};

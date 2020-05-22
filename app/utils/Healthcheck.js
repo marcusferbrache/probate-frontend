@@ -1,7 +1,8 @@
 'use strict';
 
 const FormatUrl = require('app/utils/FormatUrl');
-const {asyncFetch, fetchOptions} = require('app/components/api-utils');
+const {asyncFetch, fetchOptions, fetchJson} = require('app/components/api-utils');
+const {get} = require('lodash');
 const config = require('config');
 const statusUp = 'UP';
 const statusDown = 'DOWN';
@@ -11,11 +12,14 @@ class Healthcheck {
         return url => FormatUrl.format(url, endpoint);
     }
 
-    createServicesList(urlFormatter, servicesConfig) {
-        return [
-            {name: 'Business Service', url: urlFormatter(servicesConfig.validation.url)},
-            {name: 'Orchestrator Service', url: urlFormatter(servicesConfig.orchestrator.url)}
-        ];
+    createServicesList(urlFormatter, services) {
+        return services.map(service => {
+            return {
+                name: service.name,
+                url: urlFormatter(service.url),
+                gitCommitIdPath: service.gitCommitIdPath
+            };
+        });
     }
 
     createPromisesList(services, callback) {
@@ -36,16 +40,16 @@ class Healthcheck {
         return {name: service.name, status: json.status};
     }
 
-    info({err, json}) {
+    info({err, service, json}) {
         if (err) {
             return {gitCommitId: err.toString()};
         }
-        return {gitCommitId: json.git.commit.id};
+        return {gitCommitId: get(json, service.gitCommitIdPath)};
     }
 
-    getDownstream(type, callback) {
-        const url = this.formatUrl(config.endpoints[type.name]);
-        const services = this.createServicesList(url, config.services);
+    getDownstream(services, type, callback) {
+        const urlFormatter = this.formatUrl(config.endpoints.health);
+        services = this.createServicesList(urlFormatter, services);
         const promises = this.createPromisesList(services, type);
         Promise.all(promises).then(downstream => callback(downstream));
     }
@@ -58,6 +62,13 @@ class Healthcheck {
         return healthDownstream.map((service, key) => {
             return Object.assign(service, {gitCommitId: infoDownstream[key].gitCommitId});
         });
+    }
+
+    getServiceHealth(service) {
+        const urlFormatter = this.formatUrl(config.endpoints.health);
+        const url = urlFormatter(service.url);
+        const fetchOpts = fetchOptions({}, 'GET', {});
+        return fetchJson(url, fetchOpts);
     }
 }
 
