@@ -23,10 +23,10 @@ const completeEqualityTask = (params) => {
 
         healthcheck.getServiceHealth(service)
             .then(json => {
-                params.req.session.equalityHealth = json.status;
-                logger.info(config.services.equalityAndDiversity.name, 'is', params.req.session.equalityHealth);
+                const equalityHealthIsUp = json.status === 'UP' && json['pcq-backend'].actualStatus === 'UP';
+                logger.info(config.services.equalityAndDiversity.name, 'is', (equalityHealthIsUp ? 'UP' : 'DOWN'));
 
-                if (params.req.session.equalityHealth === 'UP') {
+                if (equalityHealthIsUp) {
                     params.req.session.form.equality = {
                         pcqId: uuidv4()
                     };
