@@ -80,7 +80,6 @@ withPipeline("nodejs", product, component) {
    }
 */
 
-  installCharts()
   enableAksStagingDeployment()
   disableLegacyDeployment()
 
