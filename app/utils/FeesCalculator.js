@@ -1,7 +1,6 @@
 'use strict';
 
 const {get} = require('lodash');
-const FeesLookup = require('app/services/FeesLookup');
 const config = require('config');
 const logger = require('app/components/logger')('Init');
 
@@ -29,7 +28,8 @@ class FeesCalculator {
             service: 'probate',
             keyword: 'NewFee'
         };
-        this.feesLookup = new FeesLookup(this.endpoint, sessionId);
+        this.issuesData = config.services.feesRegister.issuesData;
+        this.copiesData = config.services.feesRegister.copiesData;
     }
 
     calc(formdata, authToken, featureToggles) {
