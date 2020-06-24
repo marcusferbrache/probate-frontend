@@ -6,7 +6,7 @@ const FeesCalculator = require('app/utils/FeesCalculator');
 const calculatePaymentFees = (req, res, next) => {
     const session = req.session;
     const formdata = session.form;
-    const feesCalculator = new FeesCalculator(config.services.feesRegister.url, session.id);
+    const feesCalculator = new FeesCalculator(config.services.feesRegister.url, session.id, session.featureToggles);
 
     feesCalculator.calc(formdata, req.authToken, req.session.featureToggles)
         .then((fees) => {

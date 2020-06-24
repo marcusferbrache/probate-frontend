@@ -63,7 +63,7 @@ class PaymentBreakdown extends Step {
 
     * handlePost(ctx, errors, formdata, session, hostname) {
         try {
-            const feesCalculator = new FeesCalculator(config.services.feesRegister.url, ctx.sessionID);
+            const feesCalculator = new FeesCalculator(config.services.feesRegister.url, ctx.sessionID, session.featureToggles);
             const confirmFees = yield feesCalculator.calc(formdata, ctx.authToken, session.featureToggles);
             this.checkFeesStatus(confirmFees);
             const originalFees = formdata.fees;
