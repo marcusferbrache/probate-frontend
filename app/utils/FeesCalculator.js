@@ -4,14 +4,17 @@ const {get} = require('lodash');
 const FeesLookup = require('app/services/FeesLookup');
 const config = require('config');
 const logger = require('app/components/logger')('Init');
+const featureToggle = require('app/utils/FeatureToggle');
 
 class FeesCalculator {
 
-    constructor(endpoint, sessionId, featureToggle) {
+    constructor(endpoint, sessionId, featureToggles) {
         this.endpoint = endpoint;
         this.sessionId = sessionId;
 
-        if (featureToggle === 'true') {
+        const isFeesToggleEnabled = featureToggle.isEnabled(featureToggles, 'newfee-register-code');
+
+        if (isFeesToggleEnabled) {
             this.issuesData = config.services.feesRegister.issuesData;
             this.copiesData = config.services.feesRegister.copiesData;
         } else {
