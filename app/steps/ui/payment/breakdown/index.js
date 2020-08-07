@@ -78,7 +78,7 @@ class PaymentBreakdown extends Step {
             const authorise = new Authorise(config.services.idam.s2s_url, ctx.sessionID);
             const serviceAuthResult = yield authorise.post();
             if (serviceAuthResult.name === 'Error') {
-                logger.info(`serviceAuthResult Error = ${serviceAuthResult}`);
+                logger.error(`serviceAuthResult Error = ${serviceAuthResult}`);
                 const keyword = 'failure';
                 errors.push(FieldError('authorisation', keyword, this.resourcePath, this.generateContent(ctx, formdata, session.language), session.language));
                 return [ctx, errors];

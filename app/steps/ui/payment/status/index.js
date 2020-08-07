@@ -64,8 +64,9 @@ class PaymentStatus extends Step {
         const serviceAuthResult = yield authorise.post();
 
         if (serviceAuthResult.name === 'Error') {
+            logger.error(`serviceAuthResult Error = ${serviceAuthResult}`);
             options.redirect = true;
-            options.url = `${this.steps.PaymentBreakdown.constructor.getUrl()}?status=failure`;
+            options.url = `${this.steps.PaymentBreakdown.constructor.getUrl()}?status=ServiceAuthFailure`;
             return options;
         }
 
@@ -85,7 +86,7 @@ class PaymentStatus extends Step {
                 logger.error('Payment retrieval failed for reference = ' + ctx.reference + ' with status = ' + getPaymentResponse.status);
                 const options = {};
                 options.redirect = true;
-                options.url = `${this.steps.PaymentBreakdown.constructor.getUrl()}?status=failure`;
+                options.url = `${this.steps.PaymentBreakdown.constructor.getUrl()}?status=${getPaymentResponse.status}Failure`;
                 return options;
             }
 
@@ -97,9 +98,10 @@ class PaymentStatus extends Step {
             this.setErrors(options, errors);
 
             if (getPaymentResponse.status !== 'Success') {
-                options.redirect = true;
-                options.url = `${this.steps.PaymentBreakdown.constructor.getUrl()}?status=failure`;
+                logger.error('Payment retrieval failed for reference = ' + ctx.reference + ' with status = ' + getPaymentResponse.status);
                 logger.error('Unable to retrieve a payment response.');
+                options.redirect = true;
+                options.url = `${this.steps.PaymentBreakdown.constructor.getUrl()}?status=${getPaymentResponse.status}Failure`;
             } else if (!updateCcdCaseResponse || !updateCcdCaseResponse.ccdCase || updateCcdCaseResponse.ccdCase.state !== 'CaseCreated') {
                 options.redirect = false;
                 logger.warn('Did not get a successful case created state.');
