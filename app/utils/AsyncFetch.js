@@ -31,6 +31,7 @@ class AsyncFetch {
             fetch(asyncReq, this.retryOptions())
                 .then(res => {
                     if (!this.isHealthEndpoint(url)) {
+                        log.info(`Url: ${url}`);
                         log.info(`Status: ${res.status}`);
                     }
                     if (res.ok) {
