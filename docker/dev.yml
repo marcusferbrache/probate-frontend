@@ -73,7 +73,7 @@ services:
       ELASTIC_SEARCH_ENABLED: "${ES_ENABLED_DOCKER}"
       ELASTIC_SEARCH_HOSTS: ccd-elasticsearch:9200
       ELASTIC_SEARCH_DATA_NODES_HOSTS: "http://ccd-elasticsearch:9200"
-      DATA_STORE_DEFAULT_LOG_LEVEL: DEBUG
+      DATA_STORE_DEFAULT_LOG_LEVEL: INFO
     ports:
       - 4452:4452
       - 5005:5005
@@ -216,7 +216,7 @@ services:
     volumes:
       - ./database:/docker-entrypoint-initdb.d
     environment:
-      POSTGRES_MULTIPLE_DATABASES: idam,ccd,ccd_user_profile,ccd_definition,ccd_data,evidence,ccd_definition_designer,fees_register,probate,probate_man
+      POSTGRES_MULTIPLE_DATABASES: idam,ccd,ccd_user_profile,ccd_definition,ccd_data,evidence,ccd_definition_designer,fees_register,probate,probate_man,letter_tracking
       DB_USERNAME:
       DB_PASSWORD:
       POSTGRES_HOST_AUTH_METHOD: trust
@@ -228,34 +228,15 @@ services:
     environment:
       - JAVA_TOOL_OPTIONS=-Xms128m -Xmx512m -XX:MaxPermSize=512m
       - SERVER_PORT=8080
-      - IDAM_SUPERUSER_EMAIL
-      - IDAM_SECRET_KEY=AAAAAAAAAAAAAAAA
-      - GOV_NOTIFY_API_KEY
       - SPRING_DATASOURCE_URL=jdbc:postgresql://shared-database:5432/evidence
       - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
       - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
       - SPRING_PROFILES_ACTIVE=dev
-      - ENABLE_AZURE_STORAGE_CONTAINER=true
-      - ENABLE_POSTGRES_BLOB_STORAGE=false
       - STORAGEACCOUNT_PRIMARY_CONNECTION_STRING=DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azure-storage-emulator-azurite:10000/devstoreaccount1
       - STORAGE_CONTAINER_DOCUMENT_CONTAINER_NAME=hmctstestcontainer
-      - IDAM_TESTING_SUPPORT_ENABLED=true
-      - LOGGING_LEVEL_UK_GOV_HMCTS_IDAM=DEBUG
       - IDAM_S2S_BASE_URI=http://service-auth-provider-api:8080
-      - http_proxy=
-      - https_proxy=
-      - no_proxy=
-      #      logging env vars
-      - JSON_CONSOLE_PRETTY_PRINT=false
-      - REFORM_SERVICE_TYPE=java
-      - REFORM_SERVICE_NAME=dm-store
-      - REFORM_TEAM=evidence
-      - REFORM_ENVIRONMENT=docker
-      #      healthcheck env vars
-      - PACKAGES_ENVIRONMENT=docker
-      - PACKAGES_PROJECT=evidence
-      - PACKAGES_NAME=dm-store
-      - PACKAGES_VERSION=unkown
+      - ENABLE_TTL=false
+      - ENABLE_METADATA_MIGRATION=false
     depends_on:
       - shared-database
       - service-auth-provider-api
@@ -380,7 +361,6 @@ services:
       AUTH_IDAM_CLIENT_BASEURL: http://sidam-api:5000
       AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://service-auth-provider-api:8080
       SERVICES_CORECASEDATA_BASEURL: http://ccd-data-store-api:4452
-
     ports:
       - 8181:8181
     depends_on:
@@ -388,6 +368,68 @@ services:
       - shared-database
       - ccd-data-store-api
       - service-auth-provider-api
+
+  probate-business-service:
+    image: hmctspublic.azurecr.io/probate/business-service:latest
+    environment:
+    - SERVER_PORT=8081
+    - SPRING_APPLICATION_JSON={
+        "services.auth.provider.baseUrl":"http://service-auth-provider-api:8080",
+        "services.pdf.service.url":"http://pdf-service-api:5500",
+        "document_management.url":"http://dm-store:8080"
+        }
+    ports:
+    - 8081:8081
+
+  send-letter-service:
+    image: hmctspublic.azurecr.io/rpe/send-letter-service
+    environment:
+      - APPINSIGHTS_INSTRUMENTATIONKEY=DUMMY
+      - SERVER_PORT=8485
+      - FTP_FINGERPRINT=fingerprint
+      - FTP_HOSTNAME=hostname
+      - FTP_PORT=22
+      - FTP_PRIVATE_KEY=private
+      - FTP_PUBLIC_KEY=public
+      - FTP_REPORTS_FOLDER=/reports/
+      - FTP_TARGET_FOLDER=/target/
+      - FTP_USER=user
+      - LETTER_TRACKING_DB_PASSWORD=${DB_PASSWORD}
+      - LETTER_TRACKING_DB_USER_NAME=${DB_USERNAME}
+      - S2S_URL=http://service-auth-provider-api:8080
+      - SCHEDULING_ENABLED
+      - SPRING_FLYWAY_ENABLED=false
+      - ENCRYPTION_ENABLED
+      - ENCRYPTION_PUBLIC_KEY=DUMMY
+      # these environment variables are used by java-logging library
+      - ROOT_APPENDER
+      - JSON_CONSOLE_PRETTY_PRINT
+      - ROOT_LOGGING_LEVEL
+      - REFORM_SERVICE_NAME
+      - REFORM_TEAM
+      - REFORM_ENVIRONMENT
+      - LETTER_TRACKING_DB_HOST=shared-database
+      - LETTER_TRACKING_DB_NAME=letter_tracking
+      - LETTER_TRACKING_DB_PORT=5432
+      - SMTP_HOST=false
+      - SMTP_USERNAME=username
+      - SMTP_PASSWORD=password
+    ports:
+      - 8485:8485
+    depends_on:
+      - shared-database
+      - service-auth-provider-api
+    links:
+      - shared-database
+      - service-auth-provider-api
+
+  smtp-server:
+    container_name: smtp-server
+    image: mailhog/mailhog
+    restart: always
+    ports:
+      - 1025:1025
+      - 8025:8025
 
   ccd-elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.4.2
