@@ -63,7 +63,8 @@ services:
       DATA_STORE_DB_USE_SSL: "false"
       DATA_STORE_IDAM_KEY: "${IDAM_KEY_CCD_DATA_STORE}"
       DATA_STORE_TOKEN_SECRET: iuasbcuasdcbasdgcasdgcuysachjsacyasdgjcgasdj
-      DATA_STORE_S2S_AUTHORISED_SERVICES: ccd_gw,fpl_case_service,ccd_data,ccd_ps,probate_backend
+      DATA_STORE_S2S_AUTHORISED_SERVICES: ccd_gw,fpl_case_service,ccd_data,ccd_ps,probate_backend,payment-api
+      CCD_DM_DOMAIN: http://dm-store:8080
       DEFINITION_STORE_HOST: http://ccd-definition-store-api:4451
       USER_PROFILE_HOST: http://ccd-user-profile-api:4453
       IDAM_USER_URL: http://sidam-api:5000
@@ -119,6 +120,7 @@ services:
       PROXY_DEFINITION_IMPORT: http://ccd-definition-store-api:4451
       PROXY_DEFINITION_DATA: http://ccd-definition-store-api:4451/api/data
       PROXY_DEFINITION_DISPLAY: http://ccd-definition-store-api:4451/api/display
+      PROXY_PAYMENTS: http://payments-api:8080
       APPINSIGHTS_INSTRUMENTATIONKEY: 4
     ports:
       - 3453:3453
@@ -219,7 +221,7 @@ services:
     volumes:
       - ./docker/database:/docker-entrypoint-initdb.d
     environment:
-      POSTGRES_MULTIPLE_DATABASES: idam,ccd,ccd_user_profile,ccd_definition,ccd_data,evidence,ccd_definition_designer,fees_register,probate,probate_man,letter_tracking
+      POSTGRES_MULTIPLE_DATABASES: idam,ccd,ccd_user_profile,ccd_definition,ccd_data,evidence,ccd_definition_designer,fees_register,probate,probate_man,letter_tracking,payment
       DB_USERNAME:
       DB_PASSWORD:
       POSTGRES_HOST_AUTH_METHOD: trust
@@ -475,6 +477,79 @@ services:
     depends_on:
       - ccd-elasticsearch
       - shared-database
+
+  payments-api:
+    image: hmctspublic.azurecr.io/payment/api:latest
+    environment:
+      - JAVA_TOOL_OPTIONS=-Xmx512m
+      - auth.provider.service.client.baseUrl=http://service-auth-provider-api:8080/
+      - auth.idam.client.baseUrl=http://sidam-api:5000
+      - CARD_PAYMENTS_REPORT_SCHEDULER_ENABLED=true
+      - CARD_PAYMENTS_EMAIL_FROM=no-reply@reform.hmcts.net
+      - CARD_PAYMENTS_EMAIL_TO=pepito@grillo.com
+      - CARD_PAYMENTS_EMAIL_MESSAGE=hi
+      - CARD_PAYMENTS_EMAIL_SUBJECT=Docker Env Card Payments Reconciliation Report
+      - BAR_PAYMENTS_REPORT_SCHEDULER_ENABLED=true
+      - BAR_PAYMENTS_EMAIL_FROM=no-reply@reform.hmcts.net
+      - BAR_PAYMENTS_EMAIL_TO=pepito@grillo.com
+      - BAR_PAYMENTS_EMAIL_MESSAGE=hi
+      - BAR_PAYMENTS_EMAIL_SUBJECT=Docker Env Bar Payments Reconciliation Report
+      - FEATURE_PAYMENTS_SEARCH=true
+      - FEES_REGISTER_URL=https://fees-api:8080
+      - GOV_PAY_AUTH_KEY_CMC=la0ohpqa9er1bub2hddieeesc6sabbbqn4smkkve7s9ailn3n9d3hbnhc3
+      - GOV_PAY_AUTH_KEY_DIVORCE_FRONTEND=la0ohpqa9er1bub2hddieeesc6sabbbqn4smkkve7s9ailn3n9d3hbnhc3
+      - GOV_PAY_AUTH_KEY_PROBATE_FRONTEND=la0ohpqa9er1bub2hddieeesc6sabbbqn4smkkve7s9ailn3n9d3hbnhc3
+      - GOV_PAY_OPERATIONAL_SERVICES=ccd_gw
+      - GOV_PAY_URL=https://publicapi.payments.service.gov.uk/v1/payments
+      - payments.report.file.location=.
+      - PBA_CMC_PAYMENTS_REPORT_SCHEDULER_ENABLED=true
+      - PBA_CMC_PAYMENTS_EMAIL_FROM=no-reply@reform.hmcts.net
+      - PBA_CMC_PAYMENTS_EMAIL_TO=pepito@grillo.com
+      - PBA_CMC_PAYMENTS_EMAIL_MESSAGE=hi
+      - PBA_CMC_PAYMENTS_EMAIL_SUBJECT=Docker Env Card Payments Reconciliation Report
+      - PBA_PROBATE_PAYMENTS_REPORT_SCHEDULER_ENABLED=true
+      - PBA_PROBATE_PAYMENTS_EMAIL_FROM=no-reply@reform.hmcts.net
+      - PBA_PROBATE_PAYMENTS_EMAIL_TO=pepito@grillo.com
+      - PBA_PROBATE_PAYMENTS_EMAIL_MESSAGE=hi
+      - PBA_PROBATE_PAYMENTS_EMAIL_SUBJECT=Docker Env Card Payments Reconciliation Report
+      - PBA_FINREM_PAYMENTS_REPORT_SCHEDULER_ENABLED=true
+      - PBA_FINREM_PAYMENTS_EMAIL_FROM=no-reply@reform.hmcts.net
+      - PBA_FINREM_PAYMENTS_EMAIL_TO=pepito@grillo.com
+      - PBA_FINREM_PAYMENTS_EMAIL_MESSAGE=hi
+      - PBA_FINREM_PAYMENTS_EMAIL_SUBJECT=Docker Env Card Payments Reconciliation Report
+      - PBA_DIVORCE_PAYMENTS_REPORT_SCHEDULER_ENABLED=true
+      - PBA_DIVORCE_PAYMENTS_EMAIL_FROM=no-reply@reform.hmcts.net
+      - PBA_DIVORCE_PAYMENTS_EMAIL_TO=pepito@grillo.com
+      - PBA_DIVORCE_PAYMENTS_EMAIL_MESSAGE=hi
+      - PBA_DIVORCE_PAYMENTS_EMAIL_SUBJECT=Docker Env Card Payments Reconciliation Report
+      - PBA_FPL_PAYMENTS_REPORT_SCHEDULER_ENABLED=true
+      - PBA_FPL_PAYMENTS_EMAIL_FROM=no-reply@reform.hmcts.net
+      - PBA_FPL_PAYMENTS_EMAIL_TO=pepito@grillo.com
+      - PBA_FPL_PAYMENTS_EMAIL_MESSAGE=hi
+      - PBA_FPL_PAYMENTS_EMAIL_SUBJECT=Docker Env Card Payments Reconciliation Report
+      - REFORM_ENVIRONMENT=aat
+      - REFORM_SERVICE_NAME=payment-api
+      - REFORM_TEAM=cc
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://shared-database:5432/payment
+      - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DB_USERNAME}
+      - SPRING_LIQUIBASE_ENABLED=true
+      - SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE=true
+      - SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_TRUST=*
+      - SPRING_MAIL_PORT=25
+      - SPRING_MAIL_HOST=smtp-server
+      - TRUSTED_S2S_SERVICE_NAMES=cmc,probate_frontend,divorce_frontend,ccd_gw,bar_api,api_gw,finrem_payment_service,ccpay_bubble,jui_webapp,xui_webapp,fpl_case_service,iac
+      - PAYBUBBLE_HOME_URL=https://ccpay-bubble-frontend-aat.service.core-compute-aat.internal
+      - PCI_PAL_CALLBACK_URL=https://core-api-mgmt-aat.azure-api.net/telephony-api/telephony/callback
+      - ASB_CONNECTION_STRING=some-azure-service-bus-connection-string
+      - APPINSIGHTS_INSTRUMENTATIONKEY=DUMMY
+      - CORE_CASE_DATA_API_URL=http://ccd-data-store-api:4452
+    ports:
+      - 8383:8080
+    depends_on:
+      - shared-database
+      - service-auth-provider-api
+      - sidam-api
 
 volumes:
   ccd-docker-azure-blob-data:
