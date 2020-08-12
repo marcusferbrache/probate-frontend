@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set variables
-COMPOSE_FILE="-f docker/dev.yml"
+COMPOSE_FILE=""
 
 echo "Logging into ACR..."
 az acr login --name hmctspublic --subscription DCD-CNP-Prod
@@ -32,7 +32,7 @@ done
 
 # Start all other images
 echo "Starting dependencies..."
-docker-compose ${COMPOSE_FILE} up -d
+docker-compose ${COMPOSE_FILE} up -d fees-api ccd-data-store-api ccd-definition-store-api ccd-elasticsearch
 
 # Set up missing Fees keyword
 echo "Setting up Feeds keyword"
@@ -53,5 +53,10 @@ do
 done
 
 ./bin/ccd-add-all-roles.sh
+./ccdImports/conversionScripts/createAllXLS.sh probate-back-office:4104
+./ccdImports/conversionScripts/importAllXLS.sh
 
-echo "LOCAL ENVIRONMENT SUCCESSFULLY STARTED"
+docker-compose ${COMPOSE_FILE} stop
+
+echo "LOCAL ENVIRONMENT SUCCESSFULLY CREATED"
+echo "Now run with ./bin/dev-start.sh"

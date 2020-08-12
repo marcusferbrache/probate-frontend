@@ -5,6 +5,7 @@ services:
   ccd-user-profile-api:
     image: "${CCD_USER_PROFILE_API_USE_LOCAL-hmctspublic.azurecr.io/}ccd/user-profile-api:${CCD_USER_PROFILE_API_TAG:-latest}"
     environment:
+      JAVA_TOOL_OPTIONS: -Xmx512m
       USER_PROFILE_DB_HOST: shared-database
       USER_PROFILE_DB_PORT: 5432
       USER_PROFILE_DB_USERNAME: "${DB_USERNAME}"
@@ -25,6 +26,7 @@ services:
   ccd-definition-store-api:
     image: "${CCD_DEFINITION_STORE_API_USE_LOCAL-hmctspublic.azurecr.io/}ccd/definition-store-api:${CCD_DEFINITION_STORE_API_TAG:-latest}"
     environment:
+      JAVA_TOOL_OPTIONS: -Xmx512m
       DEFINITION_STORE_DB_HOST: shared-database
       DEFINITION_STORE_DB_PORT: 5432
       DEFINITION_STORE_DB_USERNAME: "${DB_USERNAME}"
@@ -53,7 +55,7 @@ services:
   ccd-data-store-api:
     image: "${CCD_DATA_STORE_API_USE_LOCAL-hmctspublic.azurecr.io/}ccd/data-store-api:${CCD_DATA_STORE_API_TAG:-latest}"
     environment:
-      JAVA_TOOL_OPTIONS: -Xdebug -Xms128m -Xms512m -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005
+      JAVA_TOOL_OPTIONS: -Xms128m -Xmx512m
       DATA_STORE_DB_HOST: shared-database
       DATA_STORE_DB_PORT: 5432
       DATA_STORE_DB_USERNAME: "${DB_USERNAME}"
@@ -87,7 +89,7 @@ services:
   ccd-case-management-web:
     image: hmctspublic.azurecr.io/ccd/case-management-web:latest
     environment:
-      IDAM_LOGIN_URL: http://localhost:9002/login
+      IDAM_LOGIN_URL: http://localhost:3501/login
       CCD_GATEWAY_BASE_URL: http://localhost:3453
       CCD_ACTIVITY_BASE_URL:
       DM_GATEWAY_BASE_URL: https://api-gateway.dev.dm.reform.hmcts.net
@@ -102,14 +104,14 @@ services:
   ccd-api-gateway:
     image: hmctspublic.azurecr.io/ccd/api-gateway-web:latest
     environment:
-      IDAM_BASE_URL: http://idam-api:5000
-      IDAM_USER_URL: http://idam-api:5000
-      IDAM_S2S_URL: http://service-auth-provider-api:8489
-      IDAM_SERVICE_KEY: AAAAAAAAAAAAAAAA
-      IDAM_OAUTH2_LOGOUT_ENDPOINT: http://idam-api:5000/session/:token
+      IDAM_BASE_URL: http://sidam-api:5000
+      IDAM_USER_URL: http://sidam-api:5000
+      IDAM_S2S_URL: http://service-auth-provider-api:8080
+      IDAM_SERVICE_KEY: "${IDAM_KEY_CCD_GATEWAY}"
+      IDAM_OAUTH2_LOGOUT_ENDPOINT: http://sidam-api:5000/session/:token
       IDAM_OAUTH2_CLIENT_ID: ccd_gateway
       IDAM_OAUTH2_CLIENT_SECRET: ccd_gateway_secret
-      IDAM_OAUTH2_TOKEN_ENDPOINT: http://idam-api:5000/oauth2/token
+      IDAM_OAUTH2_TOKEN_ENDPOINT: http://sidam-api:5000/oauth2/token
       PROXY_DOCUMENT_MANAGEMENT: http://dm-store:8080
       ADDRESS_LOOKUP_TOKEN:
       PROXY_AGGREGATED: http://ccd-data-store-api:4452
@@ -133,6 +135,7 @@ services:
       timeout: 10s
       retries: 10
     environment:
+      JAVA_TOOL_OPTIONS: -Xmx512m
       SERVER_PORT: 8080
       JWT_KEY: wThK0f0/lh3FlxFcL4xUWDMI5C1J9KyQBgXV4wseh1e5J1uYJIjvTvArHxQDrYoHJ23xFxjHkOnvNbR5dXRoxA==
       MICROSERVICEKEYS_CCD_DATA: "${IDAM_KEY_CCD_DATA_STORE}"
@@ -160,20 +163,20 @@ services:
   sidam-api:
     image: "hmctspublic.azurecr.io/idam/api:stable"
     environment:
-      JAVA_TOOL_OPTIONS: -Xms128m -Xmx512m -XX:MaxPermSize=512m
+      JAVA_TOOL_OPTIONS: -Xmx512m
       TESTING_SUPPORT_ENABLED: "true"
       IDAMHEALTHCHECK_AM_ENABLED: "false"
       IDAMHEALTHCHECK_IDM_ENABLED: "false"
-      STRATEGIC_ADMIN_URL: http://idam-web-admin:8082
-      STRATEGIC_WEBPUBLIC_URL: http://idam-web-public:3501
+      STRATEGIC_ADMIN_URL: http://localhost:8082
+      STRATEGIC_WEBPUBLIC_URL: http://localhost:3501
       SPRING_PROFILES_ACTIVE: local
       SPRING_DATASOURCE_URL: jdbc:postgresql://shared-db:5432/openidm?currentSchema=fridam
       SPRING_DATASOURCE_USERNAME: openidm
       SPRING_DATASOURCE_PASSWORD: openidm
       SPRING_DATA_ELASTICSEARCH_PROPERTIES_PATH_HOME: /tmp/es
       SECURITY_OAUTH2_CLIENT_CLIENTSECRET: password
-      SECURITY_OAUTH2_CLIENT_PRE_ESTABLISHED_REDIRECT_URI: http://idam-web-public:3501/login
-      SECURITY_OAUTH2_CLIENT_REGISTERED_REDIRECT_URI: http://idam-web-public:3501/login
+      SECURITY_OAUTH2_CLIENT_PRE_ESTABLISHED_REDIRECT_URI: http://localhost:3501/login
+      SECURITY_OAUTH2_CLIENT_REGISTERED_REDIRECT_URI: http://localhost:3501/login
       IDAM_SPI_FORGEROCK_AM_ROOT: http://fr-am:8080/openam
       IDAM_SPI_FORGEROCK_AM_TOPLEVELHOST: fr-am
       IDAM_SPI_FORGEROCK_AM_USERNAME: amadmin
@@ -193,7 +196,7 @@ services:
   fr-am:
     image: "hmctsprivate.azurecr.io/idam/idam-fr-am:latest"
     environment:
-      JAVA_TOOL_OPTIONS: -Xms128m -Xmx512m -XX:MaxPermSize=512m
+      JAVA_TOOL_OPTIONS: -Xmx512m
     ports:
       - 2889:8080
       - 1389:1389
@@ -203,7 +206,7 @@ services:
   fr-idm:
     image: "hmctsprivate.azurecr.io/idam/idam-fr-idm:latest"
     environment:
-      JAVA_TOOL_OPTIONS: -Xms128m -Xmx512m -XX:MaxPermSize=512m
+      JAVA_TOOL_OPTIONS: -Xmx512m
     ports:
       - 18080:18080
       - 9010:9010
@@ -214,7 +217,7 @@ services:
   shared-database:
     image: postgres
     volumes:
-      - ./database:/docker-entrypoint-initdb.d
+      - ./docker/database:/docker-entrypoint-initdb.d
     environment:
       POSTGRES_MULTIPLE_DATABASES: idam,ccd,ccd_user_profile,ccd_definition,ccd_data,evidence,ccd_definition_designer,fees_register,probate,probate_man,letter_tracking
       DB_USERNAME:
@@ -226,7 +229,7 @@ services:
   dm-store:
     image: hmctspublic.azurecr.io/dm/store:latest
     environment:
-      - JAVA_TOOL_OPTIONS=-Xms128m -Xmx512m -XX:MaxPermSize=512m
+      - JAVA_TOOL_OPTIONS=-Xmx512m
       - SERVER_PORT=8080
       - SPRING_DATASOURCE_URL=jdbc:postgresql://shared-database:5432/evidence
       - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
@@ -264,7 +267,7 @@ services:
   pdf-service-api:
     image: hmctspublic.azurecr.io/cmc/pdf-service:latest
     environment:
-      - JAVA_TOOL_OPTIONS=-Xms8m -Xmx256m -Djava.security.egd=file:/dev/./urandom -XX:MaxMetaspaceSize=128m
+      - JAVA_TOOL_OPTIONS=-Xmx256m -Djavx.security.egd=file:/dev/./urandom -XX:MaxMetaspaceSize=128m
       - AZURE_APPLICATIONINSIGHTS_INSTRUMENTATIONKEY=fake-key
       - S2S_URL=http://service-auth-provider-api:8080
       - ROOT_APPENDER
@@ -279,6 +282,7 @@ services:
   fees-api:
     image: hmctspublic.azurecr.io/fees-register/api
     environment:
+      JAVA_TOOL_OPTIONS: -Xmx512m
       SPRING_DATASOURCE_URL: "jdbc:postgresql://shared-database:5432/fees_register"
       SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${DB_USERNAME}
@@ -295,7 +299,7 @@ services:
   idam-web-admin:
     image: "hmctspublic.azurecr.io/idam/web-admin:stable"
     environment:
-      JAVA_TOOL_OPTIONS: -Xms64m -Xmx512m -XX:MaxPermSize=512m
+      JAVA_TOOL_OPTIONS: -Xmx512m
       STRATEGIC_SERVICE_URL: http://sidam-api:5000
     ports:
       - 8082:8080
@@ -307,7 +311,7 @@ services:
   idam-web-public:
     image: "hmctspublic.azurecr.io/idam/web-public:stable"
     environment:
-      JAVA_TOOL_OPTIONS: -Xms64m -Xmx512m -XX:MaxPermSize=512m
+      JAVA_TOOL_OPTIONS: -Xmx512m
       STRATEGIC_SERVICE_URL: http://sidam-api:5000
       IDAM_CONTINUE_URL_VALIDATOR_ENFORCE_TLS: "false"
       REFORM_SERVICE_NAME: sidam-api
@@ -323,7 +327,7 @@ services:
   probate-orchestrator:
     image: hmctspublic.azurecr.io/probate/orchestrator-service:latest
     environment:
-      JAVA_TOOL_OPTIONS: -Xms128m -Xmx512m -XX:MaxPermSize=512m
+      JAVA_TOOL_OPTIONS: -Xmx512m
       AUTH_IDAM_CLIENT_BASEURL: http://sidam-api:5000
       AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://service-auth-provider-api:8080
       SUBMIT_SERVICE_API_URL: http://probate-submit-service:8181
@@ -339,7 +343,7 @@ services:
   probate-back-office:
     image: hmctspublic.azurecr.io/probate/back-office:latest
     environment:
-      JAVA_TOOL_OPTIONS: -Xms128m -Xmx512m -XX:MaxPermSize=512m
+      JAVA_TOOL_OPTIONS: -Xmx512m
       AUTH_IDAM_CLIENT_BASEURL: http://sidam-api:5000
       S2S_AUTH_URL: http://service-auth-provider-api:8080
       SPRING_DATASOURCE_URL: jdbc:postgresql://shared-database:5432/probate_man
@@ -357,7 +361,7 @@ services:
   probate-submit-service:
     image: hmctspublic.azurecr.io/probate/submit-service:latest
     environment:
-      JAVA_TOOL_OPTIONS: -Xms128m -Xmx512m -XX:MaxPermSize=512m
+      JAVA_TOOL_OPTIONS: -Xmx512m
       AUTH_IDAM_CLIENT_BASEURL: http://sidam-api:5000
       AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://service-auth-provider-api:8080
       SERVICES_CORECASEDATA_BASEURL: http://ccd-data-store-api:4452
@@ -372,18 +376,20 @@ services:
   probate-business-service:
     image: hmctspublic.azurecr.io/probate/business-service:latest
     environment:
-    - SERVER_PORT=8081
-    - SPRING_APPLICATION_JSON={
-        "services.auth.provider.baseUrl":"http://service-auth-provider-api:8080",
-        "services.pdf.service.url":"http://pdf-service-api:5500",
-        "document_management.url":"http://dm-store:8080"
-        }
+      - JAVA_TOOL_OPTIONS=-Xmx512m
+      - SERVER_PORT=8081
+      - SPRING_APPLICATION_JSON={
+          "services.auth.provider.baseUrl":"http://service-auth-provider-api:8080",
+          "services.pdf.service.url":"http://pdf-service-api:5500",
+          "document_management.url":"http://dm-store:8080"
+          }
     ports:
     - 8081:8081
 
   send-letter-service:
     image: hmctspublic.azurecr.io/rpe/send-letter-service
     environment:
+      - JAVA_TOOL_OPTIONS=-Xmx512m
       - APPINSIGHTS_INSTRUMENTATIONKEY=DUMMY
       - SERVER_PORT=8485
       - FTP_FINGERPRINT=fingerprint
