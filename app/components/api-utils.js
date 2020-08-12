@@ -29,7 +29,6 @@ const asyncFetch = (url, fetchOptions, parseBody) => {
         fetch(asyncReq, retryOptions())
             .then(res => {
                 if (!isHealthOrInfo) {
-                    logger.info(`Url: ${url}`);
                     logger.info(`Status: ${res.status}`);
                 }
                 if (res.ok) {
@@ -50,8 +49,6 @@ const asyncFetch = (url, fetchOptions, parseBody) => {
                 resolve(body);
             })
             .catch(err => {
-                logger.error(`Url: ${url}`);
-
                 logger.error(`Error${err}`);
                 reject(Error(err));
             });
