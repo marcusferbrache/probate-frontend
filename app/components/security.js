@@ -162,7 +162,6 @@ class Security {
     }
 
     _getRedirectCookie(req) {
-        console.log(req.cookies);
         if (!req.cookies[REDIRECT_COOKIE]) {
             return null;
         }
