@@ -331,8 +331,9 @@ services:
       AUTH_IDAM_CLIENT_BASEURL: http://sidam-api:5000
       AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://service-auth-provider-api:8080
       SUBMIT_SERVICE_API_URL: http://probate-submit-service:8181
-      BUSINESS_SERVICE_API_URL:
+      BUSINESS_SERVICE_API_URL:  http://probate-business-service:8081
       BACK_OFFICE_API_URL: http://probate-back-office:4104
+      SERVICES_CORECASEDATA_BASEURL: http://ccd-data-store-api:4452
     ports:
       - 8888:8888
     depends_on:
@@ -350,6 +351,14 @@ services:
       SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
       EVIDENCE_MANAGEMENT_URL: http://dm-store:8080
+      PDF_SERVICE_URL: http://pdf-service-api:5500
+      PRINTSERVICE_HOST:
+      IDAM_SERVICE_HOST: http://sidam-api:5000
+      FEE_API_URL: http://fees-api:8080
+      EVIDENCE_MANAGEMENT_HOST: http://dm-store:8080
+      CCD_GATEWAY_HOST: http://ccd-api-gateway:3453
+      SEND_LETTER_SERIVCE_BASEURL: http://send-letter-service:8485
+      SERVICES_CORECASEDATA_BASEURL: http://ccd-data-store-api:4452
     ports:
       - 4104:4104
     depends_on:
@@ -462,6 +471,7 @@ services:
       - DB_USER=${DB_USERNAME}
       - DB_PWD=${DB_PASSWORD}
       - ES_DATA_NODES_URL=http://ccd-elasticsearch:9200
+      - LOG_LEVEL=warn
     depends_on:
       - ccd-elasticsearch
       - shared-database
