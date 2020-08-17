@@ -5,7 +5,7 @@ services:
   ccd-user-profile-api:
     image: "${CCD_USER_PROFILE_API_USE_LOCAL-hmctspublic.azurecr.io/}ccd/user-profile-api:${CCD_USER_PROFILE_API_TAG:-latest}"
     environment:
-      JAVA_TOOL_OPTIONS: -Xmx512m
+      JAVA_TOOL_OPTIONS: -Xms128m -Xmx400m
       USER_PROFILE_DB_HOST: shared-database
       USER_PROFILE_DB_PORT: 5432
       USER_PROFILE_DB_USERNAME: "${DB_USERNAME}"
@@ -26,7 +26,7 @@ services:
   ccd-definition-store-api:
     image: "${CCD_DEFINITION_STORE_API_USE_LOCAL-hmctspublic.azurecr.io/}ccd/definition-store-api:${CCD_DEFINITION_STORE_API_TAG:-latest}"
     environment:
-      JAVA_TOOL_OPTIONS: -Xmx512m
+      JAVA_TOOL_OPTIONS: -Xms128m -Xmx400m
       DEFINITION_STORE_DB_HOST: shared-database
       DEFINITION_STORE_DB_PORT: 5432
       DEFINITION_STORE_DB_USERNAME: "${DB_USERNAME}"
@@ -55,7 +55,7 @@ services:
   ccd-data-store-api:
     image: "${CCD_DATA_STORE_API_USE_LOCAL-hmctspublic.azurecr.io/}ccd/data-store-api:${CCD_DATA_STORE_API_TAG:-latest}"
     environment:
-      JAVA_TOOL_OPTIONS: -Xms128m -Xmx512m
+      JAVA_TOOL_OPTIONS: -Xms128m -Xmx400m
       DATA_STORE_DB_HOST: shared-database
       DATA_STORE_DB_PORT: 5432
       DATA_STORE_DB_USERNAME: "${DB_USERNAME}"
@@ -137,7 +137,7 @@ services:
       timeout: 10s
       retries: 10
     environment:
-      JAVA_TOOL_OPTIONS: -Xmx512m
+      JAVA_TOOL_OPTIONS: -Xms128m -Xmx256m
       SERVER_PORT: 8080
       JWT_KEY: wThK0f0/lh3FlxFcL4xUWDMI5C1J9KyQBgXV4wseh1e5J1uYJIjvTvArHxQDrYoHJ23xFxjHkOnvNbR5dXRoxA==
       MICROSERVICEKEYS_CCD_DATA: "${IDAM_KEY_CCD_DATA_STORE}"
@@ -165,7 +165,7 @@ services:
   sidam-api:
     image: "hmctspublic.azurecr.io/idam/api:stable"
     environment:
-      JAVA_TOOL_OPTIONS: -Xmx512m
+      JAVA_TOOL_OPTIONS: -Xms128m -Xmx400m
       TESTING_SUPPORT_ENABLED: "true"
       IDAMHEALTHCHECK_AM_ENABLED: "false"
       IDAMHEALTHCHECK_IDM_ENABLED: "false"
@@ -198,7 +198,7 @@ services:
   fr-am:
     image: "hmctsprivate.azurecr.io/idam/idam-fr-am:latest"
     environment:
-      JAVA_TOOL_OPTIONS: -Xmx512m
+      JAVA_TOOL_OPTIONS: -Xms128m -Xmx400m
     ports:
       - 2889:8080
       - 1389:1389
@@ -208,7 +208,7 @@ services:
   fr-idm:
     image: "hmctsprivate.azurecr.io/idam/idam-fr-idm:latest"
     environment:
-      JAVA_TOOL_OPTIONS: -Xmx512m
+      JAVA_TOOL_OPTIONS: -Xms128m -Xmx400m
     ports:
       - 18080:18080
       - 9010:9010
@@ -231,7 +231,7 @@ services:
   dm-store:
     image: hmctspublic.azurecr.io/dm/store:latest
     environment:
-      - JAVA_TOOL_OPTIONS=-Xmx512m
+      - JAVA_TOOL_OPTIONS=-Xms128m -Xmx256m
       - SERVER_PORT=8080
       - SPRING_DATASOURCE_URL=jdbc:postgresql://shared-database:5432/evidence
       - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
@@ -269,7 +269,7 @@ services:
   pdf-service-api:
     image: hmctspublic.azurecr.io/cmc/pdf-service:latest
     environment:
-      - JAVA_TOOL_OPTIONS=-Xmx256m -Djavx.security.egd=file:/dev/./urandom -XX:MaxMetaspaceSize=128m
+      - JAVA_TOOL_OPTIONS=-Xms128m -Xmx256m -Djavx.security.egd=file:/dev/./urandom -XX:MaxMetaspaceSize=128m
       - AZURE_APPLICATIONINSIGHTS_INSTRUMENTATIONKEY=fake-key
       - S2S_URL=http://service-auth-provider-api:8080
       - ROOT_APPENDER
@@ -284,7 +284,7 @@ services:
   fees-api:
     image: hmctspublic.azurecr.io/fees-register/api
     environment:
-      JAVA_TOOL_OPTIONS: -Xmx512m
+      JAVA_TOOL_OPTIONS: -Xms128m -Xmx256m
       SPRING_DATASOURCE_URL: "jdbc:postgresql://shared-database:5432/fees_register"
       SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${DB_USERNAME}
@@ -301,7 +301,7 @@ services:
   idam-web-admin:
     image: "hmctspublic.azurecr.io/idam/web-admin:stable"
     environment:
-      JAVA_TOOL_OPTIONS: -Xmx512m
+      JAVA_TOOL_OPTIONS: -Xms128m -Xmx256m
       STRATEGIC_SERVICE_URL: http://sidam-api:5000
     ports:
       - 8082:8080
@@ -313,7 +313,7 @@ services:
   idam-web-public:
     image: "hmctspublic.azurecr.io/idam/web-public:stable"
     environment:
-      JAVA_TOOL_OPTIONS: -Xmx512m
+      JAVA_TOOL_OPTIONS: -Xms128m -Xmx256m
       STRATEGIC_SERVICE_URL: http://sidam-api:5000
       IDAM_CONTINUE_URL_VALIDATOR_ENFORCE_TLS: "false"
       REFORM_SERVICE_NAME: sidam-api
@@ -329,7 +329,7 @@ services:
   probate-orchestrator:
     image: hmctspublic.azurecr.io/probate/orchestrator-service:latest
     environment:
-      JAVA_TOOL_OPTIONS: -Xmx512m
+      JAVA_TOOL_OPTIONS: -Xms128m -Xmx256m
       AUTH_IDAM_CLIENT_BASEURL: http://sidam-api:5000
       AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://service-auth-provider-api:8080
       SUBMIT_SERVICE_API_URL: http://probate-submit-service:8181
@@ -346,7 +346,7 @@ services:
   probate-back-office:
     image: hmctspublic.azurecr.io/probate/back-office:latest
     environment:
-      JAVA_TOOL_OPTIONS: -Xmx512m
+      JAVA_TOOL_OPTIONS: -Xms128m -Xmx400m
       AUTH_IDAM_CLIENT_BASEURL: http://sidam-api:5000
       S2S_AUTH_URL: http://service-auth-provider-api:8080
       SPRING_DATASOURCE_URL: jdbc:postgresql://shared-database:5432/probate_man
@@ -372,7 +372,7 @@ services:
   probate-submit-service:
     image: hmctspublic.azurecr.io/probate/submit-service:latest
     environment:
-      JAVA_TOOL_OPTIONS: -Xmx512m
+      JAVA_TOOL_OPTIONS: -Xms128m -Xmx400m
       AUTH_IDAM_CLIENT_BASEURL: http://sidam-api:5000
       AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://service-auth-provider-api:8080
       SERVICES_CORECASEDATA_BASEURL: http://ccd-data-store-api:4452
@@ -387,7 +387,7 @@ services:
   probate-business-service:
     image: hmctspublic.azurecr.io/probate/business-service:latest
     environment:
-      - JAVA_TOOL_OPTIONS=-Xmx512m
+      - JAVA_TOOL_OPTIONS=-Xms128m -Xmx400m
       - SERVER_PORT=8081
       - SPRING_APPLICATION_JSON={
           "services.auth.provider.baseUrl":"http://service-auth-provider-api:8080",
@@ -400,7 +400,7 @@ services:
   send-letter-service:
     image: hmctspublic.azurecr.io/rpe/send-letter-service
     environment:
-      - JAVA_TOOL_OPTIONS=-Xmx512m
+      - JAVA_TOOL_OPTIONS=-Xms128m -Xmx400m
       - APPINSIGHTS_INSTRUMENTATIONKEY=DUMMY
       - SERVER_PORT=8485
       - FTP_FINGERPRINT=fingerprint
@@ -441,7 +441,6 @@ services:
       - service-auth-provider-api
 
   smtp-server:
-    container_name: smtp-server
     image: mailhog/mailhog
     restart: always
     ports:
@@ -451,11 +450,12 @@ services:
   ccd-elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.4.2
     environment:
+      - JAVA_TOOL_OPTIONS=-Xms128m -Xmx400m
+      - ES_JAVA_OPTS= -Xms128m -Xmx400m
       - cluster.name=ccd-docker-es-cluster
       - discovery.type=single-node
       - bootstrap.memory_lock=true
       - action.auto_create_index=.security*,.watches,.triggered_watches,.watcher-history-*,.logstash_dead_letter,.ml*,grantofrepresentation_cases,caveat_cases,legacy_cases,standingsearch_cases,willlodgement_cases
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     ulimits:
       memlock:
         soft: -1
@@ -468,6 +468,7 @@ services:
   ccd-logstash:
     image: hmctspublic.azurecr.io/ccd/logstash:probate-latest
     environment:
+      - JAVA_TOOL_OPTIONS=-Xms128m -Xmx400m
       - XPACK_MONITORING_ENABLED=false
       - DB_URL=jdbc:postgresql://shared-database:5432/ccd_data?stringtype=unspecified&ssl=false
       - DB_USER=${DB_USERNAME}
@@ -481,7 +482,7 @@ services:
   payments-api:
     image: hmctspublic.azurecr.io/payment/api:latest
     environment:
-      - JAVA_TOOL_OPTIONS=-Xmx512m
+      - JAVA_TOOL_OPTIONS=-Xms128m -Xmx400m
       - auth.provider.service.client.baseUrl=http://service-auth-provider-api:8080/
       - auth.idam.client.baseUrl=http://sidam-api:5000
       - CARD_PAYMENTS_REPORT_SCHEDULER_ENABLED=true
