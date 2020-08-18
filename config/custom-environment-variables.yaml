@@ -80,7 +80,7 @@ appInsights:
   instrumentationKey: APPINSIGHTS_INSTRUMENTATIONKEY
 
 TestCitizenDomain: CITIZEN_EMAIL_DOMAIN
-TestE2EFrontendUrl: TEST_E2E_URL
+TestE2EFrontendUrl: TEST_URL
 TestFrontendUrl: TEST_URL
 TestIdamAddUserUrl: IDAM_ADD_USER_URL
 TestIdamBaseUrl: IDAM_API_URL
