@@ -4,7 +4,7 @@ gitRevision: ''
 frontendPublicHttpProtocol: http
 languages: ['en', 'cy']
 featureToggles:
-  enabled: true
+  enabled: false
   launchDarklyKey: 'SDK_KEY'
   launchDarklyUser:
     firstName: 'Probate'
