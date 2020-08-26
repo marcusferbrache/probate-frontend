@@ -1,6 +1,6 @@
 
 featureToggles:
-  enabled: true
+  enabled: false
 app:
   useIDAM: 'true'
   requireCcdCaseId: 'true'
