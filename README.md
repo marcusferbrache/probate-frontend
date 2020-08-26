@@ -96,6 +96,15 @@ For accessibility tests:
 For test coverage:
 `$ yarn test:coverage`
 
+For e2e tests:
+`$ yarn test-e2e`
+
+To run the e2e locally, you'll need to change some configs in the default.yaml
+```
+  useIDAM: 'true'
+  requireCcdCaseId: 'true'
+```
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/hmcts/probate-frontend/blob/develop/LICENSE.md) file for details
