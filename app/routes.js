@@ -146,8 +146,13 @@ router.use((req, res, next) => {
     }
 });
 
+const allSteps = {
+    'en': initSteps([`${__dirname}/steps/action/`, `${__dirname}/steps/ui`], 'en'),
+    'cy': initSteps([`${__dirname}/steps/action/`, `${__dirname}/steps/ui`], 'cy')
+};
+
 router.use((req, res, next) => {
-    const steps = initSteps([`${__dirname}/steps/action/`, `${__dirname}/steps/ui`], req.session.language);
+    const steps = allSteps[req.session.language];
     const currentPageCleanUrl = FormatUrl.getCleanPageUrl(req.originalUrl, 1);
     const formdata = req.session.form;
     const isHardStop = (formdata, journey) => config.hardStopParams[journey].some(param => get(formdata, param) === 'optionNo');
