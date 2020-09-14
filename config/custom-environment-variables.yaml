@@ -66,12 +66,6 @@ utils:
     retries: RETRIES_NUMBER
     retryDelay: RETRY_DELAY
 payment:
-  applicationFeeCode: APPLICATION_FEE_CODE
-  copies:
-    uk:
-      code: UK_COPIES_FEE_CODE
-    overseas:
-      code: OVERSEAS_COPIES_FEE_CODE
   serviceId: SERVICE_ID
   siteId: SITE_ID
   version: version
