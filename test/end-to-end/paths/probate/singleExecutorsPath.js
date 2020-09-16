@@ -1,5 +1,7 @@
 'use strict';
 
+// Comment to create empty pr
+
 const taskListContent = require('app/resources/en/translation/tasklist');
 const TestConfigurator = new (require('test/end-to-end/helpers/TestConfigurator'))();
 const optionYes = '';
