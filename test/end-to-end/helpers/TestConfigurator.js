@@ -9,6 +9,7 @@ const testConfig = require('test/config');
 class TestConfigurator {
 
     constructor() {
+        this.environment = testConfig.TestFrontendUrl.includes('local') ? 'local' : 'aat';
         this.testBaseUrl = testConfig.TestIdamBaseUrl;
         this.useIdam = testConfig.TestUseIdam;
         this.setTestCitizenName();
@@ -55,6 +56,8 @@ class TestConfigurator {
                 }, (error, response, body) => {
                     if (response && response.statusCode !== 201) {
                         throw new Error('TestConfigurator.getBefore: Using proxy - Unable to create user.  Response from IDAM was: ' + response.statusCode);
+                    } else {
+                        console.log('User created (via proxy)', this.userDetails);
                     }
                 });
             } else {
@@ -64,8 +67,10 @@ class TestConfigurator {
                     json: true, // <--Very important!!!
                     body: this.userDetails
                 }, (error, response, body) => {
-                    if (response.statusCode !== 201) {
+                    if (response && response.statusCode !== 201) {
                         throw new Error('TestConfigurator.getBefore: Without proxy - Unable to create user.  Response from IDAM was: ' + response.statusCode);
+                    } else {
+                        console.log('User created', this.userDetails);
                     }
                 });
             }
@@ -161,29 +166,8 @@ class TestConfigurator {
         return this.testProxy;
     }
 
-    injectFormData(data, emailId) {
-        const formData =
-            {
-                id: emailId,
-                formdata: {
-                    payloadVersion: '4.1.0',
-                    applicantEmail: emailId,
-                }
-            };
-        Object.assign(formData.formdata, data);
-        request({
-            url: this.testInjectFormDataURL,
-            method: 'POST',
-            headers: {'content-type': 'application/json', 'Session-Id': emailId},
-            proxy: this.testReformProxy,
-            socksProxyHost: 'localhost',
-            socksProxyPort: '9090',
-            json: true,
-            body: formData
-        },
-        (error, response, body) => {
-            console.log('This is email id ' + emailId);
-        });
+    equalityAndDiversityEnabled() {
+        return this.environment !== 'local';
     }
 }
 
