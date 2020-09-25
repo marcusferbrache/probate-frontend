@@ -65,7 +65,7 @@ class PaymentStatus extends Step {
 
         if (serviceAuthResult.name === 'Error') {
             options.redirect = true;
-            options.url = `${this.steps.PaymentBreakdown.constructor.getUrl()}?status=failure`;
+            options.url = `${this.steps.PaymentBreakdown.constructor.getUrl()}?status=serviceAuthError`;
             return options;
         }
 
@@ -85,7 +85,7 @@ class PaymentStatus extends Step {
                 logger.error('Payment retrieval failed for reference = ' + ctx.reference + ' with status = ' + getPaymentResponse.status);
                 const options = {};
                 options.redirect = true;
-                options.url = `${this.steps.PaymentBreakdown.constructor.getUrl()}?status=failure`;
+                options.url = `${this.steps.PaymentBreakdown.constructor.getUrl()}?status=${getPaymentResponse.status}`;
                 return options;
             }
 
@@ -98,7 +98,7 @@ class PaymentStatus extends Step {
 
             if (getPaymentResponse.status !== 'Success') {
                 options.redirect = true;
-                options.url = `${this.steps.PaymentBreakdown.constructor.getUrl()}?status=failure`;
+                options.url = `${this.steps.PaymentBreakdown.constructor.getUrl()}?status=${getPaymentResponse.status}`;
                 logger.error('Unable to retrieve a payment response.');
             } else if (!updateCcdCaseResponse || !updateCcdCaseResponse.ccdCase || updateCcdCaseResponse.ccdCase.state !== 'CaseCreated') {
                 options.redirect = false;
