@@ -87,19 +87,19 @@ withPipeline("nodejs", product, component) {
   loadVaultSecrets(secrets)
   enableSlackNotifications('#probate-jenkins')
 
-  after('test') {
-    publishHTML (target: [
-       alwaysLinkToLastBuild: true,
-       reportDir: 'output',
-       reportFiles: 'results.html',
-       reportName: 'Unit Test Results'
-    ])
-  }
+  // after('test') {
+  //   publishHTML (target: [
+  //      alwaysLinkToLastBuild: true,
+  //      reportDir: 'output',
+  //      reportFiles: 'results.html',
+  //      reportName: 'Unit Test Results'
+  //   ])
+  // }
 
   after('functionalTest:aat') {
     publishHTML (target: [
       reportDir            : "output",
-      reportFiles          : "mochawesome.html",
+      reportFiles          : "results.html,mochawesome.html",
       reportName           : "AAT Functional Tests",
       alwaysLinkToLastBuild: true
     ])
