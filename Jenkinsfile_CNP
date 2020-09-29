@@ -99,7 +99,7 @@ withPipeline("nodejs", product, component) {
   after('functionalTest:aat') {
     publishHTML (target: [
       reportDir            : "output",
-      reportFiles          : "results.html",
+      reportFiles          : "mochawesome.html",
       reportName           : "AAT Functional Tests",
       alwaysLinkToLastBuild: true
     ])
