@@ -14,6 +14,7 @@ featureToggles:
   ft_pcq: 'probate-pcq'
   ft_pcq_token: 'probate-pcq-token'
   ft_newfee_register_code: 'probate-newfee-register-code'
+  ft_new_deathcert_flow: 'probate-new-deathcert-flow'
   appwideToggles: []
 app:
   username:
