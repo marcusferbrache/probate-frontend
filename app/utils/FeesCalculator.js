@@ -4,6 +4,7 @@ const {get} = require('lodash');
 const FeesLookup = require('app/services/FeesLookup');
 const config = require('config');
 const logger = require('app/components/logger')('Init');
+const featureToggle = require('app/utils/FeatureToggle');
 
 class FeesCalculator {
 
@@ -57,6 +58,11 @@ async function createCallsRequired(formdata, headers, featureToggles, feesLookup
         overseascopiescode: '',
         total: 0,
     };
+
+    if (featureToggle.isEnabled(featureToggles, 'ft_newfee_register_code')) {
+        issuesData.keyword = 'PA';
+        copiesData.keyword = 'GrantWill';
+    }
 
     issuesData.amount_or_volume = get(formdata, 'iht.netValue', 0);
     returnResult.applicationvalue = issuesData.amount_or_volume;
