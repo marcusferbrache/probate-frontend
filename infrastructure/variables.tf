@@ -7,9 +7,7 @@ variable "location" {
   default = "UK South"
 }
 
-variable "env" {
-  type = "string"
-}
+variable "env" {}
 
 variable "ilbIp" { }
 
@@ -22,5 +20,5 @@ variable "jenkins_AAD_objectId" {
 }
 
 variable "common_tags" {
-  type = "map"
+  type = map(string)
 }
