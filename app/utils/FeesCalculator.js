@@ -11,25 +11,8 @@ class FeesCalculator {
     constructor(endpoint, sessionId) {
         this.endpoint = endpoint;
         this.sessionId = sessionId;
-        this.issuesData = {
-            amount_or_volume: 0,
-            applicant_type: 'personal',
-            channel: 'default',
-            event: 'issue',
-            jurisdiction1: 'family',
-            jurisdiction2: 'probate registry',
-            service: 'probate'
-        };
-        this.copiesData = {
-            amount_or_volume: 0,
-            applicant_type: 'all',
-            channel: 'default',
-            event: 'copies',
-            jurisdiction1: 'family',
-            jurisdiction2: 'probate registry',
-            service: 'probate',
-            keyword: 'NewFee'
-        };
+        this.issuesData = config.services.feesRegister.issuesData;
+        this.copiesData = config.services.feesRegister.copiesData;
         this.feesLookup = new FeesLookup(this.endpoint, sessionId);
     }
 
@@ -37,6 +20,12 @@ class FeesCalculator {
         const headers = {
             authToken: authToken
         };
+
+        if (featureToggle.isEnabled(featureToggles, 'ft_newfee_register_code')) {
+            this.issuesData = config.services.feesRegister.newfee_issuesData;
+            this.copiesData = config.services.feesRegister.newfee_copiesData;
+        }
+
         return createCallsRequired(formdata, headers, featureToggles, this.feesLookup, this.issuesData, this.copiesData);
     }
 }
@@ -58,11 +47,6 @@ async function createCallsRequired(formdata, headers, featureToggles, feesLookup
         overseascopiescode: '',
         total: 0,
     };
-
-    if (featureToggle.isEnabled(featureToggles, 'ft_newfee_register_code')) {
-        issuesData.keyword = 'PA';
-        copiesData.keyword = 'GrantWill';
-    }
 
     issuesData.amount_or_volume = get(formdata, 'iht.netValue', 0);
     returnResult.applicationvalue = issuesData.amount_or_volume;
