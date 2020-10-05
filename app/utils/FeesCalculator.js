@@ -21,7 +21,7 @@ class FeesCalculator {
             authToken: authToken
         };
 
-        if (featureToggle.isEnabled(featureToggles, 'ft_fees_api')) {
+        if (featureToggle.isEnabled(featureToggles, 'ft_newfee_register_code')) {
             this.issuesData = config.services.feesRegister.newfee_issuesData;
             this.copiesData = config.services.feesRegister.newfee_copiesData;
         }
