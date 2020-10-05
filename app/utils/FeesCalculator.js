@@ -22,8 +22,8 @@ class FeesCalculator {
         };
 
         if (featureToggle.isEnabled(featureToggles, 'ft_newfee_register_code')) {
-            // this.issuesData = config.services.feesRegister.newfee_issuesData;
-            // this.copiesData = config.services.feesRegister.newfee_copiesData;
+            this.issuesData = config.services.feesRegister.newfee_issuesData;
+            this.copiesData = config.services.feesRegister.newfee_copiesData;
         }
 
         return createCallsRequired(formdata, headers, featureToggles, this.feesLookup, this.issuesData, this.copiesData);
