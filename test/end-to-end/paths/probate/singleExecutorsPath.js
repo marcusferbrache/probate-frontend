@@ -7,6 +7,7 @@ const ihtPost = '';
 const optionNo = '-2';
 const bilingualGOP = false;
 const uploadingDocuments = false;
+const config = require('test/config');
 
 Feature('Single Executor flow').retry(TestConfigurator.getRetryFeatures());
 
@@ -22,7 +23,10 @@ After(() => {
     TestConfigurator.getAfter();
 });
 
-Scenario(TestConfigurator.idamInUseText('Single Executor Journey with sign out/in and survey link'), (I) => {
+Scenario(TestConfigurator.idamInUseText('Single Executor Journey with sign out/in and survey link'), async (I) => {
+
+    // eslint-disable-next-line no-unused-vars
+    const useNewDeathCertFlow = await TestConfigurator.checkFeatureToggle(config.featureToggles.ft_new_deathcert_flow);
 
     // Eligibility Task (pre IdAM)
     I.startApplication();
@@ -91,6 +95,12 @@ Scenario(TestConfigurator.idamInUseText('Single Executor Journey with sign out/i
 
     const totalExecutors = '1';
     I.enterTotalExecutors(totalExecutors);
+
+    // Skip Equality and Diversity questions
+    if (TestConfigurator.equalityAndDiversityEnabled()) {
+        I.exitEqualityAndDiversity();
+        I.enterTotalExecutors(totalExecutors);
+    }
 
     // Review and Confirm Task
     I.selectATask(taskListContent.taskNotStarted);
