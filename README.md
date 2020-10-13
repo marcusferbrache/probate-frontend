@@ -18,6 +18,13 @@ Install dependencies by executing the following command:
 $ yarn install
 ```
 
+If on Windows 10 install sed:
+```
+download from here
+http://gnuwin32.sourceforge.net/packages/sed.htm
+
+Add C:\Program Files (x86)\GnuWin32\bin to PATH system environment variable
+```
 Compile SASS stylesheets by running the following command:
 ```
 $ yarn setup
