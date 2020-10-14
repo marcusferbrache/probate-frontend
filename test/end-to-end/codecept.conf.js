@@ -48,12 +48,30 @@ exports.config = {
             chunks: 2
         }
     },
+    // mocha: {
+    //     reporterOptions: {
+    //         reportDir: testConfig.TestOutputDir,
+    //         reportName: 'index',
+    //         inlineAssets: true
+    //     }
+    // },
     mocha: {
         reporterOptions: {
-            reportDir: testConfig.TestOutputDir,
-            reportName: 'index',
-            inlineAssets: true
+            'codeceptjs-cli-reporter': {
+                stdout: '-',
+                options: {
+                    steps: true
+                }
+            },
+            mochawesome: {
+                stdout: './functional-output/console.log',
+                options: {
+                    reportDir: testConfig.TestOutputDir,
+                    reportName: 'index',
+                    inlineAssets: true
+                }
+            }
         }
     },
-    name: 'Probate FE Tests'
+    name: 'Probate FE E2E Test Report'
 };
