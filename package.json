@@ -20,7 +20,6 @@
     "test": "NODE_ENV=testing yarn test-unit $@ && yarn test-component $@",
     "test-unit": "NODE_ENV=testing NODE_PATH=. LOG_LEVEL=error mocha test/unit --reporter mochawesome --reporter-options reportDir=output,reportFilename=results --recursive --timeout 15000",
     "test-component": "NODE_ENV=testing NODE_PATH=. LOG_LEVEL=error mocha test/component --reporter spec --recursive --timeout 15000",
-    "test-pattern": "NODE_ENV=testing NODE_PATH=. LOG_LEVEL=error mocha test/unit --grep completeEqualityTask --reporter mochawesome --reporter-options reportDir=output,reportFilename=results --recursive --timeout 15000",    
     "test:a11y": "NODE_ENV=testing NODE_PATH=. LOG_LEVEL=error ENABLE_TRACKING=false mocha test/accessibility --timeout 30000",
     "test-accessibility": "NODE_ENV=testing NODE_PATH=. LOG_LEVEL=error ENABLE_TRACKING=false mocha test/accessibility --timeout 30000",
     "test-e2e": "NODE_ENV=testing NODE_PATH=. node ./node_modules/codeceptjs/bin/codecept.js run -c ./test/end-to-end/ --steps --reporter mochawesome",
