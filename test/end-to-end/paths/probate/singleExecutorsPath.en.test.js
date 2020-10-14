@@ -9,7 +9,7 @@ const bilingualGOP = false;
 const uploadingDocuments = false;
 const config = require('test/config');
 
-Feature('Single Executor flow').retry(TestConfigurator.getRetryFeatures());
+Feature('Grant Of Probate Single Executor flow...').retry(TestConfigurator.getRetryFeatures());
 
 // eslint complains that the Before/After are not used but they are by codeceptjs
 // so we have to tell eslint to not validate these
@@ -142,4 +142,5 @@ Scenario(TestConfigurator.idamInUseText('Single Executor Journey with sign out/i
 
     // Thank You
     I.seeThankYouPage();
-}).retry(TestConfigurator.getRetryScenarios());
+}).tag('@E2E')
+    .retry(TestConfigurator.getRetryScenarios());

@@ -1,7 +1,7 @@
 const testConfig = require('test/config.js');
 
 exports.config = {
-    tests: testConfig.TestPathToRun,
+    tests: './**/*.test.js',
     output: testConfig.TestOutputDir,
     helpers: {
         Puppeteer: {
