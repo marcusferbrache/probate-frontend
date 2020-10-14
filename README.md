@@ -11,19 +11,13 @@ The Frontend Application uses Orchestrator to route specific requests to the und
 - [Node.js](nodejs.org) >= 12.5.0
 - [yarn](yarnpkg.com)
 
+If on Windows 10 follow setup instructions here: https://tools.hmcts.net/confluence/pages/viewpage.action?pageId=1457316967
+
 ### Installation
 
 Install dependencies by executing the following command:
 ```
 $ yarn install
-```
-
-If on Windows 10 install sed:
-```
-download from here
-http://gnuwin32.sourceforge.net/packages/sed.htm
-
-Add C:\Program Files (x86)\GnuWin32\bin to PATH system environment variable
 ```
 Compile SASS stylesheets by running the following command:
 ```
