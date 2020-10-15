@@ -7,10 +7,10 @@ const optionYes = '';
 const ihtPost = '';
 const optionNo = '-2';
 const ihtOnline = '-2';
-// const maritalStatusMarried = '';
+const maritalStatusMarried = '';
 const spouseOfDeceased = '';
 const relationshipChildOfDeceased = '-2';
-const optionRenouncing = '';
+// const optionRenouncing = '';
 const bilingualGOP = false;
 const uploadingDocuments = false;
 
@@ -62,15 +62,17 @@ Scenario(TestConfigurator.idamInUseText('GOP -Intestacy Child Journey '), functi
     I.selectAssetsOutsideEnglandWales(optionYes);
     I.enterValueAssetsOutsideEnglandWales('400000');
     I.selectDeceasedAlias(optionNo);
-    I.selectDeceasedMaritalStatus();
+    I.selectDeceasedMaritalStatus(maritalStatusMarried);
 
+    // Executors Task
     I.selectATask(taskListContent.taskNotStarted);
     I.selectRelationshipToDeceased(spouseOfDeceased);
-    I.enterAnyChildren(optionNo);
     I.enterApplicantName('ApplicantFirstName', 'ApplicantLastName');
     I.enterApplicantPhone();
     I.enterAddressManually();
-    I.seeSummaryPage('*');
+    if (TestConfigurator.equalityAndDiversityEnabled()) {
+        I.completePCQ();
+    }
 
     I.selectATask(taskListContent.taskNotStarted);
     I.seeSummaryPage('declaration');
@@ -97,6 +99,7 @@ Scenario(TestConfigurator.idamInUseText('GOP -Intestacy Child Journey '), functi
 
     I.seeDocumentsPage();
     I.seeThankYouPage();
+
 }).tag('@E2E')
     .retry(TestConfigurator.getRetryScenarios());
 
@@ -130,16 +133,25 @@ Scenario(TestConfigurator.idamInUseText('GOP -Intestacy Child Journey - Paper ih
         I.enterGrossAndNet('205', '500', '400');
     }
 
+    I.selectAssetsOutsideEnglandWales(optionYes);
+    I.enterValueAssetsOutsideEnglandWales('400000');
     I.selectDeceasedAlias(optionNo);
-    I.selectDeceasedMaritalStatus();
+    I.selectDeceasedMaritalStatus(maritalStatusMarried);
 
     I.selectATask(taskListContent.taskNotStarted);
     I.selectRelationshipToDeceased(relationshipChildOfDeceased);
-    I.selectSpouseNotApplyingReason(optionRenouncing);
-    I.enterAnyOtherChildren(optionNo);
     I.enterApplicantName('ApplicantFirstName', 'ApplicantLastName');
     I.enterApplicantPhone();
     I.enterAddressManually();
+    if (TestConfigurator.equalityAndDiversityEnabled()) {
+        I.completePCQ();
+    }
+
+    // I.selectSpouseNotApplyingReason(optionRenouncing);
+    // I.enterAnyOtherChildren(optionNo);
+    // I.enterApplicantName('ApplicantFirstName', 'ApplicantLastName');
+    // I.enterApplicantPhone();
+    // I.enterAddressManually();
     I.seeSummaryPage('*');
 
     I.selectATask(taskListContent.taskNotStarted);

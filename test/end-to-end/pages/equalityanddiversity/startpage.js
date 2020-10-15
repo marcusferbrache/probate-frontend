@@ -10,3 +10,13 @@ module.exports = function() {
 
     I.navByClick('#back-button');
 };
+
+function completePCQ () {
+    const I = this;
+    I.wait(3);
+    I.click('.govuk-button.govuk-button--secondary');
+}
+
+module.exports = {
+    completePCQ,
+};
