@@ -68,8 +68,7 @@ Scenario(TestConfigurator.idamInUseText('GOP -Intestacy Child Journey '), functi
     I.enterApplicantPhone();
     I.enterAddressManually();
     if (TestConfigurator.equalityAndDiversityEnabled()) {
-        I.pcqPage();
-        console.log('PCQ Answered');
+        I.DontAnswerPCQ();
     }
 
     I.selectATask(taskListContent.taskNotStarted);
@@ -98,5 +97,5 @@ Scenario(TestConfigurator.idamInUseText('GOP -Intestacy Child Journey '), functi
     I.seeDocumentsPage();
     I.seeThankYouPage();
 
-}).tag('@e2ee')
-    .retry(0);
+}).tag('@teste2e')
+    .retry(1);
