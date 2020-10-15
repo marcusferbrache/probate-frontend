@@ -196,4 +196,5 @@ Scenario(TestConfigurator.idamInUseText('Intestacy Child Journey - Paper iht, no
 
     // Thank You
     I.seeThankYouPage();
-}).retry(TestConfigurator.getRetryScenarios());
+}).tag('@e2e')
+    .retry(0);

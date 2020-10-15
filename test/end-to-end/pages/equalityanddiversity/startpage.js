@@ -2,14 +2,14 @@
 
 const testConfig = require('test/config');
 
-module.exports = function() {
+function pcqPage() {
     const I = this;
     I.wait(3);
 
     I.waitForText('Equality and diversity questions', testConfig.TestWaitForTextToAppear);
 
     I.navByClick('#back-button');
-};
+}
 
 function completePCQ () {
     const I = this;
@@ -18,5 +18,6 @@ function completePCQ () {
 }
 
 module.exports = {
+    pcqPage,
     completePCQ,
 };
