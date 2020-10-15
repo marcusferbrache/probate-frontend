@@ -167,11 +167,6 @@ class TestConfigurator {
     checkFeatureToggle(featureToggleKey) {
         return this.launchDarkly.variation(featureToggleKey, testConfig.featureToggles.launchDarklyUser, false);
     }
-
-    getCurrentUrl() {
-        const helper = this.helpers.Puppeteer;
-        return helper.page.url();
-    }
 }
 
 module.exports = TestConfigurator;
