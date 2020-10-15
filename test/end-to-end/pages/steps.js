@@ -79,7 +79,7 @@ module.exports = () => {
 
         //Equality and diversity page
         exitEqualityAndDiversity: steps.equalityanddiversity.startpage,
-        DontAnswerPCQ: steps.pcq.pcq,
+        skipPcqQuestions: steps.pcq.pcqstartpage,
 
         // Summary page
         seeSummaryPage: steps.summary.summary,
