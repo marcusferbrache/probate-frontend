@@ -1,7 +1,7 @@
 const testConfig = require('test/config.js');
 
 exports.config = {
-    tests: './paths/**/*.test.js',
+    tests: './**/*.test.js',
     output: testConfig.TestOutputDir,
     helpers: {
         Puppeteer: {
@@ -48,13 +48,6 @@ exports.config = {
             chunks: 2
         }
     },
-    // mocha: {
-    //     reporterOptions: {
-    //         reportDir: testConfig.TestOutputDir,
-    //         reportName: 'index',
-    //         inlineAssets: true
-    //     }
-    // },
     mocha: {
         reporterOptions: {
             'codeceptjs-cli-reporter': {

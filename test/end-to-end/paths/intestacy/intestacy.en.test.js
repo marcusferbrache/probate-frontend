@@ -7,14 +7,14 @@ const optionYes = '';
 const ihtPost = '';
 const optionNo = '-2';
 const ihtOnline = '-2';
-const maritalStatusMarried = '';
+// const maritalStatusMarried = '';
 const spouseOfDeceased = '';
 const relationshipChildOfDeceased = '-2';
 const optionRenouncing = '';
 const bilingualGOP = false;
 const uploadingDocuments = false;
 
-Feature('Grant Of Probate Intestacy Journeys...');
+Feature('Grant Of Probate Intestacy E2E Tests...');
 
 // eslint complains that the Before/After are not used but they are by codeceptjs
 // so we have to tell eslint to not validate these
@@ -62,7 +62,7 @@ Scenario(TestConfigurator.idamInUseText('GOP -Intestacy Child Journey '), functi
     I.selectAssetsOutsideEnglandWales(optionYes);
     I.enterValueAssetsOutsideEnglandWales('400000');
     I.selectDeceasedAlias(optionNo);
-    I.selectDeceasedMaritalStatus(maritalStatusMarried);
+    I.selectDeceasedMaritalStatus();
 
     I.selectATask(taskListContent.taskNotStarted);
     I.selectRelationshipToDeceased(spouseOfDeceased);
@@ -131,7 +131,7 @@ Scenario(TestConfigurator.idamInUseText('GOP -Intestacy Child Journey - Paper ih
     }
 
     I.selectDeceasedAlias(optionNo);
-    I.selectDeceasedMaritalStatus(maritalStatusMarried);
+    I.selectDeceasedMaritalStatus();
 
     I.selectATask(taskListContent.taskNotStarted);
     I.selectRelationshipToDeceased(relationshipChildOfDeceased);
@@ -167,5 +167,6 @@ Scenario(TestConfigurator.idamInUseText('GOP -Intestacy Child Journey - Paper ih
 
     I.seeDocumentsPage();
     I.seeThankYouPage();
+
 }).tag('@E2E')
-    .retry(TestConfigurator.getRetryScenarios());
+    .retry(1);
