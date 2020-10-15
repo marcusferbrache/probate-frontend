@@ -98,5 +98,5 @@ Scenario(TestConfigurator.idamInUseText('GOP -Intestacy Child Journey '), functi
     I.seeDocumentsPage();
     I.seeThankYouPage();
 
-}).tag('@teste2e')
-    .retry(1);
+}).tag('@e2e')
+    .retry(0);
