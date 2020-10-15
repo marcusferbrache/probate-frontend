@@ -80,7 +80,10 @@ Scenario(TestConfigurator.idamInUseText('Intestacy Child Journey - Digital iht, 
     I.enterApplicantName('ApplicantFirstName', 'ApplicantLastName');
     I.enterApplicantPhone();
     I.enterAddressManually();
-    I.seeSummaryPage('*');
+    // I.seeSummaryPage('*');
+    if (TestConfigurator.equalityAndDiversityEnabled()) {
+        I.exitEqualityAndDiversity();
+    }
 
     // Check your answers and declaration
     I.selectATask(taskListContent.taskNotStarted);
@@ -163,8 +166,10 @@ Scenario(TestConfigurator.idamInUseText('Intestacy Child Journey - Paper iht, no
     I.enterApplicantName('ApplicantFirstName', 'ApplicantLastName');
     I.enterApplicantPhone();
     I.enterAddressManually();
-    I.seeSummaryPage('*');
-
+    // I.seeSummaryPage('*');
+    if (TestConfigurator.equalityAndDiversityEnabled()) {
+        I.exitEqualityAndDiversity();
+    }
     // Check your answers and declaration
     I.selectATask(taskListContent.taskNotStarted);
     I.seeSummaryPage('declaration');
@@ -196,5 +201,5 @@ Scenario(TestConfigurator.idamInUseText('Intestacy Child Journey - Paper iht, no
 
     // Thank You
     I.seeThankYouPage();
-}).tag('@e2e')
+}).tag('@teste2e')
     .retry(0);

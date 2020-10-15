@@ -7,6 +7,8 @@ exports.config = {
         Puppeteer: {
             url: testConfig.TestE2EFrontendUrl,
             waitForTimeout: 120000,
+            waitForAction: 120000,
+            waitForNavigation: ['domcontentloaded', 'networkidle0'],
             getPageTimeout: 120000,
             show: testConfig.TestShowBrowser,
             chrome: {
@@ -17,7 +19,7 @@ exports.config = {
                     height: 960
                 },
                 args: [
-                    '--no-sandbox',
+                    '--headless', '--disable-gpu', '--no-sandbox',
                     '--proxy-server=proxyout.reform.hmcts.net:8080',
                     '--proxy-bypass-list=*beta*LB.reform.hmcts.net',
                     '--window-size=1440,1400'
@@ -53,7 +55,8 @@ exports.config = {
             'codeceptjs-cli-reporter': {
                 stdout: '-',
                 options: {
-                    steps: true
+                    steps: true,
+                    verbose: true
                 }
             },
             mochawesome: {

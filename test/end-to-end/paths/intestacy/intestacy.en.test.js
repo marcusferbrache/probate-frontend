@@ -64,6 +64,7 @@ Scenario(TestConfigurator.idamInUseText('GOP -Intestacy Child Journey '), functi
     // Executors Task
     I.selectATask(taskListContent.taskNotStarted);
     I.selectRelationshipToDeceased(spouseOfDeceased);
+    I.enterAnyOtherChildren(optionNo);
     I.enterApplicantName('Applicant First Name', 'Applicant Last Name');
     I.enterApplicantPhone();
     I.enterAddressManually();
