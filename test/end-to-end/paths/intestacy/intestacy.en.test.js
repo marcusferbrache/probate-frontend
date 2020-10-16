@@ -82,7 +82,9 @@ Scenario(TestConfigurator.idamInUseText('GOP -Intestacy Spouse Journey ...'), fu
     I.enterAddressManually();
     // I.seeSummaryPage('*');
 
-    I.skipPcqQuestions();
+    if (TestConfigurator.equalityAndDiversityEnabled()) {
+        I.skipPcqQuestions();
+    }
 
     // Check your answers and declaration
     I.selectATask(taskListContent.taskNotStarted);
@@ -168,7 +170,9 @@ Scenario(TestConfigurator.idamInUseText('GOP -Intestacy Child Journey '), functi
     I.enterAddressManually();
     // I.seeSummaryPage('*');
 
-    I.skipPcqQuestions();
+    if (TestConfigurator.equalityAndDiversityEnabled()) {
+        I.skipPcqQuestions();
+    }
 
     // Check your answers and declaration
     I.selectATask(taskListContent.taskNotStarted);
