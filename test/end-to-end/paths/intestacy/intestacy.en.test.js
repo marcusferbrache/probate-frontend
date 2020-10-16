@@ -4,14 +4,17 @@ const taskListContent = require('app/resources/en/translation/tasklist');
 const TestConfigurator = new (require('test/end-to-end/helpers/TestConfigurator'))();
 
 const optionYes = '';
+const ihtPost = '';
 const optionNo = '-2';
 const ihtOnline = '-2';
 const maritalStatusMarried = '';
 const spouseOfDeceased = '';
+const relationshipChildOfDeceased = '-2';
+const optionRenouncing = '';
 const bilingualGOP = false;
 const uploadingDocuments = false;
 
-Feature('Grant Of Probate Intestacy E2E Tests...');
+Feature('Grant of Probate Intestacy E2E Tests...');
 
 // eslint complains that the Before/After are not used but they are by codeceptjs
 // so we have to tell eslint to not validate these
@@ -26,22 +29,31 @@ After(() => {
 });
 
 // eslint-disable-next-line no-undef
-Scenario(TestConfigurator.idamInUseText('GOP -Intestacy Child Journey '), function (I) {
+Scenario(TestConfigurator.idamInUseText('GOP -Intestacy Spouse Journey ...'), function (I) {
 
+    // Eligibility Task (pre IdAM)
     I.startApplication();
+
+    // Probate Sceeners
     I.selectDeathCertificate(optionYes);
     I.selectDeceasedDomicile(optionYes);
     I.selectIhtCompleted(optionYes);
     I.selectPersonWhoDiedLeftAWill(optionNo);
+
+    // Intestacy Sceeners
     I.selectDiedAfterOctober2014(optionYes);
     I.selectRelatedToDeceased(optionYes);
     I.selectOtherApplicants(optionNo);
 
     I.startApply();
+
+    // IdAM
     I.authenticateWithIdamIfAvailable();
 
+    // Dashboard
     I.chooseApplication();
 
+    // Deceased Task
     I.selectATask(taskListContent.taskNotStarted);
     I.chooseBiLingualGrant(optionNo);
     I.enterDeceasedDetails('Deceased First Name', 'Deceased Last Name', '01', '01', '1950', '01', '01', '2017');
@@ -64,18 +76,21 @@ Scenario(TestConfigurator.idamInUseText('GOP -Intestacy Child Journey '), functi
     // Executors Task
     I.selectATask(taskListContent.taskNotStarted);
     I.selectRelationshipToDeceased(spouseOfDeceased);
-    I.enterAnyOtherChildren(optionNo);
-    I.enterApplicantName('Applicant First Name', 'Applicant Last Name');
+    I.enterAnyChildren(optionNo);
+    I.enterApplicantName('ApplicantFirstName', 'ApplicantLastName');
     I.enterApplicantPhone();
     I.enterAddressManually();
+    // I.seeSummaryPage('*');
     if (TestConfigurator.equalityAndDiversityEnabled()) {
-        I.skipPcqQuestions();
+        I.exitEqualityAndDiversity();
     }
 
+    // Check your answers and declaration
     I.selectATask(taskListContent.taskNotStarted);
     I.seeSummaryPage('declaration');
     I.acceptDeclaration(bilingualGOP);
 
+    // Copies Task
     I.selectATask(taskListContent.taskNotStarted);
 
     if (TestConfigurator.getUseGovPay() === 'true') {
@@ -87,6 +102,7 @@ Scenario(TestConfigurator.idamInUseText('GOP -Intestacy Child Journey '), functi
     }
     I.seeCopiesSummary();
 
+    // Payment Task
     I.selectATask(taskListContent.taskNotStarted);
     I.seePaymentBreakdownPage();
     if (TestConfigurator.getUseGovPay() === 'true') {
@@ -95,8 +111,96 @@ Scenario(TestConfigurator.idamInUseText('GOP -Intestacy Child Journey '), functi
     }
     I.seePaymentStatusPage();
 
+    // Send Documents Task
     I.seeDocumentsPage();
-    I.seeThankYouPage();
 
+    // Thank You
+    I.seeThankYouPage();
 }).tag('@e2e')
-    .retry(0);
+    .retry(1);
+
+// eslint-disable-next-line no-undef
+Scenario(TestConfigurator.idamInUseText('GOP -Intestacy Child Journey '), function (I) {
+    // Eligibility Task (pre IdAM)
+    I.startApplication();
+
+    // Probate Sceeners
+    I.selectDeathCertificate(optionYes);
+    I.selectDeceasedDomicile(optionYes);
+    I.selectIhtCompleted(optionYes);
+    I.selectPersonWhoDiedLeftAWill(optionNo);
+
+    // Intestacy Sceeners
+    I.selectDiedAfterOctober2014(optionYes);
+    I.selectRelatedToDeceased(optionYes);
+    I.selectOtherApplicants(optionNo);
+
+    I.startApply();
+
+    // IdAM
+    I.authenticateWithIdamIfAvailable();
+
+    // Dashboard
+    I.chooseApplication();
+
+    // Deceased Task
+    I.selectATask(taskListContent.taskNotStarted);
+    I.chooseBiLingualGrant(optionNo);
+    I.enterDeceasedDetails('Deceased First Name', 'Deceased Last Name', '01', '01', '1950', '01', '01', '2017');
+    I.enterDeceasedAddress();
+    I.selectDocumentsToUpload(uploadingDocuments);
+    I.selectInheritanceMethod(ihtPost);
+    if (TestConfigurator.getUseGovPay() === 'true') {
+        I.enterGrossAndNet('205', '600000', '300000');
+    } else {
+        I.enterGrossAndNet('205', '500', '400');
+    }
+
+    I.selectDeceasedAlias(optionNo);
+    I.selectDeceasedMaritalStatus(maritalStatusMarried);
+
+    // Executors Task
+    I.selectATask(taskListContent.taskNotStarted);
+    I.selectRelationshipToDeceased(relationshipChildOfDeceased);
+    I.selectSpouseNotApplyingReason(optionRenouncing);
+    I.enterAnyOtherChildren(optionNo);
+    I.enterApplicantName('ApplicantFirstName', 'ApplicantLastName');
+    I.enterApplicantPhone();
+    I.enterAddressManually();
+    // I.seeSummaryPage('*');
+    if (TestConfigurator.equalityAndDiversityEnabled()) {
+        I.exitEqualityAndDiversity();
+    }
+    // Check your answers and declaration
+    I.selectATask(taskListContent.taskNotStarted);
+    I.seeSummaryPage('declaration');
+    I.acceptDeclaration(bilingualGOP);
+
+    // Copies Task
+    I.selectATask(taskListContent.taskNotStarted);
+    if (TestConfigurator.getUseGovPay() === 'true') {
+        I.enterUkCopies('5');
+        I.selectOverseasAssets(optionNo);
+    } else {
+        I.enterUkCopies('0');
+        I.selectOverseasAssets(optionNo);
+
+    }
+    I.seeCopiesSummary();
+
+    // Payment Task
+    I.selectATask(taskListContent.taskNotStarted);
+    I.seePaymentBreakdownPage();
+    if (TestConfigurator.getUseGovPay() === 'true') {
+        I.seeGovUkPaymentPage();
+        I.seeGovUkConfirmPage();
+    }
+    I.seePaymentStatusPage();
+
+    // Send Documents Task
+    I.seeDocumentsPage();
+
+    // Thank You
+    I.seeThankYouPage();
+}).tag('@e2e')
+    .retry(1);
