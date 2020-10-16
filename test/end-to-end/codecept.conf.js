@@ -19,7 +19,7 @@ exports.config = {
                     height: 960
                 },
                 args: [
-                    '--headless', '--disable-gpu', '--no-sandbox',
+                    '--no-sandbox',
                     '--proxy-server=proxyout.reform.hmcts.net:8080',
                     '--proxy-bypass-list=*beta*LB.reform.hmcts.net',
                     '--window-size=1440,1400'
@@ -55,8 +55,7 @@ exports.config = {
             'codeceptjs-cli-reporter': {
                 stdout: '-',
                 options: {
-                    steps: true,
-                    verbose: true
+                    steps: true
                 }
             },
             mochawesome: {
