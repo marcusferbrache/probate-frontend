@@ -1,7 +1,7 @@
 const pcqAAT = 'https://pcq.aat.platform.hmcts.net';
 const pagePath = `${pcqAAT}/start-page`;
 
-module.exports =  function completeEquality() {
+module.exports = function completeEquality() {
     const I = this;
     I.wait(3);
     const url = I.grabCurrentUrl();
