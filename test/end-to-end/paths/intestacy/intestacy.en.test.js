@@ -80,10 +80,13 @@ Scenario(TestConfigurator.idamInUseText('GOP -Intestacy Spouse Journey ...'), fu
     I.enterApplicantName('ApplicantFirstName', 'ApplicantLastName');
     I.enterApplicantPhone();
     I.enterAddressManually();
-    I.seeSummaryPage('*');
+    // I.seeSummaryPage('*');
 
-    I.exitEqualityAndDiversity();
-    console.log('PCQ Functionality Performed');
+    if (TestConfigurator.equalityAndDiversityEnabled()) {
+        console.log('PCQ Method');
+        I.completePCQ();
+        console.log('PCQ Completed');
+    }
 
     // Check your answers and declaration
     I.selectATask(taskListContent.taskNotStarted);
