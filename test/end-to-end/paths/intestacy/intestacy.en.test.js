@@ -83,7 +83,6 @@ Scenario(TestConfigurator.idamInUseText('GOP -Intestacy Spouse Journey ...'), fu
     // I.seeSummaryPage('*');
 
     if (TestConfigurator.equalityAndDiversityEnabled()) {
-        console.log('PCQ Method');
         I.completePCQ();
         console.log('PCQ Completed');
     }
@@ -173,7 +172,7 @@ Scenario(TestConfigurator.idamInUseText('GOP -Intestacy Child Journey '), functi
     // I.seeSummaryPage('*');
 
     if (TestConfigurator.equalityAndDiversityEnabled()) {
-        I.skipPcqQuestions();
+        I.completePCQ();
     }
 
     // Check your answers and declaration
