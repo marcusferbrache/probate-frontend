@@ -80,13 +80,10 @@ Scenario(TestConfigurator.idamInUseText('GOP -Intestacy Spouse Journey ...'), fu
     I.enterApplicantName('ApplicantFirstName', 'ApplicantLastName');
     I.enterApplicantPhone();
     I.enterAddressManually();
-    // I.seeSummaryPage('*');
+    I.seeSummaryPage('*');
 
-    if (TestConfigurator.equalityAndDiversityEnabled()) {
-        console.log('I see PCQ Page');
-        I.wait(10);
-        I.skipPcqQuestions();
-    }
+    I.exitEqualityAndDiversity();
+    console.log('PCQ Functionality Performed');
 
     // Check your answers and declaration
     I.selectATask(taskListContent.taskNotStarted);
@@ -119,7 +116,7 @@ Scenario(TestConfigurator.idamInUseText('GOP -Intestacy Spouse Journey ...'), fu
 
     // Thank You
     I.seeThankYouPage();
-}).tag('@e2e')
+}).tag('@e2et')
     .retry(1);
 
 // eslint-disable-next-line no-undef
