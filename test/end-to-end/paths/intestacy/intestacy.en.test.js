@@ -2,6 +2,7 @@
 
 const taskListContent = require('app/resources/en/translation/tasklist');
 const TestConfigurator = new (require('test/end-to-end/helpers/TestConfigurator'))();
+const commonContent = require('app/resources/en/translation/common');
 
 const optionYes = '';
 const ihtPost = '';
@@ -84,7 +85,9 @@ Scenario(TestConfigurator.idamInUseText('GOP -Intestacy Spouse Journey ...'), fu
 
     if (TestConfigurator.equalityAndDiversityEnabled()) {
         console.log('inside PCQ Method');
-        I.completePCQ();
+        I.exitEqualityAndDiversity();
+        I.navByClick(commonContent.saveAndContinue);
+        console.log('inside PCQ Method');
     }
 
     // Check your answers and declaration
