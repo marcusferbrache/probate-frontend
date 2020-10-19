@@ -172,7 +172,9 @@ Scenario(TestConfigurator.idamInUseText('GOP -Intestacy Child Journey '), functi
     // I.seeSummaryPage('*');
 
     if (TestConfigurator.equalityAndDiversityEnabled()) {
-        I.completePCQ();
+        I.exitEqualityAndDiversity();
+        I.enterAddressManually();
+        // I.completePCQ();
     }
 
     // Check your answers and declaration
