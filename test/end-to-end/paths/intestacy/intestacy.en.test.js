@@ -83,6 +83,8 @@ Scenario(TestConfigurator.idamInUseText('GOP -Intestacy Spouse Journey ...'), fu
     // I.seeSummaryPage('*');
 
     if (TestConfigurator.equalityAndDiversityEnabled()) {
+        console.log('I see PCQ Page');
+        I.wait(10);
         I.skipPcqQuestions();
     }
 
