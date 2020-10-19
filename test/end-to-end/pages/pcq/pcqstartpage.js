@@ -1,7 +1,8 @@
 'use strict';
 
-module.exports = function completePCQ() {
+module.exports = function() {
     const I = this;
+    I.click('.govuk-button.govuk-button--secondary');
     I.wait(3);
-    I.click('I don\'t want to answer these questions');
+    console.log('PCQ completed');
 };
