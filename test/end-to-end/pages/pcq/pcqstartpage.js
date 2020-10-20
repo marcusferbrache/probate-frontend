@@ -6,7 +6,7 @@ function completeEqualityQuestions() {
     const I = this;
     console.log('current page URL' + pageUnderTest.getUrl());
     I.seeCurrentUrlEquals(pageUnderTest.getUrl());
-    I.click('#main-content > div > div > form > ul > li:nth-child(2) > button');
+    I.click('//button[text()[contains(., "I don\'t want to answer these questions")]]');
     I.wait(3);
 }
 
