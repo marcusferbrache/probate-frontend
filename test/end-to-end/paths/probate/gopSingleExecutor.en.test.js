@@ -77,7 +77,14 @@ Scenario(TestConfigurator.idamInUseText('Single Executor Journey with sign out/i
     I.enterDeceasedDateOfDeath('01', '01', '2017');
     I.enterDeceasedAddress();
 
-    I.selectDocumentsToUpload(uploadingDocuments);
+    if (useNewDeathCertFlow) {
+        I.selectDiedEngOrWales(optionNo);
+        I.selectEnglishForeignDeathCert(optionNo);
+        I.selectForeignDeathCertTranslation(optionYes);
+    } else {
+        I.selectDocumentsToUpload(uploadingDocuments);
+    }
+
     I.selectInheritanceMethod(ihtPost);
 
     if (TestConfigurator.getUseGovPay() === 'true') {
