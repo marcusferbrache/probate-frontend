@@ -7,6 +7,7 @@ const WillWrapper = require('app/wrappers/Will');
 const RegistryWrapper = require('app/wrappers/Registry');
 const FormatCcdCaseId = require('app/utils/FormatCcdCaseId');
 const caseTypes = require('app/utils/CaseTypes');
+const featureToggle = require('app/utils/FeatureToggle');
 
 class Documents extends ValidationStep {
 
@@ -41,6 +42,11 @@ class Documents extends ValidationStep {
         const executorsWrapper = new ExecutorsWrapper(formdata.executors);
         const willWrapper = new WillWrapper(formdata.will);
         const registryAddress = (new RegistryWrapper(formdata.registry)).address();
+
+        if (featureToggle.isEnabled(featureToggles, 'ft_new_deathcert_flow')) {
+            this.content = require(`app/resources/${language}/translation/${this.resourcePath}_new_death_cert_flow`);
+        }
+
         const content = this.generateContent(ctx, formdata, language);
 
         ctx.registryAddress = registryAddress ? registryAddress : content.address;
