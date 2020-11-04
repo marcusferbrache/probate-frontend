@@ -43,8 +43,10 @@ class Documents extends ValidationStep {
         const willWrapper = new WillWrapper(formdata.will);
         const registryAddress = (new RegistryWrapper(formdata.registry)).address();
 
-        if (featureToggle.isEnabled(featureToggles, 'ft_new_deathcert_flow')) {
-            this.content = require(`app/resources/${language}/translation/${this.resourcePath}_new_death_cert_flow`);
+        ctx.newDeathCertFTEnabled = featureToggle.isEnabled(featureToggles, 'ft_new_deathcert_flow');
+        if (ctx.newDeathCertFTEnabled) {
+            this.resourcePath += '_new_death_cert_flow';
+            this.content = require(`app/resources/${language}/translation/${this.resourcePath}`);
         }
 
         const content = this.generateContent(ctx, formdata, language);
