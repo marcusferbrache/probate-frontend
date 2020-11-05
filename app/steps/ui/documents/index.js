@@ -46,7 +46,7 @@ class Documents extends ValidationStep {
         const registryAddress = (new RegistryWrapper(formdata.registry)).address();
 
         ctx.newDeathCertFTEnabled = featureToggle.isEnabled(featureToggles, 'ft_new_deathcert_flow');
-        if (ctx.newDeathCertFTEnabled) {
+        if (ctx.newDeathCertFTEnabled && !this.resourcePath.includes('new_death_cert_flow')) {
             this.resourcePath += '_new_death_cert_flow';
             this.content = require(`app/resources/${language}/translation/${this.resourcePath}`);
         }
